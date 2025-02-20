@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.geometry.primitives_2d import Channel2D, Rectangle
-from modulus.sym.geometry.parameterization import Parameterization, Parameter
+from physicsnemo.sym.geometry.primitives_2d import Channel2D, Rectangle
+from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
 
 import warp as wp
 import numpy as np

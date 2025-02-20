@@ -16,11 +16,11 @@
 
 import torch
 import numpy as np
-from modulus.sym.eq.phy_informer import PhysicsInformer
-from modulus.sym.eq.spatial_grads.spatial_grads import (
+from physicsnemo.sym.eq.phy_informer import PhysicsInformer
+from physicsnemo.sym.eq.spatial_grads.spatial_grads import (
     compute_stencil3d,
 )
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 import pytest
 import matplotlib.pyplot as plt
 from mpl_toolkits.axes_grid1 import make_axes_locatable

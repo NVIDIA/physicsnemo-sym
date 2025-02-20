@@ -18,31 +18,31 @@ import torch
 import numpy as np
 from sympy import Symbol, Eq
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.key import Key
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.dataset import DictVariationalDataset
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.dataset import DictVariationalDataset
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     VariationalConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
-from modulus.sym.loss import Loss
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.loss import Loss
 
 # VPINN imports
-from modulus.sym.utils.vpinn.test_functions import (
+from physicsnemo.sym.utils.vpinn.test_functions import (
     Test_Function,
     Legendre_test,
     Trig_test,
     Vector_Test,
 )
-from modulus.sym.utils.vpinn.integral import tensor_int
+from physicsnemo.sym.utils.vpinn.integral import tensor_int
 
 x, y = Symbol("x"), Symbol("y")
 # parameters
@@ -204,8 +204,8 @@ class DGLoss(Loss):
         return losses
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # make list of nodes to unroll graph on
     elasticity_net = instantiate_arch(
         input_keys=[Key("x"), Key("y")],

@@ -16,7 +16,7 @@
 
 from sympy import tanh, Symbol, Function
 
-from modulus.sym.eq.pde import PDE
+from physicsnemo.sym.eq.pde import PDE
 
 
 class FluxDiffusion(PDE):

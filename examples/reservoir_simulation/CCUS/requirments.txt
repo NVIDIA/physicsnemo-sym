@@ -145,7 +145,7 @@
 - mkl-random==1.1.1
 - mkl-service==2.3.0
 - mock==4.0.2
-- Modulus v22.09
+- PhysicsNeMo v22.09
 - more-itertools==8.4.0
 - mpi4py==3.0.3
 - mpmath==1.1.0

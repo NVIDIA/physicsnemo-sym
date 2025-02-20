@@ -133,9 +133,9 @@ from tensorflow.keras.layers import (
 )
 from shutil import rmtree
 import pickle
-from modulus.sym.models.fno import *
-from modulus.sym.models.afno.afno import *
-from modulus.sym.key import Key
+from physicsnemo.sym.models.fno import *
+from physicsnemo.sym.models.afno.afno import *
+from physicsnemo.sym.key import Key
 from collections import OrderedDict
 import os.path
 from numpy.linalg import inv
@@ -6391,8 +6391,8 @@ else:
     while True:
         surrogate = int(
             input(
-                "Select surrogate method type:\n1=FNO [Modulus Implementation]\n\
-2=PINO [Modulus Implemnation]\n3=PINO version 1 [Original paper implementation]\n\
+                "Select surrogate method type:\n1=FNO [PhysicsNeMo Implementation]\n\
+2=PINO [PhysicsNeMo Implemnation]\n3=PINO version 1 [Original paper implementation]\n\
 4=PINO version 2 [Original paper implementation with Flux predicted]\n\
 5=AFNO (data driven)\n6=AFNO ( data + physics driven)\n"
             )

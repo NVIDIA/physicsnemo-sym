@@ -5,8 +5,8 @@ This example demonstrates how to set up a purely physics-driven model for solvin
 This example extends PINN-related concepts demonstrated in the simpler Lid Driven Cavity flow example (in `/ldc_pinns/`), with the goal of presenting them in a more applied engineering context. We recommend reading through this Lid Driven Cavity example first.
 
 Specific tools and techniques demonstrated in this example include:
-- Using [Modulus-Sym](https://github.com/NVIDIA/modulus-sym) to define a physics-based learning task for a PINN
-- Representing custom geometry and interfacing this with Modulus-Sym, as is often required in engineering applications
+- Using [PhysicsNeMo-Sym](https://github.com/NVIDIA/Modulus-sym) to define a physics-based learning task for a PINN
+- Representing custom geometry and interfacing this with PhysicsNeMo-Sym, as is often required in engineering applications
 - Implementing custom [NVIDIA Warp](https://github.com/NVIDIA/warp) kernels for efficient point sampling of these custom geometries
 
 ## Problem Overview
@@ -17,8 +17,8 @@ Here, we examine the 2-dimensional steady, incompressible, viscous external aero
 
 ### Prerequisites
 
-If you are running this example outside the Modulus container, install Modulus Sym using
-the instructions from [here](https://github.com/NVIDIA/modulus-sym?tab=readme-ov-file#pypi).
+If you are running this example outside the PhysicsNeMo container, install PhysicsNeMo Sym using
+the instructions from [here](https://github.com/NVIDIA/Modulus-sym?tab=readme-ov-file#pypi).
 
 ### Training
 
@@ -34,7 +34,7 @@ To start a multi-GPU training run, first check that multiple GPUs are available 
 mpirun -np 2 python airfoil.py
 ```
 
-Since this is training in a purely physics-based fashion, there is no dataset required. Instead, we generate the geometry using the Modulus Sym's geometry module and a custom sampler, which is defined in `custom_airfoil_geometry.py`.
+Since this is training in a purely physics-based fashion, there is no dataset required. Instead, we generate the geometry using the PhysicsNeMo Sym's geometry module and a custom sampler, which is defined in `custom_airfoil_geometry.py`.
 
 ### Post-Processing
 

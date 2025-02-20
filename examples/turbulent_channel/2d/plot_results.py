@@ -18,7 +18,7 @@ import os
 import warnings
 import numpy as np
 import matplotlib.pyplot as plt
-from modulus.sym.utils.io import csv_to_dict
+from physicsnemo.sym.utils.io import csv_to_dict
 
 # path for checkpoint
 checkpoint = "./outputs/re590_k_ep_LS/network_checkpoint/"
@@ -69,15 +69,15 @@ if os.path.exists(to_absolute_path(file_path)):
     )
 else:
     warnings.warn(
-        f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+        f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
     )
 
-ax[0].scatter(y, k_plus, label="Modulus")
+ax[0].scatter(y, k_plus, label="PhysicsNeMo")
 ax[0].set(title="TKE: u_tau=" + str(round(u_tau, 3)))
 ax[0].set(xlabel="y", ylabel="k+")
 ax[0].legend()
 
-ax[1].scatter(y_plus, u_plus, label="Modulus")
+ax[1].scatter(y_plus, u_plus, label="PhysicsNeMo")
 ax[1].set_xscale("log")
 ax[1].set(title="U+: u_tau=" + str(round(u_tau, 3)))
 ax[1].set(xlabel="y+", ylabel="u+")

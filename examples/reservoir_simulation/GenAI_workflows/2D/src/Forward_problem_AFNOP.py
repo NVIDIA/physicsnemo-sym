@@ -21,27 +21,27 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import os
-import modulus
-from modulus.sym.hydra import ModulusConfig
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.utils.io.plotter import GridValidatorPlotter
+import physicsnemo
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
-from modulus.sym.models.afno.afno import *
+from physicsnemo.sym.models.afno.afno import *
 import shutil
 import cupy as cp
 from sklearn.model_selection import train_test_split
 import scipy.io as sio
 import requests
-from modulus.sym.utils.io.plotter import ValidatorPlotter
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter
 
 torch.set_default_dtype(torch.float32)
 
@@ -802,8 +802,8 @@ class Black_oil(torch.nn.Module):
 
 
 # [pde-loss]
-@modulus.sym.main(config_path="conf", config_name="config_PINO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_PINO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     print("")
     print("------------------------------------------------------------------")
     print("")

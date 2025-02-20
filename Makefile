@@ -24,7 +24,7 @@ doctest:
 	# coverage run \
 	# 	--rcfile='test/coverage.docstring.rc' \
 	# 	-m pytest \
-	# 	--doctest-modules modulus/ --ignore-glob=*internal*
+	# 	--doctest-modules physicsnemo/ --ignore-glob=*internal*
 	echo "Doctest CI stage not currently implemented"
 
 pytest:
@@ -36,6 +36,8 @@ coverage:
 	coverage combine && \
 		coverage report --show-missing --omit=*test* --omit=*internal* --fail-under=50 && \
 		coverage html
+
+all-ci: setup-ci black interrogate lint license install pytest doctest coverage
 
 # ============================================================================ #
 # CLEAN COMMANDS
@@ -75,13 +77,13 @@ else
     $(error Unknown CPU architecture ${ARCH} detected)
 endif
 
-MODULUS_SYM_GIT_HASH = $(shell git rev-parse --short HEAD)
+PHYSICSNEMO_SYM_GIT_HASH = $(shell git rev-parse --short HEAD)
 
 container-deploy:
-	docker build -t modulus-sym:deploy --build-arg TARGETPLATFORM=${TARGETPLATFORM} --build-arg MODULUS_SYM_GIT_HASH=${MODULUS_SYM_GIT_HASH} --target deploy -f Dockerfile .
+	docker build -t physicsnemo-sym:deploy --build-arg TARGETPLATFORM=${TARGETPLATFORM} --build-arg PHYSICSNEMO_SYM_GIT_HASH=${PHYSICSNEMO_SYM_GIT_HASH} --target deploy -f Dockerfile .
 
 container-ci:
-	docker build -t modulus-sym:ci --build-arg TARGETPLATFORM=${TARGETPLATFORM} --target ci -f Dockerfile .
+	docker build -t physicsnemo-sym:ci --build-arg TARGETPLATFORM=${TARGETPLATFORM} --target ci -f Dockerfile .
 
 container-docs:
-	docker build -t modulus-sym:docs --build-arg TARGETPLATFORM=${TARGETPLATFORM} --target docs -f Dockerfile .
+	docker build -t physicsnemo-sym:docs --build-arg TARGETPLATFORM=${TARGETPLATFORM} --target docs -f Dockerfile .

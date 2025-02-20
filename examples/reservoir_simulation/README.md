@@ -1,25 +1,25 @@
-# Modulus-Sym Reservoir Simulation Examples
+# PhysicsNeMo-Sym Reservoir Simulation Examples
 
-This repository hosts various examples for reservoir simulation tasks using Modulus-Sym,
+This repository hosts various examples for reservoir simulation tasks using PhysicsNeMo-Sym,
 developed by NVIDIA.
 
 * [2D Reservoir Simulation](./2D/)
 
     Explore examples and guidelines for conducting 2D reservoir simulation forward
-    problem using Modulus-Sym. This section includes detailed instructions,
+    problem using PhysicsNeMo-Sym. This section includes detailed instructions,
     setup procedures, and example scripts to assist you in setting up and running 2D
     reservoir simulation projects.
 
 * [3D Reservoir Simulation](./3D/)
 
     Discover examples and instructions for performing 3D reservoir simulation forward
-    problems with Modulus-Sym. This section provides insights into setting up 3D
+    problems with PhysicsNeMo-Sym. This section provides insights into setting up 3D
     reservoir simulation projects, including sample scripts and usage guidelines.
 
 * [CCUS](./CCUS/)
 
     Explore examples and guidelines for Carbon Capture, Utilization, and Storage (CCUS)
-    reservoir simulation forward problems using Modulus-Sym. This section covers various
+    reservoir simulation forward problems using PhysicsNeMo-Sym. This section covers various
     aspects of CCUS reservoir simulation, including setup procedures and usage
     instructions.
 
@@ -27,13 +27,13 @@ developed by NVIDIA.
 
     This section includes examples and details for conducting reservoir simulation
     forward and inverse problems (history matching) related to the Norne field using
-    Modulus-Sym. You'll find comprehensive instructions, example scripts, and usage
+    PhysicsNeMo-Sym. You'll find comprehensive instructions, example scripts, and usage
     guidelines tailored specifically for Norne reservoir simulation projects.
 
 * [GenAI Workflows](./GenAI_workflows/)
 
     Explore Generative AI-driven workflows for 2D and 3D reservoir simulation forward
-    and inverse problems using Modulus-Sym in this section. Discover innovative
+    and inverse problems using PhysicsNeMo-Sym in this section. Discover innovative
     approaches and techniques powered by AI for enhancing 2D reservoir simulation
     projects. This section provides detailed explanations, example workflows, and usage
     guidelines.
@@ -65,5 +65,5 @@ developed by NVIDIA.
     history matching strategies effectively.
 
 Feel free to explore each section for detailed instructions, examples, and guidelines
-for reservoir simulation tasks using Modulus-Sym. For any questions or issues, please
+for reservoir simulation tasks using PhysicsNeMo-Sym. For any questions or issues, please
 refer to the respective README files.

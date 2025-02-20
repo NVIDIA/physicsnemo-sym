@@ -1,4 +1,4 @@
-FROM nvcr.io/nvidia/modulus/modulus:22.09
+FROM nvcr.io/nvidia/physicsnemo/physicsnemo:22.09
 
 ARG MYUSER=user
 ARG MYUID=1000

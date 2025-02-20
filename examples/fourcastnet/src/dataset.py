@@ -21,8 +21,8 @@ import numpy as np
 from typing import List
 from pathlib import Path
 
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.dataset import Dataset
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.dataset import Dataset
 
 
 class ERA5HDF5GridBaseDataset:

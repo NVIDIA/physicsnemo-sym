@@ -19,28 +19,28 @@ import warnings
 
 from sympy import Symbol, Eq, Abs
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
-from modulus.sym.utils.io import (
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.utils.io import (
     csv_to_dict,
     ValidatorPlotter,
     InferencerPlotter,
 )
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # make list of nodes to unroll graph on
     ns = NavierStokes(nu=0.01, rho=1.0, dim=2, time=False)
     flow_net = instantiate_arch(
@@ -128,7 +128,7 @@ def run(cfg: ModulusConfig) -> None:
         ldc_domain.add_inferencer(grid_inference, "inf_data")
     else:
         warnings.warn(
-            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
 
     # make solver

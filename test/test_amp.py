@@ -18,9 +18,9 @@ import torch
 import pytest
 import torch.nn as nn
 
-from modulus.sym.amp import DerivScaler, AmpManager
-from modulus.sym.eq.derivatives import gradient_autodiff
-from modulus.sym import modulus_ext
+from physicsnemo.sym.amp import DerivScaler, AmpManager
+from physicsnemo.sym.eq.derivatives import gradient_autodiff
+from physicsnemo.sym import physicsnemo_ext
 
 
 Tensor = torch.Tensor
@@ -210,7 +210,7 @@ def test_amp_manager():
 
 
 @skip_if_no_gpu
-def test_modulus_ext_amp_update_scale():
+def test_physicsnemo_ext_amp_update_scale():
     # modified from https://github.com/pytorch/pytorch/blob/release/1.11/test/test_cuda.py#L2079
     device = "cuda:0"
     growth = 2.0
@@ -224,7 +224,7 @@ def test_modulus_ext_amp_update_scale():
     found_inf = torch.full((1,), 0.0, dtype=torch.float, device="cuda:0")
 
     def amp_update_scale():
-        torch.ops.modulus_ext._amp_update_scale_(
+        torch.ops.physicsnemo_ext._amp_update_scale_(
             scale,
             growth_tracker,
             found_inf,
@@ -298,5 +298,5 @@ if __name__ == "__main__":
     test_run_deriv_scaler()
     test_cuda_graph_deriv_scaler()
     test_amp_manager()
-    test_modulus_ext_amp_update_scale()
+    test_physicsnemo_ext_amp_update_scale()
     test_scaler_state_dict()

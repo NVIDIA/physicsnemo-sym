@@ -21,12 +21,12 @@ from sympy import Symbol, Eq, Abs, tanh
 
 import numpy as np
 
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import Solver
-from modulus.sym.geometry import Parameterization
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.key import Key
-from modulus.sym.node import Node
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.geometry import Parameterization
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
 
 # define sympy varaibles to parametize domain curves
 x, y, z = Symbol("x"), Symbol("y"), Symbol("z")

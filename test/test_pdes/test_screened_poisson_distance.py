@@ -17,7 +17,7 @@
 import numpy as np
 import torch
 import os
-from modulus.sym.eq.pdes.signed_distance_function import ScreenedPoissonDistance
+from physicsnemo.sym.eq.pdes.signed_distance_function import ScreenedPoissonDistance
 
 
 def test_screened_poisson_distance_equation():

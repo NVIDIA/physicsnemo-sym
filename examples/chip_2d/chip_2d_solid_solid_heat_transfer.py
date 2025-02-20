@@ -21,31 +21,31 @@ import torch
 import numpy as np
 from sympy import Symbol, Eq, Or, And
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry import Bounds
-from modulus.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
-from modulus.sym.eq.pdes.navier_stokes import GradNormal
-from modulus.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry import Bounds
+from physicsnemo.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
+from physicsnemo.sym.eq.pdes.navier_stokes import GradNormal
+from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
 )
-from modulus.sym.models.activation import Activation
-from modulus.sym.domain.monitor import PointwiseMonitor
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.models.modified_fourier_net import ModifiedFourierNetArch
+from physicsnemo.sym.models.activation import Activation
+from physicsnemo.sym.domain.monitor import PointwiseMonitor
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.models.modified_fourier_net import ModifiedFourierNetArch
 
 
-@modulus.sym.main(config_path="conf_2d_solid_solid", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf_2d_solid_solid", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # add constraints to solver
     # simulation params
     channel_origin = (-2.5, -0.5)
@@ -305,7 +305,7 @@ def run(cfg: ModulusConfig) -> None:
         domain.add_validator(openfoam_validator_solid_I)
     else:
         warnings.warn(
-            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
 
     file_path = "openfoam/2d_solid_solid_D2.csv"
@@ -329,7 +329,7 @@ def run(cfg: ModulusConfig) -> None:
         domain.add_validator(openfoam_validator_solid_II)
     else:
         warnings.warn(
-            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
 
     # make solver

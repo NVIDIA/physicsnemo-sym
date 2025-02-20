@@ -14,19 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch
-from modulus.sym.hydra.config import ModulusConfig
-from modulus.sym.key import Key
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch
+from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
+from physicsnemo.sym.key import Key
 
-from modulus.sym.distributed.manager import DistributedManager
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.solver import Solver
+from physicsnemo.sym.distributed.manager import DistributedManager
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.solver import Solver
 
-from modulus.sym.utils.io.plotter import GridValidatorPlotter
+from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 
 from utilities import download_FNO_dataset, load_FNO_dataset
 
@@ -37,8 +37,8 @@ import torch.distributed as dist
 os.environ["MODEL_PARALLEL_SIZE"] = "2"
 
 
-@modulus.sym.main(config_path="conf", config_name="config_AFNO_MP")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_AFNO_MP")
+def run(cfg: PhysicsNeMoConfig) -> None:
     manager = DistributedManager()
     # Check that world_size is a multiple of model parallel size
     if manager.world_size % 2 != 0:

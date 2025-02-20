@@ -14,23 +14,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.key import Key
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.key import Key
 
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import HDF5GridDataset
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import HDF5GridDataset
 
-from modulus.sym.utils.io.plotter import GridValidatorPlotter
+from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 
 from utilities import download_FNO_dataset
 
 
-@modulus.sym.main(config_path="conf", config_name="config_FNO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_FNO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # [keys]
     # load training/ test data
     input_keys = [Key("coeff", scale=(7.48360e00, 4.49996e00))]

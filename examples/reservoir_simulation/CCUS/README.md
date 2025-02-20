@@ -1,5 +1,5 @@
 <!-- markdownlint-disable -->
-# <b>A Modulus based CO<sub>2</sub>-Brine Physics constrained Neural Operator Forward Model</b>
+# <b>A PhysicsNeMo based CO<sub>2</sub>-Brine Physics constrained Neural Operator Forward Model</b>
 
 ## **Forward problem**
 
@@ -351,7 +351,7 @@ $`w_1`$ , $`\ldots`$ , $`w_{10}`$  $`\text{ are the weights associated with the 
 
 
 ## Important Dependencies & Prerequisites:
-- Nvidia's Modulus symbolic v23.09 :[link](https://github.com/NVIDIA/modulus-sym)
+- Nvidia's PhysicsNeMo symbolic v23.09 :[link](https://github.com/NVIDIA/Modulus-sym)
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - Python 3.8 upwards
@@ -371,12 +371,12 @@ Clone this code base repository in a dedicated **work folder**.
 ```bash
 cd **work folder**
 conda activate MDLO
-git lfs clone https://github.com/NVIDIA/modulus-sym.git
+git lfs clone https://github.com/NVIDIA/Modulus-sym.git
 ```
 ### Bare-metal
-- From terminal do these sequence of operations to install Modulus v23.09: [link](https://github.com/NVIDIA/modulus-sym.git)
+- From terminal do these sequence of operations to install PhysicsNeMo v23.09: [link](https://github.com/NVIDIA/Modulus-sym.git)
 ```bash
-pip install nvidia-modulus.sym
+pip install nvidia-physicsnemo.sym
              
 ```
 - From terminal, install (missing) dependencies in 'requirements.txt' in the conda enviroment **MDLO**
@@ -447,10 +447,10 @@ cd **work folder**
 ##### Bare Metal
 ```bash
 conda activate MDLO 
-wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/modulus/modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_ccus_supplemental_material.zip
-cp -r modulus_reservoir_simulation_ccus_supplemental_material/* .
+wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/physicsnemo/Modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_ccus_supplemental_material.zip
+cp -r physicsnemo_reservoir_simulation_ccus_supplemental_material/* .
 cd src
 python Forward_problem_PINO.py
 python Forward_problem_FNO.py
@@ -461,10 +461,10 @@ conda deactivate
 
 ##### Docker
 ```bash
-wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/modulus/modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_ccus_supplemental_material.zip
-cp -r modulus_reservoir_simulation_ccus_supplemental_material/* .
+wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/physicsnemo/Modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_ccus_supplemental_material.zip
+cp -r physicsnemo_reservoir_simulation_ccus_supplemental_material/* .
 cd src
 python Forward_problem_PINO.py
 python Forward_problem_FNO.py
@@ -482,10 +482,10 @@ cd ..
 ##### Bare Metal
 ```bash
 conda activate MDLO
-wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/modulus/modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_ccus_supplemental_material.zip
-cp -r modulus_reservoir_simulation_ccus_supplemental_material/* .
+wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/physicsnemo/Modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_ccus_supplemental_material.zip
+cp -r physicsnemo_reservoir_simulation_ccus_supplemental_material/* .
 cd src
 python Compare_FVM_Surrogate.py
 cd ..
@@ -494,10 +494,10 @@ conda deactivate
 
 ##### Docker
 ```bash
-wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/modulus/modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_supplemental_material_0.1.zip
-unzip modulus_reservoir_simulation_ccus_supplemental_material.zip
-cp -r modulus_reservoir_simulation_ccus_supplemental_material/* .
+wget --content-disposition https://api.ngc.nvidia.com/v2/resources/nvidia/physicsnemo/Modulus_reservoir_simulation_supplemental_material/versions/0.1/zip -O physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_supplemental_material_0.1.zip
+unzip physicsnemo_reservoir_simulation_ccus_supplemental_material.zip
+cp -r physicsnemo_reservoir_simulation_ccus_supplemental_material/* .
 cd src
 python Compare_FVM_Surrogate.py
 cd ..

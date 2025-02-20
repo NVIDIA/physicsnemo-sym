@@ -17,10 +17,10 @@
 import glob
 import numpy as np
 
-from modulus.sym.geometry.tessellation import Tessellation
-from modulus.sym.geometry.discrete_geometry import DiscreteGeometry
-from modulus.sym.utils.io.vtk import var_to_polyvtk
-from modulus.sym.geometry.parameterization import Parameterization, Parameter
+from physicsnemo.sym.geometry.tessellation import Tessellation
+from physicsnemo.sym.geometry.discrete_geometry import DiscreteGeometry
+from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
+from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
 
 if __name__ == "__main__":
     # make geometry for each bracket

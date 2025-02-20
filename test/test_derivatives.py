@@ -17,9 +17,9 @@
 import time
 import torch
 from typing import List, Optional
-from modulus.sym.key import Key
-from modulus.sym.constants import diff
-from modulus.sym.eq.derivatives import Derivative
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.constants import diff
+from physicsnemo.sym.eq.derivatives import Derivative
 
 
 class Model(torch.nn.Module):

@@ -16,7 +16,7 @@
 
 import pytest
 import torch
-from modulus.sym.utils.benchmark import timeit
+from physicsnemo.sym.utils.benchmark import timeit
 
 
 skip_if_no_gpu = pytest.mark.skipif(

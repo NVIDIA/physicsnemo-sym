@@ -1,11 +1,11 @@
-# Modulus (Beta) Contribution Guide
+# PhysicsNeMo Contribution Guide
 
 ## Introduction
 
-Welcome to Project Modulus! We're excited you're here and want to contribute.
+Welcome to Project PhysicsNeMo! We're excited you're here and want to contribute.
 This documentation is intended for individuals and institutions interested in
-contributing to Modulus.
-Modulus is an open-source project and, as such, its success relies on its
+contributing to PhysicsNeMo.
+PhysicsNeMo is an open-source project and, as such, its success relies on its
 community of contributors willing to keep improving it.
 Your contribution will be a valued addition to the code base; we simply ask that you read
 this page and understand our contribution process, whether you are a seasoned
@@ -13,21 +13,21 @@ open-source contributor or whether you are a first-time contributor.
 
 ## Communicate with us
 
-We are happy to talk with you about your needs for Modulus and your ideas for
+We are happy to talk with you about your needs for PhysicsNeMo and your ideas for
 contributing to the project. One way to do this is to create an issue discussing your
 thoughts. It might be that a very similar feature is under development or already
 exists, so an issue is a great starting point. If you are looking for an issue to
 resolve that will help, refer to the [issue](https://github.com/NVIDIA/modulus-sym/issues)
 section.
 
-## Contribute to Modulus-Symbolic
+## Contribute to PhysicsNeMo-Symbolic
 
 ### Pull Requests
 
 Developer workflow for code contributions is as follows:
 
 1. Developers must first [fork](https://help.github.com/en/articles/fork-a-repo) the
-[upstream](https://github.com/NVIDIA/modulus-launch) Modulus repository.
+[upstream](https://github.com/NVIDIA/modulus-launch) PhysicsNeMo repository.
 
 2. Git clone the forked repository and push changes to the personal fork.
 
@@ -40,7 +40,7 @@ changes from a branch of the fork into a selected branch of upstream.
 
     - Creation of a PR creation kicks off CI and a code review process.
 
-    - Atleast one Modulus engineer will be assigned for the review.
+    - Atleast one PhysicsNeMo engineer will be assigned for the review.
 
 4. The PR will be accepted and the corresponding issue closed after adequate review and
 testing has been completed.
@@ -129,11 +129,11 @@ committing your changes:
 
 ### Pre-commit
 
-For Modulus development, [pre-commit](https://pre-commit.com/) is **required**.
+For PhysicsNeMo development, [pre-commit](https://pre-commit.com/) is **required**.
 This will not only help developers pass the CI pipeline, but also accelerate reviews.
 Contributions that have not used pre-commit will *not be reviewed*.
 
-To install `pre-commit` follow the below steps inside the Modulus repository folder:
+To install `pre-commit` follow the below steps inside the PhysicsNeMo repository folder:
 
 ```bash
 pip install pre-commit
@@ -187,7 +187,7 @@ The pipeline has following stages:
       --ignore-regex MetaData \
       -vv \
       --color \
-      ./modulus/
+      ./physicsnemo/
     ```
 
 3. `lint`
@@ -216,7 +216,7 @@ The pipeline has following stages:
     Refer [doctest](https://docs.python.org/3/library/doctest.html) for more information.
     If your MR fails this test, check your changes and the docstrings.
     To run doctest locally, you can simply run `pytest --doctest-modules` inside the
-    `modulus` folder.
+    `physicsnemo` folder.
 
 7. `coverage`
     Checks if your code additions have sufficient coverage.

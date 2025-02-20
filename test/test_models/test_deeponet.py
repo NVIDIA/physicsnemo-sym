@@ -14,16 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.models.deeponet import DeepONetArch
-from modulus.sym.models.fully_connected import FullyConnectedArch
-from modulus.sym.models.fourier_net import FourierNetArch
-from modulus.sym.models.pix2pix import Pix2PixArch
+from physicsnemo.sym.models.deeponet import DeepONetArch
+from physicsnemo.sym.models.fully_connected import FullyConnectedArch
+from physicsnemo.sym.models.fourier_net import FourierNetArch
+from physicsnemo.sym.models.pix2pix import Pix2PixArch
 import torch
 import numpy as np
-from modulus.sym.key import Key
+from physicsnemo.sym.key import Key
 import pytest
-from modulus.sym.graph import Graph
-from modulus.sym.models.arch import FuncArch
+from physicsnemo.sym.graph import Graph
+from physicsnemo.sym.models.arch import FuncArch
 from .model_test_utils import validate_func_arch_net
 
 # ensure torch.rand() is deterministic

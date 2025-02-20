@@ -31,10 +31,10 @@ RUN apt-get update && \
 ARG VTK_ARM64_WHEEL
 ENV VTK_ARM64_WHEEL=${VTK_ARM64_WHEEL:-unknown}
 
-COPY . /modulus-sym/
+COPY . /physicsnemo-sym/
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] && [ "$VTK_ARM64_WHEEL" != "unknown" ]; then \
         echo "VTK wheel $VTK_ARM64_WHEEL for $TARGETPLATFORM exists, installing!" && \
-        pip install --no-cache-dir /modulus-sym/deps/${VTK_ARM64_WHEEL}; \
+        pip install --no-cache-dir /physicsnemo-sym/deps/${VTK_ARM64_WHEEL}; \
     elif [ "$TARGETPLATFORM" = "linux/amd64" ]; then \
         echo "Installing vtk for: $TARGETPLATFORM" && \
         pip install --no-cache-dir "vtk>=9.2.6"; \
@@ -48,7 +48,7 @@ RUN if [ "$TARGETPLATFORM" = "linux/arm64" ] && [ "$VTK_ARM64_WHEEL" != "unknown
         cd ../../ && rm -r vtk; \
     fi
     
-# Install modulus sym dependencies
+# Install physicsnemo sym dependencies
 RUN pip install --no-cache-dir "hydra-core>=1.2.0" "termcolor>=2.1.1" "chaospy>=4.3.7" "Cython>=0.29.28" "numpy-stl>=2.16.3" "opencv-python>=4.8.1.78" \
     "scikit-learn>=1.0.2" "symengine>=0.10.0" "sympy>=1.12" "timm>=1.0.3" "torch-optimizer>=0.3.0" "transforms3d>=0.3.1" \
     "typing>=3.7.4.3" "pillow==10.3.0" "notebook>=7.2.2" "mistune>=2.0.3" "pint>=0.19.2" "tensorboard>=2.8.0" "numpy<2.0"
@@ -66,10 +66,10 @@ ENV TCNN_CUDA_ARM64_WHEEL=${TCNN_CUDA_ARM64_WHEEL:-unknown}
 ENV TCNN_CUDA_ARCHITECTURES="60;70;75;80;86;90"
 RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] && [ "$TCNN_CUDA_AMD64_WHEEL" != "unknown" ]; then \
         echo "Tiny CUDA NN wheel $TCNN_CUDA_AMD64_WHEEL for $TARGETPLATFORM exists, installing!" && \
-        pip install --force-reinstall --no-cache-dir /modulus-sym/deps/$TCNN_CUDA_AMD64_WHEEL; \
+        pip install --force-reinstall --no-cache-dir /physicsnemo-sym/deps/$TCNN_CUDA_AMD64_WHEEL; \
     elif [ "$TARGETPLATFORM" = "linux/arm64" ] && [ "$TCNN_CUDA_ARM64_WHEEL" != "unknown" ]; then \
         echo "Tiny CUDA NN wheel $TCNN_CUDA_ARM64_WHEEL for $TARGETPLATFORM exists, installing!" && \
-        pip install --force-reinstall --no-cache-dir /modulus-sym/deps/$TCNN_CUDA_ARM64_WHEEL; \
+        pip install --force-reinstall --no-cache-dir /physicsnemo-sym/deps/$TCNN_CUDA_ARM64_WHEEL; \
     else \
         echo "No Tiny CUDA NN wheel present, building from source" && \
 	pip install --no-cache-dir git+https://github.com/NVlabs/tiny-cuda-nn/@master#subdirectory=bindings/torch; \	
@@ -78,23 +78,22 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] && [ "$TCNN_CUDA_AMD64_WHEEL" != "u
 # CI Image
 FROM builder as ci
 
-# Install Modulus
-# TODO revert back to main branch after 0.7.0-rc is merged into main
-RUN pip install --upgrade --no-cache-dir git+https://github.com/NVIDIA/modulus.git@0.7.0-rc
+# Install PhysicsNeMo
+RUN pip install --upgrade --no-cache-dir git+https://github.com/NVIDIA/modulus.git@main
 
 RUN pip install --no-cache-dir "black==22.10.0" "interrogate==1.5.0" "coverage==6.5.0"
 
 # Deployment image
 FROM builder as deploy
 
-# Install modulus sym
-COPY . /modulus-sym/
-RUN cd /modulus-sym/ && pip install --no-cache-dir . --no-deps --no-build-isolation
-RUN rm -rf /modulus-sym/
+# Install physicsnemo sym
+COPY . /physicsnemo-sym/
+RUN cd /physicsnemo-sym/ && pip install --no-cache-dir . --no-deps --no-build-isolation
+RUN rm -rf /physicsnemo-sym/
 
 # Set Git Hash as a environment variable
-ARG MODULUS_SYM_GIT_HASH
-ENV MODULUS_SYM_GIT_HASH=${MODULUS_SYM_GIT_HASH:-unknown}
+ARG PHYSICSNEMO_SYM_GIT_HASH
+ENV PHYSICSNEMO_SYM_GIT_HASH=${PHYSICSNEMO_SYM_GIT_HASH:-unknown}
 
 # Docs image
 FROM deploy as docs

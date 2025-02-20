@@ -15,9 +15,9 @@
 # limitations under the License.
 
 import torch
-from modulus.sym.constants import diff
-from modulus.sym.key import Key
-from modulus.sym.models.arch import Arch
+from physicsnemo.sym.constants import diff
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.models.arch import Arch
 
 # ensure torch.rand() is deterministic
 torch.manual_seed(0)

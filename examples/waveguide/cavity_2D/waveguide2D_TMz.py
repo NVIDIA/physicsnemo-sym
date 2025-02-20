@@ -19,28 +19,28 @@ import warnings
 from sympy import Symbol, pi, sin, Number, Eq
 from sympy.logic.boolalg import Or
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.wave_equation import HelmholtzEquation
-from modulus.sym.eq.pdes.navier_stokes import GradNormal
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.wave_equation import HelmholtzEquation
+from physicsnemo.sym.eq.pdes.navier_stokes import GradNormal
 
 x, y = Symbol("x"), Symbol("y")
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # params for domain
     height = 2
     width = 2
@@ -150,7 +150,7 @@ def run(cfg: ModulusConfig) -> None:
         waveguide_domain.add_inferencer(csv_inference, "inf_data")
     else:
         warnings.warn(
-            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
 
     # make solver

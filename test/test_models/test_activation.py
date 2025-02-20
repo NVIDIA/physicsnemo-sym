@@ -18,9 +18,9 @@ import warnings
 import torch
 import pytest
 from packaging import version
-from modulus.sym.manager import JitManager
-from modulus.sym.utils.benchmark import profile, timeit
-from modulus.sym.models.activation import Activation, get_activation_fn
+from physicsnemo.sym.manager import JitManager
+from physicsnemo.sym.utils.benchmark import profile, timeit
+from physicsnemo.sym.models.activation import Activation, get_activation_fn
 
 # Allow fusing single node, and prevent tiny autodiff graph are inlined/reverted.
 # These flags are automatically set when specifying jit_manager.enabled is True.

@@ -15,9 +15,9 @@
 # limitations under the License.
 
 import torch
-from modulus.sym.graph import Graph
-from modulus.sym.key import Key
-from modulus.sym.models.arch import FuncArch, Arch
+from physicsnemo.sym.graph import Graph
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.models.arch import FuncArch, Arch
 from typing import List
 
 # ensure torch.rand() is deterministic

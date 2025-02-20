@@ -21,21 +21,21 @@ import warnings
 import numpy as np
 from sympy import Symbol, Function, Number
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     PointwiseConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.wave_equation import WaveEquation
-from modulus.sym.eq.pde import PDE
-from modulus.sym.utils.io.plotter import ValidatorPlotter
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.wave_equation import WaveEquation
+from physicsnemo.sym.eq.pde import PDE
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter
 
 
 # Read in npz files generated using finite difference simulator Devito
@@ -43,7 +43,7 @@ def read_wf_data(time, dLen):
     file_path = "Training_data"
     if not os.path.exists(to_absolute_path(file_path)):
         warnings.warn(
-            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
         sys.exit()
     wf_filename = to_absolute_path(f"Training_data/wf_{int(time):04d}ms.npz")
@@ -144,8 +144,8 @@ class WavePlotter(ValidatorPlotter):
         return fs
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     """
     2d acoustic wave propagation at a domain of 2kmx2km, with a single Ricker source at the middle of the 2D domain
     """

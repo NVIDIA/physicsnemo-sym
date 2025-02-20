@@ -19,7 +19,7 @@ Reference: https://en.wikipedia.org/wiki/Wave_equation
 """
 
 from sympy import Symbol, Function, Number
-from modulus.sym.eq.pde import PDE
+from physicsnemo.sym.eq.pde import PDE
 
 
 class WaveEquation1D(PDE):
@@ -28,7 +28,7 @@ class WaveEquation1D(PDE):
     The equation is given as an example for implementing
     your own PDE. A more universal implementation of the
     wave equation can be found by
-    `from modulus.sym.eq.pdes.wave_equation import WaveEquation`.
+    `from physicsnemo.sym.eq.pdes.wave_equation import WaveEquation`.
 
     Parameters
     ==========

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 from sympy import Symbol, Function, Number
-from modulus.sym.eq.pde import PDE
+from physicsnemo.sym.eq.pde import PDE
 
 
 class SpringMass(PDE):

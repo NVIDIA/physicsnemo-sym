@@ -16,24 +16,24 @@
 
 from sympy import Symbol, Eq
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_2d import Rectangle, Circle
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_2d import Rectangle, Circle
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.eq.pdes.linear_elasticity import LinearElasticityPlaneStress
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.eq.pdes.linear_elasticity import LinearElasticityPlaneStress
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # specify Panel properties
     E = 73.0 * 10**9  # Pa
     nu = 0.33

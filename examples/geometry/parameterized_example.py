@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.geometry.primitives_2d import Rectangle, Circle
-from modulus.sym.utils.io.vtk import var_to_polyvtk
-from modulus.sym.geometry.parameterization import Parameterization, Parameter
+from physicsnemo.sym.geometry.primitives_2d import Rectangle, Circle
+from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
+from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
 
 if __name__ == "__main__":
     # make plate with parameterized hole

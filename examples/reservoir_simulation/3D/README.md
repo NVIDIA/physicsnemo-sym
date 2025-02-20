@@ -117,21 +117,21 @@ Loss_{cfd} =V(F,u;T)_{pressure} + V(u,S_w;t)_{saturation}
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 - The code is developed in a Linux enviroment.
 
-To run the example, launch the Modulus container using below:
+To run the example, launch the PhysicsNeMo container using below:
 ```bash
-docker run --rm --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --runtime nvidia -v ${PWD}:/examples -it nvcr.io/nvidia/modulus/modulus:23.08
+docker run --rm --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864 --runtime nvidia -v ${PWD}:/examples -it nvcr.io/nvidia/physicsnemo/physicsnemo:23.08
 ```
-Currently, this example is tested to run with Modulus release 24.09 and earlier.
+Currently, this example is tested to run with PhysicsNeMo release 24.09 and earlier.
 
 Next, clone the repo to get this example using:
 ```bash
 cd /examples
 git lfs install
-git lfs clone https://github.com/NVIDIA/modulus-sym.git
+git lfs clone https://github.com/NVIDIA/Modulus-sym.git
 ```
 Install the additional dependencies using the provided `requirements.txt` using:
 ```
-cd /examples/modulus-sym/examples/reservoir_simulation/3D/
+cd /examples/physicsnemo-sym/examples/reservoir_simulation/3D/
 pip install -r requirements.txt
 ```
 
@@ -141,7 +141,7 @@ pip install -r requirements.txt
 - Navigate to the example directory via terminal.
 
 ```bash
-cd /examples/modulus-sym/examples/reservoir_simulation/3D/
+cd /examples/physicsnemo-sym/examples/reservoir_simulation/3D/
 ```
 
 - Run the Forward Problem surrogation with PINO/FNO via the **src** folder.

@@ -21,22 +21,27 @@ import warnings
 import torch
 import numpy as np
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig, to_yaml
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.models.fully_connected import FullyConnectedArch
-from modulus.sym.models.fourier_net import FourierNetArch
-from modulus.sym.models.deeponet import DeepONetArch
-from modulus.sym.domain.constraint.continuous import DeepONetConstraint
-from modulus.sym.domain.validator.discrete import GridValidator
-from modulus.sym.dataset.discrete import DictGridDataset
+import physicsnemo.sym
+from physicsnemo.sym.hydra import (
+    to_absolute_path,
+    instantiate_arch,
+    PhysicsNeMoConfig,
+    to_yaml,
+)
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.models.fully_connected import FullyConnectedArch
+from physicsnemo.sym.models.fourier_net import FourierNetArch
+from physicsnemo.sym.models.deeponet import DeepONetArch
+from physicsnemo.sym.domain.constraint.continuous import DeepONetConstraint
+from physicsnemo.sym.domain.validator.discrete import GridValidator
+from physicsnemo.sym.dataset.discrete import DictGridDataset
 
-from modulus.sym.key import Key
+from physicsnemo.sym.key import Key
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # [init-model]
     trunk_net = FourierNetArch(
         input_keys=[Key("x")],
@@ -60,7 +65,7 @@ def run(cfg: ModulusConfig) -> None:
     file_path = "data/anti_derivative.npy"
     if not os.path.exists(to_absolute_path(file_path)):
         warnings.warn(
-            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
         sys.exit()
 

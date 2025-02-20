@@ -16,17 +16,17 @@
 
 import torch
 from sympy import Symbol, Eq, cos, sin, pi
-from modulus.sym.node import Node
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.geometry.primitives_3d import Plane
-from modulus.sym.domain.constraint import (
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.geometry.primitives_3d import Plane
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
     VariationalDomainConstraint,
 )
-from modulus.sym.loss import Loss
-from modulus.sym.geometry.parameterization import Parameterization, Bounds
+from physicsnemo.sym.loss import Loss
+from physicsnemo.sym.geometry.parameterization import Parameterization, Bounds
 
 # TODO: Add some more complex geometery that is the union of multiple shapes to check boundary sampling
 

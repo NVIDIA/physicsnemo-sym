@@ -38,8 +38,8 @@ def cuda_extension():
     # nvcc_args.append("--time=output.txt")
 
     return CUDAExtension(
-        name="modulus.sym.modulus_ext",
-        sources=glob.glob("modulus/sym/csrc/*.cu"),
+        name="physicsnemo.sym.physicsnemo_ext",
+        sources=glob.glob("physicsnemo/sym/csrc/*.cu"),
         extra_compile_args={"cxx": ["-std=c++14"], "nvcc": nvcc_args},
     )
 

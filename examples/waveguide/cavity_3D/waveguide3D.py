@@ -18,25 +18,25 @@ import os
 import warnings
 from sympy import Symbol, pi, sin, Number, Eq, And
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_3d import Box
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_3d import Box
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.utils.io.plotter import InferencerPlotter
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.electromagnetic import PEC, SommerfeldBC, MaxwellFreqReal
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.utils.io.plotter import InferencerPlotter
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.electromagnetic import PEC, SommerfeldBC, MaxwellFreqReal
 
 x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # params for domain
     length = 2
     height = 2

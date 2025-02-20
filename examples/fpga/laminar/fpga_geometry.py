@@ -17,8 +17,8 @@
 from sympy import Symbol, Eq, tanh
 import numpy as np
 
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.geometry import Parameterization, Parameter
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.geometry import Parameterization, Parameter
 
 # geometry params for domain
 channel_origin = (-2.5, -0.5, -0.5625)

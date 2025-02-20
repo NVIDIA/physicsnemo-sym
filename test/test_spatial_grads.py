@@ -16,7 +16,7 @@
 
 import torch
 import numpy as np
-from modulus.sym.eq.spatial_grads.spatial_grads import (
+from physicsnemo.sym.eq.spatial_grads.spatial_grads import (
     GradientCalculator,
     compute_stencil3d,
     compute_connectivity_tensor,

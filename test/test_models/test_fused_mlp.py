@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.models.fused_mlp import (
+from physicsnemo.sym.models.fused_mlp import (
     FusedMLPArch,
     FusedFourierNetArch,
     FusedGridEncodingNetArch,
 )
 import torch
 import numpy as np
-from modulus.sym.key import Key
+from physicsnemo.sym.key import Key
 
 import pytest
 

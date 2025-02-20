@@ -17,7 +17,7 @@
 import torch
 import torch.nn as nn
 
-from modulus.models.layers import SpectralConv1d, SpectralConv2d, SpectralConv3d
+from physicsnemo.models.layers import SpectralConv1d, SpectralConv2d, SpectralConv3d
 
 
 class SpectralConv1d_old(nn.Module):

@@ -18,20 +18,20 @@
 """
 import numpy as np
 import os
-import modulus
+import physicsnemo
 import torch
-from modulus.sym.hydra import ModulusConfig
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.utils.io.plotter import GridValidatorPlotter
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
-from modulus.sym.models.fno import *
+from physicsnemo.sym.models.fno import *
 import shutil
 import cupy as cp
 from sklearn.model_selection import train_test_split
@@ -73,7 +73,7 @@ def save_response_content(response, destination):
                 f.write(chunk)
 
 
-from modulus.utils.io.plotter import ValidatorPlotter
+from physicsnemo.utils.io.plotter import ValidatorPlotter
 
 
 class CustomValidatorPlotterP(ValidatorPlotter):
@@ -295,8 +295,8 @@ class CustomValidatorPlotterS(ValidatorPlotter):
         return f_big
 
 
-@modulus.sym.main(config_path="conf", config_name="config_FNO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_FNO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     print("")
     print("------------------------------------------------------------------")
     print("")

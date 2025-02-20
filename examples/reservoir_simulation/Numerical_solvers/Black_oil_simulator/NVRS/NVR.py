@@ -286,10 +286,10 @@ def Gassmann(PORO, Pr, SO, nx, ny, nz):
             + 0.0115 * T * P * (4.12 * (1.08 / rhopseudo - 1) ** 0.5 - 1)
         )  # m/s
 
-        # Bulk modulus of oil
+        # Bulk physicsnemo of oil
         KOil = rhoOil * VOil**2  # Pa
 
-        # Bulk modulus of water
+        # Bulk physicsnemo of water
         KWater = field2Metric(1.0 / CWater, "psi")  # Pa
 
         # Woodcock's equation

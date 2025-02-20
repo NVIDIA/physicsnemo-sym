@@ -20,31 +20,31 @@ from torch.utils.data import DataLoader, Dataset
 import numpy as np
 from sympy import Symbol, Eq, tanh, Or, And
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.models.fourier_net import FourierNetArch
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.models.fourier_net import FourierNetArch
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
 )
-from modulus.sym.domain.monitor import PointwiseMonitor
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
-from modulus.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
-from modulus.sym.eq.pdes.basic import NormalDotVec, GradNormal
+from physicsnemo.sym.domain.monitor import PointwiseMonitor
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
+from physicsnemo.sym.eq.pdes.basic import NormalDotVec, GradNormal
 
 from limerock_properties import *
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # make list of nodes to unroll graph on
     ze = ZeroEquation(nu=nu, dim=3, time=False, max_distance=0.5)
     ns = NavierStokes(nu=ze.equations["nu"], rho=rho, dim=3, time=False)

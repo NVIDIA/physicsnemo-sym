@@ -17,30 +17,30 @@
 import os
 import warnings
 import sys
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
 from sympy import Symbol, Eq, Heaviside, sqrt
 from sympy.logic.boolalg import And
 import numpy as np
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_3d import Box
-from modulus.sym.domain.constraint import (
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_3d import Box
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     PointwiseConstraint,
 )
-from modulus.sym.domain.inferencer import VoxelInferencer
-from modulus.sym.utils.io.plotter import InferencerPlotter
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.electromagnetic import PEC, SommerfeldBC, MaxwellFreqReal
+from physicsnemo.sym.domain.inferencer import VoxelInferencer
+from physicsnemo.sym.utils.io.plotter import InferencerPlotter
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.electromagnetic import PEC, SommerfeldBC, MaxwellFreqReal
 
 x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # params for domain
     length = 1
     height = 1
@@ -60,7 +60,7 @@ def run(cfg: ModulusConfig) -> None:
     file_path = "../validation/2Dwaveguideport.csv"
     if not os.path.exists(to_absolute_path(file_path)):
         warnings.warn(
-            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
         sys.exit()
 

@@ -17,32 +17,32 @@
 import numpy as np
 from sympy import Symbol, sin
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_1d import Line1D
-from modulus.sym.geometry.parameterization import OrderedParameterization
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_1d import Line1D
+from physicsnemo.sym.geometry.parameterization import OrderedParameterization
 
-from modulus.sym.domain.constraint import (
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
 
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.utils.io import (
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.utils.io import (
     ValidatorPlotter,
 )
 
-from modulus.sym.loss.loss import CausalLossNorm
+from physicsnemo.sym.loss.loss import CausalLossNorm
 
-from modulus.sym.key import Key
-from modulus.sym.node import Node
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
 from wave_equation import WaveEquation1D
 
 
-@modulus.sym.main(config_path="conf", config_name="config_causal")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_causal")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # make list of nodes to unroll graph on
     we = WaveEquation1D(c=1.0)
     wave_net = instantiate_arch(

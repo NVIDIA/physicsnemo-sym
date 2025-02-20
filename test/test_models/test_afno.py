@@ -17,8 +17,8 @@
 import itertools
 import torch
 
-from modulus.sym.key import Key
-from modulus.sym.models.afno import AFNOArch
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.models.afno import AFNOArch
 
 ########################
 # load & verify

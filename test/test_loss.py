@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import torch
-from modulus.sym.loss import (
+from physicsnemo.sym.loss import (
     PointwiseLossNorm,
     DecayedPointwiseLossNorm,
     IntegralLossNorm,

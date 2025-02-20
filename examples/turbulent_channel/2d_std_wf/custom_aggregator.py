@@ -19,8 +19,8 @@ import torch
 from torch import nn
 from typing import Dict, List
 
-# Import from Modulus
-from modulus.sym.loss.aggregator import Aggregator
+# Import from PhysicsNeMo
+from physicsnemo.sym.loss.aggregator import Aggregator
 
 
 class CustomSum(Aggregator):

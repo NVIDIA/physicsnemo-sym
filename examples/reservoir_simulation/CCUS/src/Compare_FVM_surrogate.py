@@ -76,11 +76,11 @@ from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
 import pickle
-from modulus.sym.models.activation import Activation
-import modulus
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
-from modulus.sym.models.fno import *
+from physicsnemo.sym.models.activation import Activation
+import physicsnemo
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.models.fno import *
 from PIL import Image
 import requests
 import sys
@@ -997,19 +997,19 @@ def Plot_2D(
     if varii == "perm":
         cbar.set_label("Log K(mD)", fontsize=11)
         plt.title("Permeability Field with well locations", fontsize=11, weight="bold")
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=11)
-        plt.title("water saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("water saturation -PhysicsNeMo", fontsize=11, weight="bold")
     elif varii == "water FLOW":
         cbar.set_label("water saturation", fontsize=11)
         plt.title("water saturation - FLOW", fontsize=11, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("water saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("water saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=11)
-        plt.title("Gas saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("Gas saturation -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "gas FLOW":
         cbar.set_label("Gas saturation", fontsize=11)
@@ -1017,11 +1017,11 @@ def Plot_2D(
 
     elif varii == "gas diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("gas saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("gas saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=11)
-        plt.title("Pressure -Modulus", fontsize=11, weight="bold")
+        plt.title("Pressure -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "pressure FLOW":
         cbar.set_label("pressure", fontsize=11)
@@ -1029,7 +1029,7 @@ def Plot_2D(
 
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("Pressure - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("Pressure - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
     elif varii == "porosity":
         cbar.set_label("porosity", fontsize=11)
@@ -2003,7 +2003,7 @@ def calculate_ssim_3d(image1_array, image2_array):
     return average_ssim
 
 
-def Plot_Modulus(ax, nx, ny, nz, Truee, N_injg, varii, gass):
+def Plot_PhysicsNeMo(ax, nx, ny, nz, Truee, N_injg, varii, gass):
     # matplotlib.use('Agg')
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
 
@@ -2118,21 +2118,23 @@ def Plot_Modulus(ax, nx, ny, nz, Truee, N_injg, varii, gass):
         ax.set_title(
             "Permeability Field with well locations", fontsize=12, weight="bold"
         )
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=12)
-        ax.set_title("water saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("water saturation -PhysicsNeMo", fontsize=12, weight="bold")
     elif varii == "water Numerical":
         cbar.set_label("water saturation", fontsize=12)
         ax.set_title("water saturation - Numerical(Flow)", fontsize=12, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "water saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "water saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=12)
-        ax.set_title("Gas saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Gas saturation -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "gas Numerical":
         cbar.set_label("Gas saturation", fontsize=12)
@@ -2141,12 +2143,14 @@ def Plot_Modulus(ax, nx, ny, nz, Truee, N_injg, varii, gass):
     elif varii == "gas diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "gas saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "gas saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=12)
-        ax.set_title("Pressure -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Pressure -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "pressure Numerical":
         cbar.set_label("pressure", fontsize=12)
@@ -2155,7 +2159,7 @@ def Plot_Modulus(ax, nx, ny, nz, Truee, N_injg, varii, gass):
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "Pressure - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "Pressure - (Numerical(Flow) -PhysicsNeMo))", fontsize=12, weight="bold"
         )
 
     elif varii == "porosity":
@@ -2556,11 +2560,11 @@ def process_step(
     diff1 = abs(look - lookf)  # [:, :, ::-1]
 
     ax1 = f_3.add_subplot(3, 3, 1, projection="3d")
-    Plot_Modulus(ax1, nx, ny, nz, look, N_injg, "pressure Modulus", gass)
+    Plot_PhysicsNeMo(ax1, nx, ny, nz, look, N_injg, "pressure PhysicsNeMo", gass)
     ax2 = f_3.add_subplot(3, 3, 2, projection="3d")
-    Plot_Modulus(ax2, nx, ny, nz, lookf, N_injg, "pressure Numerical", gass)
+    Plot_PhysicsNeMo(ax2, nx, ny, nz, lookf, N_injg, "pressure Numerical", gass)
     ax3 = f_3.add_subplot(3, 3, 3, projection="3d")
-    Plot_Modulus(ax3, nx, ny, nz, diff1, N_injg, "pressure diff", gass)
+    Plot_PhysicsNeMo(ax3, nx, ny, nz, diff1, N_injg, "pressure diff", gass)
     R2p, L2p = compute_metrics(look.ravel(), lookf.ravel())
     Accuracy_presure[kk, 0] = R2p
     Accuracy_presure[kk, 1] = L2p
@@ -2569,11 +2573,11 @@ def process_step(
     lookf = Swater_true[0, kk, :, :, :]  # [:, :, ::-1]
     diff1 = abs(look - lookf)  # [:, :, ::-1]
     ax1 = f_3.add_subplot(3, 3, 4, projection="3d")
-    Plot_Modulus(ax1, nx, ny, nz, look, N_injg, "water Modulus", gass)
+    Plot_PhysicsNeMo(ax1, nx, ny, nz, look, N_injg, "water PhysicsNeMo", gass)
     ax2 = f_3.add_subplot(3, 3, 5, projection="3d")
-    Plot_Modulus(ax2, nx, ny, nz, lookf, N_injg, "water Numerical", gass)
+    Plot_PhysicsNeMo(ax2, nx, ny, nz, lookf, N_injg, "water Numerical", gass)
     ax3 = f_3.add_subplot(3, 3, 6, projection="3d")
-    Plot_Modulus(ax3, nx, ny, nz, diff1, N_injg, "water diff", gass)
+    Plot_PhysicsNeMo(ax3, nx, ny, nz, diff1, N_injg, "water diff", gass)
     R2w, L2w = compute_metrics(look.ravel(), lookf.ravel())
     Accuracy_water[kk, 0] = R2w
     Accuracy_water[kk, 1] = L2w
@@ -2582,11 +2586,11 @@ def process_step(
     lookf = Sgas_true[0, kk, :, :, :]  # [:, :, ::-1]
     diff1 = abs(look - lookf)  # [:, :, ::-1]
     ax1 = f_3.add_subplot(3, 3, 7, projection="3d")
-    Plot_Modulus(ax1, nx, ny, nz, look, N_injg, "gas Modulus", gass)
+    Plot_PhysicsNeMo(ax1, nx, ny, nz, look, N_injg, "gas PhysicsNeMo", gass)
     ax2 = f_3.add_subplot(3, 3, 8, projection="3d")
-    Plot_Modulus(ax2, nx, ny, nz, lookf, N_injg, "gas Numerical", gass)
+    Plot_PhysicsNeMo(ax2, nx, ny, nz, lookf, N_injg, "gas Numerical", gass)
     ax3 = f_3.add_subplot(3, 3, 9, projection="3d")
-    Plot_Modulus(ax3, nx, ny, nz, diff1, N_injg, "gas diff", gass)
+    Plot_PhysicsNeMo(ax3, nx, ny, nz, diff1, N_injg, "gas diff", gass)
     R2g, L2g = compute_metrics(look.ravel(), lookf.ravel())
     Accuracy_gas[kk, 0] = R2g
     Accuracy_gas[kk, 1] = L2g
@@ -2858,28 +2862,28 @@ pressure, Swater, Sgas = Forward_model_ensemble(
 
 elapsed_time_secs2 = time.time() - start_time_plots2
 msg = (
-    "Reservoir simulation with Nvidia Modulus took: %s secs (Wall clock time)"
+    "Reservoir simulation with Nvidia PhysicsNeMo took: %s secs (Wall clock time)"
     % timedelta(seconds=round(elapsed_time_secs2))
 )
 print(msg)
 print("")
 
 
-modulus_time = elapsed_time_secs2
+physicsnemo_time = elapsed_time_secs2
 flow_time = elapsed_time_secs
 
 
 # Determine faster and slower times
-if modulus_time < flow_time:
-    slower_time = modulus_time
+if physicsnemo_time < flow_time:
+    slower_time = physicsnemo_time
     faster_time = flow_time
-    slower = "Nvidia Modulus Surrogate"
+    slower = "Nvidia PhysicsNeMo Surrogate"
     faster = "Flow Reservoir Simulator"
 else:
     slower_time = flow_time
-    faster_time = modulus_time
+    faster_time = physicsnemo_time
     slower = "Flow Reservoir Simulator"
-    faster = "Nvidia Modulus Surrogate"
+    faster = "Nvidia PhysicsNeMo Surrogate"
 
 # Calculate speedup
 speedup = math.ceil(faster_time / slower_time)
@@ -2888,8 +2892,8 @@ speedup = math.ceil(faster_time / slower_time)
 os.chdir(folderr)
 
 # Data for plotting
-tasks = ["Flow", "Modulus"]
-times = [flow_time, modulus_time]
+tasks = ["Flow", "PhysicsNeMo"]
+times = [flow_time, physicsnemo_time]
 colors = ["green", "red"]
 
 # Create the plot
@@ -2899,7 +2903,7 @@ plt.ylabel(
     "Time (seconds)", fontweight="bold", fontsize=16
 )  # Increased font size for ylabel
 plt.title(
-    "Execution Time Comparison for Modulus vs. Flow", fontweight="bold", fontsize=15
+    "Execution Time Comparison for PhysicsNeMo vs. Flow", fontweight="bold", fontsize=15
 )  # Increased font size for title
 plt.ylim(0, max(times) * 1.5)  # Increase the upper limit to 150% of the maximum time
 
@@ -3016,7 +3020,7 @@ font.set_weight("bold")
 fig4.text(
     0.5,
     0.98,
-    "R2(%) Accuracy - Modulus/Numerical",
+    "R2(%) Accuracy - PhysicsNeMo/Numerical",
     ha="center",
     va="center",
     fontproperties=font,
@@ -3025,7 +3029,7 @@ fig4.text(
 fig4.text(
     0.5,
     0.49,
-    "L2(%) Accuracy - Modulus/Numerical",
+    "L2(%) Accuracy - PhysicsNeMo/Numerical",
     ha="center",
     va="center",
     fontproperties=font,
@@ -3236,28 +3240,28 @@ pressuref, Swaterf, Sgasf = Forward_model_ensemble(
 
 elapsed_time_secs2 = time.time() - start_time_plots2
 msg = (
-    "Reservoir simulation with Nvidia Modulus (FNO) took: %s secs (Wall clock time)"
+    "Reservoir simulation with Nvidia PhysicsNeMo (FNO) took: %s secs (Wall clock time)"
     % timedelta(seconds=round(elapsed_time_secs2))
 )
 print(msg)
 print("")
 
 
-modulus_time = elapsed_time_secs2
+physicsnemo_time = elapsed_time_secs2
 flow_time = elapsed_time_secs
 
 
 # Determine faster and slower times
-if modulus_time < flow_time:
-    slower_time = modulus_time
+if physicsnemo_time < flow_time:
+    slower_time = physicsnemo_time
     faster_time = flow_time
-    slower = "Nvidia Modulus Surrogate"
+    slower = "Nvidia PhysicsNeMo Surrogate"
     faster = "Flow Reservoir Simulator"
 else:
     slower_time = flow_time
-    faster_time = modulus_time
+    faster_time = physicsnemo_time
     slower = "Flow Reservoir Simulator"
-    faster = "Nvidia Modulus Surrogate"
+    faster = "Nvidia PhysicsNeMo Surrogate"
 
 # Calculate speedup
 speedup = math.ceil(faster_time / slower_time)
@@ -3266,8 +3270,8 @@ speedup = math.ceil(faster_time / slower_time)
 os.chdir(folderr1)
 
 # Data for plotting
-tasks = ["Flow", "Modulus"]
-times = [flow_time, modulus_time]
+tasks = ["Flow", "PhysicsNeMo"]
+times = [flow_time, physicsnemo_time]
 colors = ["green", "red"]
 
 # Create the plot
@@ -3277,7 +3281,7 @@ plt.ylabel(
     "Time (seconds)", fontweight="bold", fontsize=16
 )  # Increased font size for ylabel
 plt.title(
-    "Execution Time Comparison for Modulus vs. Flow", fontweight="bold", fontsize=15
+    "Execution Time Comparison for PhysicsNeMo vs. Flow", fontweight="bold", fontsize=15
 )  # Increased font size for title
 plt.ylim(0, max(times) * 1.5)  # Increase the upper limit to 150% of the maximum time
 
@@ -3393,7 +3397,7 @@ font.set_weight("bold")
 fig4.text(
     0.5,
     0.98,
-    "R2(%) Accuracy - Modulus/Numerical",
+    "R2(%) Accuracy - PhysicsNeMo/Numerical",
     ha="center",
     va="center",
     fontproperties=font,
@@ -3402,7 +3406,7 @@ fig4.text(
 fig4.text(
     0.5,
     0.49,
-    "L2(%) Accuracy - Modulus/Numerical",
+    "L2(%) Accuracy - PhysicsNeMo/Numerical",
     ha="center",
     va="center",
     fontproperties=font,

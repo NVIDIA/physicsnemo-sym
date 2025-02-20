@@ -3,9 +3,9 @@ requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "nvidia-modulus.sym"
+name = "nvidia-physicsnemo.sym"
 authors = [
-  { name="NVIDIA Modulus Team"},
+  { name="NVIDIA PhysicsNeMo Team"},
 ]
 description = "A deep learning framework for AI-driven multi-physics systems"
 readme = "README.md"
@@ -20,7 +20,7 @@ dependencies = [
     "ninja",
     "notebook>=7.2.2",
     "numpy-stl>=2.16,<2.17",
-    "nvidia-modulus>=0.2.0",
+    "nvidia-physicsnemo>=1.0.0",
     "opencv-python>=4.8.1.78",
     "pillow>=10.3,<10.4",
     "pint>=0.19.2",
@@ -43,10 +43,10 @@ classifiers = [
 dynamic = ["version"]
 
 [tool.setuptools.dynamic]
-version = {attr = "modulus.sym.__version__"}
+version = {attr = "physicsnemo.sym.__version__"}
 
 [tool.setuptools.packages.find]
-include = ["modulus.*"]
+include = ["physicsnemo.*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yaml"]

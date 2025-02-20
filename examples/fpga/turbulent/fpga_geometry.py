@@ -18,8 +18,8 @@ from sympy import Symbol, Eq, tanh
 import numpy as np
 import yaml
 
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.geometry import Parameterization, Parameter
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.geometry import Parameterization, Parameter
 
 # check if the geometry is parameterized
 with open("./conf/config.yaml", "r") as file:

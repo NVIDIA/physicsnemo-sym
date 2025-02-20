@@ -22,9 +22,9 @@ import logging
 import numpy as np
 from torch.utils.data import DataLoader, Sampler
 
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
-from modulus.sym.distributed.manager import DistributedManager
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.distributed.manager import DistributedManager
 
 from src.dataset import ERA5HDF5GridDataset
 from src.fourcastnet import FourcastNetArch

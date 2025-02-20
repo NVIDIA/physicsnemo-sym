@@ -17,10 +17,10 @@
 @Author : Clement Etienam
 """
 import os
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
 from NVRS import *
-from modulus.sym.models.fno import *
+from physicsnemo.sym.models.fno import *
 import shutil
 import pandas as pd
 import scipy.io as sio
@@ -81,8 +81,8 @@ else:
     while True:
         surrogate = int(
             input(
-                "Select surrogate method type:\n1=FNO [Modulus Implementation]\n\
-2=PINO [Modulus Implemnation]\n"
+                "Select surrogate method type:\n1=FNO [PhysicsNeMo Implementation]\n\
+2=PINO [PhysicsNeMo Implemnation]\n"
             )
         )
         if (surrogate > 2) or (surrogate < 1):

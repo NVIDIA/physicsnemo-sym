@@ -17,7 +17,7 @@
 import numpy as np
 import torch
 import os
-from modulus.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
+from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
 
 
 def test_diffusion_equation():

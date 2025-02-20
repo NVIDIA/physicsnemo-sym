@@ -101,7 +101,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Integrated the network architecture layers into Modulus-Core.
+- Integrated the network architecture layers into PhysicsNeMo-Core.
 
 ### Fixed
 
@@ -130,7 +130,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Accompanying licenses (will provide in the Modulus docker image).
+- Accompanying licenses (will provide in the PhysicsNeMo docker image).
 
 ### Fixed
 

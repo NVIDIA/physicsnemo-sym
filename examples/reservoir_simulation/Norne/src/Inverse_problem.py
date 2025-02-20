@@ -43,7 +43,7 @@ print(".........................IMPORT SOME LIBRARIES.....................")
 from warnings import simplefilter
 
 simplefilter(action="ignore", category=FutureWarning)
-import modulus
+import physicsnemo
 import os
 import numpy as np
 
@@ -111,8 +111,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.layers import Dense
 from shutil import rmtree
-from modulus.sym.models.fno import *
-from modulus.sym.key import Key
+from physicsnemo.sym.models.fno import *
+from physicsnemo.sym.key import Key
 from joblib import Parallel, delayed, dump, load
 from collections import OrderedDict
 import os.path
@@ -3105,14 +3105,14 @@ def Add_marker(plt, XX, YY, locc):
             )
 
 
-def Plot_Modulus(
+def Plot_PhysicsNeMo(
     ax, nx, ny, nz, Truee, N_injw, N_pr, N_injg, varii, injectors, producers, gass
 ):
 
     """
-    Plot_Modulus Function
+    Plot_PhysicsNeMo Function
     ---------------------
-    Plots the modulus (or a relevant field) on a specified axis, marking positions of injectors and producers.
+    Plots the physicsnemo (or a relevant field) on a specified axis, marking positions of injectors and producers.
 
     Parameters:
     - ax (matplotlib axis object): Axis on which to plot the data.
@@ -3297,21 +3297,23 @@ def Plot_Modulus(
         ax.set_title(
             "Permeability Field with well locations", fontsize=12, weight="bold"
         )
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=12)
-        ax.set_title("water saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("water saturation -PhysicsNeMo", fontsize=12, weight="bold")
     elif varii == "water Numerical":
         cbar.set_label("water saturation", fontsize=12)
         ax.set_title("water saturation - Numerical(Flow)", fontsize=12, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "water saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "water saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "oil Modulus":
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=12)
-        ax.set_title("Oil saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Oil saturation -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "oil Numerical":
         cbar.set_label("Oil saturation", fontsize=12)
@@ -3320,12 +3322,14 @@ def Plot_Modulus(
     elif varii == "oil diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "oil saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "oil saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=12)
-        ax.set_title("Gas saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Gas saturation -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "gas Numerical":
         cbar.set_label("Gas saturation", fontsize=12)
@@ -3334,12 +3338,14 @@ def Plot_Modulus(
     elif varii == "gas diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "gas saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "gas saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=12)
-        ax.set_title("Pressure -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Pressure -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "pressure Numerical":
         cbar.set_label("pressure", fontsize=12)
@@ -3348,7 +3354,7 @@ def Plot_Modulus(
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "Pressure - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "Pressure - (Numerical(Flow) -PhysicsNeMo))", fontsize=12, weight="bold"
         )
 
     elif varii == "porosity":
@@ -4348,19 +4354,19 @@ def Plot_2D(
     if varii == "perm":
         cbar.set_label("Log K(mD)", fontsize=11)
         plt.title("Permeability Field with well locations", fontsize=11, weight="bold")
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=11)
-        plt.title("water saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("water saturation -PhysicsNeMo", fontsize=11, weight="bold")
     elif varii == "water FLOW":
         cbar.set_label("water saturation", fontsize=11)
         plt.title("water saturation - FLOW", fontsize=11, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("water saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("water saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "oil Modulus":
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=11)
-        plt.title("Oil saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("Oil saturation -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "oil FLOW":
         cbar.set_label("Oil saturation", fontsize=11)
@@ -4368,11 +4374,11 @@ def Plot_2D(
 
     elif varii == "oil diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("oil saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("oil saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=11)
-        plt.title("Gas saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("Gas saturation -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "gas FLOW":
         cbar.set_label("Gas saturation", fontsize=11)
@@ -4380,11 +4386,11 @@ def Plot_2D(
 
     elif varii == "gas diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("gas saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("gas saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=11)
-        plt.title("Pressure -Modulus", fontsize=11, weight="bold")
+        plt.title("Pressure -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "pressure FLOW":
         cbar.set_label("pressure", fontsize=11)
@@ -4392,7 +4398,7 @@ def Plot_2D(
 
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("Pressure - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("Pressure - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
     elif varii == "porosity":
         cbar.set_label("porosity", fontsize=11)
@@ -4442,20 +4448,20 @@ def Plot_2DD(
 
     if varii == "perm":
         cbar.set_label("Log K(mD)", fontsize=11)
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=11)
-        # plt.title('water saturation -Modulus',fontsize=11,weight='bold')
-    elif varii == "oil Modulus":
+        # plt.title('water saturation -PhysicsNeMo',fontsize=11,weight='bold')
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=11)
-        # plt.title('Oil saturation -Modulus',fontsize=11,weight='bold')
+        # plt.title('Oil saturation -PhysicsNeMo',fontsize=11,weight='bold')
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=11)
-        # plt.title('Gas saturation -Modulus',fontsize=11,weight='bold')
+        # plt.title('Gas saturation -PhysicsNeMo',fontsize=11,weight='bold')
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=11)
-        # plt.title('Pressure -Modulus',fontsize=11,weight='bold')
+        # plt.title('Pressure -PhysicsNeMo',fontsize=11,weight='bold')
 
     elif varii == "porosity":
         cbar.set_label("porosity", fontsize=11)
@@ -7267,7 +7273,7 @@ def plot_and_save(
 
     look = (pree[0, kk, :, :, :]) * effectiveuse
     ax1 = f_3.add_subplot(2, 2, 1, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax1,
         nx,
         ny,
@@ -7276,7 +7282,7 @@ def plot_and_save(
         N_injw,
         N_pr,
         N_injg,
-        "pressure Modulus",
+        "pressure PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7284,7 +7290,7 @@ def plot_and_save(
 
     look = (wats[0, kk, :, :, :]) * effectiveuse
     ax2 = f_3.add_subplot(2, 2, 2, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax2,
         nx,
         ny,
@@ -7293,7 +7299,7 @@ def plot_and_save(
         N_injw,
         N_pr,
         N_injg,
-        "water Modulus",
+        "water PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7302,7 +7308,7 @@ def plot_and_save(
     look = oilss[0, kk, :, :, :]
     look = look * effectiveuse
     ax3 = f_3.add_subplot(2, 2, 3, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax3,
         nx,
         ny,
@@ -7311,7 +7317,7 @@ def plot_and_save(
         N_injw,
         N_pr,
         N_injg,
-        "oil Modulus",
+        "oil PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7319,7 +7325,7 @@ def plot_and_save(
 
     look = ((gasss[0, kk, :, :, :])) * effectiveuse
     ax4 = f_3.add_subplot(2, 2, 4, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax4,
         nx,
         ny,
@@ -7328,7 +7334,7 @@ def plot_and_save(
         N_injw,
         N_pr,
         N_injg,
-        "gas Modulus",
+        "gas PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7781,7 +7787,7 @@ def process_step(
 
     look = ((pressure[0, kk, :, :, :]) * effectiveuse)[:, :, ::-1]
     ax1 = f_3.add_subplot(2, 2, 1, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax1,
         nx,
         ny,
@@ -7790,7 +7796,7 @@ def process_step(
         N_injw,
         N_pr,
         N_injg,
-        "pressure Modulus",
+        "pressure PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7798,7 +7804,7 @@ def process_step(
 
     look = ((Swater[0, kk, :, :, :]) * effectiveuse)[:, :, ::-1]
     ax2 = f_3.add_subplot(2, 2, 2, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax2,
         nx,
         ny,
@@ -7807,7 +7813,7 @@ def process_step(
         N_injw,
         N_pr,
         N_injg,
-        "water Modulus",
+        "water PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7817,7 +7823,7 @@ def process_step(
     look = (look * effectiveuse)[:, :, ::-1]
 
     ax3 = f_3.add_subplot(2, 2, 3, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax3,
         nx,
         ny,
@@ -7826,7 +7832,7 @@ def process_step(
         N_injw,
         N_pr,
         N_injg,
-        "oil Modulus",
+        "oil PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7834,7 +7840,7 @@ def process_step(
 
     look = (((Sgas[0, kk, :, :, :])) * effectiveuse)[:, :, ::-1]
     ax4 = f_3.add_subplot(2, 2, 4, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax4,
         nx,
         ny,
@@ -7843,7 +7849,7 @@ def process_step(
         N_injw,
         N_pr,
         N_injg,
-        "gas Modulus",
+        "gas PhysicsNeMo",
         injectors,
         producers,
         gass,
@@ -7914,7 +7920,7 @@ surrogate = 1
 print("PINO surrogate for forwarding")
 
 
-TEMPLATEFILE["Surrogate model"] = "PINO (Modulus implementation)"
+TEMPLATEFILE["Surrogate model"] = "PINO (PhysicsNeMo implementation)"
 
 # load data
 
@@ -9550,7 +9556,7 @@ for f3 in glob("*Dynamic*"):
 
 print("")
 print("--------------------------Saving prediction in CSV file---------------")
-write_RSM(yycheck[0, :, :66], Time_vector, "Modulus")
+write_RSM(yycheck[0, :, :66], Time_vector, "PhysicsNeMo")
 
 
 Plot_RSM_percentile_model(yycheck[0, :, :66], True_mat, Time_unie1)
@@ -9726,7 +9732,7 @@ for f3 in glob("*Dynamic*"):
 
 
 print("")
-write_RSM(yycheck[0, :, :66], Time_vector, "Modulus")
+write_RSM(yycheck[0, :, :66], Time_vector, "PhysicsNeMo")
 
 
 Plot_RSM_percentile_model(yycheck[0, :, :66], True_mat, Time_unie1)
@@ -9898,7 +9904,7 @@ for f3 in glob("*Dynamic*"):
 
 
 print("")
-write_RSM(yycheck[0, :, :66], Time_vector, "Modulus")
+write_RSM(yycheck[0, :, :66], Time_vector, "PhysicsNeMo")
 
 
 Plot_RSM_percentile_model(yycheck[0, :, :66], True_mat, Time_unie1)
@@ -10061,7 +10067,7 @@ f_3 = plt.figure(figsize=(20, 20), dpi=200)
 
 look = ((np.reshape(True_K, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 1, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1,
     nx,
     ny,
@@ -10078,40 +10084,40 @@ Plot_Modulus(
 
 look = ((np.reshape(base_k, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 2, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1, nx, ny, nz, look, N_injw, N_pr, N_injg, "Prior", injectors, producers, gass
 )
 
 
 look = ((np.reshape(controlbest, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 3, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1, nx, ny, nz, look, N_injw, N_pr, N_injg, "P10", injectors, producers, gass
 )
 
 
 look = ((np.reshape(controljj2, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 4, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1, nx, ny, nz, look, N_injw, N_pr, N_injg, "P50", injectors, producers, gass
 )
 
 look = ((np.reshape(controlbad, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 5, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1, nx, ny, nz, look, N_injw, N_pr, N_injg, "P90", injectors, producers, gass
 )
 
 
 look = ((np.reshape(yes_best_k, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 6, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1, nx, ny, nz, look, N_injw, N_pr, N_injg, "cumm-best", injectors, producers, gass
 )
 
 look = ((np.reshape(yes_mean_k, (nx, ny, nz), "F")) * effectiveuse)[:, :, ::-1]
 ax1 = f_3.add_subplot(3, 3, 7, projection="3d")
-Plot_Modulus(
+Plot_PhysicsNeMo(
     ax1, nx, ny, nz, look, N_injw, N_pr, N_injg, "cumm-mean", injectors, producers, gass
 )
 

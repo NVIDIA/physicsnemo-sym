@@ -20,8 +20,8 @@ import h5py
 import numpy as np
 import torch
 
-from modulus.sym.dataset import IterableDataset
-from modulus.sym.distributed import DistributedManager
+from physicsnemo.sym.dataset import IterableDataset
+from physicsnemo.sym.distributed import DistributedManager
 
 from src.dataset import ERA5HDF5GridBaseDataset
 

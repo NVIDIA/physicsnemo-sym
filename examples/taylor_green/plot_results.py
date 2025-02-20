@@ -17,7 +17,7 @@
 import glob
 import numpy as np
 import matplotlib.pyplot as plt
-from modulus.sym.utils.io import csv_to_dict
+from physicsnemo.sym.utils.io import csv_to_dict
 import os
 import warnings
 
@@ -72,11 +72,11 @@ if os.path.exists(to_absolute_path(file_path)):
     )
 else:
     warnings.warn(
-        f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+        f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
     )
 
 # plot turbulent kinetic energy decay
-plt.plot(time_points, tke_points, label="Modulus")
+plt.plot(time_points, tke_points, label="PhysicsNeMo")
 
 plt.legend()
 plt.title("TKE")

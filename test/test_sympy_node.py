@@ -16,7 +16,7 @@
 
 import numpy as np
 import torch
-from modulus.sym.utils.sympy import SympyToTorch
+from physicsnemo.sym.utils.sympy import SympyToTorch
 import sympy
 
 

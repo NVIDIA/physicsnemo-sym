@@ -18,9 +18,9 @@ import numpy as np
 import copy
 import pytest
 from pathlib import Path
-from modulus.sym.geometry.geometry_dataloader import GeometryDatapipe
-from modulus.sym.geometry.primitives_3d import Box, Sphere, Cylinder
-from modulus.sym.geometry.tessellation import Tessellation
+from physicsnemo.sym.geometry.geometry_dataloader import GeometryDatapipe
+from physicsnemo.sym.geometry.primitives_3d import Box, Sphere, Cylinder
+from physicsnemo.sym.geometry.tessellation import Tessellation
 import torch
 
 dir_path = Path(__file__).parent

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # General info about new container / image
-CONTAINER_NAME=modulus/ccusressim
+CONTAINER_NAME=physicsnemo/ccusressim
 CONTAINER_SHORTCUT_NAME=ccusressim
 SUBDIR_NAME=project
 PORT_HOST=8890

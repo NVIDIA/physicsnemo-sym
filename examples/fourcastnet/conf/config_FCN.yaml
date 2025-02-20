@@ -15,7 +15,7 @@
 # limitations under the License.
 
 defaults :
-  - modulus_default
+  - physicsnemo_default
   - arch:
       - afno
   - scheduler: cosine_annealing

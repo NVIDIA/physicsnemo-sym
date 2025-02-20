@@ -20,29 +20,29 @@ import warnings
 import numpy as np
 from sympy import Symbol, Eq, And, Or
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
-from modulus.sym.utils.sympy.functions import parabola
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
-from modulus.sym.eq.pdes.basic import NormalDotVec
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
+from physicsnemo.sym.utils.sympy.functions import parabola
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.basic import NormalDotVec
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
 )
 
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.models.fourier_net import FourierNetArch
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.models.fourier_net import FourierNetArch
 
 
-@modulus.sym.main(config_path="conf_2d_solid_fluid", config_name="config_flow")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf_2d_solid_fluid", config_name="config_flow")
+def run(cfg: PhysicsNeMoConfig) -> None:
     #############
     # Real Params
     #############
@@ -275,7 +275,7 @@ def run(cfg: ModulusConfig) -> None:
         domain.add_validator(openfoam_validator)
     else:
         warnings.warn(
-            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
         )
 
     # make solver

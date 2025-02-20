@@ -16,10 +16,10 @@
 
 import torch
 
-from modulus.sym.eq.derivatives import MeshlessFiniteDerivative
-from modulus.sym.node import Node
-from modulus.sym.key import Key
-from modulus.sym.graph import Graph
+from physicsnemo.sym.eq.derivatives import MeshlessFiniteDerivative
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.graph import Graph
 
 
 class SineNet(torch.nn.Module):

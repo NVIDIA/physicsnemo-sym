@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.eq.pdes.linear_elasticity import (
+from physicsnemo.sym.eq.pdes.linear_elasticity import (
     LinearElasticity,
     LinearElasticityPlaneStress,
 )

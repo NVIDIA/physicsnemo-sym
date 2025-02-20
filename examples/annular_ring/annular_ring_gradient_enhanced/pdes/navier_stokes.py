@@ -19,8 +19,8 @@
 
 from sympy import Symbol, Function, Number
 
-from modulus.sym.eq.pde import PDE
-from modulus.sym.node import Node
+from physicsnemo.sym.eq.pde import PDE
+from physicsnemo.sym.node import Node
 
 
 class NavierStokes(PDE):

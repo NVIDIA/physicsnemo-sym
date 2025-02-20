@@ -15,7 +15,7 @@
 # limitations under the License.
 
 defaults :
-  - modulus_default
+  - physicsnemo_default
   - /arch/super_res_cfg@arch.super_res
   - /arch/pix2pix_cfg@arch.pix2pix
   - scheduler: tf_exponential_lr

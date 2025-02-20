@@ -21,20 +21,20 @@ Problems" by Zhiwei Fang and Justin Zhan.
 """
 from sympy import Symbol, Function
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_1d import Point1D
-from modulus.sym.geometry.primitives_3d import Sphere
-from modulus.sym.geometry.parameterization import Parameterization, Parameter
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_1d import Point1D
+from physicsnemo.sym.geometry.primitives_3d import Sphere
+from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.eq.pde import PDE
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.eq.pde import PDE
 
 
 # define Poisson equation with sympy
@@ -61,8 +61,8 @@ class SurfacePoisson(PDE):
         )
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # make list of nodes to unroll graph on
     sp = SurfacePoisson()
     poisson_net = instantiate_arch(
