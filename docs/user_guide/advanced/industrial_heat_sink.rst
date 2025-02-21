@@ -6,7 +6,7 @@ Industrial Heat Sink
 Introduction
 ------------
 
-This tutorial uses Modulus Sym to conduct a thermal simulation of
+This tutorial uses PhysicsNeMo Sym to conduct a thermal simulation of
 NVIDIA’s NVSwitch heatsink. You will learn:
 
 #. How to use hFTB algorithm to solve conjugate heat transfer problems
@@ -39,7 +39,7 @@ material. Unlike :ref:`2d_heat`, a hFTB algorithm will be used to handle the lar
 Using real heat properties causes an issue on the interface between the
 solid and fluid because the conductivity is around 4 orders of magnitude
 different (Air: 0.0261 :math:`W/m.K` and Copper: 385 :math:`W/m.K`). 
-To remedy this, Modulus Sym has a static
+To remedy this, PhysicsNeMo Sym has a static
 conjugate heat transfer approached referred to as heat transfer
 coefficient forward temperature backward or hFTB
 [#school2018stability]_. This method works by
@@ -133,16 +133,16 @@ show good accuracy achieved by the hFTB method. :numref:`table-limerock2`
 demonstrates the impact of mesh refinement on
 the solution of the commercial solver where with increasing mesh density
 and mesh quality, the commercial solver results show convergence towards
-the Modulus Sym results. A visualization of the heat sink temperature
+the PhysicsNeMo Sym results. A visualization of the heat sink temperature
 profile is shown in :numref:`fig-limerock_thermal`.
 
 .. _table-limerock1:
 
-.. table:: A comparison for the solver and Modulus Sym results for NVSwitch pressure drop and peak temperature.
+.. table:: A comparison for the solver and PhysicsNeMo Sym results for NVSwitch pressure drop and peak temperature.
    :align: center
 
    +----------------------+---------------+---------------+---------------+
-   | Property             | OpenFOAM      | Commercial    | Modulus Sym   |
+   | Property             | OpenFOAM      | Commercial    | PhysicsNeMo Sym   |
    |                      |               | Solver        |               |
    +----------------------+---------------+---------------+---------------+
    | Pressure Drop        |               |               |               |
@@ -162,7 +162,7 @@ profile is shown in :numref:`fig-limerock_thermal`.
    +--------------------+------------------------------------------+------------------------------------------+
    | Number of elements | Pressure drop (Pa)                       | Peak temperature :math:`(^{\circ} C)`    |
    |                    +-------------------+-------------+--------+-------------------+-------------+--------+
-   |                    | Commercial solver | Modulus Sym | % diff | Commercial solver | Modulus Sym | % diff |
+   |                    | Commercial solver | PhysicsNeMo Sym | % diff | Commercial solver | PhysicsNeMo Sym | % diff |
    +--------------------+-------------------+-------------+--------+-------------------+-------------+--------+
    | 22.4 M             | 81.27             | 150.25      | 84.88  | 97.40             | 97.35       | 0.05   |
    +--------------------+-------------------+-------------+--------+-------------------+-------------+--------+

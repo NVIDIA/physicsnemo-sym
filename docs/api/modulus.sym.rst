@@ -1,38 +1,38 @@
-Modulus Sym
+PhysicsNeMo Sym
 ===============
 
-modulus.sym.constants
+physicsnemo.sym.constants
 ------------------------
 
-.. automodule:: modulus.sym.constants
+.. automodule:: physicsnemo.sym.constants
    :members:
    :show-inheritance:
 
 
-modulus.sym.graph
+physicsnemo.sym.graph
 --------------------
 
-.. automodule:: modulus.sym.graph
+.. automodule:: physicsnemo.sym.graph
    :members:
    :show-inheritance:
 
-modulus.sym.key
+physicsnemo.sym.key
 ------------------
 
-.. automodule:: modulus.sym.key
+.. automodule:: physicsnemo.sym.key
    :members:
    :show-inheritance:
 
-modulus.sym.node
+physicsnemo.sym.node
 -------------------
 
-.. automodule:: modulus.sym.node
+.. automodule:: physicsnemo.sym.node
    :members:
    :show-inheritance:
 
-modulus.sym.trainer
+physicsnemo.sym.trainer
 ----------------------
 
-.. automodule:: modulus.sym.trainer
+.. automodule:: physicsnemo.sym.trainer
    :members:
    :show-inheritance:

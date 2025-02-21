@@ -1,10 +1,10 @@
-Modulus Sym Validators
+PhysicsNeMo Sym Validators
 ======================
 
 Continuous Validators
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.validator.continuous
+.. automodule:: physicsnemo.sym.domain.validator.continuous
    :members:
    :show-inheritance:
 
@@ -12,7 +12,7 @@ Continuous Validators
 Discrete Validators
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.validator.discrete
+.. automodule:: physicsnemo.sym.domain.validator.discrete
    :members:
    :show-inheritance:
 
@@ -20,6 +20,6 @@ Discrete Validators
 Validators Base
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.validator.validator
+.. automodule:: physicsnemo.sym.domain.validator.validator
    :members:
    :show-inheritance:

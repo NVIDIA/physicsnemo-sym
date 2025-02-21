@@ -1,18 +1,18 @@
-Modulus Sym Inferencers
+PhysicsNeMo Sym Inferencers
 =======================
 
 
 Pointwise Inferencer
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.inferencer.pointwise
+.. automodule:: physicsnemo.sym.domain.inferencer.pointwise
    :members:
    :show-inheritance:
 
 Voxel Inferencer
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.inferencer.voxel
+.. automodule:: physicsnemo.sym.domain.inferencer.voxel
    :members:
    :show-inheritance:
 
@@ -20,7 +20,7 @@ Voxel Inferencer
 Point VTK Inferencer
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.inferencer.vtkpointwise
+.. automodule:: physicsnemo.sym.domain.inferencer.vtkpointwise
    :members:
    :show-inheritance:
 
@@ -28,6 +28,6 @@ Point VTK Inferencer
 Inferencer Base
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.inferencer.inferencer
+.. automodule:: physicsnemo.sym.domain.inferencer.inferencer
    :members:
    :show-inheritance:

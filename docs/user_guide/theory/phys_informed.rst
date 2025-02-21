@@ -1,4 +1,4 @@
-Physics Informed Neural Networks in Modulus Sym
+Physics Informed Neural Networks in PhysicsNeMo Sym
 ===============================================
 
 .. _nn_methodology:
@@ -67,7 +67,7 @@ shown in :numref:`fig-single-parabola`.
    Neural Network Solver compared with analytical solution.
 
 
-Using the PINNs in Modulus Sym, we were able to solve complex problems with
+Using the PINNs in PhysicsNeMo Sym, we were able to solve complex problems with
 intricate geometries and multiple physics. In order to achieve this we
 have deviated and improved on the current state-of-the-art in several
 important ways. In this section we will briefly cover some topics
@@ -78,7 +78,7 @@ Monte Carlo integration for loss formulation
 
 In literature, the losses are often defined as a summation similar to
 our above equation :eq:`sumation_loss`,
-[#raissi2017physics]_. In Modulus Sym, we take a different
+[#raissi2017physics]_. In PhysicsNeMo Sym, we take a different
 approach and view the losses as integrals. You can instead write
 :math:`L_{residual}` in the form,
 
@@ -162,11 +162,11 @@ Examples of this will be given later in the user guide.
 .. _fig-every-parabola:
 
 .. figure:: /images/user_guide/every_parabola.png
-   :alt: Modulus Sym solving parameterized differential equation problem.
+   :alt: PhysicsNeMo Sym solving parameterized differential equation problem.
    :width: 60.0%
    :align: center
 
-   Modulus Sym solving parameterized differential equation problem.
+   PhysicsNeMo Sym solving parameterized differential equation problem.
 
 Inverse Problems
 ----------------
@@ -222,7 +222,7 @@ strong) form but only a variational (or weak) form
 [#braess2007finite]_. This requires handling the PDEs in
 a different approach other than its original (classical) form,
 especially for interface problem, concave domain, singular problem, etc.
-In Modulus Sym, we can solve the PDEs not only in its classical form, but
+In PhysicsNeMo Sym, we can solve the PDEs not only in its classical form, but
 also in it weak form. Before describing the theory for weak solutions of
 PDEs using PINNs, let's start by the definitions of classical, strong
 and weak solutions.

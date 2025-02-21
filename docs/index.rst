@@ -1,10 +1,10 @@
 ********************************************
-NVIDIA Modulus Sym (Latest Release)
+NVIDIA PhysicsNeMo Sym (Latest Release)
 ********************************************
 ..
    TODO: add conf.py and root_doc
 
-NVIDIA Modulus Sym is a deep learning framework that blends the power of 
+NVIDIA PhysicsNeMo Sym is a deep learning framework that blends the power of 
 physics and partial differential equations (PDEs) with AI to build more 
 robust models for better analysis. 
 
@@ -20,17 +20,17 @@ that involve both the physics and data assimilation.
    :width: 80.0%
    :align: center
 
-With NVIDIA Modulus Sym, we aim to provide researchers and industry specialists, 
+With NVIDIA PhysicsNeMo Sym, we aim to provide researchers and industry specialists, 
 various tools that will help accelerate your development of such models for the 
 scientific discipline of your need. Experienced users can start with exploring the 
-Modulus Sym APIs and building the models while beginners can use this User Guide 
+PhysicsNeMo Sym APIs and building the models while beginners can use this User Guide 
 as a portal to explore the possibilities of AI in the domain of scientific 
 computation. The User Guide comes in with several examples that will help 
 you jumpstart your development of AI driven models.
 
 For Beginners
 -------------
-New to Modulus Sym? No worries, we will get you up and running with physics driven AI in a few minutes. 
+New to PhysicsNeMo Sym? No worries, we will get you up and running with physics driven AI in a few minutes. 
 Check out the following tutorials to get started. 
 
 .. raw:: html
@@ -50,7 +50,7 @@ Check out the following tutorials to get started.
    :name: Learn the Basics
    :hidden:
 
-   Overview <user_guide/basics/modulus_overview.rst>
+   Overview <user_guide/basics/physicsnemo_overview.rst>
    Introductory Example <user_guide/basics/lid_driven_cavity_flow.rst>
 
 .. toctree::
@@ -67,8 +67,8 @@ Check out the following tutorials to get started.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Modulus Sym Features
-   :name: Modulus Sym Features
+   :caption: PhysicsNeMo Sym Features
+   :name: PhysicsNeMo Sym Features
    :hidden:
    
    Geometry and Tesselation Modules <user_guide/features/csg_and_tessellated_module.rst>
@@ -132,8 +132,8 @@ Check out the following tutorials to get started.
 
 .. toctree::
    :maxdepth: 2
-   :caption: Modulus Sym API
-   :name: Modulus Sym API
+   :caption: PhysicsNeMo Sym API
+   :name: PhysicsNeMo Sym API
    :hidden:
    
    api/api_index

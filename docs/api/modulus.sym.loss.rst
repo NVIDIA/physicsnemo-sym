@@ -1,17 +1,17 @@
-Modulus Sym Loss
+PhysicsNeMo Sym Loss
 ================
 
-modulus.sym.loss.loss
+physicsnemo.sym.loss.loss
 ----------------------
 
-.. automodule:: modulus.sym.loss.loss
+.. automodule:: physicsnemo.sym.loss.loss
    :members:
    :show-inheritance:
 
 
-modulus.sym.loss.aggregator
+physicsnemo.sym.loss.aggregator
 ----------------------------
 
-.. automodule:: modulus.sym.loss.aggregator
+.. automodule:: physicsnemo.sym.loss.aggregator
    :members:
    :show-inheritance:

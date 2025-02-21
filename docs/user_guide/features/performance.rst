@@ -1,26 +1,26 @@
 Performance
 =============
 
-A collection of various methods for accelerating Modulus Sym are presented below. 
-The figures below show a summary of performance improvements using various Modulus Sym features over different releases. 
+A collection of various methods for accelerating PhysicsNeMo Sym are presented below. 
+The figures below show a summary of performance improvements using various PhysicsNeMo Sym features over different releases. 
 
 .. _fig-v100_speedup:
 
 .. figure:: /images/user_guide/perf-comparisons-v100.png
-   :alt: Speed-up across different Modulus Sym releases on V100 GPUs
+   :alt: Speed-up across different PhysicsNeMo Sym releases on V100 GPUs
    :width: 60.0%
    :align: center
 
-   Speed-up across different Modulus Sym releases on V100 GPUs. (MFD: Meshless Finite Derivatives)
+   Speed-up across different PhysicsNeMo Sym releases on V100 GPUs. (MFD: Meshless Finite Derivatives)
 
 .. _fig-a100_speedup:
 
 .. figure:: /images/user_guide/perf-comparisons-a100.png
-   :alt: Speed-up across different Modulus Sym releases on A100 GPUs
+   :alt: Speed-up across different PhysicsNeMo Sym releases on A100 GPUs
    :width: 60.0%
    :align: center
 
-   Speed-up across different Modulus Sym releases on A100 GPUs. (MFD: Meshless Finite Derivatives)
+   Speed-up across different PhysicsNeMo Sym releases on A100 GPUs. (MFD: Meshless Finite Derivatives)
 
 .. note::
     The higher vRAM in A100 GPUs means that we can use twice the batch size/GPU compared to the V100 runs. 
@@ -62,11 +62,11 @@ dramatically reduced training times (:numref:`fig-fpga_tf32_speedup`) without ch
    | **Case Description**      | :math:`P_{drop}`      |
    |                           | :math:`(Pa)`          |
    +---------------------------+-----------------------+
-   | **Modulus Sym:** Fully    | 29.24                 |
+   | **PhysicsNeMo Sym:** Fully    | 29.24                 |
    | Connected Networks        |                       |
    | with FP32                 |                       |
    +---------------------------+-----------------------+
-   | **Modulus Sym:** Fully    | 29.13                 |
+   | **PhysicsNeMo Sym:** Fully    | 29.13                 |
    | Connected Networks        |                       |
    | with TF32                 |                       |
    +---------------------------+-----------------------+
@@ -95,21 +95,21 @@ allows for optimizations like avoiding python's Global Interpreter
 Lock (GIL) as well as compute optimizations including dead code 
 elimination, common substring elimination and pointwise kernel fusion. 
 
-PINNs used in Modulus Sym have many peculiarities including the presence 
+PINNs used in PhysicsNeMo Sym have many peculiarities including the presence 
 of many pointwise operations. Such operations, while being computationally 
 inexpensive, put a large pressure on the memory subsystem of a GPU. JIT 
 allows for kernel fusion, so that many of these operations can be computed 
 simultaneously in a single kernel and thereby reducing the number of memory 
 transfers from GPU memory to the compute units.
 
-JIT is enabled by default in Modulus Sym through the ``jit`` option in the config 
+JIT is enabled by default in PhysicsNeMo Sym through the ``jit`` option in the config 
 file. You can optionally disable JIT by adding a ``jit: false`` option in the
 config file or add a ``jit=False`` command line option.
 
 CUDA Graphs
 ------------
 
-Modulus Sym supports CUDA Graph optimization which can accelerate problems that are launch latency bottlenecked and improve parallel performance.
+PhysicsNeMo Sym supports CUDA Graph optimization which can accelerate problems that are launch latency bottlenecked and improve parallel performance.
 Due to the strong scaling of GPU hardware, some machine learning problems can struggle keeping the GPU saturated resulting in work submission latency.
 This also impacts scalability due to work getting delayed from these bottlenecks.
 CUDA Graphs provides a solution to this problem by allowing the CPU to submit a sequence of jobs to the GPU rather than individually.
@@ -123,10 +123,10 @@ There are three steps to using CUDA Graphs:
 2. Recording phase during which the forward and backward kernels during one training iteration are recorded into a graph.
 3. Replay of the recorded graph which is used for the rest of training.
 
-Modulus Sym supports this PyTorch utility and is turned on by default.
+PhysicsNeMo Sym supports this PyTorch utility and is turned on by default.
 CUDA Graphs can be enabled using Hydra.
 It is suggested to use at least 20 warm-up steps, which is the default.
-After 20 training iterations, Modulus Sym will then attempt to record a CUDA Graph and if successful it will replay it for the remainder of training.
+After 20 training iterations, PhysicsNeMo Sym will then attempt to record a CUDA Graph and if successful it will replay it for the remainder of training.
 
 .. code-block:: yaml
     
@@ -159,7 +159,7 @@ For many problems, the additional computation needed for the foward passes in me
 This approach can potentially yield anywhere from a :math:`2-4` times speed-up over the autodiff approach with comparable accuracy.
 
 To use meshless finite derivatives, one just needs to define a :code:`MeshlessFiniteDerivative` node and add it to a constraint that will require gradient quantities.
-Modulus Sym will prioritize the use of meshless finite derivatives over autodiff when provided.
+PhysicsNeMo Sym will prioritize the use of meshless finite derivatives over autodiff when provided.
 When creating a  :code:`MeshlessFiniteDerivative` node, the derivatives that will be needed must be explicitly defined.
 This can be done though just a list, or accessing needed derivatives from other nodes.
 Additionally, this node requires a node that has the inputs consist of the independent variables and output being the quantities derivatives are needed for.
@@ -169,7 +169,7 @@ As an example, for LDC the following code snippet turns on meshless finite deriv
 
 .. code:: python
 
-    from modulus.sym.eq.derivatives import MeshlessFiniteDerivative
+    from physicsnemo.sym.eq.derivatives import MeshlessFiniteDerivative
 
     # Make list of nodes to unroll graph on
     ns = NavierStokes(nu=0.01, rho=1.0, dim=2, time=False)
@@ -202,7 +202,7 @@ As an example, for LDC the following code snippet turns on meshless finite deriv
 
 
 .. warning::
-    Meshless Finite Derivatives is a development from the Modulus Sym team and is presently in beta. 
+    Meshless Finite Derivatives is a development from the PhysicsNeMo Sym team and is presently in beta. 
     Use at your own discretion; stability and convergence is not garanteed.
     API subject to change in future versions.
 
@@ -223,17 +223,17 @@ Present Pitfalls
 * Performance gains are problem specific and is based on the derivatives needed.
   Presently the best way to further increase the performance of meshless finite derivatives, users should increase ``max_batch_size`` when creating the meshless finite derivative node.
 
-* Modulus Sym will add automatic differentiation nodes if all required derivatives are not specified to the meshless finite derivative.
+* PhysicsNeMo Sym will add automatic differentiation nodes if all required derivatives are not specified to the meshless finite derivative.
 
 Running jobs using multiple GPUs
 --------------------------------
 
-To boost performance and to run larger problems, Modulus Sym supports
+To boost performance and to run larger problems, PhysicsNeMo Sym supports
 multi-GPU and multi-node scaling. This allows for multiple
 processes, each targeting a single GPU, to perform independent forward
 and backward passes and aggregate the gradients collectively before
 updating the model weights. The :numref:`fig-fpga_scaling` shows the scaling performance of
-Modulus Sym on the laminar FPGA test problem (script can be found at
+PhysicsNeMo Sym on the laminar FPGA test problem (script can be found at
 ``examples/fpga/laminar/fpga_flow.py``) up to 1024 A100 GPUs on 128
 nodes. The scaling efficiency from 16 to 1024 GPUs is almost 85%.
 
@@ -243,7 +243,7 @@ batch size. You can use this to your advantage to increase the number of
 points sampled by increasing the number of GPUs allowing you to handle
 much larger problems.
 
-To run a Modulus Sym solution using multiple GPUs on a single compute node,
+To run a PhysicsNeMo Sym solution using multiple GPUs on a single compute node,
 one can first find out the available GPUs using
 
 .. code:: bash
@@ -259,9 +259,9 @@ GPUs.
    mpirun -np 2 python fpga_flow.py 
 
 
-Modulus Sym supports running a problem on multiple nodes as well using a 
+PhysicsNeMo Sym supports running a problem on multiple nodes as well using a 
 SLURM scheduler. Simply launch a job using ``srun`` and the appropriate 
-flags and Modulus Sym will set up the multi-node distributed process group.
+flags and PhysicsNeMo Sym will set up the multi-node distributed process group.
 The command below shows how to launch a 2 node job with 8 GPUs per node 
 (16 GPUs in total):
 
@@ -269,7 +269,7 @@ The command below shows how to launch a 2 node job with 8 GPUs per node
 
    srun -n 16 --ntasks-per-node 8 --mpi=none python fpga_flow.py
 
-Modulus Sym also supports running on other clusters that do not have a SLURM 
+PhysicsNeMo Sym also supports running on other clusters that do not have a SLURM 
 scheduler as long as the following environment variables are set for each
 process:
 

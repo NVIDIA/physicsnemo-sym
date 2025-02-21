@@ -1,10 +1,10 @@
-Modulus Sym Constraints
+PhysicsNeMo Sym Constraints
 =======================
 
 Continuous Constraints
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.constraint.continuous
+.. automodule:: physicsnemo.sym.domain.constraint.continuous
    :members:
    :show-inheritance:
 
@@ -12,7 +12,7 @@ Continuous Constraints
 Discrete Constraints
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.constraint.discrete
+.. automodule:: physicsnemo.sym.domain.constraint.discrete
    :members:
    :show-inheritance:
 
@@ -20,6 +20,6 @@ Discrete Constraints
 Constraint Base
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.constraint.constraint
+.. automodule:: physicsnemo.sym.domain.constraint.constraint
    :members:
    :show-inheritance:

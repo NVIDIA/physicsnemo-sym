@@ -1,27 +1,27 @@
 .. _config: 
 
-Modulus Sym Configuration
+PhysicsNeMo Sym Configuration
 =========================
 
-Modulus Sym employs an extension of the `Hydra configuration framework <https://hydra.cc/>`_ to offer a highly customizable but user friendly method
-for configuring the majority of Modulus Sym' features.
+PhysicsNeMo Sym employs an extension of the `Hydra configuration framework <https://hydra.cc/>`_ to offer a highly customizable but user friendly method
+for configuring the majority of PhysicsNeMo Sym' features.
 This is achieved by using easy to understand YAML files which contain essential hyperparameters for any physics-informed
 deep learning model.
-While you can still achieve the same level of customization in Modulus Sym as any deep learning library, our built in
+While you can still achieve the same level of customization in PhysicsNeMo Sym as any deep learning library, our built in
 configuration framework allows many of the internal features to be much more accessible.
-This section provides an overview of the built in configurable API Modulus Sym provides.
+This section provides an overview of the built in configurable API PhysicsNeMo Sym provides.
 
 Minimal Example
 ----------------
-Generally speaking, Modulus Sym follows the same work flow as Hydra with just some minor differences.
-For each Modulus Sym program you should create a YAML configuration file that is then loaded into
-a Python ``ModulusConfig`` object which is used by Modulus Sym. Consider the following example:
+Generally speaking, PhysicsNeMo Sym follows the same work flow as Hydra with just some minor differences.
+For each PhysicsNeMo Sym program you should create a YAML configuration file that is then loaded into
+a Python ``PhysicsNeMoConfig`` object which is used by PhysicsNeMo Sym. Consider the following example:
 
 .. code-block:: yaml
    :caption: conf/config.yaml
 
    defaults:
-    - modulus_default
+    - physicsnemo_default
     - arch:
        - fully_connected
     - optimizer: adam
@@ -31,33 +31,33 @@ a Python ``ModulusConfig`` object which is used by Modulus Sym. Consider the fol
 .. code-block:: python
     :caption: main.py
 
-    import modulus.sym
-    from modulus.sym.hydra import to_yaml
-    from modulus.sym.hydra.config import ModulusConfig
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra import to_yaml
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         print(to_yaml(cfg))
 
     if __name__ == "__main__":
        run()
 
 Here, a minimal configuration (config) YAML file is shown.
-A defaults list in ``config.yaml`` is used to load predefined configurations that are supported by Modulus Sym.
-This config file is then loaded into python using the ``@modulus.main()`` decorator, in which you specify 
+A defaults list in ``config.yaml`` is used to load predefined configurations that are supported by PhysicsNeMo Sym.
+This config file is then loaded into python using the ``@physicsnemo.main()`` decorator, in which you specify 
 the location and name of your custom config.
-The config object, ``cfg``, is then ingested into Modulus Sym and used to setup all sorts of internals all of which 
+The config object, ``cfg``, is then ingested into PhysicsNeMo Sym and used to setup all sorts of internals all of which 
 can be individually customized as discussed in the following sections.
 
-For this example, Modulus Sym has been configured to load a fully connected neural network, ADAM optimizer, exponential 
+For this example, PhysicsNeMo Sym has been configured to load a fully connected neural network, ADAM optimizer, exponential 
 decay LR scheduler and a summation loss aggregation.
 Each of the included examples present in this user guide has its own config file which can be referenced.
 
 Config Structure
 ----------------
-Configs in Modulus Sym are required to follow a common structure to ensure that all necessary parameters are provided independent
+Configs in PhysicsNeMo Sym are required to follow a common structure to ensure that all necessary parameters are provided independent
 of the user explicitly providing them.
-This is done by specifying the ``modulus_default`` schema at the top of the defaults list in every configuration file which will
+This is done by specifying the ``physicsnemo_default`` schema at the top of the defaults list in every configuration file which will
 create the following config structure:
 
 .. code-block:: yaml
@@ -80,17 +80,17 @@ create the following config structure:
         | <Profiler parameters>  
 
 This config object has multiple configuration groups that each contain separate parameters pertaining to various
-features needed inside of Modulus Sym.
+features needed inside of PhysicsNeMo Sym.
 As seen in the example above, these groups can be quickly populated in the defaults list (e.g. ``optimizer: adam`` will 
 populate the ``optimizer`` configuration group with parameters needed for ADAM).
 The next section takes a look at each of these groups in greater detail.
 
 .. warning::
-    ``- modulus_default`` should always be placed at the top of your defaults list in Modulus Sym config files. Without this, essential parameters
-    will not be initialized and Modulus Sym will not run!
+    ``- physicsnemo_default`` should always be placed at the top of your defaults list in PhysicsNeMo Sym config files. Without this, essential parameters
+    will not be initialized and PhysicsNeMo Sym will not run!
 
 .. note::
-    The ``--help`` flag can be used with your Modulus Sym program to bring
+    The ``--help`` flag can be used with your PhysicsNeMo Sym program to bring
     up some useful information on different config groups or get documentation links.
 
 Configuration Groups
@@ -98,7 +98,7 @@ Configuration Groups
 
 Global Parameters
 ^^^^^^^^^^^^^^^^^
-Some essential parameters that you will find in a Modulus Sym configuration include:
+Some essential parameters that you will find in a PhysicsNeMo Sym configuration include:
 
 * ``jit``: Turn on TorchScript
 * ``save_filetypes``: Types of file outputs from constraints, validators and inferencers
@@ -108,11 +108,11 @@ Some essential parameters that you will find in a Modulus Sym configuration incl
 Architecture
 ^^^^^^^^^^^^
 The architecture config group holds a list of model configurations that can be used to create different built in neural networks
-present within Modulus Sym.
-While not required by the Modulus Sym solver, this parameter group allows you to tune model architectures through the YAML
+present within PhysicsNeMo Sym.
+While not required by the PhysicsNeMo Sym solver, this parameter group allows you to tune model architectures through the YAML
 config file or even the command line.
 
-To initialize an architecture using the config, Modulus Sym provides an ``instantiate_arch()`` method that allows different architectures
+To initialize an architecture using the config, PhysicsNeMo Sym provides an ``instantiate_arch()`` method that allows different architectures
 to be initialized easily.
 The following two examples initialize the same neural network.
 
@@ -121,17 +121,17 @@ The following two examples initialize the same neural network.
 
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
         - arch:
             - fully_connected
 
     # Python code
-    import modulus.sym
-    from modulus.sym.hydra import instantiate_arch
-    from modulus.sym.hydra.config import ModulusConfig
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra import instantiate_arch
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         model = instantiate_arch(
             input_keys=[Key("x"), Key("y")],
             output_keys=[Key("u"), Key("v"), Key("p")],
@@ -147,12 +147,12 @@ The following two examples initialize the same neural network.
     :caption: Explicit model intialization
 
     # Python code
-    import modulus.sym
-    from modulus.sym.hydra.config import ModulusConfig
-    from modulus.sym.models.fully_connected import FullyConnectedArch
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
+    from physicsnemo.sym.models.fully_connected import FullyConnectedArch
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         model = FullyConnectedArch(
             input_keys=[Key("x"), Key("y")], 
             output_keys=[Key("u"), Key("v"), Key("p")],
@@ -169,7 +169,7 @@ The following two examples initialize the same neural network.
     controlled through the YAML file and CLI without loss of control. This can streamline the tuning of architecture hyperparameters.
 
 
-Currently the architectures that are shipped internally in Modulus Sym that have a configuration group include:
+Currently the architectures that are shipped internally in PhysicsNeMo Sym that have a configuration group include:
 
 * ``fully_connected``: Fully connected neural network model 
 * ``fourier_net``: Fourier neural network
@@ -191,7 +191,7 @@ Examples
 
     # config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
         - arch:
             - fully_connected
         
@@ -202,12 +202,12 @@ Examples
 
 
     # Python code
-    import modulus.sym
-    from modulus.sym.hydra import instantiate_arch
-    from modulus.sym.hydra.config import ModulusConfig
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra import instantiate_arch
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         model = instantiate_arch(
             input_keys=[Key("x"), Key("y")],
             output_keys=[Key("u"), Key("v")],
@@ -222,19 +222,19 @@ Examples
 
     # config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
         - arch:
             - modified_fourier
             - siren
 
 
     # Python code
-    import modulus.sym
-    from modulus.sym.hydra import instantiate_arch
-    from modulus.sym.hydra.config import ModulusConfig
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra import instantiate_arch
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         model_1 = instantiate_arch(
             input_keys=[Key("x"), Key("y")],
             output_keys=[Key("u"), Key("v")],
@@ -262,7 +262,7 @@ Training
 ^^^^^^^^
 
 The training config group contains parameters essential to the training process of the model.
-This is set by default with `modulus_default`, but many of the parameters contained in this group
+This is set by default with `physicsnemo_default`, but many of the parameters contained in this group
 are often essential to modify.
 
 
@@ -282,7 +282,7 @@ Some essential parameters that you will find under the ``training`` config group
 
 Loss
 ^^^^
-The loss config group is used to select different loss aggregations that are supported by Modulus Sym.
+The loss config group is used to select different loss aggregations that are supported by PhysicsNeMo Sym.
 A loss aggregation is the method used to combine the losses from different constraints.
 Different methods can yield improved performance for some problems.
 
@@ -296,7 +296,7 @@ Different methods can yield improved performance for some problems.
 
 Optimizer
 ^^^^^^^^^^
-The loss optimizer group contains the supported optimizers that can be used in Modulus Sym which includes ones that are built into `PyTorch <https://pytorch.org/docs/stable/optim.html#algorithms>`_ as well as from `Torch Optimizer <https://github.com/jettify/pytorch-optimizer>`_ package.
+The loss optimizer group contains the supported optimizers that can be used in PhysicsNeMo Sym which includes ones that are built into `PyTorch <https://pytorch.org/docs/stable/optim.html#algorithms>`_ as well as from `Torch Optimizer <https://github.com/jettify/pytorch-optimizer>`_ package.
 Some of the most commonly used optimizers include:
 
 * ``adam``: ADAM optimizer
@@ -314,7 +314,7 @@ as well as these more unique optimizers:
 
 Scheduler
 ^^^^^^^^^^
-The scheduler optimizer group contains the supported learning rate schedulers that can be used in Modulus Sym.
+The scheduler optimizer group contains the supported learning rate schedulers that can be used in PhysicsNeMo Sym.
 By default none is specified for which a constant learning rate will be used.
 
 
@@ -326,7 +326,7 @@ By default none is specified for which a constant learning rate will be used.
 Command Line Interface
 ----------------------
 
-As previously mentioned, a particular benefit using Hydra configs to control Modulus Sym is that any of these parameters can be controlled
+As previously mentioned, a particular benefit using Hydra configs to control PhysicsNeMo Sym is that any of these parameters can be controlled
 through CLI.
 This can be particularly useful during hyperparameter tuning or queuing up multiple runs using `Hydra multirun <https://hydra.cc/docs/tutorials/basic/running_your_app/multi-run/>`_.
 Here are a couple of examples which may be particularly useful when developing physics-informed models.
@@ -358,7 +358,7 @@ Common Practices
 Results Frequency
 ^^^^^^^^^^^^^^^^^
 
-Modulus Sym offers several different methods for recording the results of your training including recording validation, inference, batch, 
+PhysicsNeMo Sym offers several different methods for recording the results of your training including recording validation, inference, batch, 
 and monitor results. 
 Each of these can be individually controlled in the training config group, however, typically it's preferred for each to have the same frequency.
 In these instances, the ``rec_results_freq`` parameter can be used to control all of these parameters uniformly.
@@ -368,7 +368,7 @@ The following two config files are equivalent.
 
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
     
     training:
         rec_results_freq : 1000
@@ -378,7 +378,7 @@ The following two config files are equivalent.
 
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
     
     training:
         rec_validation_freq: 1000
@@ -391,7 +391,7 @@ Changing Activation Functions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Activations functions are one of the most important hyperparameters to test for any deep learning model.
-While all of Modulus Sym' networks have default activations functions that have been seen to provide the best performance,
+While all of PhysicsNeMo Sym' networks have default activations functions that have been seen to provide the best performance,
 specific activations may perform better than others on a case to case basis.
 Changing a activation function is straight forward using the ``instantiate_arch`` method:
 
@@ -399,13 +399,13 @@ Changing a activation function is straight forward using the ``instantiate_arch`
     :caption: Initializing a fully-connect model with Tanh activation functions
 
     # Python code
-    import modulus.sym
-    from modulus.sym.hydra import instantiate_arch
-    from modulus.sym.hydra.config import ModulusConfig
-    from modulus.sym.models.layers import Activation
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra import instantiate_arch
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
+    from physicsnemo.sym.models.layers import Activation
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         model_1 = instantiate_arch(
             input_keys=[Key("x"), Key("y")],
             output_keys=[Key("u"), Key("v")],
@@ -420,13 +420,13 @@ Changing a activation function is straight forward using the ``instantiate_arch`
 
     Activation functions are not currently supported in the config files. They must be set in the Python script.
 
-Many of Modulus Sym' models also include support for :ref:`adaptive_activations` which can be turned on in the config file or explicitly in the code:
+Many of PhysicsNeMo Sym' models also include support for :ref:`adaptive_activations` which can be turned on in the config file or explicitly in the code:
 
 .. code-block:: yaml
 
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
         - arch:
             - fully_connected
 
@@ -448,7 +448,7 @@ Here the ``arch_schema`` config group is used to access an architecture's struct
 
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
         - /arch_schema/fully_connected@arch.model1
         - /arch_schema/fully_connected@arch.model2
 
@@ -463,12 +463,12 @@ Here the ``arch_schema`` config group is used to access an architecture's struct
     :caption: Initialization of two custom architectures
 
     # Python code
-    import modulus.sym
-    from modulus.sym.hydra import instantiate_arch
-    from modulus.sym.hydra.config import ModulusConfig
+    import physicsnemo.sym
+    from physicsnemo.sym.hydra import instantiate_arch
+    from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
 
-    @modulus.main(config_path="conf", config_name="config")
-    def run(cfg: ModulusConfig) -> None:
+    @physicsnemo.main(config_path="conf", config_name="config")
+    def run(cfg: PhysicsNeMoConfig) -> None:
         model_1 = instantiate_arch(
             input_keys=[Key("x"), Key("y")],
             output_keys=[Key("u"), Key("v")],
@@ -488,7 +488,7 @@ Here the ``arch_schema`` config group is used to access an architecture's struct
 Run Modes
 ^^^^^^^^^
 
-Modulus Sym has two different run modes available for training and evaluation:
+PhysicsNeMo Sym has two different run modes available for training and evaluation:
 
 * ``train``: Default run mode. Trains the neural network.
 
@@ -499,7 +499,7 @@ Modulus Sym has two different run modes available for training and evaluation:
     
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
 
     run_mode: 'eval'
 
@@ -507,7 +507,7 @@ Modulus Sym has two different run modes available for training and evaluation:
 Criterion Based Stopping
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Modulus Sym supports early training termination, based on a user specified criterion, before the maximum number of iterations is reached.
+PhysicsNeMo Sym supports early training termination, based on a user specified criterion, before the maximum number of iterations is reached.
 
 * ``metric``: Metric to be monitored during the training. This can be the total loss, individual loss terms, validation metrics, or metrics in the monitor domain. For example, in the annular ring example, you can choose `loss`, `loss_continuity`, `momentum_imbalance`, or `l2_relative_error_u` as the metric. Note the use of `l2_relative_error_` for metrics from the validation domain, this is consistent with the tag used for tensorboard plots.
 
@@ -527,7 +527,7 @@ Modulus Sym supports early training termination, based on a user specified crite
     
     # config/config.yaml
     defaults:
-        - modulus_default
+        - physicsnemo_default
 
     stop_criterion:
         - metric: 'l2_relative_error_u'

@@ -1,11 +1,11 @@
-Modulus Sym Hydra
+PhysicsNeMo Sym Hydra
 =====================
 
 
 hydra.arch
 -------------------------
 
-.. automodule:: modulus.sym.hydra.arch
+.. automodule:: physicsnemo.sym.hydra.arch
    :members:
    :undoc-members:
    :show-inheritance:
@@ -13,7 +13,7 @@ hydra.arch
 hydra.config
 ---------------------------
 
-.. automodule:: modulus.sym.hydra.config
+.. automodule:: physicsnemo.sym.hydra.config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -21,7 +21,7 @@ hydra.config
 hydra.hydra
 --------------------------
 
-.. automodule:: modulus.sym.hydra.hydra
+.. automodule:: physicsnemo.sym.hydra.hydra
    :members:
    :undoc-members:
    :show-inheritance:
@@ -29,7 +29,7 @@ hydra.hydra
 hydra.loss
 -------------------------
 
-.. automodule:: modulus.sym.hydra.loss
+.. automodule:: physicsnemo.sym.hydra.loss
    :members:
    :undoc-members:
    :show-inheritance:
@@ -37,7 +37,7 @@ hydra.loss
 hydra.optimizer
 ------------------------------
 
-.. automodule:: modulus.sym.hydra.optimizer
+.. automodule:: physicsnemo.sym.hydra.optimizer
    :members:
    :undoc-members:
    :show-inheritance:
@@ -46,7 +46,7 @@ hydra.optimizer
 hydra.profiler
 -----------------------------
 
-.. automodule:: modulus.sym.hydra.profiler
+.. automodule:: physicsnemo.sym.hydra.profiler
    :members:
    :undoc-members:
    :show-inheritance:
@@ -54,7 +54,7 @@ hydra.profiler
 hydra.scheduler
 ------------------------------
 
-.. automodule:: modulus.sym.hydra.scheduler
+.. automodule:: physicsnemo.sym.hydra.scheduler
    :members:
    :undoc-members:
    :show-inheritance:
@@ -62,7 +62,7 @@ hydra.scheduler
 hydra.training
 -----------------------------
 
-.. automodule:: modulus.sym.hydra.training
+.. automodule:: physicsnemo.sym.hydra.training
    :members:
    :undoc-members:
    :show-inheritance:
@@ -70,7 +70,7 @@ hydra.training
 hydra.utils
 --------------------------
 
-.. automodule:: modulus.sym.hydra.utils
+.. automodule:: physicsnemo.sym.hydra.utils
    :members:
    :show-inheritance:
 

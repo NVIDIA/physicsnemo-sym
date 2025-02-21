@@ -6,22 +6,22 @@ Inverse Problem: Finding Unknown Coefficients of a PDE
 Introduction
 ------------
 
-In this tutorial, you will use Modulus Sym to solve an inverse problem by
+In this tutorial, you will use PhysicsNeMo Sym to solve an inverse problem by
 assimilating data from observations. You will use the flow field computed
 by OpenFOAM as an input to the PINNs whose job is to predict the
 parameters characterizing the flow (eg. viscosity (:math:`\nu`) and
 thermal diffusivity (:math:`\alpha`)). In this tutorial you will learn:
 
-#. How to assimilate analytical/experimental/simulation data in Modulus Sym.
+#. How to assimilate analytical/experimental/simulation data in PhysicsNeMo Sym.
 
-#. How to use the ``PointwiseConstraint`` in Modulus Sym to create constraints from 
+#. How to use the ``PointwiseConstraint`` in PhysicsNeMo Sym to create constraints from 
    data that can be loaded in form of .csv files/numpy arrays.
 
 #. How to use the assimilated data to make predictions of unknown
    quantities.
 
 .. note:: 
-   This tutorial assumes that you have completed tutorial :ref:`Introductory Example` and have familiarized yourself with the basics of the Modulus Sym APIs. 
+   This tutorial assumes that you have completed tutorial :ref:`Introductory Example` and have familiarized yourself with the basics of the PhysicsNeMo Sym APIs. 
 
 Problem Description
 -------------------
@@ -195,7 +195,7 @@ in :numref:`fig-inverse-point-result`.
    :align: center
 
    +----------------------+----------------------+--------------------------+
-   | Property             | OpenFOAM (True)      | Modulus Sym (Predicted)  |
+   | Property             | OpenFOAM (True)      | PhysicsNeMo Sym (Predicted)  |
    +----------------------+----------------------+--------------------------+
    | Kinematic Viscosity  | 1.00 × 10\ :sup:`−2` | 9.87 × 10\ :sup:`−3`     |
    | :math:`(m^2/s)`      |                      |                          |

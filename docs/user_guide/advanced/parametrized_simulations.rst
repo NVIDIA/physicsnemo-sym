@@ -7,7 +7,7 @@ Introduction
 ------------
 
 This tutorial walks through the process of simulating a
-parameterized problem using Modulus Sym. The neural networks in Modulus Sym allow
+parameterized problem using PhysicsNeMo Sym. The neural networks in PhysicsNeMo Sym allow
 us to solve problems for multiple parameters/independent variables in a single
 training. These parameters can be geometry variables, coefficients of a PDE or even boundary conditions. 
 Once the training is complete, it is possible to run inference on several geometry/physical parameter
@@ -21,14 +21,14 @@ heat sink whose fin height, fin thickness, and fin length are variable.
 We will then perform a design optimization to find out the most optimal
 fin configuration for the heat sink example. By the end of this
 tutorial, you would learn to easily convert any simulation to a
-parametric design study using Modulus Sym's CSG module and Neural Network
+parametric design study using PhysicsNeMo Sym's CSG module and Neural Network
 solver. In this tutorial, you would learn the following:
 
-#. How to set up a parametric simulation in Modulus Sym.
+#. How to set up a parametric simulation in PhysicsNeMo Sym.
 
 .. note::
    This tutorial is an extension of tutorial :ref:`cht` which
-   discussed how to use Modulus Sym for solving Conjugate Heat problems. This 
+   discussed how to use PhysicsNeMo Sym for solving Conjugate Heat problems. This 
    tutorial uses the same geometry setup and solves it for a
    parameterized setup at an increased Reynolds number. Hence, it is recommended
    that you to refer tutorial :ref:`cht` for any additional details
@@ -80,7 +80,7 @@ given in equation :eq:`param_ranges`.
 Case Setup
 ----------
 
-In this tutorial, you will use the 3D geometry module from Modulus Sym to
+In this tutorial, you will use the 3D geometry module from PhysicsNeMo Sym to
 create the parameterized 3-fin heat sink geometry. Discrete parameterization can sometimes lead to discontinuities in the solution making the training harder. 
 Hence tutorial only covers parameters that are continuous. Also, you will be training the
 parameterized model and validating it by performing inference on a case
@@ -193,7 +193,7 @@ expressed as below:
    |		     |													      |	drop that can be provided by cooling system          |
    +-----------------+--------------------------------------------------------------------------------------------------------+------------------------------------------------------+
 
-Such optimization problems can be easily achieved in Modulus Sym once you have a trained, parameterized model ready. 
+Such optimization problems can be easily achieved in PhysicsNeMo Sym once you have a trained, parameterized model ready. 
 As it can be noticed, while solving the parameterized simulation you
 created some monitors to track the peak temperature and the pressure
 drop for some design variable combination. You will basically would follow the
@@ -233,14 +233,14 @@ design has a pressure drop of 2.46 and a peak temperature of 76.23
    Three Fin geometry after optimization
 
 :numref:`table-parameterized1` represents the computed pressure
-drop and peak temperature for the OpenFOAM single geometry and Modulus Sym
+drop and peak temperature for the OpenFOAM single geometry and PhysicsNeMo Sym
 single and parameterized geometry runs. It is evident that the results
 for the parameterized model are close to those of a single geometry
 model, showing its good accuracy.
 
 .. _table-parameterized1:
 
-.. table:: A comparison for the OpenFOAM and Modulus Sym results
+.. table:: A comparison for the OpenFOAM and PhysicsNeMo Sym results
    :align: center
 
    +-----------------------+-----------------+------------+-----------------+
@@ -255,18 +255,18 @@ model, showing its good accuracy.
    | :math:`(^{\circ} C)`  |                 |            |                 |
    +-----------------------+-----------------+------------+-----------------+
 
-By parameterizing the geometry, Modulus Sym significantly accelerates design
+By parameterizing the geometry, PhysicsNeMo Sym significantly accelerates design
 optimization when compared to traditional solvers, which are limited to
 single geometry simulations. For instance, 3 values (two end values of
 the range and a middle value) per design variable would result in
 :math:`3^6 = 729` single geometry runs. The total compute time required
-by OpenFOAM for this design optimization would be 4099 hrs. (on 20 processors). Modulus Sym can achieve 
+by OpenFOAM for this design optimization would be 4099 hrs. (on 20 processors). PhysicsNeMo Sym can achieve 
 the same design optimization at ~17x lower computational cost. Large number
 of design variables or their values would only magnify the difference in
 the time taken for two approaches.
 
 .. note::
-   The Modulus Sym calculations were done using 4 NVIDIA V100 GPUs. The OpenFOAM calculations were done using 20 processors.
+   The PhysicsNeMo Sym calculations were done using 4 NVIDIA V100 GPUs. The OpenFOAM calculations were done using 20 processors.
 
 .. figure:: /images/user_guide/flow_field_with_T_4_cropped.png
    :name: fig:optimal_3Fin_result

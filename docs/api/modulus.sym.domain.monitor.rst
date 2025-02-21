@@ -1,11 +1,11 @@
-Modulus Sym Monitors
+PhysicsNeMo Sym Monitors
 ====================
 
 
 Pointwise Monitor
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.monitor.pointwise
+.. automodule:: physicsnemo.sym.domain.monitor.pointwise
    :members:
    :show-inheritance:
 
@@ -13,6 +13,6 @@ Pointwise Monitor
 Monitor Base
 ------------------------------------------------
 
-.. automodule:: modulus.sym.domain.monitor.monitor
+.. automodule:: physicsnemo.sym.domain.monitor.monitor
    :members:
    :show-inheritance:

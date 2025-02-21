@@ -1,6 +1,6 @@
 .. _tipsTricks:
 
-Recommended Practices in Modulus Sym
+Recommended Practices in PhysicsNeMo Sym
 ====================================
 
 Physics Informed Neural Networks
@@ -8,7 +8,7 @@ Physics Informed Neural Networks
 
 Some of the improvements like adding integral continuity planes,
 weighting the losses spatially, and varying the point density in the
-areas of interest, have been key in making Modulus Sym robust and capable of
+areas of interest, have been key in making PhysicsNeMo Sym robust and capable of
 handling some of the larger scale problems. In this section we will dive into details 
 for some of the important ones. 
 
@@ -25,10 +25,10 @@ Differential Equations <https://hplgit.github.io/scaling-book/doc/pub/book/html/
 Several examples in the User Guide already adopt this philosophy. Some examples where such  nondimensionalizing 
 is extensively leveraged are: :ref:`linear_elasticity`, :ref:`2d_heat`, :ref:`limerock`, etc.
 
-Modulus Sym provides some utilities based on the `Pint python library <https://pint.readthedocs.io/en/stable/>`_ to facilitate scaling and nondimensionalization.
-With this, the user can define a `quantity` in Modulus Sym which represents a physical quantity with a value and a unit. Pint has a powerful string parsing support and the specified units
+PhysicsNeMo Sym provides some utilities based on the `Pint python library <https://pint.readthedocs.io/en/stable/>`_ to facilitate scaling and nondimensionalization.
+With this, the user can define a `quantity` in PhysicsNeMo Sym which represents a physical quantity with a value and a unit. Pint has a powerful string parsing support and the specified units
 do not necessarily have to follow a strict format. For example, the velocity unit can be defined as `meter/second`, `m/s`, or `meter/s`. 
-Different algebraic manipulations can be done on different Modulus Sym quantities and Modulus Sym will automatically keep track of the units. 
+Different algebraic manipulations can be done on different PhysicsNeMo Sym quantities and PhysicsNeMo Sym will automatically keep track of the units. 
 The user can instantiate a nondimensionalizer object 
 by providing the required characteristics scales to the 
 `NonDimensionalizer` method, and this object can be used to scale and nondimensionalize the quantities.  
@@ -179,7 +179,7 @@ training, gradients corresponding to each mini-batch are aggregated
 locally on each GPU, and are then aggregated globally just before the
 model parameters are updated. Therefore, gradient aggregation does not
 introduce any extra communication overhead between the workers. Details
-on how to use the gradient aggregation in Modulus Sym is provided in Tutorial
+on how to use the gradient aggregation in PhysicsNeMo Sym is provided in Tutorial
 :ref:`config`.
 
 .. figure:: /images/user_guide/annular_ring_gradient_aggregation.png
@@ -225,7 +225,7 @@ Symmetry
 In training of PINNs for problems with symmetry in geometry and physical
 quantities, reducing the computational domain and using the symmetry
 boundaries can help with accelerating the training, reducing the memory
-usage, and in some cases, improving the accuracy. In Modulus Sym, the
+usage, and in some cases, improving the accuracy. In PhysicsNeMo Sym, the
 following symmetry boundary conditions at the line or plane of symmetry
 may be used:
 
@@ -240,7 +240,7 @@ Operator Learning Networks
 --------------------------
 
 In this subsection, we provide some recommendations about operator learning networks. Literally, operator learning networks is aiming to learn
-operators or parametrized operators between two function spaces. There are two networks structures now in Modulus Sym that can handle this
+operators or parametrized operators between two function spaces. There are two networks structures now in PhysicsNeMo Sym that can handle this
 problem, DeepONet and Fourier Neural Operator. Both of these two structures have data informed and physics informed modeling ways.
 
 For data informed approach, the computational graph is relative simply as there is no gradients involved in the loss terms. However, you
@@ -260,7 +260,7 @@ The trunk net will decide where we evaluate the output functions. Therefore, we 
 net. For example, if the output function is of high frequency, we may use Fourier networks with a suitable frequency. This will make the network
 much easier to train.
 
-For the concrete examples of DeepONet in Modulus Sym, please see tutorial :ref:`deeponet`.
+For the concrete examples of DeepONet in PhysicsNeMo Sym, please see tutorial :ref:`deeponet`.
 
 
 .. rubric:: References

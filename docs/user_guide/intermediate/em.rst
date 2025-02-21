@@ -4,8 +4,8 @@ Electromagnetics: Frequency Domain Maxwell's Equation
 Introduction
 ------------
 
-This tutorial demonstrates how to use Modulus Sym to do the
-electromagnetic (EM) simulation. Currently, Modulus Sym offers the following
+This tutorial demonstrates how to use PhysicsNeMo Sym to do the
+electromagnetic (EM) simulation. Currently, PhysicsNeMo Sym offers the following
 features for frequency domain EM simulation:
 
 #. Frequency domain Maxwell's equation in scalar form. This is same to
@@ -28,7 +28,7 @@ simulations are appropriately nondimensionalized.
 
 .. note::
    This tutorial assumes that you have completed the tutorial :ref:`Introductory Example` and are
-   familiar with Modulus Sym APIs
+   familiar with PhysicsNeMo Sym APIs
 
    All the scripts referred in this tutorial can be found in ``examples/waveguide/``.
 
@@ -63,7 +63,7 @@ ABC will be simplified in the following form, respectively:
 Case Setup
 ~~~~~~~~~~
 
-This subsection shows how to use Modulus Sym to setup the EM
+This subsection shows how to use PhysicsNeMo Sym to setup the EM
 solver. Similar to the previous tutorials, you will first import the necessary
 libraries.
 
@@ -72,7 +72,7 @@ libraries.
    :lines: 15-35
 
 Then, define the variables for ``sympy`` symbolic calculation and parameters for geometry.
-Also, before you define the main classes for Modulus Sym, you need to compute
+Also, before you define the main classes for PhysicsNeMo Sym, you need to compute
 the eigenmode for waveguide solver. Since the material is uniform
 (vacuum), the closed form of the eigenmode is of the form
 :math:`\sin(\frac{k\pi y}{L})`, where :math:`L` is the length of the
@@ -123,16 +123,16 @@ Results
 
 The full code of this example can be found in
 ``examples/waveguide/cavity_2D/waveguide2D_TMz.py``. The
-simulation with wavenumber equals :math:`32`. The solution from comercial solver, Modulus Sym prediction, and their difference
+simulation with wavenumber equals :math:`32`. The solution from comercial solver, PhysicsNeMo Sym prediction, and their difference
 are shown below.
 
-.. figure:: /images/user_guide/2Dwaveguide_modulus.png
-   :alt: Modulus Sym, wavenumber=\ :math:`32`
-   :name: fig:2Dwaveguide_modulus
+.. figure:: /images/user_guide/2Dwaveguide_physicsnemo.png
+   :alt: PhysicsNeMo Sym, wavenumber=\ :math:`32`
+   :name: fig:2Dwaveguide_physicsnemo
    :width: 100.0%
    :align: center
 
-   Modulus Sym, wavenumber=\ :math:`32`
+   PhysicsNeMo Sym, wavenumber=\ :math:`32`
 
 Problem 2: 2D Dielectric slab waveguide
 ---------------------------------------
@@ -213,19 +213,19 @@ simulation with wavenumber equals :math:`16` and :math:`32`,
 respectively. The results are shown in figure below
 
 .. figure:: /images/user_guide/2Dslab_16.png
-   :alt: Modulus Sym, wavenumber=\ :math:`16`
+   :alt: PhysicsNeMo Sym, wavenumber=\ :math:`16`
    :name: fig:2Dslab
    :width: 50.0%
    :align: center
 
-   Modulus Sym, wavenumber=\ :math:`16`
+   PhysicsNeMo Sym, wavenumber=\ :math:`16`
 
 
 Problem 3: 3D waveguide cavity
 ------------------------------
 
 This example, shows how to setup a 3D waveguide simulation in
-Modulus Sym. Unlike the previous examples, the features in Modulus Sym
+PhysicsNeMo Sym. Unlike the previous examples, the features in PhysicsNeMo Sym
 to define the boundary condition are used. The geometry is
 :math:`\Omega = [0,2]^3`, as shown below.
 
@@ -246,7 +246,7 @@ field :math:`\mathbf{E}=(E_x, E_y, E_z)`:
 .. math:: \nabla\times \nabla\times \mathbf{E}+\epsilon_rk^2\mathbf{E} = 0,
 
 where :math:`\epsilon_r` is the permittivity, and the :math:`k` is the
-wavenumber. Note that, currently Modulus Sym only support real permittivity
+wavenumber. Note that, currently PhysicsNeMo Sym only support real permittivity
 and wavenumber. For the sake of simplicity, assume the permeability
 :math:`\mu_r=1`. As before, waveguide port has been applied on the left.
 We apply absorbing boundary condition on the right side and PEC for the
@@ -261,7 +261,7 @@ while the PEC is
 Case setup
 ~~~~~~~~~~
 
-This section shows how to use Modulus Sym to setup the 3D
+This section shows how to use PhysicsNeMo Sym to setup the 3D
 frequency EM solver, especially for the boundary conditions.
 
 First import the necessary libraries.
@@ -389,7 +389,7 @@ that as the waveguide port boundary condition.
 First define the geometry and the ``sympy`` permittivity
 function. To define the piecewise ``sympy`` functions, use
 ``Heaviside`` instead of ``Piecewise`` as the later cannot be complied
-in Modulus Sym for the time being. The waveguide data can also be imported using the ``csv_to_dict()`` function.
+in PhysicsNeMo Sym for the time being. The waveguide data can also be imported using the ``csv_to_dict()`` function.
 
 
 .. literalinclude:: ../../../examples/waveguide/slab_3D/slab_3D.py

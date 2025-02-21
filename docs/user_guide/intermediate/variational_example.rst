@@ -12,25 +12,25 @@ Introduction
 
 This tutorial demonstrates the process of solving a PDE
 using the variational formulation. It shows how to use the variational
-method to solve the interface PDE problem using Modulus Sym. The use of
+method to solve the interface PDE problem using PhysicsNeMo Sym. The use of
 variational method (weak formulation) also allows you to handle problems
 with point source with ease and this is covered in this tutorial too.
 In this tutorial you will learn:
 
 #. How to solve a PDE in its variational form (continuous and
-   discontinuous) in Modulus Sym.
+   discontinuous) in PhysicsNeMo Sym.
 
 #. How to generate test functions and their derivative data on desired
    point sets.
 
-#. How to use quadrature in the Modulus Sym.
+#. How to use quadrature in the PhysicsNeMo Sym.
 
 #. How to solve a problem with a point source (Dirac Delta function).
 
 .. note::
    This tutorial assumes that you have completed tutorial
    :ref:`Introductory Example` on Lid Driven Cavity and have familiarized yourself
-   with the basics of the Modulus Sym APIs. Also, see Section :ref:`weak-solutions-pinn` from the
+   with the basics of the PhysicsNeMo Sym APIs. Also, see Section :ref:`weak-solutions-pinn` from the
    Theory chapter for more details on weak solutions of PDEs.
 
    All the scripts referred in this tutorial can be found in
@@ -39,7 +39,7 @@ In this tutorial you will learn:
 .. warning::
 
    The Python package `quadpy <https://github.com/nschloe/quadpy>`_ is required for these examples.
-   Install using ``pip install quadpy`` (Also refer to :ref:`install_modulus_docker`).
+   Install using ``pip install quadpy`` (Also refer to :ref:`install_physicsnemo_docker`).
 
 Problem Description
 -------------------
@@ -140,13 +140,13 @@ Variational form for Discontinuous type formulation :
     \sum_{i=1}^2(\nabla u_i\cdot v_i - fv_i) dx - \sum_{i=1}^2\int_{\Gamma_D}\frac{\partial u_i}{\partial \mathbf{n}} v_i ds-\int_{\Gamma}(g_I\langle v \rangle+\langle \nabla u \rangle[\![ v ]\!]) ds =0
 
 The following subsections show how to implement these
-variational forms in the Modulus Sym.
+variational forms in the PhysicsNeMo Sym.
 
 Continuous type formulation
 ---------------------------
 
 This subsection shows how to implement the continuous type
-variational form :eq:`var_cont-example` in Modulus Sym.
+variational form :eq:`var_cont-example` in PhysicsNeMo Sym.
 The code for this example can be found in ``./dg/dg.py``.
 
 First, import all the packages needed:
@@ -190,7 +190,7 @@ faster, but the computational graph is larger. The code segment below applies th
 
 For variational constraints, in the ``run`` function, first collect the data needed to formulate the variational form. 
 For interior points, there are two options.
-The first option is quadrature rule. Modulus Sym has the functionality to create the
+The first option is quadrature rule. PhysicsNeMo Sym has the functionality to create the
 quadrature rule on some basic geometries and meshes based on `quadpy <https://github.com/nschloe/quadpy>`_ package.
 The quadrature rule has higher accuracy and efficiency, so use the quadrature rules when possible.
 The other option is using random points. You can use quasi-random points to increase the accuracy of the integral
@@ -229,7 +229,7 @@ to the ``VariationalConstraint`` to form this loss.
 
 First, choose what test function to use.
 
-In Modulus Sym, Legendre, 1st and 2nd kind of Chebyshev polynomials
+In PhysicsNeMo Sym, Legendre, 1st and 2nd kind of Chebyshev polynomials
 and trigonometric functions are already implemented as the test
 functions and can be selected directly. You can also define your own
 test functions by providing its name, domain, and SymPy expression in
@@ -268,7 +268,7 @@ Now, all the resulting variables of test function, like ``v_interior``, are :mat
 :math:`M` is the number of the test functions.
 
 To form the integration, you can use the ``tensor_int`` function in the
-Modulus Sym. This function has three parameters ``w``, ``v``, and ``u``. The
+PhysicsNeMo Sym. This function has three parameters ``w``, ``v``, and ``u``. The
 ``w`` is the quadrature weight for the integration. For uniform random
 points or quasi-random points, it is precisely the average area. The
 ``v`` is an :math:`N` by :math:`M` tensor, and ``u`` is a :math:`1` by
@@ -289,33 +289,33 @@ The results are shown in :numref:`fig-dg_pinn`.
 .. _fig-dg_pinn:
 
 .. figure:: /images/user_guide/dg_pinns.png
-   :alt: Left: Modulus Sym. Center: Analytical. Right: Difference.
+   :alt: Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
    :name: fig:dg_pinn
    :align: center
 
-   Left: Modulus Sym. Center: Analytical. Right: Difference.
+   Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
 
 By using quadrature rule, the results are shown in :numref:`fig-dg_quad`.
 
 .. _fig-dg_quad:
 
 .. figure:: /images/user_guide/dg_quad.png
-   :alt: Left: Modulus Sym. Center: Analytical. Right: Difference.
+   :alt: Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
    :name: fig:dg_quad
    :align: center
 
-   Left: Modulus Sym. Center: Analytical. Right: Difference.
+   Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
 
 By using quadrature rule and RBF test function, the results are shown in :numref:`fig-dg_rbf`.
 
 .. _fig-dg_rbf:
 
 .. figure:: /images/user_guide/dg_rbf.png
-   :alt: Left: Modulus Sym. Center: Analytical. Right: Difference.
+   :alt: Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
    :name: fig:dg_rbf
    :align: center
 
-   Left: Modulus Sym. Center: Analytical. Right: Difference.
+   Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
 
 
 Point source and Dirac Delta function
@@ -391,12 +391,12 @@ Results and Post-processing
 The results for the problem are shown in :numref:`fig:dg_point_source`.
 
 .. figure:: /images/user_guide/point_source.png
-   :alt: Modulus Sym prediction.
+   :alt: PhysicsNeMo Sym prediction.
    :name: fig:dg_point_source
    :align: center
    :width: 80.0%
 
-   Modulus Sym prediction
+   PhysicsNeMo Sym prediction
 
 Since the ground truth solution is unbounded at origin, it is not useful to compare it with the exact solution.
 

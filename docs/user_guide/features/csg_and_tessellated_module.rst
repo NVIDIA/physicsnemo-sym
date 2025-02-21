@@ -6,18 +6,18 @@ Geometry Modules
 Constructive Solid Geometry
 ---------------------------
 
-Modulus Sym provides several 1D, 2D and 3D primitives that can be used for sampling point clouds required for the physics-informed training. 
+PhysicsNeMo Sym provides several 1D, 2D and 3D primitives that can be used for sampling point clouds required for the physics-informed training. 
 These primitives support the standard boolean operations* like Union (``+`` ), Intersection (``&`` ) and Subtraction (``-`` ). The boolean
 operations work on the signed distance fields of the differnt primitives. 
 
-Below example shows a simple CSG primitive being built using Modulus Sym. 
+Below example shows a simple CSG primitive being built using PhysicsNeMo Sym. 
 
 .. code-block:: python
     :caption: Constructive solid geometry
         
     import numpy as np
-    from modulus.sym.geometry.primitives_3d import Box, Sphere, Cylinder
-    from modulus.sym.utils.io.vtk import var_to_polyvtk
+    from physicsnemo.sym.geometry.primitives_3d import Box, Sphere, Cylinder
+    from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
     
     # number of points to sample
     nr_points = 100000
@@ -45,13 +45,13 @@ Below example shows a simple CSG primitive being built using Modulus Sym.
         
 
 .. figure:: /images/user_guide/csg_demo.png
-   :alt: Constructive Solid Geometry using Modulus Sym primitives
+   :alt: Constructive Solid Geometry using PhysicsNeMo Sym primitives
    :width: 80.0%
    :align: center
 
-   Constructive Solid Geometry using Modulus Sym primitives
+   Constructive Solid Geometry using PhysicsNeMo Sym primitives
 
-A complete list of primitives can be referred in ``modulus.geometry.primitives_*`` 
+A complete list of primitives can be referred in ``physicsnemo.geometry.primitives_*`` 
 
 .. note::
     While generating a complex primitive, it should be noted that the boolean operation are performed at the final stage, meaning it is invariant to 
@@ -90,9 +90,9 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
 .. code-block:: python
     :caption: Parameterized geometry
 
-    from modulus.sym.geometry.primitives_2d import Rectangle, Circle
-    from modulus.sym.utils.io.vtk import var_to_polyvtk
-    from modulus.sym.geometry.parameterization import Parameterization, Parameter
+    from physicsnemo.sym.geometry.primitives_2d import Rectangle, Circle
+    from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
+    from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
     
     # make plate with parameterized hole
     # make parameterized primitives
@@ -120,14 +120,14 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
     
 
 .. figure:: /images/user_guide/csg_parameterized_demo.png
-   :alt: Parameterized Constructive Solid Geometry using Modulus Sym primitives
+   :alt: Parameterized Constructive Solid Geometry using PhysicsNeMo Sym primitives
    :width: 80.0%
    :align: center
 
-   Parameterized Constructive Solid Geometry using Modulus Sym primitives
+   Parameterized Constructive Solid Geometry using PhysicsNeMo Sym primitives
 
 
-Some interesting shapes generated using Modulus Sym' geometry module are presented below
+Some interesting shapes generated using PhysicsNeMo Sym' geometry module are presented below
 
 .. figure:: /images/user_guide/naca_demo.png
    :alt: NACA airfoil using ``Polygon`` primitive
@@ -154,7 +154,7 @@ Some interesting shapes generated using Modulus Sym' geometry module are present
 Defining Custom Primitives
 --------------------------
 
-If you don't find a primitive defined for your application, it is easy to setup using the base classes from Modulus Sym. All you need to do is come up with and appropriate
+If you don't find a primitive defined for your application, it is easy to setup using the base classes from PhysicsNeMo Sym. All you need to do is come up with and appropriate
 expression for the signed distance field and the surfaces of the geometry. An example is shown below. 
 
 .. code-block:: python
@@ -162,12 +162,12 @@ expression for the signed distance field and the surfaces of the geometry. An ex
 
     from sympy import Symbol, pi, sin, cos, sqrt, Min, Max, Abs
     
-    from modulus.sym.geometry.geometry import Geometry, csg_curve_naming
-    from modulus.sym.geometry.helper import _sympy_sdf_to_sdf
-    from modulus.sym.geometry.curve import SympyCurve, Curve
-    from modulus.sym.geometry.parameterization import Parameterization, Parameter, Bounds
-    from modulus.sym.geometry.primitives_3d import Cylinder
-    from modulus.sym.utils.io.vtk import var_to_polyvtk
+    from physicsnemo.sym.geometry.geometry import Geometry, csg_curve_naming
+    from physicsnemo.sym.geometry.helper import _sympy_sdf_to_sdf
+    from physicsnemo.sym.geometry.curve import SympyCurve, Curve
+    from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter, Bounds
+    from physicsnemo.sym.geometry.primitives_3d import Cylinder
+    from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
     
     class InfiniteCylinder(Geometry):
         """
@@ -250,17 +250,17 @@ expression for the signed distance field and the surfaces of the geometry. An ex
         
 
 .. figure:: /images/user_guide/custom_primitive_demo.png
-   :alt: Custom primitive in Modulus Sym. The cylinders are sliced to visualize the interior SDF
+   :alt: Custom primitive in PhysicsNeMo Sym. The cylinders are sliced to visualize the interior SDF
    :width: 80.0%
    :align: center
 
-   Custom primitive in Modulus Sym. The cylinders are sliced to visualize the interior SDF
+   Custom primitive in PhysicsNeMo Sym. The cylinders are sliced to visualize the interior SDF
 
    
 Tesselated Geometry
 -------------------
 
-For more complicated shapes, Modulus Sym allows geometries to be imported in the STL format. The module uses ray tracing to compute SDF and its derivatives.
+For more complicated shapes, PhysicsNeMo Sym allows geometries to be imported in the STL format. The module uses ray tracing to compute SDF and its derivatives.
 The module also gives surface normals of the geometry for surface sampling. Once the geometry is imported, the point cloud can be used for training. An
 example of this can be found in :ref:`stl`.
 
@@ -270,9 +270,9 @@ Tesselated geometries can also be combined with the primitives
     :caption: Tesselated Geometry
 
     import numpy as np
-    from modulus.sym.geometry.tessellation import Tessellation
-    from modulus.sym.geometry.primitives_3d import Plane
-    from modulus.sym.utils.io.vtk import var_to_polyvtk
+    from physicsnemo.sym.geometry.tessellation import Tessellation
+    from physicsnemo.sym.geometry.primitives_3d import Plane
+    from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
     
     # number of points to sample
     nr_points = 100000
@@ -294,18 +294,18 @@ Tesselated geometries can also be combined with the primitives
         
 
 .. figure:: /images/user_guide/stl_demo_1.png
-   :alt: Tesselated Geometry sampling using Modulus Sym 
+   :alt: Tesselated Geometry sampling using PhysicsNeMo Sym 
    :width: 80.0%
    :align: center
 
-   Tesselated Geometry sampling using Modulus Sym
+   Tesselated Geometry sampling using PhysicsNeMo Sym
 
 .. figure:: /images/user_guide/stl_demo_2.png
-   :alt: Tesselated Geometry sampling using Modulus Sym: Stanford bunny
+   :alt: Tesselated Geometry sampling using PhysicsNeMo Sym: Stanford bunny
    :width: 80.0%
    :align: center
 
-   Tesselated Geometry sampling using Modulus Sym: Stanford bunny
+   Tesselated Geometry sampling using PhysicsNeMo Sym: Stanford bunny
 
 
 Signed Distance Fields (SDF) of Geometry objects
@@ -317,13 +317,13 @@ It is widely used to describe the geometry in mathematics, rendering, and simila
 applications. In physics-informed learning, it is also used to represent
 `geometric inputs to the neural networks <https://www.research.autodesk.com/app/uploads/2023/03/convolutional-neural-networks-for.pdf_rectr0tDKzFYVAAJe.pdf>`_.
 
-Modulus' geometry module (CSG and Tesselation) computes the SDF (and its derivatives) on
+PhysicsNeMo' geometry module (CSG and Tesselation) computes the SDF (and its derivatives) on
 points sampled in the interior for use in the training pipelines.
 Additionally, the SDF can be computed on custom points using the ``.sdf`` attribute.
  
-Modulus also provides a utility to recover the STL geometry from the SDF using marching
+PhysicsNeMo also provides a utility to recover the STL geometry from the SDF using marching
 cubes algorithm. For more details refer
-`here <https://github.com/NVIDIA/modulus/blob/main/modulus/utils/mesh/generate_stl.py#L25>`_.
+`here <https://github.com/NVIDIA/physicsnemo/blob/main/modulus/utils/mesh/generate_stl.py#L25>`_.
 
 Below example shows the use of these utilities for a CSG geometry.
 
@@ -331,9 +331,9 @@ Below example shows the use of these utilities for a CSG geometry.
     :caption: Computing SDF for CSG geometry and reconstructing the STL
 
     import numpy as np
-    from modulus.sym.geometry.primitives_3d import Box, Sphere, Cylinder
+    from physicsnemo.sym.geometry.primitives_3d import Box, Sphere, Cylinder
 
-    from modulus.utils.mesh import sdf_to_stl
+    from physicsnemo.utils.mesh import sdf_to_stl
 
     # make standard constructive solid geometry example
     box = Box(point_1=(-1, -1, -1), point_2=(1, 1, 1))
@@ -386,9 +386,9 @@ Below example shows the use of these utilities for a Tesselation geometry.
     :caption: Computing SDF for Tesselation geometry and reconstructing the STL
 
     import numpy as np
-    from modulus.sym.geometry.tessellation import Tessellation
+    from physicsnemo.sym.geometry.tessellation import Tessellation
 
-    from modulus.utils.mesh import sdf_to_stl
+    from physicsnemo.utils.mesh import sdf_to_stl
 
     # read the Stanford Bunny stl
     geo = Tessellation.from_stl("./Stanford_Bunny.stl")

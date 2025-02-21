@@ -6,18 +6,18 @@ Darcy Flow with Fourier Neural Operator
 Introduction
 ------------
 
-In this tutorial, you will use Modulus Sym to set up a data-driven model for a 2D Darcy flow using 
-the Fourier Neural Operator (FNO) architecture inside of Modulus Sym. In this tutorial, you will learn the following:
+In this tutorial, you will use PhysicsNeMo Sym to set up a data-driven model for a 2D Darcy flow using 
+the Fourier Neural Operator (FNO) architecture inside of PhysicsNeMo Sym. In this tutorial, you will learn the following:
 
 #. How to load grid data and set up data-driven constraints
 
 #. How to create a grid validator node
 
-#. How to use Fourier Neural Operator architecture in Modulus Sym
+#. How to use Fourier Neural Operator architecture in PhysicsNeMo Sym
 
 .. note::
 
-   This tutorial assumes that you are familiar with the basic functionality of Modulus Sym and understand the FNO architecture.
+   This tutorial assumes that you are familiar with the basic functionality of PhysicsNeMo Sym and understand the FNO architecture.
    Please see the :ref:`Introductory Example` and :ref:`fno` sections for additional information.
 
 .. warning::
@@ -70,9 +70,9 @@ This requires the package `gdown <https://github.com/wkentaro/gdown>`_ which can
 
 Configuration
 ~~~~~~~~~~~~~~
-The configuration for this problem is fairly standard within Modulus Sym. 
+The configuration for this problem is fairly standard within PhysicsNeMo Sym. 
 Note that we have two architectures in the config: one is the pointwise decoder for FNO and the other is the FNO model which will eventually ingest the decoder.
-The most important parameter for FNO models is ``dimension`` which tells Modulus Sym to load a 1D, 2D or 3D FNO architecture.
+The most important parameter for FNO models is ``dimension`` which tells PhysicsNeMo Sym to load a 1D, 2D or 3D FNO architecture.
 ``nr_fno_layers`` are the number of Fourier convolution layers in the model.
 The size of the latent features in FNO are determined based on the decoders input key ``z``, in this case the embedded feature space is 32.
 
@@ -81,16 +81,16 @@ The size of the latent features in FNO are determined based on the decoders inpu
 
 .. note::
 
-   Modulus Sym configs can allow users to define keys inside the YAML file. 
+   PhysicsNeMo Sym configs can allow users to define keys inside the YAML file. 
    In this instance, ``input_keys: [z,32]`` will create a single key of size 32 and ``input_keys: coeff`` creates a single input key of size 1.
 
 Loading Data
 ~~~~~~~~~~~~~
 
-For this data-driven problem the first step is to get the training data into Modulus Sym.
+For this data-driven problem the first step is to get the training data into PhysicsNeMo Sym.
 Prior to loading data, set any normalization value that you want to apply to the data.
 For this dataset, calculate the `scale` and `shift` parameters for both the input permeability field and output pressure.
-Then, set this normalization inside Modulus Sym by providing a shift/scale to each key, ``Key(name, scale=(shift, scale))``.
+Then, set this normalization inside PhysicsNeMo Sym by providing a shift/scale to each key, ``Key(name, scale=(shift, scale))``.
 
 .. literalinclude:: ../../../examples/darcy/darcy_FNO_lazy.py
    :language: python
@@ -131,7 +131,7 @@ Thus we first initialize the small fully-connected decoder network, which we the
 Adding Data Constraints
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-For the physics-informed problems in Modulus Sym, you typically need to define a geometry and 
+For the physics-informed problems in PhysicsNeMo Sym, you typically need to define a geometry and 
 constraints based on boundary conditions and governing equations.
 Here the only constraint is a ``SupervisedGridConstraint`` which performs standard supervised
 training on grid data.
@@ -144,7 +144,7 @@ This constraint supports the use of multiple workers, which are particularly imp
 
 .. note::
 
-   Grid data refers to data that can be defined in a tensor like an image. Inside Modulus Sym this grid of data typically represents a spatial domain 
+   Grid data refers to data that can be defined in a tensor like an image. Inside PhysicsNeMo Sym this grid of data typically represents a spatial domain 
    and should follow the standard dimensionality of ``[batch, channel, xdim, ydim, zdim]`` where channel is the dimensionality of your state variables.
    Both Fourier and convolutional models use grid-based data to efficiently learn and predict entire domains in one forward pass, which contrasts to the
    pointwise predictions of standard PINN approaches.

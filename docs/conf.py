@@ -14,11 +14,11 @@
 # -- Project information -----------------------------------------------------
 import os
 import sphinx_rtd_theme
-from modulus.sym import __version__ as version
+from physicsnemo.sym import __version__ as version
 
-project = "NVIDIA Modulus Symbolic"
-copyright = "2023, NVIDIA Modulus Team"
-author = "NVIDIA Modulus Team"
+project = "NVIDIA PhysicsNeMo Symbolic"
+copyright = "2023, NVIDIA PhysicsNeMo Team"
+author = "NVIDIA PhysicsNeMo Team"
 release = version
 
 

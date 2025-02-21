@@ -7,11 +7,11 @@ Introduction
 ------------
 
 In this tutorial, you will import an STL file for a complicated geometry
-and use Modulus Sym' SDF library to sample points on the surface and the
+and use PhysicsNeMo Sym' SDF library to sample points on the surface and the
 interior of the STL and train the PINNs to predict flow in this complex
 geometry. In this tutorial you will learn the following:
 
-#. How to import an STL file in Modulus Sym and sample points in the interior
+#. How to import an STL file in PhysicsNeMo Sym and sample points in the interior
    and on the surface of the geometry.
 
 .. figure:: /images/user_guide/aneurysm.png
@@ -24,7 +24,7 @@ geometry. In this tutorial you will learn the following:
 .. note::
    This tutorial assumes that you have completed tutorial :ref:`Introductory Example`
    and have familiarized yourself with the basics
-   of the Modulus Sym APIs. Additionally, to use the modules
+   of the PhysicsNeMo Sym APIs. Additionally, to use the modules
    described in this tutorial, make sure your system satisfies the
    requirements for SDF library (:ref:`system_requirements`).
    
@@ -47,8 +47,8 @@ constant :math:`1.0`.
 Case Setup
 ----------
 
-In this tutorial, you will use Modulus Sym' ``Tessellation`` module to sample points
-using a STL geometry. The module works similar to Modulus Sym' geometry
+In this tutorial, you will use PhysicsNeMo Sym' ``Tessellation`` module to sample points
+using a STL geometry. The module works similar to PhysicsNeMo Sym' geometry
 module. Which means you can use ``PointwiseInteriorConstraint`` and ``PointwiseBoundaryConstraint`` to sample points in the interior and the boundary of the geometry and define
 appropriate constraints. Separate STL files for each boundary of the 
 geometry and another watertight geometry for sampling points in the interior of the
@@ -57,7 +57,7 @@ geometry are required.
 Importing the required packages
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The list of required packages can be found below. Import Modulus Sym'
+The list of required packages can be found below. Import PhysicsNeMo Sym'
 ``Tessellation`` module to the sample points on the STL geometry.
 
 .. literalinclude:: ../../../examples/aneurysm/aneurysm.py
@@ -117,7 +117,7 @@ Adding Validators and Monitors
 
 The process of adding validation data and monitors is similar to previous tutorials. 
 This example uses the simulation from OpenFOAM for validating the
-Modulus Sym results. Also, you can create a monitor for pressure drop across
+PhysicsNeMo Sym results. Also, you can create a monitor for pressure drop across
 the aneurysm to monitor the convergence and compare against OpenFOAM
 data. The code to generate the these domains is shown below.
 
@@ -161,38 +161,38 @@ aneurysm and the vein. A cross-sectional view in
 :numref:`fig-aneurysm-v` shows the distribution of velocity magnitude
 inside the aneurysm. One of the key challenges of this problem is
 getting the flow to develop inside the aneurysm sac and the streamline
-plot in :numref:`fig-aneurysm-stream` shows that Modulus Sym
+plot in :numref:`fig-aneurysm-stream` shows that PhysicsNeMo Sym
 successfully captures the flow field inside.
 
 
 .. _fig-aneurysm-v:
 
 .. figure:: /images/user_guide/aneurysm_v_mag_labelled.png
-   :alt: Cross-sectional view aneurysm showing velocity magnitude. Left: Modulus Sym. Center: OpenFOAM. Right: Difference
+   :alt: Cross-sectional view aneurysm showing velocity magnitude. Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference
    :width: 100.0%
    :align: center
 
-   Cross-sectional view aneurysm showing velocity magnitude. Left: Modulus Sym. Center: OpenFOAM. Right: Difference
+   Cross-sectional view aneurysm showing velocity magnitude. Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference
 
 
 .. _fig-aneurysm-p:
 
 .. figure:: /images/user_guide/aneurysm_p_labelled.png
-   :alt: Pressure across aneurysm. Left: Modulus Sym. Center: OpenFOAM. Right: Difference
+   :alt: Pressure across aneurysm. Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference
    :width: 100.0%
    :align: center
 
-   Pressure across aneurysm. Left: Modulus Sym. Center: OpenFOAM. Right: Difference
+   Pressure across aneurysm. Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference
 
 
 .. _fig-aneurysm-stream:
 
 .. figure:: /images/user_guide/aneurysm_streamlines3_crop.png
-   :alt: Flow streamlines inside the aneurysm generated from Modulus Sym simulation.
+   :alt: Flow streamlines inside the aneurysm generated from PhysicsNeMo Sym simulation.
    :width: 50.0%
    :align: center
 
-   Flow streamlines inside the aneurysm generated from Modulus Sym simulation.
+   Flow streamlines inside the aneurysm generated from PhysicsNeMo Sym simulation.
 
 
 Accelerating the Training of Neural Network Solvers via Transfer Learning
@@ -227,7 +227,7 @@ intracranial aneurysm models with different sac shapes.
 
    Transfer learning accelerates intracranial aneurysm simulations. Results are for two intracranial aneurysms with different sac shapes.
 
-To use transfer learning in Modulus Sym, set ``'initialize_network_dir'`` in the configs
+To use transfer learning in PhysicsNeMo Sym, set ``'initialize_network_dir'`` in the configs
 to the source model network checkpoint. Also, since in transfer learning
 you fine-tune the source model instead of training from scratch, use a
 relatively smaller learning rate compared to a full run, with smaller
@@ -236,7 +236,7 @@ number of iterations and faster decay, as shown below.
 .. code:: yaml
     
     defaults :
-      - modulus_default
+      - physicsnemo_default
       - arch:
           - fully_connected
       - scheduler: tf_exponential_lr

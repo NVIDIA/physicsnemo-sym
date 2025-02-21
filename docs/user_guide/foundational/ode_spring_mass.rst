@@ -6,16 +6,16 @@ Coupled Spring Mass ODE System
 Introduction
 ------------
 
-In this tutorial Modulus Sym is used to solve a system of coupled
+In this tutorial PhysicsNeMo Sym is used to solve a system of coupled
 ordinary differential equations. Since the APIs used for this problem
 have already been covered in a previous tutorial, only the
 problem description is discussed without going into the details of the code.
 
 .. note::
    This tutorial assumes that you have completed tutorial :ref:`Introductory Example`
-   and have familiarized yourself with the basics of the Modulus Sym APIs. 
+   and have familiarized yourself with the basics of the PhysicsNeMo Sym APIs. 
    Also, refer to tutorial :ref:`transient` for information on defining new
-   differential equations, and solving time dependent problems in Modulus Sym.
+   differential equations, and solving time dependent problems in PhysicsNeMo Sym.
    
 Problem Description
 -------------------
@@ -132,15 +132,15 @@ solver script ``spring_mass_solver.py`` as seen in other tutorials.
 Results and Post-processing
 ---------------------------
 
-The results for the Modulus Sym simulation are compared against the
+The results for the PhysicsNeMo Sym simulation are compared against the
 analytical validation data. You can see that the solution converges to
 the analytical result very quickly. The plots can be created
 using the ``.npz`` files that are created in the ``validator/`` directory
 in the network checkpoint.
 
 .. figure:: /images/user_guide/comparison_ode.png
-   :alt: Comparison of Modulus Sym results with an analytical solution
+   :alt: Comparison of PhysicsNeMo Sym results with an analytical solution
    :width: 70.0%
    :align: center
 
-   Comparison of Modulus Sym results with an analytical solution.
+   Comparison of PhysicsNeMo Sym results with an analytical solution.

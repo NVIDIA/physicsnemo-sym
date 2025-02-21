@@ -145,7 +145,7 @@ Case Setup - Standard Wall Functions
 ------------------------------------
 
 The equations are symbolically defined using the custom PDEs (for details on 
-setting up custom PDEs in Modulus Sym, please see :ref:`transient`). For these problems, the convergence behavior is greatly influenced by the initialization of the network. 
+setting up custom PDEs in PhysicsNeMo Sym, please see :ref:`transient`). For these problems, the convergence behavior is greatly influenced by the initialization of the network. 
 Therefore, this example starts by training the network to predict constant profiles for turbulent flow quantities and then slowly ramps up the equation losses while ramping down the initialization losses. To do this, a :ref:`custom_aggregator` is defined. 
 
 For the Standard wall function approach, the equation :eq:`log-law` needs to be satisfied exactly. So, train a neural network that can lookup values of :math:`u_{\tau}`. This is done by solving the log law for a range of :math:`u` and
@@ -170,7 +170,7 @@ For this, use the initialization strategy that is used for CFD problems discusse
 Custom Aggregator
 ~~~~~~~~~~~~~~~~~
 
-The aggregator in Modulus Sym combines different loss terms together to form a global loss that is used by the network during optimization. The default behavior of the aggregator is to sum all the weighted losses. However, this example varies which losses are applied in the begining of the model training (initialization losses) and which ones are applied later (equations and wall function relations). For this, a :math:`tanh` function is used to smoothly ramp up and ramp down the different losses. The code for the following is shown here: 
+The aggregator in PhysicsNeMo Sym combines different loss terms together to form a global loss that is used by the network during optimization. The default behavior of the aggregator is to sum all the weighted losses. However, this example varies which losses are applied in the begining of the model training (initialization losses) and which ones are applied later (equations and wall function relations). For this, a :math:`tanh` function is used to smoothly ramp up and ramp down the different losses. The code for the following is shown here: 
 
 .. literalinclude:: ../../../examples/turbulent_channel/2d_std_wf/custom_aggregator.py
    :language: python
@@ -204,7 +204,7 @@ the script to solve the problem as shown below. There is no seperate network for
 Post-processing, Results and Discussion
 ---------------------------------------
 
-The Modulus Sym results are shown in the figure below along with the DNS data [#moser1999direct]_ and Solver data [#gistanford]_. Observe that the the nondimensionalized velocity and turbulent kinetic energy profiles match very well with the DNS and solver data. Also, the k-omega models are able to predict the friction velocity with better accuracy when compared to the k-epsilon models. 
+The PhysicsNeMo Sym results are shown in the figure below along with the DNS data [#moser1999direct]_ and Solver data [#gistanford]_. Observe that the the nondimensionalized velocity and turbulent kinetic energy profiles match very well with the DNS and solver data. Also, the k-omega models are able to predict the friction velocity with better accuracy when compared to the k-epsilon models. 
 
 .. figure:: /images/user_guide/turbulent_channel_results.png
    :alt: Turbulent flow in a 2D channel 

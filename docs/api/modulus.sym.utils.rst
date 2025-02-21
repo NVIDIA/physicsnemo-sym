@@ -1,34 +1,34 @@
-Modulus Sym Utilities
+PhysicsNeMo Sym Utilities
 ============================
 
 
 Input / Ouput
 ------------------------------------
 
-.. automodule:: modulus.sym.utils.io.plotter
+.. automodule:: physicsnemo.sym.utils.io.plotter
    :members:
    :show-inheritance:
 
-.. automodule:: modulus.sym.utils.io.vtk
+.. automodule:: physicsnemo.sym.utils.io.vtk
    :members:
    :show-inheritance:
 
-.. automodule:: modulus.sym.utils.io.csv_rw
+.. automodule:: physicsnemo.sym.utils.io.csv_rw
    :members:
    :show-inheritance:
 
 Sympy
 -------------------------------------------
 
-.. automodule::  modulus.sym.utils.sympy.functions
+.. automodule::  physicsnemo.sym.utils.sympy.functions
    :members:
    :show-inheritance:
 
-.. automodule:: modulus.sym.utils.sympy.numpy_printer
+.. automodule:: physicsnemo.sym.utils.sympy.numpy_printer
    :members:
    :show-inheritance:
 
-.. automodule:: modulus.sym.utils.sympy.torch_printer
+.. automodule:: physicsnemo.sym.utils.sympy.torch_printer
    :members:
    :show-inheritance:
 
@@ -36,10 +36,10 @@ Sympy
 Variational PINNs
 -------------------------------------------
 
-.. automodule:: modulus.sym.utils.vpinn.integral
+.. automodule:: physicsnemo.sym.utils.vpinn.integral
    :members:
    :show-inheritance:
 
-.. automodule:: modulus.sym.utils.vpinn.test_functions
+.. automodule:: physicsnemo.sym.utils.vpinn.test_functions
    :members:
    :show-inheritance:

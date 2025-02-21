@@ -1,12 +1,12 @@
 
 .. _architectures:
 
-Architectures In Modulus Sym
+Architectures In PhysicsNeMo Sym
 ============================
 
 In this section, we discuss some of the advanced and state-of-the-art
 Deep learning architectures and schemes that have become a part of
-Modulus Sym library.
+PhysicsNeMo Sym library.
 
 Fourier Network
 --------------------
@@ -19,7 +19,7 @@ to alleviate this issue is to perform input encoding, that is, to
 transform the inputs to a higher dimensional feature space via
 high-frequency functions
 [#mildenhall2020nerf]_, [#rahaman2019spectral]_, [#tancik2020fourier]_.
-This is done in Modulus Sym using the Fourier networks, which takes the
+This is done in PhysicsNeMo Sym using the Fourier networks, which takes the
 following form:
 
 .. math::
@@ -39,7 +39,7 @@ parameters, i.e.,
 :math:`n` is the number of layers, and :math:`\sigma` is the activation
 function. :math:`\phi_E` is an input encoding layer, and by setting that
 to identity function, we arrive at the standard feed-forward
-fully-connected architecture. The input encoding layer in Modulus Sym is a
+fully-connected architecture. The input encoding layer in PhysicsNeMo Sym is a
 variation of the one proposed in [#tancik2020fourier]_
 with trainable encoding, and takes the following form
 
@@ -57,7 +57,7 @@ In the case of parameterized examples, it is also possible to apply
 encoding to the parameters in addition to the spatial inputs. In fact,
 it has been observed that applying encoding to the parametric inputs in
 addition to the spatial inputs will improve the accuracy and the
-training convergence of the model. Note that Modulus Sym applies the input
+training convergence of the model. Note that PhysicsNeMo Sym applies the input
 encoding to the spatial and parametric inputs in a fully decoupled
 setting and then concatenates the spatial/temporal and parametric
 Fourier features together. Details on the usage of Fourier net can be
@@ -99,7 +99,7 @@ sink can be found in tutorial :ref:`fpga`.
 Highway Fourier Network
 ------------------------------
 
-Highway Fourier network is a Modulus Sym variation of the Fourier
+Highway Fourier network is a PhysicsNeMo Sym variation of the Fourier
 network, inspired by the highway networks proposed in
 [#srivastava2015training]_. Highway networks consist of
 adaptive gating units that control the flow of information, and are
@@ -212,8 +212,8 @@ is scaled by a factor :math:`\omega` to span multiple periods of the Sin
 function. This was empirically shown to give good performance and is in
 line with the benefits of the input encoding in the Fourier network. The
 authors suggest :math:`\omega=30` to perform well under many
-circumstances and is the default value given in Modulus Sym as well. Details
-on how to use the SiReN architecture in Modulus Sym can be found in 
+circumstances and is the default value given in PhysicsNeMo Sym as well. Details
+on how to use the SiReN architecture in PhysicsNeMo Sym can be found in 
 :ref:`config`.
 
 DGM Architecture
@@ -276,7 +276,7 @@ used, and network nonlinearity comes from the multiplicative filters
 only. In this setting, it has been shown in
 [#fathony2020multiplicative]_ that the output of a
 multiplicative Filter network can be represented as a linear combination
-of Fourier or Gabor bases. In Modulus Sym, the user can choose whether to use
+of Fourier or Gabor bases. In PhysicsNeMo Sym, the user can choose whether to use
 activation functions or not. The Fourier filters take the following
 form:
 
@@ -333,7 +333,7 @@ transform :math:`W_{i}` and activation function :math:`\sigma(\cdot)`.
 Similarly :math:`\mathcal{Q}` is the point-wise fully-connected decoding network, :math:`\mathcal{P}: \mathbb{R}^{k} \rightarrow \mathbb{R}^{d_out}`.
 Since all fully-connected components of FNO are point-wise operations, the model is invariant to the dimensionality of
 the input.
-Additional information on FNO and its implementation in Modulus Sym can be found in the example :ref:`darcy_fno`.
+Additional information on FNO and its implementation in PhysicsNeMo Sym can be found in the example :ref:`darcy_fno`.
 
 .. note::
     While FNO is technically invariant to the dimensionality of the discretized domain :math:`D`, this domain *must* be
@@ -382,7 +382,7 @@ At the end of all the transformer layers, a linear decoder converts the feature 
 
 There are several important hyperparameters that affect the accuracy and computational cost of the AFNO. 
 Empirically, the most important hyperparameters that should be tuned keeping in mind the task at hand are the number of layers, patch size, the embedding dimension and the number of blocks.
-Additional information on AFNO and its implementation in Modulus Sym can be found in the example :ref:`darcy_afno`.
+Additional information on AFNO and its implementation in PhysicsNeMo Sym can be found in the example :ref:`darcy_afno`.
 
 .. _pino:
 
@@ -457,12 +457,12 @@ from high-dimensional data. This will be more efficient than a fully-connected n
 Pix2Pix Net
 -----------
 
-Pix2Pix network in Modulus Sym is a convolutional encoder-decoder based on the pix2pix [#isola2017imagetoimage]_ and pix2pixHD [#wang2018high]_ generator models.
-The implementation inside of Modulus Sym is a streamlined version of these models that can be used for various problems involving data that is structured.
+Pix2Pix network in PhysicsNeMo Sym is a convolutional encoder-decoder based on the pix2pix [#isola2017imagetoimage]_ and pix2pixHD [#wang2018high]_ generator models.
+The implementation inside of PhysicsNeMo Sym is a streamlined version of these models that can be used for various problems involving data that is structured.
 This model consists of three main components: downscaling layers, residual blocks and upscaling layers.
 
 .. figure:: /images/user_guide/pix2pix_arch.png
-   :alt: Pix2Pix architecture in Modulus Sym
+   :alt: Pix2Pix architecture in PhysicsNeMo Sym
    :width: 60.0%
    :align: center
 
@@ -481,19 +481,19 @@ Lastly, the upscaling section mirrors the downscaling section with transposed co
 .. math:: y = (\textrm{ConvT}(s=2) \circ \textrm{BatchNorm}(\cdot) \circ \sigma(\cdot))^{\circ n}(z).
 
 The pix2pix encoder-decoder also allows users to upscale the resolution of the input output feature with an additional set of transpose convolutional layers.
-Information regarding using this model in Modulus Sym can be found in the example :ref:`turbulence_super_res`.
+Information regarding using this model in PhysicsNeMo Sym can be found in the example :ref:`turbulence_super_res`.
 
 .. _super_res:
 
 Super Resolution Net
 --------------------
 
-The super resolution network in Modulus Sym is a convolutional decoder that is specifically designed for super resolution problems [#ledig2012high]_.
+The super resolution network in PhysicsNeMo Sym is a convolutional decoder that is specifically designed for super resolution problems [#ledig2012high]_.
 This model can be particularly useful for mapping between low to high resolution data that is on a structured grid.
 This model consists of just two parts: convolutional residual blocks and upscaling blocks.
 
 .. figure:: /images/user_guide/super_res_arch.png
-   :alt: Super resolution architecture in Modulus Sym
+   :alt: Super resolution architecture in PhysicsNeMo Sym
    :width: 50.0%
    :align: center
 
@@ -507,7 +507,7 @@ The second part of the model consists of :math:`n` upscaling blocks which each c
 .. math:: y = (\textrm{Conv} \circ \textrm{PixShuffle}(s=2) \circ \sigma(\cdot))^{\circ n}(z).
 
 Each upscaling layer increases the dimensionality of the feature by a factor of 2.
-Additional information regarding this model and its use in Modulus Sym can be found in the example :ref:`turbulence_super_res`.
+Additional information regarding this model and its use in PhysicsNeMo Sym can be found in the example :ref:`turbulence_super_res`.
 
 
 .. rubric:: References

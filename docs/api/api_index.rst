@@ -1,5 +1,5 @@
 
-Welcome to the Modulus Sym API documentation.
+Welcome to the PhysicsNeMo Sym API documentation.
 
 Core API
 ===========
@@ -7,15 +7,15 @@ Core API
 .. toctree::
    :maxdepth: 1
 
-   modulus.sym
-   modulus.sym.domain.constraint
-   modulus.sym.domain.inferencer
-   modulus.sym.domain.validator
-   modulus.sym.domain.monitor
-   modulus.sym.loss
-   modulus.sym.hydra
-   modulus.sym.geometry
-   modulus.sym.eq
+   physicsnemo.sym
+   physicsnemo.sym.domain.constraint
+   physicsnemo.sym.domain.inferencer
+   physicsnemo.sym.domain.validator
+   physicsnemo.sym.domain.monitor
+   physicsnemo.sym.loss
+   physicsnemo.sym.hydra
+   physicsnemo.sym.geometry
+   physicsnemo.sym.eq
 
 Models
 ===========
@@ -23,7 +23,7 @@ Models
 .. toctree::
    :maxdepth: 1
 
-   modulus.sym.models
+   physicsnemo.sym.models
 
 Utilities
 ===============
@@ -31,4 +31,4 @@ Utilities
 .. toctree::
    :maxdepth: 1
 
-   modulus.sym.utils
+   physicsnemo.sym.utils
