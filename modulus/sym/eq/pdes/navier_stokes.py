@@ -121,11 +121,13 @@ class NavierStokes(PDE):
         # set equations
         self.equations = {}
         self.equations["continuity"] = (
-            rho.diff(t) + (rho * u).diff(x) + (rho * v).diff(y) + (rho * w).diff(z)
+            rho.diff(t) + (rho * u).diff(x) +
+            (rho * v).diff(y) + (rho * w).diff(z)
         )
 
         if not self.mixed_form:
-            curl = Number(0) if rho.diff(x) == 0 else u.diff(x) + v.diff(y) + w.diff(z)
+            curl = Number(0) if rho.diff(x) == 0 else u.diff(
+                x) + v.diff(y) + w.diff(z)
             self.equations["momentum_x"] = (
                 (rho * u).diff(t)
                 + (
@@ -349,6 +351,91 @@ class GradNormal(PDE):
         )
 
 
+class NavierStokesIncompressible(PDE):
+    '''Custom  implementation of incompressible NS equations'''
+
+    name = "navier stokes incompressible"
+
+    def __init__(self, nu, rho=1, dim=3, time=False):
+        '''Parameters
+        ==========
+        nu : float, Sympy Symbol/Expr, str
+            The kinematic viscosity. If `nu` is a str then it is
+            converted to Sympy Function of form `nu(x,y,z,t)`.
+            If `nu` is a Sympy Symbol or Expression then this
+            is substituted into the equation. This allows for
+            variable viscosity.
+        rho : float, int
+            The density of the fluid. Default is 1.
+        dim : int
+            Dimension of the Navier Stokes (2 or 3). Default is 3.
+        time : bool
+            If time-dependent equations or not. Default is False.'''
+
+        self.dim = dim
+        self.time = time
+
+        # coordinates
+        x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+
+        # time
+        t = Symbol("t")
+
+        input_variables = {"x": x, "y": y, "z": z, "t": t}
+        if self.dim == 2:
+            input_variables.pop("z")
+        if not self.time:
+            input_variables.pop("t")
+
+         # kinematic viscosity
+        if isinstance(nu, str):
+            nu = Function(nu)(*input_variables)
+        elif isinstance(nu, (float, int)):
+            nu = Number(nu)
+
+        # density
+        if isinstance(rho, str):
+            raise Exception("rho must be number")
+        elif isinstance(rho, (float, int)):
+            rho = Number(rho)
+
+        u = Function("u")(*input_variables)
+        v = Function("v")(*input_variables)
+        if self.dim == 3:
+            w = Function("w")(*input_variables)
+        else:
+            w = Number(0)
+
+        # pressure
+        p = Function("p")(*input_variables)
+
+        # set equations
+        self.equations = {}
+        self.equations["continuity"] = (
+            u.diff(x) + v.diff(y) + w.diff(z)
+        )
+
+        self.equations["momentum_x"] = (
+            u.diff(t) + u * u.diff(x) + v * u.diff(y) +
+            w * u.diff(z) + 1 / rho * p.diff(x)
+            - nu * (u.diff(x).diff(x) + u.diff(y).diff(y) + u.diff(z).diff(z))
+        )
+
+        self.equations["momentum_y"] = (
+            v.diff(t) + u * v.diff(x) + v * v.diff(y) +
+            w * v.diff(z) + 1 / rho * p.diff(y)
+            - nu * (v.diff(x).diff(x) + v.diff(y).diff(y) + v.diff(z).diff(z))
+        )
+        self.equations["momentum_z"] = (
+            w.diff(t) + u * w.diff(x) + v * w.diff(y) +
+            w * w.diff(z) + 1 / rho * p.diff(z)
+            - nu * (w.diff(x).diff(x) + w.diff(y).diff(y) + w.diff(z).diff(z))
+        )
+
+        if self.dim == 2:
+            self.equations.pop("momentum_z")
+
+
 class Curl(PDE):
     """
     del cross vector operator
@@ -516,3 +603,88 @@ class FluxContinuity(PDE):
             self.equations[str(T) + "_flux"] += (
                 Symbol(v) * n * rho * T - rho * D * n * g
             )
+
+
+class Euler(PDE):
+    '''Custom implementation of compressible Euler equations'''
+
+    def __init__(self, rho=1, dim=3, ratio_heats=1.4, time=False):
+        '''
+        Parameters
+        ==========
+        rho : float, Sympy Symbol/Expr, str
+            The density of the fluid. If `rho` is a str then it is
+            converted to Sympy Function of form 'rho(x,y,z,t)'.
+            If 'rho' is a Sympy Symbol or Expression then this
+            is substituted into the equation to allow for
+            compressible Navier Stokes. Default is 1.
+        dim : int
+            Dimension of the Navier Stokes (2 or 3). Default is 3.
+        time : bool
+            If time-dependent equations or not. Default is False.
+        ratio_heats : float
+            Ratio of specific heats. Default is 1.4 (for air).
+        '''
+        self.dim = dim
+        self.time = time
+
+        # coordinates
+        x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+
+        # time
+        t = Symbol("t")
+
+        # make input variables
+        input_variables = {"x": x, "y": y, "z": z, "t": t}
+        if self.dim == 2:
+            input_variables.pop("z")
+        if not self.time:
+            input_variables.pop("t")
+
+        u = Function("u")(*input_variables)
+        v = Function("v")(*input_variables)
+        if self.dim == 3:
+            w = Function("w")(*input_variables)
+        else:
+            w = Number(0)
+
+        # pressure
+        p = Function("p")(*input_variables)
+
+        # density
+        if isinstance(rho, str):
+            rho = Function(rho)(*input_variables)
+        elif isinstance(rho, (float, int)):
+            rho = Number(rho)
+
+        self.equations = {}
+
+        e = p / (rho * (ratio_heats - 1))
+        # Energy
+        E = rho * (e + (u ** 2 + v ** 2 + w ** 2) / 2)
+
+        self.equations["continuity"] = (
+            rho.diff(t) + (rho * u).diff(x) +
+            (rho * v).diff(y) + (rho * w).diff(z)
+        )
+
+        self.equations["momentum_x"] = (
+            (rho * u).diff(t) + (rho * u ** 2 + p).diff(x) +
+            (rho * u * v).diff(y) + (rho * u * w).diff(z)
+
+        )
+
+        self.equations["momentum_y"] = (
+            (rho * v).diff(t) + (rho * u * v).diff(x) +
+            (rho * v ** 2 + p).diff(y) + (rho * v * w).diff(z)
+        )
+
+        self.equations["momentum_z"] = (
+            (rho * w).diff(t) + (rho * u * w).diff(x) +
+            (rho * v * w).diff(y) + (rho * w ** 2 + p).diff(z)
+        )
+
+        self.equations["energy"] = (
+            E.diff(t) + (u * (E + p)).diff(x) +
+            (v * (E + p)).diff(y) + (w * (E + p)).diff(z)
+        )
