@@ -12,15 +12,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update `inspect.getargspec` usage
+
 ### Deprecated
 
 ### Removed
 
 ### Fixed
 
+- Fix optimizer checkpoint loading errors
+
 ### Security
 
 ### Dependencies
+
+- Remove upper bound for Cython
+- Add upper bound for numpoly (transitive dependency of chaospy)
 
 ## [1.8.0] - 2024-12-04
 

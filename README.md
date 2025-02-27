@@ -110,7 +110,7 @@ The recommended method for installing the latest version of PhysicsNeMo Symbolic
 using PyPi:
 
 ```bash
-pip install "pint==0.19.2"
+pip install "Cython"
 pip install nvidia-physicsnemo.sym --no-build-isolation
 ```
 

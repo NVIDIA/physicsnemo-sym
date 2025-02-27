@@ -1030,7 +1030,10 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         log.info("attempting to restore from: " + add_hydra_run_path(network_dir))
         if os.path.exists(optimizer_checkpoint_file):
             try:
-                checkpoint = torch.load(optimizer_checkpoint_file, map_location=device)
+                checkpoint = torch.load(
+                    optimizer_checkpoint_file, map_location=device, weights_only=False
+                )
+
                 optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
                 aggregator.load_state_dict(checkpoint["aggregator_state_dict"])
                 scheduler.load_state_dict(checkpoint["scheduler_state_dict"])
@@ -1043,7 +1046,10 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 fail = colored("Fail loading optimizer: ", "red")
                 step = 0
                 log.info(
-                    fail + add_hydra_run_path(network_dir + "/optim_checkpoint.pth")
+                    fail
+                    + add_hydra_run_path(
+                        network_dir + f"/optim_checkpoint.{model_parallel_rank}.pth"
+                    )
                 )
         else:
             log.warning("optimizer checkpoint not found")

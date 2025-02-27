@@ -17,6 +17,7 @@
 from typing import Dict, List, Union, Callable
 from pathlib import Path
 import inspect
+import sys
 
 import torch
 import numpy as np
@@ -30,6 +31,57 @@ from physicsnemo.sym.distributed import DistributedManager
 from physicsnemo.sym.utils.io import InferencerPlotter
 from physicsnemo.sym.utils.io.vtk import var_to_polyvtk, VTKBase, VTKUniformGrid
 from physicsnemo.sym.dataset import DictInferencePointwiseDataset
+
+
+def _get_function_argspec(func):
+    if sys.version_info >= (3, 11):
+        sig = inspect.signature(func)  # Use the latest function in 3.11+
+        return {
+            "args": [
+                param
+                for param in sig.parameters
+                if sig.parameters[param].kind
+                in (
+                    inspect.Parameter.POSITIONAL_ONLY,
+                    inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                )
+            ],
+            "varargs": next(
+                (
+                    param
+                    for param in sig.parameters
+                    if sig.parameters[param].kind == inspect.Parameter.VAR_POSITIONAL
+                ),
+                None,
+            ),
+            "varkw": next(
+                (
+                    param
+                    for param in sig.parameters
+                    if sig.parameters[param].kind == inspect.Parameter.VAR_KEYWORD
+                ),
+                None,
+            ),
+            "defaults": [
+                param.default
+                for param in sig.parameters.values()
+                if param.default is not param.empty
+            ],
+            "kwonlyargs": [
+                param
+                for param in sig.parameters
+                if sig.parameters[param].kind == inspect.Parameter.KEYWORD_ONLY
+            ],
+        }
+    else:
+        argspec = inspect.getfullargspec(func)  # Backward-compatible approach
+        return {
+            "args": argspec.args,
+            "varargs": argspec.varargs,
+            "varkw": argspec.varkw,
+            "defaults": argspec.defaults,
+            "kwonlyargs": argspec.kwonlyargs,
+        }
 
 
 class PointVTKInferencer(PointwiseInferencer):
@@ -91,7 +143,7 @@ class PointVTKInferencer(PointwiseInferencer):
         self.mask_value = mask_value
         self.mask_index = None
         if mask_fn is not None:
-            args, _, _, _ = inspect.getargspec(mask_fn)
+            args = _get_function_argspec(mask_fn)["args"]
             # Fall back np_lambdify does not supply arguement names
             # Ideally np_lambdify should allow input names to be queried
             if len(args) == 0:
