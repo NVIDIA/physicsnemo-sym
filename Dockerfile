@@ -79,7 +79,13 @@ RUN if [ "$TARGETPLATFORM" = "linux/amd64" ] && [ "$TCNN_CUDA_AMD64_WHEEL" != "u
 FROM builder as ci
 
 # Install PhysicsNeMo
-RUN pip install --upgrade --no-cache-dir git+https://github.com/NVIDIA/modulus.git@main
+RUN if [ -e "/physicsnemo-sym/deps/physicsnemo" ]; then \
+        # Install from local instance
+        echo "Installing PhysicsNeMo from local instance" && \
+        cd /physicsnemo-sym/deps/physicsnemo/ && pip install . ; \
+    else \
+        pip install --upgrade --no-cache-dir git+https://github.com/NVIDIA/modulus.git@main ;\
+    fi
 
 RUN pip install --no-cache-dir "black==22.10.0" "interrogate==1.5.0" "coverage==6.5.0"
 

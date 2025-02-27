@@ -23,8 +23,60 @@ import inspect
 import numpy as np
 import symengine as se
 import sympy as sp
+import sys
 
 NP_LAMBDA_STORE = {}
+
+
+def _get_function_argspec(func):
+    if sys.version_info >= (3, 11):
+        sig = inspect.signature(func)  # Use the latest function in 3.11+
+        return {
+            "args": [
+                param
+                for param in sig.parameters
+                if sig.parameters[param].kind
+                in (
+                    inspect.Parameter.POSITIONAL_ONLY,
+                    inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                )
+            ],
+            "varargs": next(
+                (
+                    param
+                    for param in sig.parameters
+                    if sig.parameters[param].kind == inspect.Parameter.VAR_POSITIONAL
+                ),
+                None,
+            ),
+            "varkw": next(
+                (
+                    param
+                    for param in sig.parameters
+                    if sig.parameters[param].kind == inspect.Parameter.VAR_KEYWORD
+                ),
+                None,
+            ),
+            "defaults": [
+                param.default
+                for param in sig.parameters.values()
+                if param.default is not param.empty
+            ],
+            "kwonlyargs": [
+                param
+                for param in sig.parameters
+                if sig.parameters[param].kind == inspect.Parameter.KEYWORD_ONLY
+            ],
+        }
+    else:
+        argspec = inspect.getfullargspec(func)  # Backward-compatible approach
+        return {
+            "args": argspec.args,
+            "varargs": argspec.varargs,
+            "varkw": argspec.varkw,
+            "defaults": argspec.defaults,
+            "kwonlyargs": argspec.kwonlyargs,
+        }
 
 
 def np_lambdify(f, r):
@@ -70,7 +122,7 @@ def np_lambdify(f, r):
         # check if already a numpy function
         if isinstance(f_i, types.FunctionType):
             # add r inputs to function
-            args = inspect.getargspec(f_i).args
+            args = _get_function_argspec(f_i)["args"]
 
             def lambdify_f_i(**x):
                 return f_i(**{key: x[key] for key in args})
