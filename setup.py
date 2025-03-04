@@ -27,11 +27,11 @@ def cuda_extension():
     version_pattern = re.match(r"^(\d+)(?:\.(\d+))?(?:\.(\d+))?", torch.version.cuda)
     if not version_pattern:
         raise RuntimeError(f"Unable to parse CUDA version: {torch.version.cuda=}")
-    
+
     # Extract components, defaulting to 0 if not present
     cuda_major = int(version_pattern.group(1))
     cuda_minor = int(version_pattern.group(2) or 0)
-    
+
     nvcc_args = [
         "-gencode=arch=compute_70,code=sm_70",
         "-gencode=arch=compute_75,code=sm_75",
