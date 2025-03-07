@@ -1,12 +1,12 @@
 
 Post Processing in PhysicsNeMo Sym
-==============================
+==================================
 
 
 .. _tensorboard:
 
 TensorBoard in PhysicsNeMo Sym
---------------------------
+------------------------------
 
 Introduction
 ^^^^^^^^^^^^
@@ -143,7 +143,7 @@ Finally, run the example code. You should automatically see your plots being add
 .. _vtk:
 
 VTK Utilities in PhysicsNeMo Sym
-----------------------------
+--------------------------------
 
 Introduction
 ^^^^^^^^^^^^

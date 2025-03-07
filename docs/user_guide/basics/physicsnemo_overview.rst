@@ -1,8 +1,8 @@
 PhysicsNeMo Sym Overview
-====================
+=========================
 
 PhysicsNeMo Sym Building Blocks
----------------------------
+-------------------------------
 
 * **Geometry and Data**
     PhysicsNeMo Sym provides both physics-informed and data-driven machine learning solutions for physics simulation problems.
@@ -54,7 +54,7 @@ PhysicsNeMo Sym Building Blocks
     ``Monitor`` results can also be exported to a text file in comma-separated values (CSV) format.
 
 PhysicsNeMo Sym Development Workflow
---------------------------------
+-------------------------------------
 
 The figure below illustrates a typical workflow when developing in PhysicsNeMo Sym.
 Not all problems will call for exactly this workflow, but it serves as a general guide.
@@ -83,7 +83,7 @@ More details of each step can be found in the :ref:`Introductory Example` chapte
 
 
 PhysicsNeMo Sym Training Algorithm
-------------------------------
+----------------------------------
 
 .. _fig-physicsnemo-training-loop:
 

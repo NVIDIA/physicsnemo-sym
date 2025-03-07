@@ -2,7 +2,7 @@
 .. _architectures:
 
 Architectures In PhysicsNeMo Sym
-============================
+================================
 
 In this section, we discuss some of the advanced and state-of-the-art
 Deep learning architectures and schemes that have become a part of

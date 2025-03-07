@@ -1,7 +1,7 @@
 .. _tipsTricks:
 
 Recommended Practices in PhysicsNeMo Sym
-====================================
+=========================================
 
 Physics Informed Neural Networks
 --------------------------------

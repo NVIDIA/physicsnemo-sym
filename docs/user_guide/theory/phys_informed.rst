@@ -1,5 +1,5 @@
 Physics Informed Neural Networks in PhysicsNeMo Sym
-===============================================
+====================================================
 
 .. _nn_methodology:
 
