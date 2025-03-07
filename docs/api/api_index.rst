@@ -1,8 +1,8 @@
 
 Welcome to the PhysicsNeMo Sym API documentation.
 
-Core API
-===========
+Fundamental API
+================
 
 .. toctree::
    :maxdepth: 1

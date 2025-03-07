@@ -1,7 +1,7 @@
 .. _config: 
 
 PhysicsNeMo Sym Configuration
-=========================
+=============================
 
 PhysicsNeMo Sym employs an extension of the `Hydra configuration framework <https://hydra.cc/>`_ to offer a highly customizable but user friendly method
 for configuring the majority of PhysicsNeMo Sym' features.

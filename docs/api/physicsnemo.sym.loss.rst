@@ -1,8 +1,8 @@
 PhysicsNeMo Sym Loss
-================
+====================
 
 physicsnemo.sym.loss.loss
-----------------------
+--------------------------
 
 .. automodule:: physicsnemo.sym.loss.loss
    :members:
@@ -10,7 +10,7 @@ physicsnemo.sym.loss.loss
 
 
 physicsnemo.sym.loss.aggregator
-----------------------------
+--------------------------------
 
 .. automodule:: physicsnemo.sym.loss.aggregator
    :members:
