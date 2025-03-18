@@ -1,6 +1,9 @@
 # PhysicsNeMo Symbolic
 
 <!-- markdownlint-disable -->
+
+📝 NVIDIA Modulus has been renamed to NVIDIA PhysicsNeMo
+
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GitHub](https://img.shields.io/github/license/NVIDIA/modulus)](https://github.com/NVIDIA/modulus/blob/master/LICENSE.txt)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -9,6 +12,7 @@
 | [**Install guide**](#installation)
 | [**Contributing Guidelines**](#contributing-to-physicsnemo)
 | [**Resources**](#resources)
+| [**PhysicsNeMo Migration Guide**](#physicsnemo-migration-guide)
 | [**Communication**](#communication)
 
 ## What is PhysicsNeMo Symbolic?
@@ -161,6 +165,25 @@ docker build -t physicsnemo-sym:deploy \
 ```
 
 Currently only `linux/amd64` and `linux/arm64` platforms are supported.
+
+## PhysicsNeMo Migration Guide
+
+NVIDIA Modulus has been renamed to NVIDIA PhysicsNeMo. For migration:
+
+- Use `pip install nvidia-physicsnemo.sym` rather than
+  `pip install nvidia-modulus.sym` for PyPi wheels.
+- Use `nvcr.io/nvidia/physicsnemo/physicsnemo:<tag>` rather than
+  `nvcr.io/nvidia/modulus/modulus:<tag>` for Docker containers.
+- Replace `nvidia-modulus.sym` by `nvidia-physicsnemo.sym` in your pip requirements
+  files (`requirements.txt`, `setup.py`, `setup.cfg`, `pyproject.toml`, etc.)
+- In your code, change the import statements from `import modulus.sym` to
+  `import physicsnemo.sym`
+
+The old PyPi registry and the NGC container registry will be deprecated soon
+and will not receive any bug fixes/updates. The old checkpoints will remain
+compatible with these updates.
+
+More details to follow soon.
 
 ## Contributing to PhysicsNeMo
 
