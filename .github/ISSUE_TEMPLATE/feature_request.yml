@@ -23,8 +23,8 @@ body:
     attributes:
       value: |
         Thanks for taking the time to help Modulus and fill out this feature request!
-        - By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/NVIDIA/modulus-sym/blob/main/CONTRIBUTING.md)
-        - You also confirm that you have searched the [open documentation issues](https://github.com/NVIDIA/modulus-sym/issues) and have found no duplicates for this request
+        - By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/NVIDIA/physicsnemo-sym/blob/main/CONTRIBUTING.md)
+        - You also confirm that you have searched the [open documentation issues](https://github.com/NVIDIA/physicsnemo-sym/issues) and have found no duplicates for this request
 
   - type: dropdown
     id: new_or_improvement

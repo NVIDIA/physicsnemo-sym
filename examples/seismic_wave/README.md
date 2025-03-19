@@ -4,7 +4,7 @@ This example uses PINNs for emulating 2D time-dependent seismic wave propagation
 
 ## Problem overview
 This sample illustrates how to solve the acoustic wave equation
-You can get more details on this sample from the [documentation](https://docs.nvidia.com/deeplearning/physicsnemo/Modulus-sym-v110/user_guide/foundational/2d_wave_equation.html)
+You can get more details on this sample from the [documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/foundational/2d_wave_equation.html)
 
 ## Dataset
 
@@ -24,4 +24,4 @@ python wave_2d.py
 
 ## References
 
-- [PhysicsNeMo Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/Modulus-sym-v110/user_guide/foundational/2d_wave_equation.html)
+- [PhysicsNeMo Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/foundational/2d_wave_equation.html)

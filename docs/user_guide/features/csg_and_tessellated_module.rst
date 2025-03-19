@@ -323,7 +323,7 @@ Additionally, the SDF can be computed on custom points using the ``.sdf`` attrib
  
 PhysicsNeMo also provides a utility to recover the STL geometry from the SDF using marching
 cubes algorithm. For more details refer
-`here <https://github.com/NVIDIA/physicsnemo/blob/main/modulus/utils/mesh/generate_stl.py#L25>`_.
+`here <https://github.com/NVIDIA/physicsnemo/blob/main/physicsnemo/utils/mesh/generate_stl.py#L25>`_.
 
 Below example shows the use of these utilities for a CSG geometry.
 

@@ -5,7 +5,7 @@
 📝 NVIDIA Modulus has been renamed to NVIDIA PhysicsNeMo
 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![GitHub](https://img.shields.io/github/license/NVIDIA/modulus)](https://github.com/NVIDIA/modulus/blob/master/LICENSE.txt)
+[![GitHub](https://img.shields.io/github/license/NVIDIA/physicsnemo)](https://github.com/NVIDIA/physicsnemo/blob/master/LICENSE.txt)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!-- markdownlint-enable -->
 [**Getting Started**](#getting-started)
@@ -25,13 +25,13 @@ domain sampling and computing PDE-based residuals using various gradient computi
 It also provides higher level abstraction to compose a training loop from specification
 of the geometry, PDEs and constraints like boundary conditions using simple symbolic APIs.
 Please refer to the
-[Lid Driven cavity](https://docs.nvidia.com/deeplearning/modulus/modulus-sym/user_guide/basics/lid_driven_cavity_flow.html)
+[Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
 that illustrates the concept.
 
 Additional information can be found in the
-[PhysicsNeMo documentation](https://docs.nvidia.com/modulus/index.html#sym).
+[PhysicsNeMo documentation](https://docs.nvidia.com/physicsnemo/index.html#sym).
 
-Please refer to the [PhysicsNeMo SDK](https://github.com/NVIDIA/modulus/blob/main/README.md)
+Please refer to the [PhysicsNeMo SDK](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
 to learn more about the full stack.
 
 ### Hello world
@@ -82,13 +82,13 @@ To use the computational graph builder from PhysicsNeMo Sym:
 ```
 <!-- markdownlint-enable -->
 
-Please refer [Introductory Example](https://github.com/NVIDIA/modulus/tree/main/examples/cfd/darcy_physics_informed)
+Please refer [Introductory Example](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
 for usage of the physics utils in custom training loops and
-[Lid Driven cavity](https://docs.nvidia.com/deeplearning/modulus/modulus-sym/user_guide/basics/lid_driven_cavity_flow.html)
+[Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
 for an end-to-end PINN workflow.
 
 Users of PhysicsNeMo versions older than 23.05 can refer to the
-[migration guide](https://docs.nvidia.com/deeplearning/modulus/migration-guide/index.html)
+[migration guide](https://docs.nvidia.com/deeplearning/physicsnemo/migration-guide/index.html)
 for updating to the latest version.
 
 ## Getting started
@@ -96,10 +96,10 @@ for updating to the latest version.
 The following resources will help you in learning how to use PhysicsNeMo. The best way
 is to start with a reference sample and then update it for your own use case.
 
-- [Using PhysicsNeMo Sym with your PyTorch model](https://github.com/NVIDIA/modulus/tree/main/examples/cfd/darcy_physics_informed)
-- [Using PhysicsNeMo Sym to construct computational graph](https://docs.nvidia.com/deeplearning/modulus/modulus-sym/user_guide/basics/modulus_overview.html)
-- [Reference Samples](https://github.com/NVIDIA/modulus-sym/blob/main/examples/README.md)
-- [User guide Documentation](https://docs.nvidia.com/deeplearning/modulus/modulus-sym/index.html)
+- [Using PhysicsNeMo Sym with your PyTorch model](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
+- [Using PhysicsNeMo Sym to construct computational graph](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/physicsnemo_overview.html)
+- [Reference Samples](https://github.com/NVIDIA/physicsnemo-sym/blob/main/examples/README.md)
+- [User guide Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/index.html)
 
 ## Resources
 
@@ -136,10 +136,10 @@ pip install "hydra-core>=1.2.0" "termcolor>=2.1.1" "chaospy>=4.3.7" "Cython==0.2
 ### Container
 
 The recommended PhysicsNeMo docker image can be pulled from the
-[NVIDIA Container Registry](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/containers/modulus):
+[NVIDIA Container Registry](https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/containers/physicsnemo):
 
 ```bash
-docker pull nvcr.io/nvidia/modulus/modulus:24.04
+docker pull nvcr.io/nvidia/physicsnemo/physicsnemo:<tag>
 ```
 
 ## From Source
@@ -149,7 +149,7 @@ docker pull nvcr.io/nvidia/modulus/modulus:24.04
 For a local build of the PhysicsNeMo Symbolic Python package from source use:
 
 ```Bash
-git clone git@github.com:NVIDIA/modulus-sym.git && cd physicsnemo-sym
+git clone git@github.com:NVIDIA/physicsnemo-sym.git && cd physicsnemo-sym
 
 pip install --upgrade pip
 pip install .
@@ -197,13 +197,13 @@ For guidance on contributing to PhysicsNeMo, please refer to the
 ## Cite PhysicsNeMo
 
 If PhysicsNeMo helped your research and you would like to cite it, please refer to the
-[guidelines](https://github.com/NVIDIA/modulus/blob/main/CITATION.cff)
+[guidelines](https://github.com/NVIDIA/physicsnemo/blob/main/CITATION.cff)
 
 ## Communication
 
 - Github Discussions: Discuss new architectures, implementations, Physics-ML research, etc.
 - GitHub Issues: Bug reports, feature requests, install issues, etc.
-- PhysicsNeMo Forum: The [PhysicsNeMo Forum](https://forums.developer.nvidia.com/c/physics-simulation/modulus-physics-ml-model-framework)
+- PhysicsNeMo Forum: The [PhysicsNeMo Forum](https://forums.developer.nvidia.com/t/welcome-to-the-physicsnemo-ml-model-framework-forum/178556)
 hosts an audience of new to moderate-level users and developers for general chat, online
 discussions, collaboration, etc.
 

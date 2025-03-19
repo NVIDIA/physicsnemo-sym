@@ -5,7 +5,7 @@ This example demonstrates how to set up a purely physics-driven model for solvin
 This example extends PINN-related concepts demonstrated in the simpler Lid Driven Cavity flow example (in `/ldc_pinns/`), with the goal of presenting them in a more applied engineering context. We recommend reading through this Lid Driven Cavity example first.
 
 Specific tools and techniques demonstrated in this example include:
-- Using [PhysicsNeMo-Sym](https://github.com/NVIDIA/Modulus-sym) to define a physics-based learning task for a PINN
+- Using [PhysicsNeMo-Sym](https://github.com/NVIDIA/physicsnemo-sym) to define a physics-based learning task for a PINN
 - Representing custom geometry and interfacing this with PhysicsNeMo-Sym, as is often required in engineering applications
 - Implementing custom [NVIDIA Warp](https://github.com/NVIDIA/warp) kernels for efficient point sampling of these custom geometries
 
@@ -18,7 +18,7 @@ Here, we examine the 2-dimensional steady, incompressible, viscous external aero
 ### Prerequisites
 
 If you are running this example outside the PhysicsNeMo container, install PhysicsNeMo Sym using
-the instructions from [here](https://github.com/NVIDIA/Modulus-sym?tab=readme-ov-file#pypi).
+the instructions from [here](https://github.com/NVIDIA/physicsnemo-sym?tab=readme-ov-file#pypi).
 
 ### Training
 

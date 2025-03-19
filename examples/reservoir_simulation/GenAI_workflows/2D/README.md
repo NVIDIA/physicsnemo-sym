@@ -185,7 +185,7 @@ Loss_{cfd} =V(F,u;T)_{pressure} + V(u,S_w;t)_{saturation}
 
 ## Important Dependencies & Prerequisites:
 - Nvidia's in-house GPU based black oil reservoir simulator - **NVRS**
-- Nvidia's PhysicsNeMo v22.09 :[link](https://docs.nvidia.com/deeplearning/Modulus/user_guide/getting_started/installation.html)
+- Nvidia's PhysicsNeMo v22.09 :[link](https://docs.nvidia.com/deeplearning/physicsnemo/user_guide/getting_started/installation.html)
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - pyAMGX : [link](https://github.com/shwina/pyamgx.git)
@@ -207,10 +207,10 @@ Clone this code base repository in a dedicated **work folder**.
 ```bash
 cd **work folder**
 conda activate MDLO
-git lfs clone https://github.com/NVIDIA/Modulus-sym.git
+git lfs clone https://github.com/NVIDIA/physicsnemo-sym.git
 ```
 ### Bare-metal
-- From terminal do these sequence of operations to install PhysicsNeMo v23.09: [link](https://github.com/NVIDIA/Modulus-sym.git)
+- From terminal do these sequence of operations to install PhysicsNeMo v23.09: [link](https://github.com/NVIDIA/physicsnemo-sym.git)
 ```bash
 pip install nvidia-physicsnemo.sym
              

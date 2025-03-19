@@ -127,7 +127,7 @@ Next, clone the repo to get this example using:
 ```bash
 cd /examples
 git lfs install
-git lfs clone https://github.com/NVIDIA/Modulus-sym.git
+git lfs clone https://github.com/NVIDIA/physicsnemo-sym.git
 ```
 Install the additional dependencies using the provided `requirements.txt` using:
 ```

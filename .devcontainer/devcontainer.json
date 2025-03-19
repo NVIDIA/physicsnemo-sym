@@ -9,7 +9,7 @@
 	],
 	// While it may seem a good idea to mount it with `-v` in `runArgs` above
 	// that doesn't work with vscode's git integration.
-	// "containerUser": "modulus",
+	// "containerUser": "physicsnemo",
 	"containerEnv": {"EDITOR": "code -w"},
 	// Configure tool-specific properties.
 	"customizations": {
@@ -44,7 +44,7 @@
 	},
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
-            "username": "modulus",
+            "username": "physicsnemo",
             "installZsh": false,
             "installOhMyZsh": false,
             "configureZshAsDefaultShell": false,

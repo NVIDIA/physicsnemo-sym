@@ -17,7 +17,7 @@ We are happy to talk with you about your needs for PhysicsNeMo and your ideas fo
 contributing to the project. One way to do this is to create an issue discussing your
 thoughts. It might be that a very similar feature is under development or already
 exists, so an issue is a great starting point. If you are looking for an issue to
-resolve that will help, refer to the [issue](https://github.com/NVIDIA/modulus-sym/issues)
+resolve that will help, refer to the [issue](https://github.com/NVIDIA/physicsnemo-sym/issues)
 section.
 
 ## Contribute to PhysicsNeMo-Symbolic
@@ -27,7 +27,7 @@ section.
 Developer workflow for code contributions is as follows:
 
 1. Developers must first [fork](https://help.github.com/en/articles/fork-a-repo) the
-[upstream](https://github.com/NVIDIA/modulus-launch) PhysicsNeMo repository.
+[upstream](https://github.com/NVIDIA/physicsnemo-sym) PhysicsNeMo repository.
 
 2. Git clone the forked repository and push changes to the personal fork.
 

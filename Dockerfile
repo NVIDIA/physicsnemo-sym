@@ -84,7 +84,7 @@ RUN if [ -e "/physicsnemo-sym/deps/physicsnemo" ]; then \
         echo "Installing PhysicsNeMo from local instance" && \
         cd /physicsnemo-sym/deps/physicsnemo/ && pip install . ; \
     else \
-        pip install --upgrade --no-cache-dir git+https://github.com/NVIDIA/modulus.git@main ;\
+        pip install --upgrade --no-cache-dir git+https://github.com/NVIDIA/physicsnemo.git@main ;\
     fi
 
 RUN pip install --no-cache-dir "black==22.10.0" "interrogate==1.5.0" "coverage==6.5.0"
