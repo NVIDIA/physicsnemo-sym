@@ -64,7 +64,7 @@ such models can help solve real world problems.
 ## Additional examples
 
 In addition to the examples in this repo, more Physics-ML usecases and examples
-can be referenced from the [PhysicsNeMo examples](https://github.com/NVIDIA/Modulus/blob/main/examples/README.md).
+can be referenced from the [PhysicsNeMo examples](https://github.com/NVIDIA/physicsnemo/blob/main/examples/README.md).
 
 ## NVIDIA support
 
@@ -76,5 +76,5 @@ For stable examples, please refer the tagged versions.
 
 We're posting these examples on GitHub to better support the community, facilitate
 feedback, as well as collect and implement contributions using
-[GitHub issues](https://github.com/NVIDIA/Modulus-launch/issues) and pull requests.
+[GitHub issues](https://github.com/NVIDIA/physicsnemo-sym/issues) and pull requests.
 We welcome all contributions!
