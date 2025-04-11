@@ -138,6 +138,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         criteria=Eq(x, channel_origin[0]),
         lambda_weighting={"u": 1.0, "v": 1.0, "w": 1.0},
         batch_per_epoch=5000,
+        parameterization=param_ranges
     )
     flow_domain.add_constraint(constraint_inlet, "inlet")
 
@@ -149,6 +150,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         batch_size=cfg.batch_size.outlet,
         criteria=Eq(x, channel_origin[0] + channel_dim[0]),
         batch_per_epoch=5000,
+        parameterization=param_ranges
     )
     flow_domain.add_constraint(constraint_outlet, "outlet")
 
@@ -159,6 +161,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         outvar={"u": 0, "v": 0, "w": 0},
         batch_size=cfg.batch_size.no_slip,
         batch_per_epoch=5000,
+        parameterization=param_ranges
     )
     flow_domain.add_constraint(no_slip, "no_slip")
 
@@ -177,6 +180,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             "momentum_z": Symbol("sdf"),
         },
         batch_per_epoch=5000,
+        parameterization=param_ranges
     )
     flow_domain.add_constraint(lr_interior, "lr_interior")
 
@@ -197,6 +201,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             "momentum_z": Symbol("sdf"),
         },
         batch_per_epoch=5000,
+        parameterization=param_ranges
     )
     flow_domain.add_constraint(hr_interior, "hr_interior")
 
