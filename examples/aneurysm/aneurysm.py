@@ -191,7 +191,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         integral_batch_size=cfg.batch_size.integral_continuity,
         lambda_weighting={"normal_dot_vel": 0.1},
     )
-    domain.add_constraint(integral_continuity, "integral_continuity_1")
+    domain.add_constraint(integral_continuity, "integral_continuity_2")
 
     # add validation data
     file_path = "./openfoam/aneurysm_parabolicInlet_sol0.csv"
