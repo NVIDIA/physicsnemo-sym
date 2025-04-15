@@ -113,4 +113,4 @@ class ZeroEquation(PDE):
 
         # set equations
         self.equations = {}
-        self.equations["nu"] = nu + rho * mixing_length**2 * sqrt(G)
+        self.equations["nu"] = nu + mixing_length**2 * sqrt(G)
