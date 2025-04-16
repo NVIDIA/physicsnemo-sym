@@ -155,39 +155,40 @@ trainable Fourier features. Here, we underline that the choice of
 :math:`\sigma_i` is problem dependent and typical values can be
 :math:`1, 10, 100,` etc.
 
-Spatio-temporal Fourier Feature Network
-----------------------------------------
-
-For time-dependent problems, multi-scale behavior may exist not only
-across spatial directions but also across time. The authors
-[#wang2021eigenvector]_ proposed another novel multi-scale
-Fourier feature architecture to tackle multi-scale problems in
-spatio-temporal domains. Specifically, the feed-forward pass of the
-network is now defined as
-
-.. math::
-
-   \begin{aligned}
-        &\phi_{E}^{(x_i)}(x_i)=[\sin (2 \pi \mathbf{f}^{(x_i)} \times x_i) ; \cos (2 \pi \mathbf{f}^{(x_i)} \times \mathbf{x}_i)]^{T}, \\
-     & \phi_{E}^{(t)}(t)=[\sin (2 \pi \mathbf{f}^{(t)} \times t) ; \cos (2 \pi \mathbf{f}^{(t)} \times x_i)]^{T}, \\ 
-     & \mathbf{H}^{(x_i)}_1 = \sigma(\mathbf{W}_1 \cdot \phi_{E}^{(x_i)}(x_i) + \mathbf{b}_1),
-       \quad \text{ for } i=1, 2, \dots, d,\\
-     & \mathbf{H}^{(t)}_1 = \sigma(\mathbf{W}_1 \cdot \phi_{E}^{(t)}(t) + \mathbf{b}_1),\\
-       & \mathbf{H}_{\ell}^{(x_i)} = \sigma(\mathbf{W}_\ell \cdot \mathbf{H}^{(x_i)}_{\ell-1}  + \mathbf{b}_\ell),  \quad \text{ for } \ell=2,  \dots, L \text{ and } i=1,2, \dots, d,\\
-     & \mathbf{H}^{(t)}_{\ell} = \sigma(\mathbf{W}_\ell \cdot \mathbf{H}^{(t)}_{\ell-1}  + \mathbf{b}_\ell),  \quad \text{ for } \ell=2,  \dots, L, \\
-       &    \mathbf{H}_{L} =  \prod_{i=1}^d H^{(x_i)}_{L} \cdot H^{(t)}_{L}  , \\
-     & \mathbf{u}_{net}(\mathbf{x}, t; {\mathbf{\theta}}) = \mathbf{W}_{L+1} \cdot \mathbf{H}_{L} + \mathbf{b}_{L+1},\end{aligned}
-
-where :math:`\phi_{E}^{(x_i)}` and :math:`\phi_{E}^{(t)}` denote spatial
-and temporal Fourier feature mappings, respectively, and :math:`\odot`
-represents the point-wise multiplication. Here, each entry of
-:math:`\mathbf{f}^{(x_i)}` and :math:`\mathbf{f}^{(t)}` can be sampled
-from different Gaussian distributions. One key difference from the
-multi-scale Fourier feature network is that separate Fourier feature
-embeddings are applied to spatial and temporal input coordinates before
-passing the embedded inputs through the same fully-connected network.
-Another key difference is that network outputs are merged using
-point-wise multiplication and passing them through a linear layer.
+.. 
+   Spatio-temporal Fourier Feature Network
+   ----------------------------------------
+   
+   For time-dependent problems, multi-scale behavior may exist not only
+   across spatial directions but also across time. The authors
+   [#wang2021eigenvector]_ proposed another novel multi-scale
+   Fourier feature architecture to tackle multi-scale problems in
+   spatio-temporal domains. Specifically, the feed-forward pass of the
+   network is now defined as
+   
+   .. math::
+   
+      \begin{aligned}
+           &\phi_{E}^{(x_i)}(x_i)=[\sin (2 \pi \mathbf{f}^{(x_i)} \times x_i) ; \cos (2 \pi \mathbf{f}^{(x_i)} \times \mathbf{x}_i)]^{T}, \\
+        & \phi_{E}^{(t)}(t)=[\sin (2 \pi \mathbf{f}^{(t)} \times t) ; \cos (2 \pi \mathbf{f}^{(t)} \times x_i)]^{T}, \\ 
+        & \mathbf{H}^{(x_i)}_1 = \sigma(\mathbf{W}_1 \cdot \phi_{E}^{(x_i)}(x_i) + \mathbf{b}_1),
+          \quad \text{ for } i=1, 2, \dots, d,\\
+        & \mathbf{H}^{(t)}_1 = \sigma(\mathbf{W}_1 \cdot \phi_{E}^{(t)}(t) + \mathbf{b}_1),\\
+          & \mathbf{H}_{\ell}^{(x_i)} = \sigma(\mathbf{W}_\ell \cdot \mathbf{H}^{(x_i)}_{\ell-1}  + \mathbf{b}_\ell),  \quad \text{ for } \ell=2,  \dots, L \text{ and } i=1,2, \dots, d,\\
+        & \mathbf{H}^{(t)}_{\ell} = \sigma(\mathbf{W}_\ell \cdot \mathbf{H}^{(t)}_{\ell-1}  + \mathbf{b}_\ell),  \quad \text{ for } \ell=2,  \dots, L, \\
+          &    \mathbf{H}_{L} =  \prod_{i=1}^d H^{(x_i)}_{L} \cdot H^{(t)}_{L}  , \\
+        & \mathbf{u}_{net}(\mathbf{x}, t; {\mathbf{\theta}}) = \mathbf{W}_{L+1} \cdot \mathbf{H}_{L} + \mathbf{b}_{L+1},\end{aligned}
+   
+   where :math:`\phi_{E}^{(x_i)}` and :math:`\phi_{E}^{(t)}` denote spatial
+   and temporal Fourier feature mappings, respectively, and :math:`\odot`
+   represents the point-wise multiplication. Here, each entry of
+   :math:`\mathbf{f}^{(x_i)}` and :math:`\mathbf{f}^{(t)}` can be sampled
+   from different Gaussian distributions. One key difference from the
+   multi-scale Fourier feature network is that separate Fourier feature
+   embeddings are applied to spatial and temporal input coordinates before
+   passing the embedded inputs through the same fully-connected network.
+   Another key difference is that network outputs are merged using
+   point-wise multiplication and passing them through a linear layer.
 
 .. _sirens:
 
