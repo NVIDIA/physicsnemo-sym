@@ -16,7 +16,6 @@
 
 """Zero Equation Turbulence model
 References:
-https://www.eureka.im/954.html
 https://knowledge.autodesk.com/support/cfd/learn-explore/caas/CloudHelp/cloudhelp/2019/ENU/SimCFD-Learning/files/GUID-BBA4E008-8346-465B-9FD3-D193CF108AF0-htm.html
 """
 
@@ -114,4 +113,4 @@ class ZeroEquation(PDE):
 
         # set equations
         self.equations = {}
-        self.equations["nu"] = nu + rho * mixing_length**2 * sqrt(G)
+        self.equations["nu"] = nu + mixing_length**2 * sqrt(G)
