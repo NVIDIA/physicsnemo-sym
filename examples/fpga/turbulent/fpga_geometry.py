@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from sympy import Symbol, Eq, tanh
 import numpy as np
 import yaml
@@ -110,7 +111,11 @@ for i in range(total_fins):
     else:
         fin += Box(
             (fin_origin[0], fin_origin[1], fin_origin[2] + i * gap),
-            (fin_origin[0] + fin_dim[0], fin_origin[1] + fin_dim[1], fin_origin[2] + i * gap + fin_dim[2]),
+            (
+                fin_origin[0] + fin_dim[0],
+                fin_origin[1] + fin_dim[1],
+                fin_origin[2] + i * gap + fin_dim[2],
+            ),
             parameterization=pr,
         )
 
