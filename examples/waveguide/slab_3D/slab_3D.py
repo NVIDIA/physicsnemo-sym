@@ -60,7 +60,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     file_path = "../validation/2Dwaveguideport.csv"
     if not os.path.exists(to_absolute_path(file_path)):
         warnings.warn(
-            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Cannot continue. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/physicsnemo_sym_examples_supplemental_materials"
         )
         sys.exit()
 

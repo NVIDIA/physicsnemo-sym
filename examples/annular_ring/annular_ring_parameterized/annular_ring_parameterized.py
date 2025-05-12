@@ -181,7 +181,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         domain.add_validator(openfoam_validator)
     else:
         warnings.warn(
-            f"Directory {file_path_1} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path_1} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/physicsnemo_sym_examples_supplemental_materials"
         )
 
     # r875
@@ -209,7 +209,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         domain.add_validator(openfoam_validator)
     else:
         warnings.warn(
-            f"Directory {file_path_2} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path_2} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/physicsnemo_sym_examples_supplemental_materials"
         )
 
     # r75
@@ -237,7 +237,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         domain.add_validator(openfoam_validator)
     else:
         warnings.warn(
-            f"Directory {file_path_3} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/Modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path_3} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/physicsnemo_sym_examples_supplemental_materials"
         )
 
     # add inferencer data
