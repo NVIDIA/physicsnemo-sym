@@ -14,16 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from physicsnemo.sym.models.fused_mlp import (
-    FusedMLPArch,
-    FusedFourierNetArch,
-    FusedGridEncodingNetArch,
-)
 import torch
 import numpy as np
 from physicsnemo.sym.key import Key
 
 import pytest
+from test.pytest_utils import import_or_fail
+
 
 layer_size_params = [
     pytest.param(128, id="fused_128"),
@@ -44,8 +41,15 @@ def make_dict(nr_layers):
     return _dict
 
 
+@import_or_fail("tinycudann")
 @pytest.mark.parametrize("layer_size", layer_size_params)
-def test_fully_fused_mlp(layer_size):
+def test_fully_fused_mlp(layer_size, pytestconfig):
+    from physicsnemo.sym.models.fused_mlp import (
+        FusedMLPArch,
+        FusedFourierNetArch,
+        FusedGridEncodingNetArch,
+    )
+
     batch_size = 1024
 
     data_in = np.random.random((batch_size, 2))
@@ -76,8 +80,15 @@ def test_fully_fused_mlp(layer_size):
     # assert np.allclose(data_out1, data_out2, rtol=1e-3), "Test failed!"
 
 
+@import_or_fail("tinycudann")
 @pytest.mark.parametrize("layer_size", layer_size_params)
-def test_fused_fourier_net(layer_size):
+def test_fused_fourier_net(layer_size, pytestconfig):
+    from physicsnemo.sym.models.fused_mlp import (
+        FusedMLPArch,
+        FusedFourierNetArch,
+        FusedGridEncodingNetArch,
+    )
+
     batch_size = 1024
 
     data_in = np.random.random((batch_size, 2))
@@ -109,8 +120,15 @@ def test_fused_fourier_net(layer_size):
     # assert np.allclose(data_out1, data_out2, rtol=1e-3), "Test failed!"
 
 
+@import_or_fail("tinycudann")
 @pytest.mark.parametrize("layer_size", layer_size_params)
-def test_fused_grid_encoding_net(layer_size):
+def test_fused_grid_encoding_net(layer_size, pytestconfig):
+    from physicsnemo.sym.models.fused_mlp import (
+        FusedMLPArch,
+        FusedFourierNetArch,
+        FusedGridEncodingNetArch,
+    )
+
     batch_size = 1024
 
     data_in = np.random.random((batch_size, 2))

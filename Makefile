@@ -30,7 +30,7 @@ doctest:
 pytest:
 	coverage run \
 		--rcfile='test/coverage.pytest.rc' \
-		-m pytest test/
+		-m pytest --ignore-glob=*docs* --ignore=physicsnemo/sym/utils/vpinn/test_functions.py --ignore-glob=*examples*
 
 coverage:
 	coverage combine && \
