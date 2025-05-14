@@ -119,46 +119,6 @@ def test_activation_fused_silu():
     assert silu_scripted_2nd < silu_2nd, "silu_scripted_2nd is slower than silu_2nd"
     assert silu_scripted_3rd < silu_3rd, "silu_scripted_3rd is slower than silu_3rd"
 
-    # profile and get the number of kernels
-    # verbose = False  # set to True to debug
-    #
-    # _, events = profile(
-    #     run, silu_scripted, 1, x, label="silu_scripted_1st", verbose=verbose
-    # )
-    # event_keys = cleanup_events([evt.key for evt in events])
-    # num_kernels = len(event_keys)
-    # print("silu_scripted_1st num_events: ", num_kernels)
-    # if version.parse(torch.__version__) >= version.parse("1.12.9"):
-    #     # this depends on the SiLU autodiff PR: https://github.com/pytorch/pytorch/pull/81724
-    #     # fwd + 1st_deriv kernels
-    #     assert num_kernels == 2
-    # else:
-    #     warnings.warn(f"Fused SiLU is not supported for torch {torch.__version__}")
-    #
-    # _, events = profile(
-    #     run, silu_scripted, 2, x, label="silu_scripted_2nd", verbose=verbose
-    # )
-    # event_keys = cleanup_events([evt.key for evt in events])
-    # num_kernels = len(event_keys)
-    # print("silu_scripted_2nd num_events: ", num_kernels)
-    # if version.parse(torch.__version__) >= version.parse("1.12.9"):
-    #     # fwd + 1st_deriv + 2nd_deriv kernels
-    #     assert num_kernels == 3
-    # else:
-    #     warnings.warn(f"Fused SiLU is not supported for torch {torch.__version__}")
-    #
-    # _, events = profile(
-    #     run, silu_scripted, 3, x, label="silu_scripted_3rd", verbose=verbose
-    # )
-    # event_keys = cleanup_events([evt.key for evt in events])
-    # num_kernels = len(event_keys)
-    # print("silu_scripted_3rd num_events: ", num_kernels)
-    # if version.parse(torch.__version__) >= version.parse("1.12.9"):
-    #     # fwd + 1st_deriv + 2nd_deriv + 3rd_deriv kernels
-    #     assert num_kernels <= 7
-    # else:
-    #     warnings.warn(f"Fused SiLU is not supported for torch {torch.__version__}")
-
 
 if __name__ == "__main__":
     test_activation_jit()
