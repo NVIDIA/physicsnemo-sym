@@ -19,6 +19,7 @@ Defines base class for all mesh type geometries
 """
 
 import numpy as np
+import warp as wp
 import csv
 from stl import mesh as np_mesh
 from sympy import Symbol
@@ -145,9 +146,12 @@ class Tessellation(Geometry):
                         points,
                         include_hit_points=True,
                     )
-                    sdf_field = sdf_field.numpy()
+                    if isinstance(sdf_field, wp.types.array):
+                        sdf_field = sdf_field.numpy()
+                    if isinstance(sdf_derivative, wp.types.array):
+                        sdf_derivative = sdf_derivative.numpy()
                     sdf_field = -np.expand_dims(max_dis * sdf_field, axis=1)
-                    sdf_derivative = sdf_derivative.numpy().reshape(-1)
+                    sdf_derivative = sdf_derivative.reshape(-1)
                 else:
                     sdf_field = np.zeros_like(invar["x"])
                 outputs["sdf"] = sdf_field
