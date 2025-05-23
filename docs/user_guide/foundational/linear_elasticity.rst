@@ -58,7 +58,7 @@ defined as
 
 .. math:: \mu = \frac{E}{2(1+\nu)}.
 
-Here, :math:`E`, :math:`v` are, respectively, the Young’s physicsnemo and
+Here, :math:`E`, :math:`v` are, respectively, the Young’s modulus and
 Poisson’s ratio.
 
 Linear elasticity equations in the mixed form
@@ -104,7 +104,7 @@ nondimensionalized variables can be defined as:
 
 Here, :math:`L` is the characteristic length, :math:`U` is the
 characteristic displacement, and :math:`\mu_c` is the
-nondimensionalizing shear physicsnemo. The
+nondimensionalizing shear modulus. The
 nondimensionalized Navier and equilibrium equations can be obtained by multiplying both
 sides of equations by :math:`L^2/\mu_c U`, as follows:
 
