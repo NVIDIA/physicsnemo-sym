@@ -6,12 +6,10 @@
 [![GitHub](https://img.shields.io/github/license/NVIDIA/physicsnemo)](https://github.com/NVIDIA/physicsnemo/blob/master/LICENSE.txt)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!-- markdownlint-enable -->
-[**Getting Started**](#getting-started)
+[**PhysicsNeMo Sym**](#What-is-PhysicsNeMo-Symbolic)
 | [**Install guide**](#installation)
 | [**Documentation**](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)
 | [**Contributing Guidelines**](#contributing-to-physicsnemo)
-| [**Resources**](#resources)
-| [**PhysicsNeMo Migration Guide**](#physicsnemo-migration-guide)
 | [**Communication**](#communication)
 
 ## What is PhysicsNeMo Symbolic?
