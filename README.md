@@ -7,7 +7,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!-- markdownlint-enable -->
 [**PhysicsNeMo Sym**](#What-is-PhysicsNeMo-Symbolic)
-| [**Install guide**](#installation)
+| [**Getting started**](#Getting-started)
 | [**Documentation**](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)
 | [**Contributing Guidelines**](#contributing-to-physicsnemo)
 | [**Communication**](#communication)
