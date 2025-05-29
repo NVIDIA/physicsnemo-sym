@@ -89,7 +89,7 @@ The recommended PhysicsNeMo docker image can be pulled from the
 docker pull nvcr.io/nvidia/physicsnemo/physicsnemo:<tag>
 ```
 
-## From Source
+### From Source
 
 ### Package
 
