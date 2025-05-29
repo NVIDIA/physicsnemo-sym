@@ -41,52 +41,7 @@ that illustrates the concept.
 Additional information can be found in the
 [PhysicsNeMo documentation]([https://docs.nvidia.com/physicsnemo/index.html#sym](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)).
 
-### Hello world
 
-You can run below example to start using the geometry module from PhysicsNeMo-Sym as shown
-below:
-
-```python
->>> import numpy as np
->>> from physicsnemo.sym.geometry.primitives_3d import Box
->>> from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
->>> nr_points = 100000
->>> box = Box(point_1=(-1, -1, -1), point_2=(1, 1, 1))
->>> s = box.sample_boundary(nr_points=nr_points)
->>> var_to_polyvtk(s, "boundary")
->>> print("Surface Area: {:.3f}".format(np.sum(s["area"])))
-Surface Area: 24.000
-```
-
-To use the PDE module from PhysicsNeMo-Sym, you can run the below example:
-
-```python
->>> from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
->>> ns = NavierStokes(nu=0.01, rho=1, dim=2)
->>> ns.pprint()
-continuity: u__x + v__y
-momentum_x: u*u__x + v*u__y + p__x + u__t - 0.01*u__x__x - 0.01*u__y__y
-momentum_y: u*v__x + v*v__y + p__y + v__t - 0.01*v__x__x - 0.01*v__y__y
-```
-
-To use the computational graph builder from PhysicsNeMo Sym:
-<!-- markdownlint-disable -->
-```python
->>> import torch
->>> from sympy import Symbol
->>> from physicsnemo.sym.graph import Graph
->>> from physicsnemo.sym.node import Node
->>> from physicsnemo.sym.key import Key
->>> from physicsnemo.sym.eq.pdes.diffusion import Diffusion
->>> from physicsnemo.sym.models.fully_connected import FullyConnectedArch
->>> net = FullyConnectedArch(input_keys=[Key("x")], output_keys=[Key("u")], nr_layers=3, layer_size=32)
->>> diff = Diffusion(T="u", time=False, dim=1, D=0.1, Q=1.0)
->>> nodes = [net.make_node(name="net")] + diffusion.make_nodes()
->>> graph = Graph(nodes, [Key("x")], [Key("diffusion_u")])
->>> graph.forward({"x": torch.tensor([1.0, 2.0]).requires_grad_(True).reshape(-1, 1)})
-{'diffusion_u': tensor([[-0.9956],
-        [-1.0161]], grad_fn=<SubBackward0>)}
-```
 <!-- markdownlint-enable -->
 
 Please refer [Introductory Example](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
@@ -100,20 +55,13 @@ for updating to the latest version.
 
 ## Getting started
 
-The following resources will help you in learning how to use PhysicsNeMo. The best way
-is to start with a reference sample and then update it for your own use case.
-
-- [Using PhysicsNeMo with your PyTorch model](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
-- [Using PhysicsNeMo to construct computational graph](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/physicsnemo_overview.html)
-- [Reference Samples](https://github.com/NVIDIA/physicsnemo/tree/main/examples#readme)
-- [User guide Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)
-
-## Resources
-
-- [Getting started Webinar](https://www.nvidia.com/en-us/on-demand/session/gtc24-dlit61460/?playlistId=playList-bd07f4dc-1397-4783-a959-65cec79aa985)
-- [AI4Science PhysicsNeMo Bootcamp](https://github.com/openhackathons-org/End-to-End-AI-for-Science)
+Please use the getting started guide here for [PhysicsNeMo](https://github.com/NVIDIA/physicsnemo/blob/main/README.md#getting-started)
 
 ## Installation
+
+Please ensure you have installed PhysicsNeMo using the steps spelled out [here](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
+
+You can then install this package following the steps outlined below:
 
 ### PyPi
 
