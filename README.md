@@ -10,6 +10,7 @@
 <!-- markdownlint-enable -->
 [**Getting Started**](#getting-started)
 | [**Install guide**](#installation)
+| [**Documentation**](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)
 | [**Contributing Guidelines**](#contributing-to-physicsnemo)
 | [**Resources**](#resources)
 | [**PhysicsNeMo Migration Guide**](#physicsnemo-migration-guide)
@@ -17,22 +18,28 @@
 
 ## What is PhysicsNeMo Symbolic?
 
-PhysicsNeMo Symbolic (PhysicsNeMo Sym) repository is part of PhysicsNeMo SDK and it provides
-algorithms and utilities to be used with PhysicsNeMo core, to explicitly physics inform the
-model training. This includes utilities for explicitly integrating symbolic PDEs,
+PhysicsNeMo Symbolic (PhysicsNeMo Sym) is sub-module of PhysicsNeMo SDK that provides
+algorithms and utilities to explicitly physics inform the
+training of AI models. 
+
+Please refer to the [PhysicsNeMo SDK](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
+to learn more about the full stack.
+
+This includes utilities for explicitly integrating symbolic PDEs,
 domain sampling and computing PDE-based residuals using various gradient computing schemes.
 
-It also provides higher level abstraction to compose a training loop from specification
+Please refer to the
+[Physics informing surrogate model for Darcy flow](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/examples/cfd/darcy_physics_informed/readme.html)
+that illustrates the concept.
+
+It also provides an abstraction layer for developers that want to compose a training loop from specification
 of the geometry, PDEs and constraints like boundary conditions using simple symbolic APIs.
 Please refer to the
 [Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
 that illustrates the concept.
 
 Additional information can be found in the
-[PhysicsNeMo documentation](https://docs.nvidia.com/physicsnemo/index.html#sym).
-
-Please refer to the [PhysicsNeMo SDK](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
-to learn more about the full stack.
+[PhysicsNeMo documentation]([https://docs.nvidia.com/physicsnemo/index.html#sym](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)).
 
 ### Hello world
 
@@ -96,10 +103,10 @@ for updating to the latest version.
 The following resources will help you in learning how to use PhysicsNeMo. The best way
 is to start with a reference sample and then update it for your own use case.
 
-- [Using PhysicsNeMo Sym with your PyTorch model](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
-- [Using PhysicsNeMo Sym to construct computational graph](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/physicsnemo_overview.html)
-- [Reference Samples](https://github.com/NVIDIA/physicsnemo-sym/blob/main/examples/README.md)
-- [User guide Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/index.html)
+- [Using PhysicsNeMo with your PyTorch model](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
+- [Using PhysicsNeMo to construct computational graph](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/physicsnemo_overview.html)
+- [Reference Samples](https://github.com/NVIDIA/physicsnemo/tree/main/examples#readme)
+- [User guide Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)
 
 ## Resources
 
