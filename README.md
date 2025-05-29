@@ -14,11 +14,11 @@
 
 ## What is PhysicsNeMo Symbolic?
 
-PhysicsNeMo Symbolic (PhysicsNeMo Sym) is sub-module of PhysicsNeMo SDK that provides
+PhysicsNeMo Symbolic (PhysicsNeMo Sym) is sub-module of PhysicsNeMo framework that provides
 algorithms and utilities to explicitly physics inform the
 training of AI models. 
 
-Please refer to the [PhysicsNeMo SDK](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
+Please refer to the [PhysicsNeMo framework](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
 to learn more about the full stack.
 
 This includes utilities for explicitly integrating symbolic PDEs,
