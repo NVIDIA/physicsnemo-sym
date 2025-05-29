@@ -35,7 +35,7 @@ Please refer to the
 that illustrates the concept.
 
 Additional information can be found in the
-[PhysicsNeMo documentation]([https://docs.nvidia.com/physicsnemo/index.html#sym](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)).
+[PhysicsNeMo documentation](https://docs.nvidia.com/physicsnemo/index.html#sym](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
 
 
 <!-- markdownlint-enable -->
