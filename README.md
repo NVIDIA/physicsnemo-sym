@@ -40,18 +40,14 @@ Additional information can be found in the
 
 <!-- markdownlint-enable -->
 
+## Getting started
+
+Please use the getting started guide here for [PhysicsNeMo](https://github.com/NVIDIA/physicsnemo/blob/main/README.md#getting-started)
+
 Please refer [Introductory Example](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
 for usage of the physics utils in custom training loops and
 [Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
 for an end-to-end PINN workflow.
-
-Users of PhysicsNeMo versions older than 23.05 can refer to the
-[migration guide](https://docs.nvidia.com/deeplearning/physicsnemo/migration-guide/index.html)
-for updating to the latest version.
-
-## Getting started
-
-Please use the getting started guide here for [PhysicsNeMo](https://github.com/NVIDIA/physicsnemo/blob/main/README.md#getting-started)
 
 ## Installation
 
