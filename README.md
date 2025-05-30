@@ -28,7 +28,8 @@ Please refer to the
 [Physics informing surrogate model for Darcy flow](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/examples/cfd/darcy_physics_informed/readme.html)
 that illustrates the concept.
 
-It also provides an abstraction layer for developers that want to compose a training loop from specification
+It also provides an abstraction layer for developers that want to compose a training loop
+from specification
 of the geometry, PDEs and constraints like boundary conditions using simple symbolic APIs.
 Please refer to the
 [Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
@@ -36,7 +37,6 @@ that illustrates the concept.
 
 Additional information can be found in the
 [PhysicsNeMo documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
-
 
 <!-- markdownlint-enable -->
 
@@ -51,7 +51,7 @@ for an end-to-end PINN workflow.
 
 ## Installation
 
-Please ensure you have installed PhysicsNeMo using the steps spelled out [here](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
+Please ensure you have installed PhysicsNeMo using the steps [here](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
 
 You can then install this package following the steps outlined below:
 
@@ -137,8 +137,7 @@ discussions, collaboration, etc.
 
 ## Feedback
 
-Want to suggest some improvements to PhysicsNeMo? Use our feedback form
-[here](https://docs.google.com/forms/d/e/1FAIpQLSfX4zZ0Lp7MMxzi3xqvzX4IQDdWbkNh5H_a_clzIhclE2oSBQ/viewform?usp=sf_link).
+Want to suggest some improvements to PhysicsNeMo? Use our [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSfX4zZ0Lp7MMxzi3xqvzX4IQDdWbkNh5H_a_clzIhclE2oSBQ/viewform?usp=sf_link).
 
 ## License
 
