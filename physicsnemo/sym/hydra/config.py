@@ -149,7 +149,7 @@ class ExperimentalPhysicsNeMoConfig(PhysicsNeMoConfig):
 def register_physicsnemo_configs() -> None:
 
     if not torch.__version__ == JIT_PYTORCH_VERSION:
-        logger.warn(
+        logger.warning(
             f"TorchScript default is being turned off due to PyTorch version mismatch."
         )
 
