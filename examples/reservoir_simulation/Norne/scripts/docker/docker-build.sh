@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # General info about new container / image
-CONTAINER_NAME=modulus/norneressim
+CONTAINER_NAME=physicsnemo/norneressim
 TAG=latest
 
 # Build a container

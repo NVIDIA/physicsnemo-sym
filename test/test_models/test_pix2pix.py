@@ -17,8 +17,8 @@
 import itertools
 import torch
 
-from modulus.sym.key import Key
-from modulus.sym.models.pix2pix import Pix2PixArch
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.models.pix2pix import Pix2PixArch
 
 
 def test_pix2pix():

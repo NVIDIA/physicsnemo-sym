@@ -233,7 +233,7 @@ class RSTSpellChecker:
 def test_rst_spelling(
     userguide_path: Path,
     en_dictionary_path: Path = Path("./test/en_dictionary.json.gz"),
-    extra_dictionary_path: Path = Path("./test/modulus_dictionary.json"),
+    extra_dictionary_path: Path = Path("./test/physicsnemo_dictionary.json"),
     file_pattern: str = "*.rst",
 ):
     """Looks through RST files for any references to example python files
@@ -245,7 +245,7 @@ def test_rst_spelling(
     en_dictionary_path: Path, optional
         Path to english dictionary
     extra_dictionary_path: Path, optional
-        Path to additional Modulus dictionary
+        Path to additional PhysicsNeMo dictionary
     file_pattern : str, optional
         Pattern for file types to parse, by default "*.rst"
 

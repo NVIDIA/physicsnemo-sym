@@ -109,12 +109,12 @@ loss is reduced, that is
    \label{IM_unbiased}
    \mathbf{\theta^*}  \approx \underset{{ \mathbf{\theta} }}{\operatorname{argmin}} \ \frac{1}{N} \sum_{i=1}^{N} \frac{f(\mathbf{x_i})}{q(\mathbf{x_i})} \ell (\mathbf{\theta}; \mathbf{x_i} ),  \quad \mathbf{x_i} \sim q(\mathbf{x}).
 
-Modulus Sym offers point cloud importance sampling for improved convergence
+PhysicsNeMo Sym offers point cloud importance sampling for improved convergence
 and accuracy, as originally proposed in
 [#nabian2021efficient]_. In this scheme, the training
 points are updated adaptively based on a sampling measure :math:`q` for
 a more accurate unbiased approximation of the loss, compared to uniform
-sampling. Details on the importance sampling implementation in Modulus Sym
+sampling. Details on the importance sampling implementation in PhysicsNeMo Sym
 are presented in ``examples/ldc/ldc_2d_importance_sampling.py`` script. 
 :numref:`fig-annular-ring-importance-sampling` shows a comparison between
 the uniform and importance sampling validation error results for the
@@ -151,14 +151,14 @@ shown in :numref:`fig-annular-ring-sample-prob`.
 Quasi-Random Sampling
 ------------------------
 
-Training points in Modulus Sym are generated according to a uniform
+Training points in PhysicsNeMo Sym are generated according to a uniform
 distribution by default. An alternative to uniform sampling is the
 quasi-random sampling, which provides the means to generate training
 points with a low level of discrepancy across the domain. Among the
 popular low discrepancy sequences are the Halton sequences
 [#halton1960efficiency]_, the Sobol sequences, and the
 Hammersley sets, out of which the Halton sequences are adopted in
-Modulus Sym. A snapshot of a batch of training points generated using uniform
+PhysicsNeMo Sym. A snapshot of a batch of training points generated using uniform
 sampling and Halton sequences for the annular ring example is shown in
 :numref:`fig-halton-ring`. Halton
 sequences for sample generation can be enabled by setting ``quasirandom=True`` during the 
@@ -200,7 +200,7 @@ to the domain boundaries :math:`\partial D`, and therefore, is zero on :math:`\p
 The exact distance function is not second or higher-order differentiable, and thus, one can use
 the ADF function :math:`\phi (\mathbf{x})` instead.
 
-The exact boundary condition imposition in Modulus Sym is currently limited to 2D geometries only.
+The exact boundary condition imposition in PhysicsNeMo Sym is currently limited to 2D geometries only.
 Let :math:`\partial D \in \mathbb{R}^2` be a boundary composed of :math:`n` line segments
 and curves :math:`D_i`, and :math:`\phi_i` denote the ADF to each curve or line segment
 such that :math:`\phi_1 \cup \phi_2 \cup ... \cup \phi_n =\phi`. The properties of an ADF function are as follows:
@@ -390,7 +390,7 @@ will not be minimized unless all previous residuals decrease to
 some small value such that :math:`w_i` is large enough. This simple algorithm enforces a PINN model to
 learn the PDE solution gradually, respecting the inherent causal structure of its dynamic evolution.
 
-Implementation Details on causal training in Modulus Sym are presented in script
+Implementation Details on causal training in PhysicsNeMo Sym are presented in script
 ``examples/wave_equation/wave_1d_causal.py``. :numref:`fig-wave_1d_causal` presents a comparison of the validation error between
 the baseline and causal training. It can be observed that causal training yields much better predictive
 accuracy up to one order of magnitude.
@@ -406,7 +406,7 @@ accuracy up to one order of magnitude.
    Interior validation accuracy for models trained with (blue) and without (red) the causal loss function for the 1D wave equation example.
 
 It is worth noting that causal training scheme can be seamlessly combined with the moving time-window and different
-network architectures in Modulus Sym. For instance, the script ``examples/taylor_green/taylor_green_causal.py`` illustrates
+network architectures in PhysicsNeMo Sym. For instance, the script ``examples/taylor_green/taylor_green_causal.py`` illustrates
 how to combine the causal loss function with the time-marching strategy for solving a complex transient Navier-Stokes problem.
 
 
@@ -563,7 +563,7 @@ the weights :math:`w_j` are normalized such that :math:`\Sigma_j w_j(i)=n_{loss}
 For more details on the GradNorm algorithm, please refer to the reference paper [#chen2018gradnorm]_.
 
 In the GradNorm algorithm, it is observed that in some cases the weights :math:`w_j` can take negative values
-and that will adversely affect the training convergence of the neural network solver. To prevent this, in the Modulus Sym
+and that will adversely affect the training convergence of the neural network solver. To prevent this, in the PhysicsNeMo Sym
 implementation of the GradNorm, we use an exponential transformation of the trainable weight parameters to weigh
 the loss terms.
 
@@ -592,7 +592,7 @@ accomplish this.
 
 ResNorm
 --------
-Residual Normalization (ResNorm) is a Modulus Sym loss balancing scheme developed in collaboration with the National Energy Technology Laboratory (NETL). 
+Residual Normalization (ResNorm) is a PhysicsNeMo Sym loss balancing scheme developed in collaboration with the National Energy Technology Laboratory (NETL). 
 In this algorithm, which is a simplified variation of GradNorm, an additional loss term is minimized during training that encourages the individual losses to take similar relative magnitudes.
 The loss weights are dynamically tuned throughout the training based on the relative training rates of different losses, as follows:
 
@@ -662,7 +662,7 @@ where :math:`Tr(\cdot)` is the trace operator.
 
 We now assign the weights by NTK. The idea of NTK is, for each loss term, its convergence rate is indicated by its eigenvalues of NTK.
 So, we reweight the loss terms by their eigenvalues such that each term has basically same convergence rate. For more details, please
-refer [#wang2022when]_. In Modulus Sym, NTK can be computed automatically and weights can be assigned on the fly. The script ``examples/helmholtz/helmholtz_ntk.py`` shows the NTK implementation
+refer [#wang2022when]_. In PhysicsNeMo Sym, NTK can be computed automatically and weights can be assigned on the fly. The script ``examples/helmholtz/helmholtz_ntk.py`` shows the NTK implementation
 for a helmholtz problem. The :numref:`fig-no-ntk` shows the results before NTK weighting. We observe that the maximum error is 0.04. Using NTK weights, this error is reduced to 0.006 as shown
 in the :numref:`fig-ntk`. 
 
@@ -701,7 +701,7 @@ However, creating multiple instances of the same equation (with different frozen
 This scheme can be coupled with other loss balancing algorithms like ResNorm, etc. to come up with the optimal task weights for these different instances. 
 
 
-An example of creating multiple instances of equations using Modulus Sym APIs is provided in the script ``examples/annular_ring_equation_instancing/annular_ring.py``. 
+An example of creating multiple instances of equations using PhysicsNeMo Sym APIs is provided in the script ``examples/annular_ring_equation_instancing/annular_ring.py``. 
 Although the incompressible navier stokes equations used in this example is not the best test for the feature (because the system of PDEs does not 
 exhibit any stiffness), creating multiple instances of the momentum equations with the advection and diffusion terms frozen separately, provides 
 improvement over the baseline. The effectiveness of this scheme is primarily observed more for a stiff system of PDEs with 

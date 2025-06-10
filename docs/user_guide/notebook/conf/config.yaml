@@ -1,5 +1,5 @@
 defaults :
-  - modulus_default
+  - physicsnemo_default
   - scheduler: tf_exponential_lr
   - optimizer: adam
   - loss: sum

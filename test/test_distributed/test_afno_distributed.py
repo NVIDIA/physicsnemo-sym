@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import modulus
-from modulus.sym.hydra import to_yaml, instantiate_arch
-from modulus.sym.hydra.config import ModulusConfig
-from modulus.sym.models.afno.distributed import DistributedAFNONet
-from modulus.sym.distributed.manager import DistributedManager
+import physicsnemo
+from physicsnemo.sym.hydra import to_yaml, instantiate_arch
+from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
+from physicsnemo.sym.models.afno.distributed import DistributedAFNONet
+from physicsnemo.sym.distributed.manager import DistributedManager
 
 import os
 import torch
@@ -27,8 +27,8 @@ import torch
 os.environ["MODEL_PARALLEL_SIZE"] = "2"
 
 
-@modulus.sym.main(config_path="conf", config_name="config_AFNO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_AFNO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     input_is_matmul_parallel = False
     output_is_matmul_parallel = False
     in_chans = 3

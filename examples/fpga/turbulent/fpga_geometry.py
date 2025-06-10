@@ -14,25 +14,34 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from sympy import Symbol, Eq, tanh
 import numpy as np
 import yaml
 
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.geometry import Parameterization, Parameter
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.geometry import Parameterization, Parameter
 
 # check if the geometry is parameterized
 with open("./conf/config.yaml", "r") as file:
     yaml_data = yaml.safe_load(file)
 parameterized = yaml_data["custom"]["parameterized"]
 
+HS_height_range = (0.40625, 0.8625)
+HS_length_range = (0.35, 0.65)
+
 if parameterized:
     # geometry parameterization
     HS_height = Symbol("HS_height")
     HS_length = Symbol("HS_length")
+    param_ranges = {HS_height: HS_height_range, HS_length: HS_length_range}
+    pr = Parameterization(param_ranges)
 else:
     HS_length = 0.65
     HS_height = 0.8625
+    fixed_param_ranges = {}
+    pr = Parameterization(fixed_param_ranges)
+
 
 # geometry params for domain
 channel_origin = (-2.5, -0.5, -0.5625)
@@ -59,6 +68,7 @@ channel = Channel(
         channel_origin[1] + channel_dim[1],
         channel_origin[2] + channel_dim[2],
     ),
+    parameterization=pr,
 )
 
 # fpga heat sink
@@ -69,27 +79,52 @@ heat_sink_base = Box(
         heat_sink_base_origin[1] + heat_sink_base_dim[1],
         heat_sink_base_origin[2] + heat_sink_base_dim[2],
     ),
+    parameterization=pr,
 )
 fin_center = (
     fin_origin[0] + fin_dim[0] / 2,
     fin_origin[1] + fin_dim[1] / 2,
     fin_origin[2] + fin_dim[2] / 2,
 )
-fin = Box(
-    fin_origin,
-    (
-        fin_origin[0] + fin_dim[0],
-        fin_origin[1] + fin_dim[1],
-        fin_origin[2] + fin_dim[2],
-    ),
-)
+# fin = Box(
+#     fin_origin,
+#     (
+#         fin_origin[0] + fin_dim[0],
+#         fin_origin[1] + fin_dim[1],
+#         fin_origin[2] + fin_dim[2],
+#     ),
+#     parameterization=pr,
+# )
 gap = (heat_sink_base_dim[2] - fin_dim[2]) / (total_fins - 1)  # gap between fins
-fin = fin.repeat(
-    gap,
-    repeat_lower=(0, 0, 0),
-    repeat_higher=(0, 0, total_fins - 1),
-    center=fin_center,
-)
+# fin = 0.
+for i in range(total_fins):
+    if i == 0:
+        fin = Box(
+            fin_origin,
+            (
+                fin_origin[0] + fin_dim[0],
+                fin_origin[1] + fin_dim[1],
+                fin_origin[2] + fin_dim[2],
+            ),
+            parameterization=pr,
+        )
+    else:
+        fin += Box(
+            (fin_origin[0], fin_origin[1], fin_origin[2] + i * gap),
+            (
+                fin_origin[0] + fin_dim[0],
+                fin_origin[1] + fin_dim[1],
+                fin_origin[2] + i * gap + fin_dim[2],
+            ),
+            parameterization=pr,
+        )
+
+# fin = fin.repeat(
+#     gap,
+#     repeat_lower=(0, 0, 0),
+#     repeat_higher=(0, 0, total_fins - 1),
+#     center=fin_center,
+# )
 fpga = heat_sink_base + fin
 
 # entire geometry
@@ -104,6 +139,7 @@ inlet = Plane(
         channel_origin[2] + channel_dim[2],
     ),
     -1,
+    parameterization=pr,
 )
 outlet = Plane(
     (channel_origin[0] + channel_dim[0], channel_origin[1], channel_origin[2]),
@@ -113,6 +149,7 @@ outlet = Plane(
         channel_origin[2] + channel_dim[2],
     ),
     1,
+    parameterization=pr,
 )
 
 # planes for integral continuity

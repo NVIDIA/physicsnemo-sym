@@ -83,7 +83,7 @@ import os.path
 import pandas as pd
 from skimage.transform import resize as rzz
 import h5py
-from modulus.sym.hydra import to_absolute_path
+from physicsnemo.sym.hydra import to_absolute_path
 import scipy.io as sio
 import yaml
 from typing import Dict
@@ -122,22 +122,22 @@ cores = multiprocessing.cpu_count()
 logger = logging.getLogger(__name__)
 torch.cuda.empty_cache()
 torch.set_default_dtype(torch.float32)
-import modulus
+import physicsnemo
 import gc
-from modulus.sym.hydra import ModulusConfig
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
 
-# from modulus.hydra import to_absolute_path
-from modulus.sym.key import Key
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.models.fully_connected import *
-from modulus.sym.models.fno import *
-from modulus.sym.loss.loss import Loss
-from modulus.sym.models.activation import Activation
-from modulus.sym.node import Node
+# from physicsnemo.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.models.fully_connected import *
+from physicsnemo.sym.models.fno import *
+from physicsnemo.sym.loss.loss import Loss
+from physicsnemo.sym.models.activation import Activation
+from physicsnemo.sym.node import Node
 import requests
 from typing import Union, Tuple
 from pathlib import Path
@@ -7386,8 +7386,8 @@ def normalize_tensors_adjusted(tensor_dict):
     return normalized_dict
 
 
-@modulus.sym.main(config_path="conf", config_name="config_PINO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_PINO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     text = """
                                                               dddddddd                                                         
     MMMMMMMM               MMMMMMMM                           d::::::d                lllllll                                  

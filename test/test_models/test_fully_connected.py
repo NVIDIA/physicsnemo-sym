@@ -20,8 +20,8 @@ import numpy as np
 import pytest
 import torch
 
-from modulus.sym.key import Key
-from modulus.sym.models.fully_connected import FullyConnectedArch
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.models.fully_connected import FullyConnectedArch
 
 from .model_test_utils import validate_func_arch_net
 

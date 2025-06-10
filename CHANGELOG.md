@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.9.0a0] - 2025-01-XX
+## [2.2.0a0] - 2025-08-XX
 
 ### Added
 
@@ -21,6 +21,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 
 ### Dependencies
+
+## [2.1.0] - 2025-06-10
+
+### Fixed
+
+- Fix the zero equation formulation to correctly reflect turbulent kinematic viscosity
+
+- Made `tiny-cuda-nn` optional in deployment image
+
+## [2.0.0] - 2025-03-18
+
+### Changed
+
+- Update `inspect.getargspec` usage
+
+### Fixed
+
+- Fix optimizer checkpoint loading errors
+
+### Dependencies
+
+- Remove upper bound for Cython
+- Add upper bound for numpoly (transitive dependency of chaospy)
 
 ## [1.8.0] - 2024-12-04
 
@@ -101,7 +124,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Integrated the network architecture layers into Modulus-Core.
+- Integrated the network architecture layers into PhysicsNeMo-Core.
 
 ### Fixed
 
@@ -130,7 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Accompanying licenses (will provide in the Modulus docker image).
+- Accompanying licenses (will provide in the PhysicsNeMo docker image).
 
 ### Fixed
 

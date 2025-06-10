@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 import torch
 import numpy as np
 import os

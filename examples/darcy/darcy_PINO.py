@@ -20,19 +20,19 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-import modulus.sym
-from modulus.models.layers.spectral_layers import fourier_derivatives
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.key import Key
-from modulus.sym.node import Node
+import physicsnemo.sym
+from physicsnemo.models.layers.spectral_layers import fourier_derivatives
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
 
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.utils.io.plotter import GridValidatorPlotter
-from modulus.sym.utils.io.vtk import grid_to_vtk
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
+from physicsnemo.sym.utils.io.vtk import grid_to_vtk
 
 from utilities import download_FNO_dataset, load_FNO_dataset
 from ops import dx, ddx
@@ -123,8 +123,8 @@ class Darcy(torch.nn.Module):
 # [pde-loss]
 
 
-@modulus.sym.main(config_path="conf", config_name="config_PINO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_PINO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # [datasets]
     # load training/ test data
     input_keys = [

@@ -14,6 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 from fpga_geometry import *
 
 import os
@@ -21,35 +22,35 @@ import warnings
 
 import sys
 import torch
-import modulus.sym
+import physicsnemo.sym
 from sympy import Symbol, Eq, Abs, tanh, And, Or
 import numpy as np
 
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.models.fourier_net import FourierNetArch
-from modulus.sym.domain.constraint import (
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.models.fourier_net import FourierNetArch
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.domain.monitor import PointwiseMonitor
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes, Curl
-from modulus.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
-from modulus.sym.eq.pdes.basic import NormalDotVec, GradNormal
-from modulus.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
-from modulus.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.domain.monitor import PointwiseMonitor
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes, Curl
+from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
+from physicsnemo.sym.eq.pdes.basic import NormalDotVec, GradNormal
+from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
+from physicsnemo.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # params for simulation
     #############
     # Real Params
@@ -138,6 +139,7 @@ def run(cfg: ModulusConfig) -> None:
         criteria=Eq(x, channel_origin[0]),
         lambda_weighting={"u": 1.0, "v": 1.0, "w": 1.0},
         batch_per_epoch=5000,
+        parameterization=param_ranges,
     )
     flow_domain.add_constraint(constraint_inlet, "inlet")
 
@@ -149,6 +151,7 @@ def run(cfg: ModulusConfig) -> None:
         batch_size=cfg.batch_size.outlet,
         criteria=Eq(x, channel_origin[0] + channel_dim[0]),
         batch_per_epoch=5000,
+        parameterization=param_ranges,
     )
     flow_domain.add_constraint(constraint_outlet, "outlet")
 
@@ -159,6 +162,7 @@ def run(cfg: ModulusConfig) -> None:
         outvar={"u": 0, "v": 0, "w": 0},
         batch_size=cfg.batch_size.no_slip,
         batch_per_epoch=5000,
+        parameterization=param_ranges,
     )
     flow_domain.add_constraint(no_slip, "no_slip")
 
@@ -177,6 +181,7 @@ def run(cfg: ModulusConfig) -> None:
             "momentum_z": Symbol("sdf"),
         },
         batch_per_epoch=5000,
+        parameterization=param_ranges,
     )
     flow_domain.add_constraint(lr_interior, "lr_interior")
 
@@ -197,6 +202,7 @@ def run(cfg: ModulusConfig) -> None:
             "momentum_z": Symbol("sdf"),
         },
         batch_per_epoch=5000,
+        parameterization=param_ranges,
     )
     flow_domain.add_constraint(hr_interior, "hr_interior")
 
@@ -279,7 +285,7 @@ def run(cfg: ModulusConfig) -> None:
         flow_domain.add_validator(openfoam_validator)
     else:
         warnings.warn(
-            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/modulus/resources/modulus_sym_examples_supplemental_materials"
+            f"Directory {file_path} does not exist. Will skip adding validators. Please download the additional files from NGC https://catalog.ngc.nvidia.com/orgs/nvidia/teams/physicsnemo/resources/physicsnemo_sym_examples_supplemental_materials"
         )
 
     # add pressure monitor

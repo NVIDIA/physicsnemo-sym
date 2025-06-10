@@ -29,8 +29,8 @@ except:
 from tqdm import *
 from typing import List, Dict, Union
 from pathlib import Path
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.distributed.manager import DistributedManager
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.distributed.manager import DistributedManager
 
 
 def _pos_to_name(dataset, field, time_step, start, end, step, filter_width):

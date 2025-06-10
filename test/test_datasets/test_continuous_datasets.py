@@ -18,12 +18,12 @@ import torch
 import numpy as np
 from sympy import Symbol, sin
 
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.dataset import (
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.dataset import (
     DictImportanceSampledPointwiseIterableDataset,
 )
-from modulus.sym.domain.constraint.utils import _compute_outvar
-from modulus.sym.geometry.parameterization import Bounds
+from physicsnemo.sym.domain.constraint.utils import _compute_outvar
+from physicsnemo.sym.geometry.parameterization import Bounds
 
 
 def test_DictImportanceSampledPointwiseIterableDataset():

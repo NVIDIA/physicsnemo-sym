@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from modulus.sym.eq.pdes.electromagnetic import MaxwellFreqReal, SommerfeldBC, PEC
+from physicsnemo.sym.eq.pdes.electromagnetic import MaxwellFreqReal, SommerfeldBC, PEC
 import torch
 import numpy as np
 import os

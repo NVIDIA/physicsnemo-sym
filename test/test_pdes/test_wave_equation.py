@@ -17,7 +17,7 @@
 import numpy as np
 import torch
 import os
-from modulus.sym.eq.pdes.wave_equation import WaveEquation, HelmholtzEquation
+from physicsnemo.sym.eq.pdes.wave_equation import WaveEquation, HelmholtzEquation
 
 
 def test_wave_equation():

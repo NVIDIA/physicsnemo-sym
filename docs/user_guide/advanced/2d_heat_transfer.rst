@@ -7,7 +7,7 @@ Introduction
 ------------
 
 This tutorial discusses strategies that can be employed for handling conjugate heat transfer problems with higher thermal conductivities that represent more realistic materials. 
-The :ref:`cht` tutorial introduced how you can setup a simple conjugate heat transfer problem in Modulus Sym. However, the thermal properties in that example do not represent realistic material properties 
+The :ref:`cht` tutorial introduced how you can setup a simple conjugate heat transfer problem in PhysicsNeMo Sym. However, the thermal properties in that example do not represent realistic material properties 
 used to manufacture a heatsink or to cool one. Usually the heatsinks are made of a highly conductive material like Aluminum/Copper, and for air cooled cases, the fluid surrounding the heatsink is air. 
 The conductivities of these materials are orders of magnitude different. This causes sharp gradients at the interface and makes the neural network training very complex. 
 This tutorial shows how such properties and scenarios can be handled via appropriate scaling and architecture choices. 
@@ -38,7 +38,7 @@ The code to setup this problem is shown here:
    :language: python
 
 You can monitor the Tensorboard plots to see the convergence of the simulation. The following table summarizes a comparison of the peak temperature achieved by 
-the heat sink between the Commercial solver and Modulus Sym results. 
+the heat sink between the Commercial solver and PhysicsNeMo Sym results. 
 
 
 .. list-table:: Comparison of the peak temperature with the reference values
@@ -48,7 +48,7 @@ the heat sink between the Commercial solver and Modulus Sym results.
 
    * - Property
      - OpenFOAM (Reference)
-     - Modulus Sym (Predicted)
+     - PhysicsNeMo Sym (Predicted)
    * - Peak temperature :math:`(^{\circ} C)`
      - :math:`180.24` 
      - :math:`180.28`
@@ -87,9 +87,9 @@ The heat setup is also similar to the solid-solid case that was covered earlier.
 See ``examples/chip_2d/chip_2d_solid_fluid_heat_transfer_flow.py`` and ``examples/chip_2d/chip_2d_solid_fluid_heat_transfer_heat.py`` for more details on the 
 definitions of flow/heat constraints and boundary conditions. 
 
-The figure below visualizes the thermal solution in solid and fluid. You can observe that Modulus Sym prediction does a much better job in predicting the temperature continuity
+The figure below visualizes the thermal solution in solid and fluid. You can observe that PhysicsNeMo Sym prediction does a much better job in predicting the temperature continuity
 at the interface when compared to the commercial solution. We believe these differences in the solver results are due to the discretization errors and can be potentially fixed 
-by improving the grid resolution at the interface. Modulus Sym prediction however does not suffer from such errors and the physical constraints are respected to a better degree of accuracy. 
+by improving the grid resolution at the interface. PhysicsNeMo Sym prediction however does not suffer from such errors and the physical constraints are respected to a better degree of accuracy. 
 
 .. figure:: /images/user_guide/2d_solid_fluid_results.png
    :alt: Results for 2D solid-fluid case

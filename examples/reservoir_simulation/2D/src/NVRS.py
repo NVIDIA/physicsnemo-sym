@@ -2079,21 +2079,23 @@ def Plot_2D(XX, YY, plt, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, prod
     if varii == "perm":
         cbar.set_label("Log K(mD)", fontsize=11)
         plt.title("Permeability Field with well locations", fontsize=11, weight="bold")
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=11)
-        plt.title("water saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("water saturation -PhysicsNeMo", fontsize=11, weight="bold")
     elif varii == "water Numerical":
         cbar.set_label("water saturation", fontsize=11)
         plt.title("water saturation - Numerical", fontsize=11, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=11)
         plt.title(
-            "water saturation - (Numerical(GPU) -Modulus)", fontsize=11, weight="bold"
+            "water saturation - (Numerical(GPU) -PhysicsNeMo)",
+            fontsize=11,
+            weight="bold",
         )
 
-    elif varii == "oil Modulus":
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=11)
-        plt.title("Oil saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("Oil saturation -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "oil Numerical":
         cbar.set_label("Oil saturation", fontsize=11)
@@ -2102,12 +2104,12 @@ def Plot_2D(XX, YY, plt, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, prod
     elif varii == "oil diff":
         cbar.set_label("unit", fontsize=11)
         plt.title(
-            "oil saturation - (Numerical(GPU) -Modulus)", fontsize=11, weight="bold"
+            "oil saturation - (Numerical(GPU) -PhysicsNeMo)", fontsize=11, weight="bold"
         )
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure(psia)", fontsize=11)
-        plt.title("Pressure -Modulus", fontsize=11, weight="bold")
+        plt.title("Pressure -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "pressure Numerical":
         cbar.set_label("pressure(psia)", fontsize=11)
@@ -2115,7 +2117,9 @@ def Plot_2D(XX, YY, plt, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, prod
 
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("Pressure - (Numerical(GPU) -Modulus)", fontsize=11, weight="bold")
+        plt.title(
+            "Pressure - (Numerical(GPU) -PhysicsNeMo)", fontsize=11, weight="bold"
+        )
 
     elif varii == "porosity":
         cbar.set_label("porosity", fontsize=11)
@@ -2130,7 +2134,7 @@ def Plot_2D(XX, YY, plt, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, prod
     Add_marker2(plt, XX, YY, injectors, producers)
 
 
-def Plot_Modulus(ax, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, producers):
+def Plot_PhysicsNeMo(ax, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, producers):
     # matplotlib.use('Agg')
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
 
@@ -2271,21 +2275,23 @@ def Plot_Modulus(ax, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, producer
         ax.set_title(
             "Permeability Field with well locations", fontsize=12, weight="bold"
         )
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=12)
-        ax.set_title("water saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("water saturation -PhysicsNeMo", fontsize=12, weight="bold")
     elif varii == "water Numerical":
         cbar.set_label("water saturation", fontsize=12)
         ax.set_title("water saturation - Numerical(GPU)", fontsize=12, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "water saturation - (Numerical(GPU) -Modulus))", fontsize=12, weight="bold"
+            "water saturation - (Numerical(GPU) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "oil Modulus":
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=12)
-        ax.set_title("Oil saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Oil saturation -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "oil Numerical":
         cbar.set_label("Oil saturation", fontsize=12)
@@ -2294,12 +2300,14 @@ def Plot_Modulus(ax, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, producer
     elif varii == "oil diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "oil saturation - (Numerical(GPU) -Modulus))", fontsize=12, weight="bold"
+            "oil saturation - (Numerical(GPU) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=12)
-        ax.set_title("Pressure -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Pressure -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "pressure Numerical":
         cbar.set_label("pressure", fontsize=12)
@@ -2308,7 +2316,7 @@ def Plot_Modulus(ax, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, producer
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "Pressure - (Numerical(GPU) -Modulus))", fontsize=12, weight="bold"
+            "Pressure - (Numerical(GPU) -PhysicsNeMo))", fontsize=12, weight="bold"
         )
 
     elif varii == "porosity":

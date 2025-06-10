@@ -18,7 +18,7 @@ import os
 import numpy as np
 import torch
 from torch import nn
-from modulus.sym.loss.aggregator import HomoscedasticUncertainty
+from physicsnemo.sym.loss.aggregator import HomoscedasticUncertainty
 
 
 class FitToPoly(nn.Module):

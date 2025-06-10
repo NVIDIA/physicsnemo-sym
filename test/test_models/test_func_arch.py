@@ -16,12 +16,12 @@
 
 import torch
 import pytest
-from modulus.sym.models.arch import FuncArch
-from modulus.sym.key import Key
-from modulus.sym.graph import Graph
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
-from modulus.sym.models.fully_connected import FullyConnectedArch
-from modulus.sym.manager import JitManager
+from physicsnemo.sym.models.arch import FuncArch
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.graph import Graph
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.models.fully_connected import FullyConnectedArch
+from physicsnemo.sym.manager import JitManager
 
 
 # ensure torch.rand() is deterministic

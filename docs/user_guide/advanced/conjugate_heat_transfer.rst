@@ -6,24 +6,24 @@ Conjugate Heat Transfer
 Introduction
 ------------
 
-This tutorial uses Modulus Sym to study the conjugate heat
+This tutorial uses PhysicsNeMo Sym to study the conjugate heat
 transfer between the heat sink and the surrounding fluid. The
 temperature variations inside solid and fluid would be solved in a
 coupled manner with appropriate interface boundary conditions. In this
 tutorial, you will learn:
 
-#. How to generate a 3D geometry using the geometry module in Modulus Sym.
+#. How to generate a 3D geometry using the geometry module in PhysicsNeMo Sym.
 
 #. How to set up a conjugate heat transfer problem using the interface
-   boundary conditions in Modulus Sym.
+   boundary conditions in PhysicsNeMo Sym.
 
-#. How to use the Multi-Phase training approach in Modulus Sym for one way
+#. How to use the Multi-Phase training approach in PhysicsNeMo Sym for one way
    coupled problems.
 
 .. note::
    This tutorial assumes that you have completed tutorial :ref:`Introductory Example`
    on and have familiarized yourself with the basics
-   of the Modulus Sym APIs. Also, you should review the 
+   of the PhysicsNeMo Sym APIs. Also, you should review the 
    :ref:`advection-diffusion` tutorial for additional details
    on writing some of the thermal boundary conditions.
 
@@ -255,35 +255,35 @@ Results and Post-processing
 ---------------------------
 
 The table and figures below show the results of Pressure drop and Peak
-temperatures obtained from the Modulus Sym and compare it with the results
+temperatures obtained from the PhysicsNeMo Sym and compare it with the results
 from OpenFOAM solver.
 
 .. table:: Comparisons of Results with OpenFOAM
    :align: center
 
    ===================================== =========== ========
-   \                                     Modulus Sym OpenFOAM
+   \                                     PhysicsNeMo Sym OpenFOAM
    Pressure Drop :math:`(Pa)`            7.51        7.49
    Peak Temperature :math:`(^{\circ} C)` 78.35       78.05
    ===================================== =========== ========
 
 
 .. figure:: /images/user_guide/CHTXSlice.png
-   :alt: Left: Modulus Sym. Center: OpenFOAM. Right: Difference. Top: Temperature distribution in Fluid. Bottom: Temperature distribution in Solid (*Temperature scales in C*)
+   :alt: Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. Top: Temperature distribution in Fluid. Bottom: Temperature distribution in Solid (*Temperature scales in C*)
    :name: fig:3d_heat_sink_xslice_heat
    :width: 100.0%
    :align: center
 
-   Left: Modulus Sym. Center: OpenFOAM. Right: Difference. Top: Temperature
+   Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. Top: Temperature
    distribution in Fluid. Bottom: Temperature distribution in Solid (*Temperature scales in C*)
 
 .. figure:: /images/user_guide/CHTZSlice.png
-   :alt: Left: Modulus Sym. Center: OpenFOAM. Right: Difference. (*Temperature scales in C*)
+   :alt: Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. (*Temperature scales in C*)
    :name: fig:3d_heat_sink_zslice_heat
    :width: 100.0%
    :align: center
 
-   Left: Modulus Sym. Center: OpenFOAM. Right: Difference. (*Temperature scales in C*)
+   Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. (*Temperature scales in C*)
 
 Plotting gradient quantities: Wall Velocity Gradients
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -292,7 +292,7 @@ In a variety of applications, it is desirable to plot the gradients of
 some quantities inside the domain. One such example relevant to fluid
 flows is the wall velocity gradients and wall shear stresses. These
 quantities are often plotted to compute frictional forces, etc. You can
-visualize such quantities in Modulus Sym by outputting the :math:`x`,
+visualize such quantities in PhysicsNeMo Sym by outputting the :math:`x`,
 :math:`y` and :math:`z` derivatives of the desired variables using an 
 ``PointwiseInferencer``.
  
@@ -313,15 +313,15 @@ visualize such quantities in Modulus Sym by outputting the :math:`x`,
 You can then post-process these quantities based on your choice to
 visualize the desired variables. `Paraview’s Calculator Filter
 <https://kitware.github.io/paraview-docs/latest/python/paraview.simple.Calculator.html>`_ was used for the 
-plot shown below. The wall velocity gradients comparison between OpenFOAM and Modulus Sym is
+plot shown below. The wall velocity gradients comparison between OpenFOAM and PhysicsNeMo Sym is
 shown in :numref:`fig-3d_heat_sink_wall_velGrad`.
 
 .. _fig-3d_heat_sink_wall_velGrad:
 
 .. figure:: /images/user_guide/wall_shear_stress_3Fin.png
-   :alt: Comparison of magnitude of wall velocity gradients. Left: Modulus Sym. Right: OpenFOAM
+   :alt: Comparison of magnitude of wall velocity gradients. Left: PhysicsNeMo Sym. Right: OpenFOAM
    :width: 80.0%
    :align: center
 
-   Comparison of magnitude of wall velocity gradients. Left: Modulus Sym.
+   Comparison of magnitude of wall velocity gradients. Left: PhysicsNeMo Sym.
    Right: OpenFOAM

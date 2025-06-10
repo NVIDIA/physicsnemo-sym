@@ -18,7 +18,7 @@ import os
 import numpy as np
 import torch
 from torch import nn
-from modulus.sym.loss.aggregator import LRAnnealing
+from physicsnemo.sym.loss.aggregator import LRAnnealing
 
 
 class FitToPoly(nn.Module):

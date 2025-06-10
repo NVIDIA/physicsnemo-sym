@@ -25,8 +25,8 @@ import numpy as np
 import torch
 from torch.utils.data import DataLoader
 
-from modulus.sym.distributed import DistributedManager
-from modulus.sym.domain.constraint.constraint import Constraint
+from physicsnemo.sym.distributed import DistributedManager
+from physicsnemo.sym.domain.constraint.constraint import Constraint
 
 from src.dali_dataset import ERA5HDF5GridDaliIterableDataset
 from src.dataset import ERA5HDF5GridDataset

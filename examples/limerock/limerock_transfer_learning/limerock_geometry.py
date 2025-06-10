@@ -17,8 +17,8 @@
 from sympy import Symbol, Eq, tanh, Max
 import numpy as np
 import itertools
-from modulus.sym.geometry.primitives_3d import Box, Channel, Plane
-from modulus.sym.geometry import Parameterization, Parameter
+from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
+from physicsnemo.sym.geometry import Parameterization, Parameter
 
 fin_front_top_cut_angle = 0.0
 fin_front_bottom_cut_angle = 0.0

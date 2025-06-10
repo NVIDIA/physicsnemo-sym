@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # General info about new container / image
-CONTAINER_NAME=modulus/ccusressim
+CONTAINER_NAME=physicsnemo/ccusressim
 TAG=latest
 
 # Build a container

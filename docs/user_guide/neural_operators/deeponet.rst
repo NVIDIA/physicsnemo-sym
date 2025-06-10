@@ -7,15 +7,15 @@ Introduction
 --------------
 
 This tutorial illustrates how to learn abstract operators using data-informed and physics-informed
-Deep operator network (DeepONet) in Modulus Sym. In this tutorial, you will learn
+Deep operator network (DeepONet) in PhysicsNeMo Sym. In this tutorial, you will learn
 
-#. How to use DeepONet architecture in Modulus Sym
+#. How to use DeepONet architecture in PhysicsNeMo Sym
 
 #. How to set up data-informed and physics-informed DeepONet for learning operators
 
 .. note::
    This tutorial assumes that you have completed the tutorial :ref:`Introductory Example` and are
-   familiar with Modulus Sym APIs.
+   familiar with PhysicsNeMo Sym APIs.
 
 Problem 1: Anti-derivative (data-informed)
 ------------------------------------------
@@ -83,7 +83,7 @@ The models are initialized in the Python script using the following:
    :end-before: [init-model]
 
 .. note::
-   The DeepONet architecture in Modulus Sym is extremely flexible allowing users to use different branch and trunk nets.
+   The DeepONet architecture in PhysicsNeMo Sym is extremely flexible allowing users to use different branch and trunk nets.
    For example a convolutional model can be used in the branch network while a fully-connected is used in the trunk.
 
 
@@ -280,8 +280,8 @@ Case Setup
 ~~~~~~~~~~
 
 In this section, you will set up a data-informed DeepONet for learning the solution operator of a 2D Darcy flow in
-Modulus Sym. The problem setup and training data are the same as in Fourier Neural Operators. Please see the tutorial
-:ref:`darcy_fno` for more details. It is worth emphasising that one can employ any built-in Modulus Sym
+PhysicsNeMo Sym. The problem setup and training data are the same as in Fourier Neural Operators. Please see the tutorial
+:ref:`darcy_fno` for more details. It is worth emphasising that one can employ any built-in PhysicsNeMo Sym
 network architectures  in a DeepONet model.
 
 .. note::

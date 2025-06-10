@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This script allows you to try various combinations of Modulus
+# This script allows you to try various combinations of PhysicsNeMo
 # features by changing only this config.yaml file. For best
 # performance, we recommend the below defaults for each architecture.
 # You can modify them by editing the  correponding entries in this 
@@ -36,7 +36,7 @@
 
 
 defaults:
-  - modulus_default
+  - physicsnemo_default
   - scheduler: tf_exponential_lr
   - optimizer: adam
   - loss: sum

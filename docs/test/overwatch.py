@@ -66,7 +66,7 @@ def get_doc_codeblock_files(userguide_path: Path, file_pattern: str = "*.rst"):
     """
     assert userguide_path.is_dir(), "Invalid repo folder path"
 
-    regex_pattern = re.compile("\/modulus\/examples\/(.+?)\.py")
+    regex_pattern = re.compile("\/physicsnemo\/examples\/(.+?)\.py")
 
     files = {}
     for doc_file in userguide_path.rglob(file_pattern):

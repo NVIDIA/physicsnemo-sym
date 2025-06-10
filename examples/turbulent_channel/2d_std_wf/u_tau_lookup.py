@@ -19,26 +19,26 @@ import numpy as np
 from sympy import Symbol, Eq, sin, cos, Min, Max, Abs, log, exp
 from scipy import optimize
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
     PointwiseConstraint,
 )
-from modulus.sym.domain.monitor import PointwiseMonitor
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.key import Key
-from modulus.sym.node import Node
+from physicsnemo.sym.domain.monitor import PointwiseMonitor
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
 
 
-@modulus.sym.main(config_path="conf_u_tau_lookup", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf_u_tau_lookup", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     u = np.linspace(1e-3, 50, num=100)
     y = np.linspace(1e-3, 0.5, num=100)
 

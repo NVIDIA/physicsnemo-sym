@@ -22,16 +22,16 @@ from torch.utils.data import DataLoader
 import os
 import matplotlib.pyplot as plt
 from copy import deepcopy
-import modulus
-from modulus.sym.hydra import ModulusConfig
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
+import physicsnemo
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
 from NVRS import *
 import time
 from datetime import timedelta
 from utilities import preprocess_FNO_mat
 from ops import dx, ddx
-from modulus.sym.models.fno import *
+from physicsnemo.sym.models.fno import *
 import cupy as cp
 from PIL import Image
 
@@ -529,8 +529,8 @@ def MyLossClement(a, b):
     return loss
 
 
-@modulus.sym.main(config_path="conf", config_name="config_PINO_original")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_PINO_original")
+def run(cfg: PhysicsNeMoConfig) -> None:
     print("")
     print("------------------------------------------------------------------")
     print("")

@@ -20,22 +20,22 @@
 from warnings import warn
 
 warn(
-    f"This example will be depricated soon! Please switch to the FourCastNet recipe from Modulus Launch repo.",
+    f"This example will be depricated soon! Please switch to the FourCastNet recipe from PhysicsNeMo Launch repo.",
     DeprecationWarning,
 )
 
 import logging
 
-import modulus.sym
+import physicsnemo.sym
 
-from modulus.sym.hydra.config import ModulusConfig
-from modulus.sym.key import Key
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import Constraint, SupervisedGridConstraint
-from modulus.sym.domain.constraint.constraint import InfiniteDataLoader
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.solver import Solver
-from modulus.sym.utils.io import GridValidatorPlotter
+from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import Constraint, SupervisedGridConstraint
+from physicsnemo.sym.domain.constraint.constraint import InfiniteDataLoader
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.utils.io import GridValidatorPlotter
 
 from src.dali_dataset import ERA5HDF5GridDaliIterableDataset
 from src.dataset import ERA5HDF5GridDataset
@@ -45,8 +45,8 @@ from src.loss import LpLoss
 logger = logging.getLogger(__name__)
 
 
-@modulus.sym.main(config_path="conf", config_name="config_FCN")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_FCN")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # load training/ test data
     channels = list(range(cfg.custom.n_channels))
     train_dataset = _create_dataset(

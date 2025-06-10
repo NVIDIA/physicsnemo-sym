@@ -20,31 +20,31 @@ import numpy as np
 
 from sympy import Symbol, Eq, Abs, sin, cos
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.utils.io import csv_to_dict
-from modulus.sym.solver import SequentialSolver
-from modulus.sym.domain import Domain
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.solver import SequentialSolver
+from physicsnemo.sym.domain import Domain
 
-from modulus.sym.geometry.primitives_3d import Box
+from physicsnemo.sym.geometry.primitives_3d import Box
 
-from modulus.sym.models.fully_connected import FullyConnectedArch
-from modulus.sym.models.moving_time_window import MovingTimeWindowArch
-from modulus.sym.domain.constraint import (
+from physicsnemo.sym.models.fully_connected import FullyConnectedArch
+from physicsnemo.sym.models.moving_time_window import MovingTimeWindowArch
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from modulus.sym.domain.inferencer import PointVTKInferencer
-from modulus.sym.utils.io import (
+from physicsnemo.sym.domain.inferencer import PointVTKInferencer
+from physicsnemo.sym.utils.io import (
     VTKUniformGrid,
 )
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # time window parameters
     time_window_size = 1.0
     t_symbol = Symbol("t")

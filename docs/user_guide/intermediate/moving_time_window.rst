@@ -11,7 +11,7 @@ with continuous time approach. This tutorial presents a moving time window
 approach to solve a complex transient Navier-Stokes problem. In this
 tutorial, you will learn:
 
-#. How to solve sequences of problems/domains in Modulus Sym.
+#. How to solve sequences of problems/domains in PhysicsNeMo Sym.
 
 #. How to set up periodic boundary conditions.
 

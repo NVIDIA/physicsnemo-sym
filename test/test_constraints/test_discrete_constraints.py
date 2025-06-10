@@ -18,13 +18,13 @@ import torch
 import numpy as np
 from sympy import Symbol
 
-from modulus.sym.node import Node
-from modulus.sym.domain.constraint.discrete import (
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.domain.constraint.discrete import (
     SupervisedGridConstraint,
     DeepONetConstraint_Data,
     DeepONetConstraint_Physics,
 )
-from modulus.sym.dataset import DictGridDataset
+from physicsnemo.sym.dataset import DictGridDataset
 
 
 def test_SupervisedGridConstraint():

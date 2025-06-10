@@ -18,7 +18,7 @@ from pathlib import Path
 import tempfile
 from termcolor import cprint
 
-from modulus.sym.distributed import DistributedManager
+from physicsnemo.sym.distributed import DistributedManager
 
 from src.test_dali_dataset import (
     create_test_data,

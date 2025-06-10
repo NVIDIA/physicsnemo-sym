@@ -20,27 +20,27 @@ import warnings
 import numpy as np
 from sympy import Symbol, Eq, Or, And, Max
 
-import modulus.sym
-from modulus.sym.key import Key
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_2d import Line, Channel2D
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
-from modulus.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_2d import Line, Channel2D
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from modulus.sym.geometry import Parameterization, Parameter, Bounds
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.utils.io import InferencerPlotter
+from physicsnemo.sym.geometry import Parameterization, Parameter, Bounds
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.utils.io import InferencerPlotter
 
 from custom_airfoil_geometry import AirfoilInChannel
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     ##########
     # Geometry
     ##########

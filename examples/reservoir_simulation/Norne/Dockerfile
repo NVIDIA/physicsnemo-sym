@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Use the NVIDIA Modulus image as the base image
-FROM nvcr.io/nvidia/modulus/modulus:23.09
+# Use the NVIDIA PhysicsNeMo image as the base image
+FROM nvcr.io/nvidia/physicsnemo/physicsnemo:23.09
 
 # Clone and build MPSlib
 RUN cd /workspace && git clone https://github.com/ergosimulation/mpslib.git MPSlib && cd MPSlib && make -j 

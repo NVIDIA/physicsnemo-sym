@@ -16,9 +16,9 @@
 
 import numpy as np
 from pathlib import Path
-from modulus.sym.geometry import Parameterization, Parameter, Bounds
-from modulus.sym.geometry.primitives_1d import Point1D, Line1D
-from modulus.sym.geometry.primitives_2d import (
+from physicsnemo.sym.geometry import Parameterization, Parameter, Bounds
+from physicsnemo.sym.geometry.primitives_1d import Point1D, Line1D
+from physicsnemo.sym.geometry.primitives_2d import (
     Line,
     Channel2D,
     Rectangle,
@@ -27,7 +27,7 @@ from modulus.sym.geometry.primitives_2d import (
     Ellipse,
     Polygon,
 )
-from modulus.sym.geometry.primitives_3d import (
+from physicsnemo.sym.geometry.primitives_3d import (
     Plane,
     Channel,
     Box,
@@ -40,8 +40,8 @@ from modulus.sym.geometry.primitives_3d import (
     IsoTriangularPrism,
     ElliCylinder,
 )
-from modulus.sym.geometry.tessellation import Tessellation
-from modulus.sym.utils.io.vtk import var_to_polyvtk
+from physicsnemo.sym.geometry.tessellation import Tessellation
+from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
 
 dir_path = Path(__file__).parent
 

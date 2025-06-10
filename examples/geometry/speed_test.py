@@ -15,9 +15,14 @@
 # limitations under the License.
 
 import numpy as np
-from modulus.sym.geometry.tessellation import Tessellation
-from modulus.sym.geometry.primitives_3d import Box, Sphere, Cylinder, VectorizedBoxes
-from modulus.sym.utils.io.vtk import var_to_polyvtk
+from physicsnemo.sym.geometry.tessellation import Tessellation
+from physicsnemo.sym.geometry.primitives_3d import (
+    Box,
+    Sphere,
+    Cylinder,
+    VectorizedBoxes,
+)
+from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
 from stl import mesh as np_mesh
 import time
 

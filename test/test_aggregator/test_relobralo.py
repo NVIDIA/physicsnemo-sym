@@ -18,7 +18,7 @@ import os
 import numpy as np
 import torch
 from torch import nn
-from modulus.sym.loss.aggregator import Relobralo
+from physicsnemo.sym.loss.aggregator import Relobralo
 
 
 class FitToPoly(nn.Module):

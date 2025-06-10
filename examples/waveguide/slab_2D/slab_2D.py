@@ -20,22 +20,22 @@ import numpy as np
 from scipy.sparse.linalg import eigsh
 from scipy.sparse import diags
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.domain.constraint import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     PointwiseConstraint,
 )
-from modulus.sym.domain.validator import PointwiseValidator
-from modulus.sym.domain.inferencer import VoxelInferencer
-from modulus.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.wave_equation import HelmholtzEquation
-from modulus.sym.eq.pdes.navier_stokes import GradNormal
+from physicsnemo.sym.domain.validator import PointwiseValidator
+from physicsnemo.sym.domain.inferencer import VoxelInferencer
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.wave_equation import HelmholtzEquation
+from physicsnemo.sym.eq.pdes.navier_stokes import GradNormal
 
 x, y = Symbol("x"), Symbol("y")
 
@@ -58,8 +58,8 @@ def Laplacian_1D_eig(a, b, N, eps=lambda x: np.ones_like(x), k=3):
     return eigvals.astype(np.float32), eigvecs.astype(np.float32), x.astype(np.float32)
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # params for domain
     height = 2
     width = 2

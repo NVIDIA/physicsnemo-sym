@@ -18,8 +18,8 @@ from sympy import Symbol
 import numpy as np
 from pathlib import Path
 
-from modulus.sym.geometry.tessellation import Tessellation
-from modulus.sym.geometry import Parameterization
+from physicsnemo.sym.geometry.tessellation import Tessellation
+from physicsnemo.sym.geometry import Parameterization
 
 dir_path = Path(__file__).parent
 

@@ -15,7 +15,7 @@
 # limitations under the License.
 
 defaults :
-  - modulus_default
+  - physicsnemo_default
   - /arch/pix2pix_cfg@arch.branch
   - /arch/fourier_cfg@arch.trunk
   - /arch/deeponet_cfg@arch.deeponet

@@ -20,22 +20,22 @@ import numpy as np
 
 from typing import List, Dict, Union
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch
 
-import modulus.sym
-from modulus.sym.hydra import to_absolute_path, instantiate_arch, ModulusConfig
-from modulus.sym.distributed import DistributedManager
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import Constraint
-from modulus.sym.domain.validator import GridValidator
+import physicsnemo.sym
+from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.distributed import DistributedManager
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import Constraint
+from physicsnemo.sym.domain.validator import GridValidator
 
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.loss import PointwiseLossNorm
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.utils.io import grid_to_vtk
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.loss import PointwiseLossNorm
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.utils.io import grid_to_vtk
 
 from jhtdb_utils import make_jhtdb_dataset
 from ops import FlowOps
@@ -299,8 +299,8 @@ class SuperResolutionValidator(GridValidator):
             writer.add_scalar("val/" + name + "/" + k, loss, step, new_style=True)
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # load jhtdb datasets
     invar, outvar = make_jhtdb_dataset(
         nr_samples=cfg.custom.jhtdb.n_train,

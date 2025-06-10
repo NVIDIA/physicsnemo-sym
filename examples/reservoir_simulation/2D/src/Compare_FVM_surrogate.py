@@ -15,10 +15,10 @@
 # limitations under the License.
 
 import os
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
 from NVRS import *
-from modulus.sym.models.fno import *
+from physicsnemo.sym.models.fno import *
 import shutil
 import pandas as pd
 import scipy.io as sio
@@ -113,15 +113,24 @@ def process_step(kk):
     lookf = lookf * pini_alt
     diff1 = abs(look - lookf)
     ax1 = f_3.add_subplot(331, projection="3d")
-    Plot_Modulus(
-        ax1, nx, ny, nz, look, N_injw, N_pr, "pressure Modulus", injectors, producers
+    Plot_PhysicsNeMo(
+        ax1,
+        nx,
+        ny,
+        nz,
+        look,
+        N_injw,
+        N_pr,
+        "pressure PhysicsNeMo",
+        injectors,
+        producers,
     )
     ax2 = f_3.add_subplot(332, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax2, nx, ny, nz, lookf, N_injw, N_pr, "pressure Numerical", injectors, producers
     )
     ax3 = f_3.add_subplot(333, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax3, nx, ny, nz, diff1, N_injw, N_pr, "pressure diff", injectors, producers
     )
     R2p, L2p = compute_metrics(look.ravel(), lookf.ravel())
@@ -130,15 +139,15 @@ def process_step(kk):
     lookf = cSat[0, kk, :, :]
     diff1 = abs(look - lookf)
     ax1 = f_3.add_subplot(334, projection="3d")
-    Plot_Modulus(
-        ax1, nx, ny, nz, look, N_injw, N_pr, "water Modulus", injectors, producers
+    Plot_PhysicsNeMo(
+        ax1, nx, ny, nz, look, N_injw, N_pr, "water PhysicsNeMo", injectors, producers
     )
     ax2 = f_3.add_subplot(335, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax2, nx, ny, nz, lookf, N_injw, N_pr, "water Numerical", injectors, producers
     )
     ax3 = f_3.add_subplot(336, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax3, nx, ny, nz, diff1, N_injw, N_pr, "water diff", injectors, producers
     )
     R2w, L2w = compute_metrics(look.ravel(), lookf.ravel())
@@ -147,15 +156,17 @@ def process_step(kk):
     lookf = 1 - cSat[0, kk, :, :]
     diff1 = abs(look - lookf)
     ax1 = f_3.add_subplot(337, projection="3d")
-    Plot_Modulus(
-        ax1, nx, ny, nz, look, N_injw, N_pr, "oil Modulus", injectors, producers
+    Plot_PhysicsNeMo(
+        ax1, nx, ny, nz, look, N_injw, N_pr, "oil PhysicsNeMo", injectors, producers
     )
     ax2 = f_3.add_subplot(338, projection="3d")
-    Plot_Modulus(
+    Plot_PhysicsNeMo(
         ax2, nx, ny, nz, lookf, N_injw, N_pr, "oil Numerical", injectors, producers
     )
     ax3 = f_3.add_subplot(339, projection="3d")
-    Plot_Modulus(ax3, nx, ny, nz, diff1, N_injw, N_pr, "oil diff", injectors, producers)
+    Plot_PhysicsNeMo(
+        ax3, nx, ny, nz, diff1, N_injw, N_pr, "oil diff", injectors, producers
+    )
     R2o, L2o = compute_metrics(look.ravel(), lookf.ravel())
 
     plt.tight_layout(rect=[0, 0, 1, 0.95])
@@ -176,8 +187,8 @@ surrogate = None
 while True:
     surrogate = int(
         input(
-            "Select surrogate method type:\n1=FNO [Modulus Implementation]\n\
-2=PINO [Modulus Implementation]\n3\3=AFNO (data driven)\n4=AFNO ( data + physics driven)\n"
+            "Select surrogate method type:\n1=FNO [PhysicsNeMo Implementation]\n\
+2=PINO [PhysicsNeMo Implementation]\n3\3=AFNO (data driven)\n4=AFNO ( data + physics driven)\n"
         )
     )
     if (surrogate > 4) or (surrogate < 1):
@@ -778,7 +789,7 @@ font.set_weight("bold")
 fig4.text(
     0.5,
     0.98,
-    "R2(%) Accuracy - Modulus/Numerical(GPU)",
+    "R2(%) Accuracy - PhysicsNeMo/Numerical(GPU)",
     ha="center",
     va="center",
     fontproperties=font,
@@ -787,7 +798,7 @@ fig4.text(
 fig4.text(
     0.5,
     0.49,
-    "L2(%) Accuracy - Modulus/Numerical(GPU)",
+    "L2(%) Accuracy - PhysicsNeMo/Numerical(GPU)",
     ha="center",
     va="center",
     fontproperties=font,

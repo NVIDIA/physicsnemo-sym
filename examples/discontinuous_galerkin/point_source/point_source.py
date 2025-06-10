@@ -18,31 +18,31 @@ import torch
 import hydra
 from omegaconf import DictConfig, OmegaConf
 
-import modulus.sym
-from modulus.sym.hydra import instantiate_arch, ModulusConfig
-from modulus.sym.solver import Solver
-from modulus.sym.geometry import Bounds
-from modulus.sym.geometry.primitives_2d import Rectangle
-from modulus.sym.models.fully_connected import FullyConnectedArch
-from modulus.sym.key import Key
-from modulus.sym.eq.pdes.diffusion import Diffusion
-from modulus.sym.utils.vpinn.test_functions import (
+import physicsnemo.sym
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.geometry import Bounds
+from physicsnemo.sym.geometry.primitives_2d import Rectangle
+from physicsnemo.sym.models.fully_connected import FullyConnectedArch
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.eq.pdes.diffusion import Diffusion
+from physicsnemo.sym.utils.vpinn.test_functions import (
     Test_Function,
     Legendre_test,
     Trig_test,
 )
-from modulus.sym.utils.vpinn.integral import tensor_int, Quad_Rect, Quad_Collection
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import (
+from physicsnemo.sym.utils.vpinn.integral import tensor_int, Quad_Rect, Quad_Collection
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     VariationalDomainConstraint,
 )
-from modulus.sym.domain.inferencer import PointwiseInferencer
-from modulus.sym.utils.io.plotter import InferencerPlotter
-from modulus.sym.loss import Loss
+from physicsnemo.sym.domain.inferencer import PointwiseInferencer
+from physicsnemo.sym.utils.io.plotter import InferencerPlotter
+from physicsnemo.sym.loss import Loss
 from sympy import Symbol
-from modulus.sym.constants import tf_dt
+from physicsnemo.sym.constants import tf_dt
 
 
 # custom variational loss
@@ -96,8 +96,8 @@ class DGLoss(Loss):
         return losses
 
 
-@modulus.sym.main(config_path="conf", config_name="config")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config")
+def run(cfg: PhysicsNeMoConfig) -> None:
     # make list of nodes to unroll graph on
     df = Diffusion(T="u", D=1.0, dim=2, time=False)
     dg_net = instantiate_arch(

@@ -19,26 +19,26 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 import os
-import modulus
-from modulus.sym.hydra import ModulusConfig
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
-from modulus.sym.node import Node
-from modulus.sym.solver import Solver
-from modulus.sym.domain import Domain
-from modulus.sym.domain.constraint import SupervisedGridConstraint
-from modulus.sym.domain.validator import GridValidator
-from modulus.sym.dataset import DictGridDataset
-from modulus.sym.utils.io.plotter import GridValidatorPlotter
+import physicsnemo
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
+from physicsnemo.sym.node import Node
+from physicsnemo.sym.solver import Solver
+from physicsnemo.sym.domain import Domain
+from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
+from physicsnemo.sym.domain.validator import GridValidator
+from physicsnemo.sym.dataset import DictGridDataset
+from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
-from modulus.sym.models.afno.afno import *
+from physicsnemo.sym.models.afno.afno import *
 import shutil
 import cupy as cp
 import scipy.io as sio
 import requests
-from modulus.sym.utils.io.plotter import ValidatorPlotter
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter
 
 torch.set_default_dtype(torch.float32)
 
@@ -141,7 +141,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
                 look,
                 self.N_injw,
                 self.N_pr,
-                "pressure Modulus",
+                "pressure PhysicsNeMo",
                 self.injectors,
                 self.producers,
             )
@@ -193,7 +193,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
 
             f_3 = plt.figure(figsize=(20, 20), dpi=200)
             ax1 = f_3.add_subplot(131, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax1,
                 self.nx,
                 self.ny,
@@ -201,12 +201,12 @@ class CustomValidatorPlotterP(ValidatorPlotter):
                 look,
                 self.N_injw,
                 self.N_pr,
-                "pressure Modulus",
+                "pressure PhysicsNeMo",
                 self.injectors,
                 self.producers,
             )
             ax2 = f_3.add_subplot(132, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax2,
                 self.nx,
                 self.ny,
@@ -219,7 +219,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
                 self.producers,
             )
             ax3 = f_3.add_subplot(133, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax3,
                 self.nx,
                 self.ny,
@@ -257,7 +257,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
         fig4.text(
             0.5,
             0.98,
-            "R2(%) Accuracy - Modulus/Numerical(GPU)",
+            "R2(%) Accuracy - PhysicsNeMo/Numerical(GPU)",
             ha="center",
             va="center",
             fontproperties=font,
@@ -266,7 +266,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
         fig4.text(
             0.5,
             0.49,
-            "L2(%) Accuracy - Modulus/Numerical(GPU)",
+            "L2(%) Accuracy - PhysicsNeMo/Numerical(GPU)",
             ha="center",
             va="center",
             fontproperties=font,
@@ -385,7 +385,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
                 look_sat,
                 self.N_injw,
                 self.N_pr,
-                "water Modulus",
+                "water PhysicsNeMo",
                 self.injectors,
                 self.producers,
             )
@@ -434,7 +434,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
                 look_oil,
                 self.N_injw,
                 self.N_pr,
-                "oil Modulus",
+                "oil PhysicsNeMo",
                 self.injectors,
                 self.producers,
             )
@@ -486,7 +486,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
 
             f_3 = plt.figure(figsize=(20, 20), dpi=200)
             ax1 = f_3.add_subplot(231, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax1,
                 self.nx,
                 self.ny,
@@ -494,12 +494,12 @@ class CustomValidatorPlotterS(ValidatorPlotter):
                 look_sat,
                 self.N_injw,
                 self.N_pr,
-                "water Modulus",
+                "water PhysicsNeMo",
                 self.injectors,
                 self.producers,
             )
             ax2 = f_3.add_subplot(232, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax2,
                 self.nx,
                 self.ny,
@@ -512,7 +512,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
                 self.producers,
             )
             ax3 = f_3.add_subplot(233, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax3,
                 self.nx,
                 self.ny,
@@ -526,7 +526,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
             )
 
             ax4 = f_3.add_subplot(234, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax4,
                 self.nx,
                 self.ny,
@@ -534,12 +534,12 @@ class CustomValidatorPlotterS(ValidatorPlotter):
                 look_oil,
                 self.N_injw,
                 self.N_pr,
-                "oil Modulus",
+                "oil PhysicsNeMo",
                 self.injectors,
                 self.producers,
             )
             ax5 = f_3.add_subplot(235, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax5,
                 self.nx,
                 self.ny,
@@ -552,7 +552,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
                 self.producers,
             )
             ax6 = f_3.add_subplot(236, projection="3d")
-            Plot_Modulus(
+            Plot_PhysicsNeMo(
                 ax6,
                 self.nx,
                 self.ny,
@@ -590,7 +590,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
         fig4.text(
             0.5,
             0.98,
-            "R2(%) Accuracy - Modulus/Numerical(GPU)",
+            "R2(%) Accuracy - PhysicsNeMo/Numerical(GPU)",
             ha="center",
             va="center",
             fontproperties=font,
@@ -599,7 +599,7 @@ class CustomValidatorPlotterS(ValidatorPlotter):
         fig4.text(
             0.5,
             0.49,
-            "L2(%) Accuracy - Modulus/Numerical(GPU)",
+            "L2(%) Accuracy - PhysicsNeMo/Numerical(GPU)",
             ha="center",
             va="center",
             fontproperties=font,
@@ -1044,8 +1044,8 @@ class Black_oil(torch.nn.Module):
 
 
 # [pde-loss]
-@modulus.sym.main(config_path="conf", config_name="config_PINO")
-def run(cfg: ModulusConfig) -> None:
+@physicsnemo.sym.main(config_path="conf", config_name="config_PINO")
+def run(cfg: PhysicsNeMoConfig) -> None:
     print("")
     print("------------------------------------------------------------------")
     print("")

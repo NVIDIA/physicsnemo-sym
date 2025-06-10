@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # General info about new container / image
-CONTAINER_NAME=modulus/ressim
+CONTAINER_NAME=physicsnemo/ressim
 TAG=latest
 
 # Specs of the current user. These will be arguments to Dockerfile

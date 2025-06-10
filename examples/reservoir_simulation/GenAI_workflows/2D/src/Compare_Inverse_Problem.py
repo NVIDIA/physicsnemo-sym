@@ -17,10 +17,10 @@
 @Author : Clement Etienam
 """
 import os
-from modulus.sym.hydra import to_absolute_path
-from modulus.sym.key import Key
+from physicsnemo.sym.hydra import to_absolute_path
+from physicsnemo.sym.key import Key
 from NVRS import *
-from modulus.sym.models.fno import *
+from physicsnemo.sym.models.fno import *
 import shutil
 import pandas as pd
 import scipy.io as sio

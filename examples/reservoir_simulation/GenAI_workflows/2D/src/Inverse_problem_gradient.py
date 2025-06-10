@@ -107,8 +107,8 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.models import load_model, Model, Sequential
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.layers import Input, UpSampling2D, Conv2D, MaxPooling2D, Dense
-from modulus.sym.models.fno import *
-from modulus.sym.key import Key
+from physicsnemo.sym.models.fno import *
+from physicsnemo.sym.key import Key
 import os.path
 from PIL import Image
 import numpy
@@ -4452,8 +4452,8 @@ else:
     while True:
         surrogate = int(
             input(
-                "Select surrogate method type:\n1=FNO [Modulus Implementation]\n\
-    2=PINO [Modulus IMplemnation]\n3=PINO version 1 \
+                "Select surrogate method type:\n1=FNO [PhysicsNeMo Implementation]\n\
+    2=PINO [PhysicsNeMo IMplemnation]\n3=PINO version 1 \
     [Original paper implementation]\n4=PINO version 2 [Original paper implementation with Flux predicted]\n"
             )
         )

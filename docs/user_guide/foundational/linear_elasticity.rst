@@ -7,12 +7,12 @@ Introduction
 ------------
 
 This tutorial illustrates the linear elasticity
-implementation in Modulus Sym. Modulus Sym offers the capability of solving the
+implementation in PhysicsNeMo Sym. PhysicsNeMo Sym offers the capability of solving the
 linear elasticity equations in the differential or variational form,
 allowing to solve a wide range of problems with a variety of boundary
 conditions. Three examples are presented in this chapter, namely the 3D
 bracket, the fuselage panel, and the plane displacement, to discuss the
-details of the linear elasticity in Modulus Sym. In this tutorial, you
+details of the linear elasticity in PhysicsNeMo Sym. In this tutorial, you
 will learn:
 
 -  How to solve linear elasticity equations using the differential and
@@ -26,18 +26,18 @@ will learn:
 .. note::
    This tutorial assumes that you have completed :ref:`Introductory Example` tutorial
    and have familiarized yourself with the basics of
-   the Modulus Sym APIs. See :ref:`weak-solutions-pinn` 
+   the PhysicsNeMo Sym APIs. See :ref:`weak-solutions-pinn` 
    for more details on weak solutions of PDEs. Some of the boundary
    conditions are defined more elaborately in the tutorial
    :ref:`variational-example` . 
 
-   The linear elasticity equations in Modulus Sym can be found in the 
-   source code directory ``modulus/eq/pdes/linear_elasticity.py``.
+   The linear elasticity equations in PhysicsNeMo Sym can be found in the 
+   source code directory ``physicsnemo/eq/pdes/linear_elasticity.py``.
 
 .. warning::
 
    The Python package `quadpy <https://github.com/nschloe/quadpy>`_ is required for this example.
-   Install using ``pip install quadpy`` (Also refer to :ref:`install_modulus_docker`).
+   Install using ``pip install quadpy`` (Also refer to :ref:`install_physicsnemo_docker`).
 
 Linear Elasticity in the Differential Form
 ------------------------------------------
@@ -58,7 +58,7 @@ defined as
 
 .. math:: \mu = \frac{E}{2(1+\nu)}.
 
-Here, :math:`E`, :math:`v` are, respectively, the Young’s modulus and
+Here, :math:`E`, :math:`v` are, respectively, the Young’s physicsnemo and
 Poisson’s ratio.
 
 Linear elasticity equations in the mixed form
@@ -104,7 +104,7 @@ nondimensionalized variables can be defined as:
 
 Here, :math:`L` is the characteristic length, :math:`U` is the
 characteristic displacement, and :math:`\mu_c` is the
-nondimensionalizing shear modulus. The
+nondimensionalizing shear physicsnemo. The
 nondimensionalized Navier and equilibrium equations can be obtained by multiplying both
 sides of equations by :math:`L^2/\mu_c U`, as follows:
 
@@ -217,7 +217,7 @@ done only to generate the interior points more efficiently.
 
 
 :numref:`fig-bracket-results` shows
-the Modulus Sym results and also a comparison with a commercial solver
+the PhysicsNeMo Sym results and also a comparison with a commercial solver
 results. The results of these two solvers show good agreement, with only
 a 8% difference in maximum bracket displacement.
 
@@ -227,12 +227,12 @@ a 8% difference in maximum bracket displacement.
    :width: 100.0%
    :align: center
 
-   Modulus Sym linear elasticity results for the bracket deflection example
+   PhysicsNeMo Sym linear elasticity results for the bracket deflection example
 
 Problem 2: Stress analysis for aircraft fuselage panel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This example uses Modulus Sym for the analysis of stress
+This example uses PhysicsNeMo Sym for the analysis of stress
 concentration in an aircraft fuselage panel. Depending on the altitude
 of the flying plane, the fuselage panel is exposed to different values
 of hoop stress that can cause accumulated damage to the panel over the
@@ -263,7 +263,7 @@ thickness of the panel is very small (i.e., :math:`2 \, \text{mm}`),
 plane stress equations can be used in this example. The python script
 for this problem can be found at
 ``examples/fuselage_panel/panel_solver.py``. The plane stress form of
-the linear elasticity equations in Modulus Sym can be called by using the
+the linear elasticity equations in PhysicsNeMo Sym can be called by using the
 ``LinearElasticityPlaneStress`` class:
 
 .. literalinclude:: ../../../examples/fuselage_panel/panel.py
@@ -271,19 +271,19 @@ the linear elasticity equations in Modulus Sym can be called by using the
    :lines: 44-56
 
 :numref:`fig-panel-results` shows
-the Modulus Sym results for panel displacements and stresses. For comparison,
-the commercial solver results are also presented in :numref:`fig-panel-abaqus-results`. The Modulus Sym
+the PhysicsNeMo Sym results for panel displacements and stresses. For comparison,
+the commercial solver results are also presented in :numref:`fig-panel-abaqus-results`. The PhysicsNeMo Sym
 and commercial solver results are in close agreement, with a difference
 of less than 5% in the maximum Von Mises stress.
 
 .. _fig-panel-results:
 
 .. figure:: /images/user_guide/panel_results_combined.png
-   :alt: Modulus Sym linear elasticity results for the aircraft fuselage panel example with parameterized hoop stress. The results are for :math:`\sigma_{hoop}` = 46
+   :alt: PhysicsNeMo Sym linear elasticity results for the aircraft fuselage panel example with parameterized hoop stress. The results are for :math:`\sigma_{hoop}` = 46
    :width: 100.0%
    :align: center
 
-   Modulus Sym linear elasticity results for the aircraft fuselage panel example with parameterized hoop stress. The results are for :math:`\sigma_{hoop}` = 46
+   PhysicsNeMo Sym linear elasticity results for the aircraft fuselage panel example with parameterized hoop stress. The results are for :math:`\sigma_{hoop}` = 46
 
 .. _fig-panel-abaqus-results:
 
@@ -302,10 +302,10 @@ Linear elasticity equations in the variational form
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the differential form of the linear elasticity equations,
-Modulus Sym also enables the use of variational form of these equations
+PhysicsNeMo Sym also enables the use of variational form of these equations
 (:ref:`variational-example`). This section presents 
 the linear elasticity equations in the variational
-form as implemented in Modulus Sym. Nondimensionalized
+form as implemented in PhysicsNeMo Sym. Nondimensionalized
 variables will be used in this derivation. The inner product of
 Equation :eq:`eqn-equilibrium` and a vector test
 function :math:`v \in \mathbf{V}`, and integrating over the domain is given as
@@ -324,7 +324,7 @@ where :math:`T_i` is the traction. The first term is zero for
 the traction free boundaries. Equation
 :eq:`eqn-elasticity_variational` is the
 variational form of the linear elasticity equations that is adopted in
-Modulus Sym. The term :math:`\hat{\sigma}_{ji}` in this equation is computed
+PhysicsNeMo Sym. The term :math:`\hat{\sigma}_{ji}` in this equation is computed
 using the stress-displacement relation in Equation
 :eq:`eqn-stress_displacement`.
 
@@ -409,10 +409,10 @@ to the overall loss as follows:
    :language: python
    :lines: 175-202
 
-:numref:`fig-plane_displacement-results` shows the Modulus Sym results for this
+:numref:`fig-plane_displacement-results` shows the PhysicsNeMo Sym results for this
 plane displacement example. The results are in good agreement with the
 FEM results reported in [#rao2020physics]_, verifying
-the accuracy of the Modulus Sym results in the variational form.
+the accuracy of the PhysicsNeMo Sym results in the variational form.
 
 .. _fig-plane_displacement-results:
 
@@ -420,7 +420,7 @@ the accuracy of the Modulus Sym results in the variational form.
    :width: 100.0%
    :align: center
 
-   Modulus Sym results for the plane displacement example.
+   PhysicsNeMo Sym results for the plane displacement example.
 
 
 

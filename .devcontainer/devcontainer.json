@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
 {
-	"name": "Modulus Sym Dev Container",
+	"name": "PhysicsNeMo Sym Dev Container",
 	"image": "nvcr.io/nvidia/pytorch:24.08-py3",
 	"runArgs": [
 		"--gpus=all",
@@ -9,7 +9,7 @@
 	],
 	// While it may seem a good idea to mount it with `-v` in `runArgs` above
 	// that doesn't work with vscode's git integration.
-	// "containerUser": "modulus",
+	// "containerUser": "physicsnemo",
 	"containerEnv": {"EDITOR": "code -w"},
 	// Configure tool-specific properties.
 	"customizations": {
@@ -44,7 +44,7 @@
 	},
     "features": {
         "ghcr.io/devcontainers/features/common-utils:2": {
-            "username": "modulus",
+            "username": "physicsnemo",
             "installZsh": false,
             "installOhMyZsh": false,
             "configureZshAsDefaultShell": false,

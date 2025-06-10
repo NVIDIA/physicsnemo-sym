@@ -18,7 +18,7 @@ import numpy as np
 from ops import FlowOps
 import torch
 from typing import Tuple
-from modulus.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 
 
 def compute_velocity_grad(velocity: torch.Tensor, dx: float = None) -> torch.Tensor:

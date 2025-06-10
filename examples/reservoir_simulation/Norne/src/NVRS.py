@@ -104,7 +104,7 @@ from skimage.transform import resize as rzz
 from mpl_toolkits.mplot3d import Axes3D
 import imp
 import h5py
-from modulus.sym.hydra import to_absolute_path
+from physicsnemo.sym.hydra import to_absolute_path
 import scipy.io as sio
 import yaml
 import matplotlib
@@ -753,7 +753,7 @@ def Plot_RSM_percentile(pertoutt, True_mat, timezz):
     for k in range(22):
         plt.subplot(5, 5, int(k + 1))
         plt.plot(timezz, True_mat[:, k], color="red", lw="2", label="Flow")
-        plt.plot(timezz, P10[:, k], color="blue", lw="2", label="Modulus")
+        plt.plot(timezz, P10[:, k], color="blue", lw="2", label="PhysicsNeMo")
         plt.xlabel("Time (days)", fontsize=13, fontweight="bold")
         plt.ylabel("$Q_{oil}(bbl/day)$", fontsize=13, fontweight="bold")
         # plt.ylim((0,25000))
@@ -778,7 +778,7 @@ def Plot_RSM_percentile(pertoutt, True_mat, timezz):
     for k in range(22):
         plt.subplot(5, 5, int(k + 1))
         plt.plot(timezz, True_mat[:, k + 22], color="red", lw="2", label="Flow")
-        plt.plot(timezz, P10[:, k + 22], color="blue", lw="2", label="Modulus")
+        plt.plot(timezz, P10[:, k + 22], color="blue", lw="2", label="PhysicsNeMo")
         plt.xlabel("Time (days)", fontsize=13, fontweight="bold")
         plt.ylabel("$Q_{water}(bbl/day)$", fontsize=13, fontweight="bold")
         # plt.ylim((0,25000))
@@ -805,7 +805,7 @@ def Plot_RSM_percentile(pertoutt, True_mat, timezz):
     for k in range(22):
         plt.subplot(5, 5, int(k + 1))
         plt.plot(timezz, True_mat[:, k + 44], color="red", lw="2", label="Flow")
-        plt.plot(timezz, P10[:, k + 44], color="blue", lw="2", label="Modulus")
+        plt.plot(timezz, P10[:, k + 44], color="blue", lw="2", label="PhysicsNeMo")
         plt.xlabel("Time (days)", fontsize=13, fontweight="bold")
         plt.ylabel("$Q_{gas}(scf/day)$", fontsize=13, fontweight="bold")
         # plt.ylim((0,25000))
@@ -1686,19 +1686,19 @@ def Plot_2D(
     if varii == "perm":
         cbar.set_label("Log K(mD)", fontsize=11)
         plt.title("Permeability Field with well locations", fontsize=11, weight="bold")
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=11)
-        plt.title("water saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("water saturation -PhysicsNeMo", fontsize=11, weight="bold")
     elif varii == "water FLOW":
         cbar.set_label("water saturation", fontsize=11)
         plt.title("water saturation - FLOW", fontsize=11, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("water saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("water saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "oil Modulus":
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=11)
-        plt.title("Oil saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("Oil saturation -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "oil FLOW":
         cbar.set_label("Oil saturation", fontsize=11)
@@ -1706,11 +1706,11 @@ def Plot_2D(
 
     elif varii == "oil diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("oil saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("oil saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=11)
-        plt.title("Gas saturation -Modulus", fontsize=11, weight="bold")
+        plt.title("Gas saturation -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "gas FLOW":
         cbar.set_label("Gas saturation", fontsize=11)
@@ -1718,11 +1718,11 @@ def Plot_2D(
 
     elif varii == "gas diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("gas saturation - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("gas saturation - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=11)
-        plt.title("Pressure -Modulus", fontsize=11, weight="bold")
+        plt.title("Pressure -PhysicsNeMo", fontsize=11, weight="bold")
 
     elif varii == "pressure FLOW":
         cbar.set_label("pressure", fontsize=11)
@@ -1730,7 +1730,7 @@ def Plot_2D(
 
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=11)
-        plt.title("Pressure - (FLOW -Modulus)", fontsize=11, weight="bold")
+        plt.title("Pressure - (FLOW -PhysicsNeMo)", fontsize=11, weight="bold")
 
     elif varii == "porosity":
         cbar.set_label("porosity", fontsize=11)
@@ -5390,7 +5390,7 @@ def compute_metrics(y_true, y_pred):
     return R2, L2_accuracy
 
 
-def Plot_Modulus(
+def Plot_PhysicsNeMo(
     ax, nx, ny, nz, Truee, N_injw, N_pr, N_injg, varii, injectors, producers, gass
 ):
     # matplotlib.use('Agg')
@@ -5558,21 +5558,23 @@ def Plot_Modulus(
         ax.set_title(
             "Permeability Field with well locations", fontsize=12, weight="bold"
         )
-    elif varii == "water Modulus":
+    elif varii == "water PhysicsNeMo":
         cbar.set_label("water saturation", fontsize=12)
-        ax.set_title("water saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("water saturation -PhysicsNeMo", fontsize=12, weight="bold")
     elif varii == "water Numerical":
         cbar.set_label("water saturation", fontsize=12)
         ax.set_title("water saturation - Numerical(Flow)", fontsize=12, weight="bold")
     elif varii == "water diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "water saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "water saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "oil Modulus":
+    elif varii == "oil PhysicsNeMo":
         cbar.set_label("Oil saturation", fontsize=12)
-        ax.set_title("Oil saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Oil saturation -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "oil Numerical":
         cbar.set_label("Oil saturation", fontsize=12)
@@ -5581,12 +5583,14 @@ def Plot_Modulus(
     elif varii == "oil diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "oil saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "oil saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "gas Modulus":
+    elif varii == "gas PhysicsNeMo":
         cbar.set_label("Gas saturation", fontsize=12)
-        ax.set_title("Gas saturation -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Gas saturation -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "gas Numerical":
         cbar.set_label("Gas saturation", fontsize=12)
@@ -5595,12 +5599,14 @@ def Plot_Modulus(
     elif varii == "gas diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "gas saturation - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "gas saturation - (Numerical(Flow) -PhysicsNeMo))",
+            fontsize=12,
+            weight="bold",
         )
 
-    elif varii == "pressure Modulus":
+    elif varii == "pressure PhysicsNeMo":
         cbar.set_label("pressure", fontsize=12)
-        ax.set_title("Pressure -Modulus", fontsize=12, weight="bold")
+        ax.set_title("Pressure -PhysicsNeMo", fontsize=12, weight="bold")
 
     elif varii == "pressure Numerical":
         cbar.set_label("pressure", fontsize=12)
@@ -5609,7 +5615,7 @@ def Plot_Modulus(
     elif varii == "pressure diff":
         cbar.set_label("unit", fontsize=12)
         ax.set_title(
-            "Pressure - (Numerical(Flow) -Modulus))", fontsize=12, weight="bold"
+            "Pressure - (Numerical(Flow) -PhysicsNeMo))", fontsize=12, weight="bold"
         )
 
     elif varii == "porosity":

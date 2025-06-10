@@ -19,9 +19,9 @@ NOTE: run three_fin_flow and Three_fin_thermal in "eval" mode
 after training to get the monitor values for different designs.
 """
 
-# import Modulus library
-from modulus.sym.utils.io.csv_rw import dict_to_csv
-from modulus.sym.hydra import to_absolute_path
+# import PhysicsNeMo library
+from physicsnemo.sym.utils.io.csv_rw import dict_to_csv
+from physicsnemo.sym.hydra import to_absolute_path
 
 # import other libraries
 import numpy as np
