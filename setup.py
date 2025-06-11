@@ -22,9 +22,14 @@ import torch
 from torch.utils.cpp_extension import CUDAExtension, BuildExtension
 
 
-def cuda_extension():
+def cuda_extension() -> CUDAExtension:
     # Parse CUDA version string assuming SemVer (handles formats like "12.8-rc.2", "12.10", etc.)
-    version_pattern = re.match(r"^(\d+)(?:\.(\d+))?(?:\.(\d+))?", torch.version.cuda)
+    if torch.version.cuda:
+        version_pattern = re.match(
+            r"^(\d+)(?:\.(\d+))?(?:\.(\d+))?", torch.version.cuda
+        )
+    else:  # Occurs on CPU-only PyTorch installations
+        raise RuntimeError(f"CUDA version not found: {torch.version.cuda=}")
     if not version_pattern:
         raise RuntimeError(f"Unable to parse CUDA version: {torch.version.cuda=}")
 
