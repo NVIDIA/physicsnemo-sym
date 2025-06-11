@@ -2,111 +2,58 @@
 
 <!-- markdownlint-disable -->
 
-📝 NVIDIA Modulus has been renamed to NVIDIA PhysicsNeMo
-
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![GitHub](https://img.shields.io/github/license/NVIDIA/physicsnemo)](https://github.com/NVIDIA/physicsnemo/blob/master/LICENSE.txt)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!-- markdownlint-enable -->
-[**Getting Started**](#getting-started)
-| [**Install guide**](#installation)
+[**PhysicsNeMo Sym**](#What-is-PhysicsNeMo-Symbolic)
+| [**Getting started**](#Getting-started)
+| [**Documentation**](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html)
 | [**Contributing Guidelines**](#contributing-to-physicsnemo)
-| [**Resources**](#resources)
-| [**PhysicsNeMo Migration Guide**](#physicsnemo-migration-guide)
 | [**Communication**](#communication)
 
 ## What is PhysicsNeMo Symbolic?
 
-PhysicsNeMo Symbolic (PhysicsNeMo Sym) repository is part of PhysicsNeMo SDK and it provides
-algorithms and utilities to be used with PhysicsNeMo core, to explicitly physics inform the
-model training. This includes utilities for explicitly integrating symbolic PDEs,
+PhysicsNeMo Symbolic (PhysicsNeMo Sym) is sub-module of PhysicsNeMo framework that provides
+algorithms and utilities to explicitly physics inform the
+training of AI models. 
+
+Please refer to the [PhysicsNeMo framework](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
+to learn more about the full stack.
+
+This includes utilities for explicitly integrating symbolic PDEs,
 domain sampling and computing PDE-based residuals using various gradient computing schemes.
 
-It also provides higher level abstraction to compose a training loop from specification
+Please refer to the
+[Physics informing surrogate model for Darcy flow](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/examples/cfd/darcy_physics_informed/readme.html)
+that illustrates the concept.
+
+It also provides an abstraction layer for developers that want to compose a training loop
+from specification
 of the geometry, PDEs and constraints like boundary conditions using simple symbolic APIs.
 Please refer to the
 [Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
 that illustrates the concept.
 
 Additional information can be found in the
-[PhysicsNeMo documentation](https://docs.nvidia.com/physicsnemo/index.html#sym).
+[PhysicsNeMo documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
 
-Please refer to the [PhysicsNeMo SDK](https://github.com/NVIDIA/physicsnemo/blob/main/README.md)
-to learn more about the full stack.
-
-### Hello world
-
-You can run below example to start using the geometry module from PhysicsNeMo-Sym as shown
-below:
-
-```python
->>> import numpy as np
->>> from physicsnemo.sym.geometry.primitives_3d import Box
->>> from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
->>> nr_points = 100000
->>> box = Box(point_1=(-1, -1, -1), point_2=(1, 1, 1))
->>> s = box.sample_boundary(nr_points=nr_points)
->>> var_to_polyvtk(s, "boundary")
->>> print("Surface Area: {:.3f}".format(np.sum(s["area"])))
-Surface Area: 24.000
-```
-
-To use the PDE module from PhysicsNeMo-Sym, you can run the below example:
-
-```python
->>> from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
->>> ns = NavierStokes(nu=0.01, rho=1, dim=2)
->>> ns.pprint()
-continuity: u__x + v__y
-momentum_x: u*u__x + v*u__y + p__x + u__t - 0.01*u__x__x - 0.01*u__y__y
-momentum_y: u*v__x + v*v__y + p__y + v__t - 0.01*v__x__x - 0.01*v__y__y
-```
-
-To use the computational graph builder from PhysicsNeMo Sym:
-<!-- markdownlint-disable -->
-```python
->>> import torch
->>> from sympy import Symbol
->>> from physicsnemo.sym.graph import Graph
->>> from physicsnemo.sym.node import Node
->>> from physicsnemo.sym.key import Key
->>> from physicsnemo.sym.eq.pdes.diffusion import Diffusion
->>> from physicsnemo.sym.models.fully_connected import FullyConnectedArch
->>> net = FullyConnectedArch(input_keys=[Key("x")], output_keys=[Key("u")], nr_layers=3, layer_size=32)
->>> diff = Diffusion(T="u", time=False, dim=1, D=0.1, Q=1.0)
->>> nodes = [net.make_node(name="net")] + diffusion.make_nodes()
->>> graph = Graph(nodes, [Key("x")], [Key("diffusion_u")])
->>> graph.forward({"x": torch.tensor([1.0, 2.0]).requires_grad_(True).reshape(-1, 1)})
-{'diffusion_u': tensor([[-0.9956],
-        [-1.0161]], grad_fn=<SubBackward0>)}
-```
 <!-- markdownlint-enable -->
+
+## Getting started
+
+Please use the getting started guide here for [PhysicsNeMo](https://github.com/NVIDIA/physicsnemo/blob/main/README.md#getting-started)
 
 Please refer [Introductory Example](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
 for usage of the physics utils in custom training loops and
 [Lid Driven cavity](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/lid_driven_cavity_flow.html)
 for an end-to-end PINN workflow.
 
-Users of PhysicsNeMo versions older than 23.05 can refer to the
-[migration guide](https://docs.nvidia.com/deeplearning/physicsnemo/migration-guide/index.html)
-for updating to the latest version.
-
-## Getting started
-
-The following resources will help you in learning how to use PhysicsNeMo. The best way
-is to start with a reference sample and then update it for your own use case.
-
-- [Using PhysicsNeMo Sym with your PyTorch model](https://github.com/NVIDIA/physicsnemo/tree/main/examples/cfd/darcy_physics_informed)
-- [Using PhysicsNeMo Sym to construct computational graph](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/basics/physicsnemo_overview.html)
-- [Reference Samples](https://github.com/NVIDIA/physicsnemo-sym/blob/main/examples/README.md)
-- [User guide Documentation](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/index.html)
-
-## Resources
-
-- [Getting started Webinar](https://www.nvidia.com/en-us/on-demand/session/gtc24-dlit61460/?playlistId=playList-bd07f4dc-1397-4783-a959-65cec79aa985)
-- [AI4Science PhysicsNeMo Bootcamp](https://github.com/openhackathons-org/End-to-End-AI-for-Science)
-
 ## Installation
+
+Please ensure you have installed PhysicsNeMo using the steps [here](https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-core/index.html).
+
+You can then install this package following the steps outlined below:
 
 ### PyPi
 
@@ -142,7 +89,7 @@ The recommended PhysicsNeMo docker image can be pulled from the
 docker pull nvcr.io/nvidia/physicsnemo/physicsnemo:<tag>
 ```
 
-## From Source
+### From Source
 
 ### Package
 
@@ -165,25 +112,6 @@ docker build -t physicsnemo-sym:deploy \
 ```
 
 Currently only `linux/amd64` and `linux/arm64` platforms are supported.
-
-## PhysicsNeMo Migration Guide
-
-NVIDIA Modulus has been renamed to NVIDIA PhysicsNeMo. For migration:
-
-- Use `pip install nvidia-physicsnemo.sym` rather than
-  `pip install nvidia-modulus.sym` for PyPi wheels.
-- Use `nvcr.io/nvidia/physicsnemo/physicsnemo:<tag>` rather than
-  `nvcr.io/nvidia/modulus/modulus:<tag>` for Docker containers.
-- Replace `nvidia-modulus.sym` by `nvidia-physicsnemo.sym` in your pip requirements
-  files (`requirements.txt`, `setup.py`, `setup.cfg`, `pyproject.toml`, etc.)
-- In your code, change the import statements from `import modulus.sym` to
-  `import physicsnemo.sym`
-
-The old PyPi registry and the NGC container registry will be deprecated soon
-and will not receive any bug fixes/updates. The old checkpoints will remain
-compatible with these updates.
-
-More details to follow soon.
 
 ## Contributing to PhysicsNeMo
 
@@ -209,8 +137,7 @@ discussions, collaboration, etc.
 
 ## Feedback
 
-Want to suggest some improvements to PhysicsNeMo? Use our feedback form
-[here](https://docs.google.com/forms/d/e/1FAIpQLSfX4zZ0Lp7MMxzi3xqvzX4IQDdWbkNh5H_a_clzIhclE2oSBQ/viewform?usp=sf_link).
+Want to suggest some improvements to PhysicsNeMo? Use our [feedback form](https://docs.google.com/forms/d/e/1FAIpQLSfX4zZ0Lp7MMxzi3xqvzX4IQDdWbkNh5H_a_clzIhclE2oSBQ/viewform?usp=sf_link).
 
 ## License
 

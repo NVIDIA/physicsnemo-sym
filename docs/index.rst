@@ -28,22 +28,6 @@ as a portal to explore the possibilities of AI in the domain of scientific
 computation. The User Guide comes in with several examples that will help 
 you jumpstart your development of AI driven models.
 
-For Beginners
--------------
-New to PhysicsNeMo Sym? No worries, we will get you up and running with physics driven AI in a few minutes. 
-Check out the following tutorials to get started. 
-
-.. raw:: html
-   :file: _static/beginner_landing_buttons.html
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Getting Started
-   :name: Getting Started
-   :hidden:
-
-   Table of Contents <user_guide/getting_started/toc.rst>
-
 .. toctree::
    :maxdepth: 2
    :caption: Learn the Basics
