@@ -31,13 +31,13 @@ class LinearElasticity(PDE):
     Parameters
     ==========
     E : float, Sympy Symbol/Expr, str
-        The Young's physicsnemo
+        The Young's modulus
     nu : float, Sympy Symbol/Expr, str
         The Poisson's ratio
     lambda_: float, Sympy Symbol/Expr, str
         Lamé's first parameter
     mu: float, Sympy Symbol/Expr, str
-        Lamé's second parameter (shear physicsnemo)
+        Lamé's second parameter (shear modulus)
     rho: float, Sympy Symbol/Expr, str
         Mass density.
     dim : int
