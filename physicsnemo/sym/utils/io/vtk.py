@@ -860,7 +860,9 @@ class VTKFromFile(object):
                 vtk_reader = cls.readXMLVTK(file_path)
                 read_success = True
             except:
-                logger.warning("VTK file not valid XML format, will attempt legacy load")
+                logger.warning(
+                    "VTK file not valid XML format, will attempt legacy load"
+                )
         # If failed or legacy force, create VTK Reader
         if not read_success:
             try:
