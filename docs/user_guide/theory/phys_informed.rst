@@ -1,5 +1,5 @@
 Physics Informed Neural Networks (PINNs) in PhysicsNeMo Sym
-====================================================
+===========================================================
 
 .. _nn_methodology:
 
@@ -43,7 +43,7 @@ methods for solving PDEs. For example:
   basis functions.
 
 Physics Informed Neural Networks (PINNs)
----------------------------------------
+----------------------------------------
 
 In Physics Informed Neural Networks (PINNs), the solution function to the PDE is
 itself represented by a neural network: the neural network maps an input
