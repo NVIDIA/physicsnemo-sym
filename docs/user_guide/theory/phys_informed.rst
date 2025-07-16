@@ -3,9 +3,6 @@ Physics Informed Neural Networks (PINNs) in PhysicsNeMo Sym
 
 .. _nn_methodology:
 
-Basic methodology
------------------
-
 In this section we provide a brief introduction to Physics Informed Neural
 Networks (PINNs), a technique used to find solutions of partial differential
 equations using neural networks.
