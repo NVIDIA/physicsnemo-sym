@@ -519,7 +519,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         if self.cfg.jit:
             # Warn user if pytorch version difference
             if not torch.__version__ == JIT_PYTORCH_VERSION:
-                self.log.warn(
+                self.log.warning(
                     f"Installed PyTorch version {torch.__version__} is not TorchScript"
                     + f" supported in PhysicsNeMo. Version {JIT_PYTORCH_VERSION} is officially supported."
                 )
@@ -667,7 +667,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 # check for infs/NaNs in loss
                 if not torch.isfinite(loss):
                     if self.amp_manager.enabled:
-                        self.log.warn(f"{self.step_str} loss went to INFs/NaNs")
+                        self.log.warning(f"{self.step_str} loss went to INFs/NaNs")
                     else:
                         self.log.error(f"{self.step_str} loss went to INFs/NaNs")
                         break
@@ -869,7 +869,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 dist.barrier(device_ids=[self.manager.local_rank])
 
             if self.cfg.cuda_graph_warmup < 11:
-                self.log.warn(
+                self.log.warning(
                     f"Graph warm up length ({self.cfg.cuda_graph_warmup}) should be more than 11 steps, higher suggested"
                 )
             self.log.info("Attempting cuda graph building, this may take a bit...")

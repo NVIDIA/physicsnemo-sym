@@ -276,7 +276,7 @@ def instantiate_sched(
                 "gamma": sched_cfg.decay_rate ** (1.0 / sched_cfg.decay_steps),
             }
         else:
-            logger.warn("Detected unsupported custom scheduler", sched_cfg)
+            logger.warning("Detected unsupported custom scheduler", sched_cfg)
 
     try:
         scheduler = hydra.utils.instantiate(sched_cfg, optimizer=optimizer)
