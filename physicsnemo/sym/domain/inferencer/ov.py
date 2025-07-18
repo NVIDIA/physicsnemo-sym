@@ -188,7 +188,7 @@ class OVVoxelInferencer(Inferencer):
         # If mask set up mask indexes
         if mask_fn is not None:
             args = _get_function_argspec(mask_fn)["args"]
-            # Fall back np_lambdify does not supply arguement names
+            # Fall back np_lambdify does not supply argument names
             # Ideally np_lambdify should allow input names to be queried
             if len(args) == 0:
                 args = list(invar.keys())  # Hope your inputs all go into the mask
@@ -304,7 +304,7 @@ class OVVoxelInferencer(Inferencer):
         return invar, predvar
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-        logger.warn(
+        logger.warning(
             "OVoxInferencer is not designed to be used inside of PhysicsNeMo solver"
         )
         pass
@@ -465,7 +465,7 @@ class OVFourCastNetInferencer(Inferencer):
         """
         torch.cuda.set_per_process_memory_fraction(memory_fraction)
 
-        # Create ouput prediction tensor [Tsteps, C, H, W]
+        # Create output prediction tensor [Tsteps, C, H, W]
         shape = self.init_state.shape
         outputs = torch.zeros(shape[0] + tsteps, shape[1], shape[2], shape[3])
         outputs[0] = (self.init_state - self.mu) / self.std
@@ -532,7 +532,7 @@ class OVFourCastNetInferencer(Inferencer):
         return np.load(array_file)
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-        logger.warn(
+        logger.warning(
             "OVFourCastNetInferencer is not designed to be used inside of PhysicsNeMo solver"
         )
         pass
