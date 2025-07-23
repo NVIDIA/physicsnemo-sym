@@ -18,11 +18,69 @@ import logging
 from typing import List, Optional, Union
 
 import numpy as np
+from numba import njit
+from typing import List, Optional, Union
 import torch
 from physicsnemo.sym.eq.derivatives import gradient_autodiff
 from physicsnemo.sym.eq.fd import grads as fd_grads
 from physicsnemo.sym.eq.ls import grads as ls_grads
 from physicsnemo.sym.eq.mfd import grads as mfd_grads
+
+@njit
+def edges_to_adjacency(
+    sorted_bidirectional_edges: np.ndarray, n_points: int
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Convert a sorted bidirectional edge list to an adjacency list using numba.
+    
+    Parameters
+    ----------
+    sorted_bidirectional_edges : np.ndarray
+        A 2D array of shape (n_edges, 2) where each row contains the start
+        and end indices of an edge. Edges are sorted by increasing start index,
+        then increasing end index.
+    n_points : int
+        The number of points in the mesh.
+    
+    Returns
+    -------
+    tuple[np.ndarray, np.ndarray]
+        A tuple of (offsets, indices) arrays.
+    """
+    n_edges = len(sorted_bidirectional_edges)
+    offsets = np.zeros(n_points + 1, dtype=sorted_bidirectional_edges.dtype)
+    indices = np.zeros(n_edges, dtype=sorted_bidirectional_edges.dtype)
+
+    edge_idx = 0
+    for adj_index in range(n_points):
+        start_offset = offsets[adj_index]
+        while edge_idx < n_edges:
+            start_idx = sorted_bidirectional_edges[edge_idx, 0]
+            if start_idx == adj_index:
+                indices[start_offset] = sorted_bidirectional_edges[edge_idx, 1]
+                start_offset += 1
+            elif start_idx > adj_index:
+                break
+            edge_idx += 1
+        offsets[adj_index + 1] = start_offset
+
+    return offsets, indices
+
+edges_to_adjacency(np.zeros((0, 2), dtype=np.int64), 0)  # Does the precompilation
+
+def unique_axis0_fast(array):
+    """
+    A faster version of np.unique(array, axis=0) for 2D arrays using numba.
+    """
+    if len(array) == 0:
+        return array
+    
+    idxs = np.lexsort(array.T[::-1])
+    array = array[idxs]
+    unique_idxs = np.empty(len(array), dtype=np.bool_)
+    unique_idxs[0] = True
+    unique_idxs[1:] = np.any(array[:-1, :] != array[1:, :], axis=-1)
+    return array[unique_idxs]
 
 
 def compute_stencil2d(coords, model, dx, return_mixed_derivs=False):
@@ -119,7 +177,7 @@ def compute_stencil3d(coords, model, dx, return_mixed_derivs=False):
 
 def compute_connectivity_tensor(nodes, edges, max_neighbors=None):
     """
-    Compute connectivity tensor for given nodes and edges in sparse format.
+    Compute connectivity tensor for given nodes and edges using optimized numba functions.
 
     Parameters
     ----------
@@ -140,49 +198,48 @@ def compute_connectivity_tensor(nodes, edges, max_neighbors=None):
         - indices: Tensor containing the neighbor indices for all nodes concatenated
         - neighbor_matrix: Tensor of shape [N, max_neighbors] for batched computation
     """
-    edge_list = []
-    for i in range(edges.size(0)):
-        node1, node2 = edges[i][0].item(), edges[i][1].item()
-        edge_list.append(tuple(sorted((node1, node2))))
-    unique_edges = set(edge_list)
+    # Convert to numpy for faster processing
+    edges_np = edges.cpu().numpy()
+    nodes_np = nodes.cpu().numpy().flatten()
     
-    # Build adjacency list for each node
-    node_edges = {node.item(): [] for node in nodes}
-    for edge in unique_edges:
-        node1, node2 = edge
-        if node1 in node_edges:
-            node_edges[node1].append(node2)
-        if node2 in node_edges:
-            node_edges[node2].append(node1)
+    # Create bidirectional edges (both directions)
+    bidirectional_edges = np.concatenate((edges_np, edges_np[:, ::-1]), axis=0)
     
-    # Convert to offsets and indices format
-    offsets = []
-    indices = []
+    # Sort edges by start point, then end point
+    order = np.lexsort((bidirectional_edges[:, 1], bidirectional_edges[:, 0]))
+    sorted_bidirectional_edges = bidirectional_edges[order]
     
-    for node_id in sorted(node_edges.keys()):
-        neighbors = node_edges[node_id]
-        offsets.append(len(indices))
-        indices.extend(neighbors)
+    # Remove duplicates using optimized function
+    unique_edges = unique_axis0_fast(sorted_bidirectional_edges)
     
-    offsets.append(len(indices))
+    # Build adjacency list using numba-optimized function
+    num_nodes = len(nodes_np)
+    offsets, indices = edges_to_adjacency(unique_edges, num_nodes)
     
+    # Convert to tensors
     offsets_tensor = torch.tensor(offsets, dtype=torch.long, device=nodes.device)
     indices_tensor = torch.tensor(indices, dtype=torch.long, device=nodes.device)
     
     # Create neighbor matrix for batched computation
     if max_neighbors is None:
-        max_neighbors = max(len(neighbors) for neighbors in node_edges.values())
+        # Calculate max neighbors from offsets
+        neighbor_counts = offsets[1:] - offsets[:-1]
+        max_neighbors = int(np.max(neighbor_counts))
     
-    neighbor_matrix = torch.full((len(node_edges), max_neighbors), -1, 
+    neighbor_matrix = torch.full((num_nodes, max_neighbors), -1, 
                                dtype=torch.long, device=nodes.device)
     
-    for i, node_id in enumerate(sorted(node_edges.keys())):
-        neighbors = node_edges[node_id]
-        num_neighbors = len(neighbors)
+    # Fill neighbor matrix efficiently
+    for i in range(num_nodes):
+        start_idx = offsets[i]
+        end_idx = offsets[i + 1]
+        num_neighbors = end_idx - start_idx
         if num_neighbors > 0:
-            neighbor_matrix[i, :num_neighbors] = torch.tensor(neighbors, 
-                                                            dtype=torch.long, 
-                                                            device=nodes.device)
+            neighbor_matrix[i, :num_neighbors] = torch.tensor(
+                indices[start_idx:end_idx], 
+                dtype=torch.long, 
+                device=nodes.device
+            )
     
     return offsets_tensor, indices_tensor, neighbor_matrix
 
