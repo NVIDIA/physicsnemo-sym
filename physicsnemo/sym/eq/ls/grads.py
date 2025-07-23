@@ -32,139 +32,65 @@ class FirstDeriv(torch.nn.Module):
         ), "First Derivative through least squares method only supported for 2D and 3D inputs"
 
     def forward(self, coords, connectivity_tensor, y) -> List[Tensor]:
-        p1 = coords[connectivity_tensor[:, :, 0]]
-        p2 = coords[connectivity_tensor[:, :, 1]]
-        dx = p1[:, :, 0] - p2[:, :, 0]
-        dy = p1[:, :, 1] - p2[:, :, 1]
+        """
+        Compute first derivatives using least squares method with fully vectorized computation.
 
-        f1 = y[connectivity_tensor[:, :, 0]]
-        f2 = y[connectivity_tensor[:, :, 1]]
+        Parameters
+        ----------
+        coords : torch.Tensor
+            Node coordinates of shape [N, dim]
+        connectivity_tensor : tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+            Tuple of (offsets, indices, neighbor_matrix) representing connectivity
+        y : torch.Tensor
+            Function values at nodes of shape [N, 1]
 
-        du = (f1 - f2).squeeze(-1)
+        Returns
+        -------
+        List[torch.Tensor]
+            List of gradient components [dudx, dudy, dudz] for each node
+        """
+        _, _, neighbor_matrix = connectivity_tensor
 
+        num_nodes = coords.shape[0]
+        max_neighbors = neighbor_matrix.shape[1]
+
+        # Create mask for valid neighbors
+        valid_mask = (neighbor_matrix != -1)  # [N, max_neighbors]
+
+        # neighbor_matrix: [N, max_neighbors] -> neighbor_coords: [N, max_neighbors, dim]
+        neighbor_coords = coords[neighbor_matrix]  # [N, max_neighbors, dim]
+        neighbor_values = y[neighbor_matrix]  # [N, max_neighbors, 1]
+
+        center_coords = coords.unsqueeze(1)  # [N, 1, dim]
+        center_values = y.unsqueeze(1)  # [N, 1, 1]
+
+        dv = neighbor_coords - center_coords  # [N, max_neighbors, dim]
+        du = neighbor_values - center_values  # [N, max_neighbors, 1]
+
+        mask_expanded = valid_mask.unsqueeze(-1)  # [N, max_neighbors, 1]
+        dv = dv * mask_expanded
+        du = du * mask_expanded
+
+        dv_batched = dv.unsqueeze(0)  # [1, N, max_neighbors, dim]
+        du_batched = du.unsqueeze(0)  # [1, N, max_neighbors, 1]
+
+        grad_u = self.compute_ls_grads(dv_batched, du_batched)  # [1, N, dim, 1]
+        grad_u = grad_u.squeeze(0).squeeze(-1)  # [N, dim]
+
+        # Split into individual components
         result = []
-        if self.dim == 2:
-            w = 1 / torch.sqrt(dx**2 + dy**2)
-            w = torch.where(torch.isinf(w), torch.tensor(1.0).to(w.device), w)
-            mask = torch.ones_like(dx)
+        for i in range(self.dim):
+            result.append(grad_u[:, i:i+1])  # [N, 1]
 
-            a1 = torch.sum((w**2 * dx * dx) * mask, dim=1)
-            b1 = torch.sum((w**2 * dx * dy) * mask, dim=1)
-            d1 = torch.sum((w**2 * du * dx) * mask, dim=1)
+        return result
 
-            a2 = torch.sum((w**2 * dx * dy) * mask, dim=1)
-            b2 = torch.sum((w**2 * dy * dy) * mask, dim=1)
-            d2 = torch.sum((w**2 * du * dy) * mask, dim=1)
+    def compute_ls_grads(self, dv, du):
+        """Given du and dv, compute the grads (batched)"""
 
-            detA = torch.linalg.det(
-                torch.stack(
-                    [
-                        torch.stack([a1, a2], dim=1),
-                        torch.stack([b1, b2], dim=1),
-                    ],
-                    dim=2,
-                )
-            )
-            dudx = (
-                torch.linalg.det(
-                    torch.stack(
-                        [
-                            torch.stack([d1, d2], dim=1),
-                            torch.stack([b1, b2], dim=1),
-                        ],
-                        dim=2,
-                    )
-                )
-                / detA
-            )
-            dudy = (
-                torch.linalg.det(
-                    torch.stack(
-                        [
-                            torch.stack([a1, a2], dim=1),
-                            torch.stack([d1, d2], dim=1),
-                        ],
-                        dim=2,
-                    )
-                )
-                / detA
-            )
-            result.append(dudx.unsqueeze(dim=1))
-            result.append(dudy.unsqueeze(dim=1))
-            return result
-        elif self.dim == 3:
-            dz = p1[:, :, 2] - p2[:, :, 2]
+        w_squared = 1 / ((dv**2).sum(dim=3) + 1e-8) # Sum along the coordinate dim
+        W = torch.diag_embed(w_squared)
+        A = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), dv)   # Should be [1, batch_size, 3, 3]
+        B = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), du)   # Should be [1, batch_size, 3, 5]
+        grad_u, _, _, _ = torch.linalg.lstsq(A, B) # Should be [1, batchsize, 3, 5]
 
-            w = 1 / torch.sqrt(dx**2 + dy**2 + dz**2)
-            w = torch.where(torch.isinf(w), torch.tensor(1.0).to(w.device), w)
-            mask = torch.ones_like(dx)
-
-            a1 = torch.sum((w**2 * dx * dx) * mask, dim=1)
-            b1 = torch.sum((w**2 * dx * dy) * mask, dim=1)
-            c1 = torch.sum((w**2 * dx * dz) * mask, dim=1)
-            d1 = torch.sum((w**2 * du * dx) * mask, dim=1)
-
-            a2 = torch.sum((w**2 * dx * dy) * mask, dim=1)
-            b2 = torch.sum((w**2 * dy * dy) * mask, dim=1)
-            c2 = torch.sum((w**2 * dy * dz) * mask, dim=1)
-            d2 = torch.sum((w**2 * du * dy) * mask, dim=1)
-
-            a3 = torch.sum((w**2 * dx * dz) * mask, dim=1)
-            b3 = torch.sum((w**2 * dy * dz) * mask, dim=1)
-            c3 = torch.sum((w**2 * dz * dz) * mask, dim=1)
-            d3 = torch.sum((w**2 * du * dz) * mask, dim=1)
-
-            detA = torch.linalg.det(
-                torch.stack(
-                    [
-                        torch.stack([a1, a2, a3], dim=1),
-                        torch.stack([b1, b2, b3], dim=1),
-                        torch.stack([c1, c2, c3], dim=1),
-                    ],
-                    dim=2,
-                )
-            )
-            dudx = (
-                torch.linalg.det(
-                    torch.stack(
-                        [
-                            torch.stack([d1, d2, d3], dim=1),
-                            torch.stack([b1, b2, b3], dim=1),
-                            torch.stack([c1, c2, c3], dim=1),
-                        ],
-                        dim=2,
-                    )
-                )
-                / detA
-            )
-            dudy = (
-                torch.linalg.det(
-                    torch.stack(
-                        [
-                            torch.stack([a1, a2, a3], dim=1),
-                            torch.stack([d1, d2, d3], dim=1),
-                            torch.stack([c1, c2, c3], dim=1),
-                        ],
-                        dim=2,
-                    )
-                )
-                / detA
-            )
-            dudz = (
-                torch.linalg.det(
-                    torch.stack(
-                        [
-                            torch.stack([a1, a2, a3], dim=1),
-                            torch.stack([b1, b2, b3], dim=1),
-                            torch.stack([d1, d2, d3], dim=1),
-                        ],
-                        dim=2,
-                    )
-                )
-                / detA
-            )
-
-            result.append(dudx.unsqueeze(dim=1))
-            result.append(dudy.unsqueeze(dim=1))
-            result.append(dudz.unsqueeze(dim=1))
-            return result
+        return grad_u

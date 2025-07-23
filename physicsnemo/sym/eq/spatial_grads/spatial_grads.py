@@ -117,9 +117,9 @@ def compute_stencil3d(coords, model, dx, return_mixed_derivs=False):
         return uposx, unegx, uposy, unegy, uposz, unegz
 
 
-def compute_connectivity_tensor(nodes, edges):
+def compute_connectivity_tensor(nodes, edges, max_neighbors=None):
     """
-    Compute connectivity tensor for given nodes and edges.
+    Compute connectivity tensor for given nodes and edges in sparse format.
 
     Parameters
     ----------
@@ -129,47 +129,62 @@ def compute_connectivity_tensor(nodes, edges):
     edges :
         Edges of the mesh in [M, 2] format.
         Where M is the number of edges.
+    max_neighbors : int, optional
+        Maximum number of neighbors to pad to. If None, uses the maximum found in the mesh.
 
     Returns
     -------
-    torch.Tensor
-        Tensor containing neighbor nodes for each node. Each node is made to have
-        same neighbors by finding the max neighbors and adding (0, 0) for points with
-        fewer neighbors.
+    tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+        A tuple containing:
+        - offsets: Tensor of shape [N+1] containing the start index for each node's neighbors
+        - indices: Tensor containing the neighbor indices for all nodes concatenated
+        - neighbor_matrix: Tensor of shape [N, max_neighbors] for batched computation
     """
     edge_list = []
     for i in range(edges.size(0)):
         node1, node2 = edges[i][0].item(), edges[i][1].item()
         edge_list.append(tuple(sorted((node1, node2))))
     unique_edges = set(edge_list)
+    
+    # Build adjacency list for each node
     node_edges = {node.item(): [] for node in nodes}
     for edge in unique_edges:
         node1, node2 = edge
         if node1 in node_edges:
-            node_edges[node1].append((node1, node2))
+            node_edges[node1].append(node2)
         if node2 in node_edges:
-            node_edges[node2].append((node2, node1))
-    max_connectivity = []
-    for k, v in node_edges.items():
-        max_connectivity.append(len(v))
-    max_connectivity = np.array(max_connectivity).max()
-    for k, v in node_edges.items():
-        if len(v) < max_connectivity:
-            empty_list = [(0, 0) for _ in range(max_connectivity - len(v))]
-            v = v + empty_list
-            node_edges[k] = torch.tensor(v)
-        elif len(v) > max_connectivity:
-            v = v[0:max_connectivity]
-            node_edges[k] = torch.tensor(v)
-        else:
-            node_edges[k] = torch.tensor(v)
-    connectivity_tensor = (
-        torch.stack([v for v in node_edges.values()], dim=0)
-        .to(torch.long)
-        .to(nodes.device)
-    )
-
-    return connectivity_tensor
+            node_edges[node2].append(node1)
+    
+    # Convert to offsets and indices format
+    offsets = []
+    indices = []
+    
+    for node_id in sorted(node_edges.keys()):
+        neighbors = node_edges[node_id]
+        offsets.append(len(indices))
+        indices.extend(neighbors)
+    
+    offsets.append(len(indices))
+    
+    offsets_tensor = torch.tensor(offsets, dtype=torch.long, device=nodes.device)
+    indices_tensor = torch.tensor(indices, dtype=torch.long, device=nodes.device)
+    
+    # Create neighbor matrix for batched computation
+    if max_neighbors is None:
+        max_neighbors = max(len(neighbors) for neighbors in node_edges.values())
+    
+    neighbor_matrix = torch.full((len(node_edges), max_neighbors), -1, 
+                               dtype=torch.long, device=nodes.device)
+    
+    for i, node_id in enumerate(sorted(node_edges.keys())):
+        neighbors = node_edges[node_id]
+        num_neighbors = len(neighbors)
+        if num_neighbors > 0:
+            neighbor_matrix[i, :num_neighbors] = torch.tensor(neighbors, 
+                                                            dtype=torch.long, 
+                                                            device=nodes.device)
+    
+    return offsets_tensor, indices_tensor, neighbor_matrix
 
 
 class GradientsAutoDiff(torch.nn.Module):
