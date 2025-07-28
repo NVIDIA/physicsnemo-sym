@@ -23,74 +23,185 @@ Tensor = torch.Tensor
 class FirstDeriv(torch.nn.Module):
     """Module to compute first derivative with 2nd order accuracy using least squares method"""
 
-    def __init__(self, dim: int):
+    def __init__(self, dim: int, direct_input: bool = False):
         super().__init__()
 
         self.dim = dim
+        self.direct_input = direct_input
         assert (
             self.dim > 1
         ), "First Derivative through least squares method only supported for 2D and 3D inputs"
 
-    def forward(self, coords, connectivity_tensor, y) -> List[Tensor]:
+    def forward(self, coords, connectivity_tensor, y, du=None, dv=None) -> List[Tensor]:
         """
         Compute first derivatives using least squares method with fully vectorized computation.
 
         Parameters
         ----------
         coords : torch.Tensor
-            Node coordinates of shape [N, dim]
-        connectivity_tensor : tuple[torch.Tensor, torch.Tensor, torch.Tensor]
-            Tuple of (offsets, indices, neighbor_matrix) representing connectivity
+            Node coordinates of shape [N, dim] (ignored if direct_input=True)
+        connectivity_tensor : tuple[torch.Tensor, torch.Tensor] or tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+            Either (offsets, indices) for sparse format or (offsets, indices, neighbor_matrix) for batched format (ignored if direct_input=True)
         y : torch.Tensor
-            Function values at nodes of shape [N, 1]
+            Function values at nodes of shape [N, 1] (ignored if direct_input=True)
+        du : torch.Tensor, optional
+            Direct input for function differences, shape [N, max_neighbors, 1] or [batch_size, N, max_neighbors, 1] (required if direct_input=True)
+        dv : torch.Tensor, optional
+            Direct input for coordinate differences, shape [N, max_neighbors, dim] or [batch_size, N, max_neighbors, dim] (required if direct_input=True)
 
         Returns
         -------
         List[torch.Tensor]
             List of gradient components [dudx, dudy, dudz] for each node
         """
-        _, _, neighbor_matrix = connectivity_tensor
+        if self.direct_input:
+            if du is None or dv is None:
+                raise ValueError("du and dv must be provided when direct_input=True")
+            return self._forward_direct(du, dv)
+        
+        # Handle different connectivity formats
+        if len(connectivity_tensor) == 2:
+            offsets, indices = connectivity_tensor
+            return self._forward_sparse(coords, offsets, indices, y)
+        elif len(connectivity_tensor) == 3:
+            _, _, neighbor_matrix = connectivity_tensor
+            return self._forward_batched(coords, neighbor_matrix, y)
+        else:
+            raise ValueError("connectivity_tensor must be tuple of length 2 or 3")
 
-        num_nodes = coords.shape[0]
-        max_neighbors = neighbor_matrix.shape[1]
-
-        # Create mask for valid neighbors
-        valid_mask = (neighbor_matrix != -1)  # [N, max_neighbors]
-
-        # neighbor_matrix: [N, max_neighbors] -> neighbor_coords: [N, max_neighbors, dim]
-        neighbor_coords = coords[neighbor_matrix]  # [N, max_neighbors, dim]
-        neighbor_values = y[neighbor_matrix]  # [N, max_neighbors, 1]
-
-        center_coords = coords.unsqueeze(1)  # [N, 1, dim]
-        center_values = y.unsqueeze(1)  # [N, 1, 1]
-
-        dv = neighbor_coords - center_coords  # [N, max_neighbors, dim]
-        du = neighbor_values - center_values  # [N, max_neighbors, 1]
-
-        mask_expanded = valid_mask.unsqueeze(-1)  # [N, max_neighbors, 1]
-        dv = dv * mask_expanded
-        du = du * mask_expanded
-
-        dv_batched = dv.unsqueeze(0)  # [1, N, max_neighbors, dim]
-        du_batched = du.unsqueeze(0)  # [1, N, max_neighbors, 1]
-
-        grad_u = self.compute_ls_grads(dv_batched, du_batched)  # [1, N, dim, 1]
-        grad_u = grad_u.squeeze(0).squeeze(-1)  # [N, dim]
-
+    def _forward_direct(self, du, dv) -> List[Tensor]:
+        """
+        Compute derivatives directly from provided du and dv tensors.
+        
+        Parameters
+        ----------
+        du : torch.Tensor
+            Function differences, shape [N, max_neighbors, 1] or [batch_size, N, max_neighbors, 1]
+        dv : torch.Tensor
+            Coordinate differences, shape [N, max_neighbors, dim] or [batch_size, N, max_neighbors, dim]
+            
+        Returns
+        -------
+        List[torch.Tensor]
+            List of gradient components [dudx, dudy, dudz] for each node
+        """
+        
+        grad_u = self.compute_ls_grads(dv, du)  # [batch_size, N, dim, 1]
+        grad_u = grad_u.squeeze(-1)  # [batch_size, N, dim]
+        
         # Split into individual components
         result = []
         for i in range(self.dim):
-            result.append(grad_u[:, i:i+1])  # [N, 1]
+            result.append(grad_u[:, i:i+1])
+        
+        return result
 
+    def _forward_sparse(self, coords, offsets, indices, y) -> List[Tensor]:
+        """
+        Compute derivatives using sparse connectivity format with parallel processing.
+        Optimized for cases where all nodes have the same number of neighbors.
+        """
+        print("In sparse implementation")
+        num_nodes = coords.shape[0]
+        
+        # Check if all nodes have the same number of neighbors
+        neighbor_counts = offsets[1:] - offsets[:-1]  # [N]
+        unique_counts = torch.unique(neighbor_counts)
+        
+        if len(unique_counts) == 1:
+            num_neighbors = int(unique_counts[0].item())
+            
+            neighbor_matrix = torch.zeros(num_nodes, num_neighbors, dtype=torch.long, device=coords.device)
+            
+            for i in range(num_nodes):
+                start_idx = offsets[i]
+                end_idx = offsets[i + 1]
+                neighbor_matrix[i] = indices[start_idx:end_idx]
+            
+            return self._forward_batched(coords, neighbor_matrix, y)
+        
+        else:
+            max_neighbors = int(torch.max(neighbor_counts).item())
+            
+            all_dv = torch.zeros(num_nodes, max_neighbors, self.dim, device=coords.device)
+            all_du = torch.zeros(num_nodes, max_neighbors, 1, device=coords.device)
+            all_weights = torch.zeros(num_nodes, max_neighbors, device=coords.device)
+            
+            for i in range(num_nodes):
+                start_idx = offsets[i]
+                end_idx = offsets[i + 1]
+                neighbor_indices = indices[start_idx:end_idx]
+                
+                if len(neighbor_indices) == 0:
+                    continue
+                    
+                p_center = coords[i:i+1]  # [1, dim]
+                p_neighbors = coords[neighbor_indices]  # [num_neighbors, dim]
+                
+                f_center = y[i:i+1]  # [1, 1]
+                f_neighbors = y[neighbor_indices]  # [num_neighbors, 1]
+                
+                dv = p_neighbors - p_center  # [num_neighbors, dim]
+                du = (f_neighbors - f_center)  # [num_neighbors, 1]
+                
+                weights = 1 / (torch.sum(dv**2, dim=1) + 1e-8)  # [num_neighbors]
+                
+                num_neighbors = len(neighbor_indices)
+                all_dv[i, :num_neighbors] = dv
+                all_du[i, :num_neighbors] = du
+                all_weights[i, :num_neighbors] = weights
+            
+            grad_u = self.compute_ls_grads(all_dv, all_du)  # [N, dim, 1]
+            grad_u = grad_u.squeeze(-1)  # [N, dim]
+            
+            # Split into individual components
+            result = []
+            for i in range(self.dim):
+                result.append(grad_u[:, i:i+1])  # [N, 1]
+            
+            return result
+
+    def _forward_batched(self, coords, neighbor_matrix, y) -> List[Tensor]:
+        """
+        Compute derivatives using batched connectivity format.
+        """
+        num_nodes = coords.shape[0]
+        max_neighbors = neighbor_matrix.shape[1]
+        
+        # Create mask for valid neighbors
+        valid_mask = (neighbor_matrix != -1)  # [N, max_neighbors]
+        
+        neighbor_coords = coords[neighbor_matrix]  # [N, max_neighbors, dim]
+        neighbor_values = y[neighbor_matrix]  # [N, max_neighbors, 1]
+        
+        center_coords = coords.unsqueeze(1)  # [N, 1, dim]
+        center_values = y.unsqueeze(1)  # [N, 1, 1]
+        
+        dv = neighbor_coords - center_coords  # [N, max_neighbors, dim]
+        du = neighbor_values - center_values  # [N, max_neighbors, 1]
+        
+        # Apply mask to zero out invalid neighbors
+        mask_expanded = valid_mask.unsqueeze(-1)  # [N, max_neighbors, 1]
+        dv = dv * mask_expanded
+        du = du * mask_expanded
+        
+        grad_u = self.compute_ls_grads(dv, du)  # [N, dim, 1]
+        grad_u = grad_u.squeeze(-1)  # [N, dim]
+        
+        # Split into individual components
+        result = []
+        for i in range(self.dim):
+            result.append(grad_u[:, i:i+1])
+        
         return result
 
     def compute_ls_grads(self, dv, du):
         """Given du and dv, compute the grads (batched)"""
 
-        w_squared = 1 / ((dv**2).sum(dim=3) + 1e-8) # Sum along the coordinate dim
+        w_squared = 1 / ((dv**2).sum(dim=2) + 1e-8)
         W = torch.diag_embed(w_squared)
-        A = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), dv)   # Should be [1, batch_size, 3, 3]
-        B = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), du)   # Should be [1, batch_size, 3, 5]
-        grad_u, _, _, _ = torch.linalg.lstsq(A, B) # Should be [1, batchsize, 3, 5]
+        A = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), dv)
+        B = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), du)
+        grad_u, _, _, _ = torch.linalg.lstsq(A, B)
 
         return grad_u

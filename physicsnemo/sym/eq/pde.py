@@ -78,6 +78,7 @@ class PDE(object):
         create_instances: int = 1,
         freeze_terms: Dict[str, List[int]] = {},
         detach_names: List[str] = [],
+        return_as_dict: bool = False
     ):
         """
         Make a list of nodes from PDE.
@@ -90,13 +91,19 @@ class PDE(object):
             This will freeze the terms in appropiate equation
         detach_names : List[str]
             This will detach the inputs of the resulting node.
+        return_as_dict : bool
+            If True, return nodes as a dictionary with equation names as keys.
+            If False, return nodes as a list (default behavior).
 
         Returns
         -------
-        nodes : List[Node]
+        nodes : Union[List[Node], Dict[str, Node]]
             Makes a separate node for every equation.
+            Returns list of nodes if return_as_dict=False, dictionary if return_as_dict=True.
         """
         nodes = []
+        node_dict = {}
+        
         if create_instances == 1:
             if bool(freeze_terms):
                 print(
@@ -104,7 +111,10 @@ class PDE(object):
                 )
                 freeze_terms = {}  # override with an empty dict
             for name, eq in self.equations.items():
-                nodes.append(Node.from_sympy(eq, str(name), freeze_terms, detach_names))
+                node = Node.from_sympy(eq, str(name), freeze_terms, detach_names)
+                nodes.append(node)
+                if return_as_dict:
+                    node_dict[str(name)] = node
         else:
             # look for empty lists in freeze_terms dict
             for k in list(freeze_terms):
@@ -112,30 +122,32 @@ class PDE(object):
                     freeze_terms.pop(k)
             for i in range(create_instances):
                 for name, eq in self.equations.items():
-                    if str(name) + "_" + str(i) in freeze_terms.keys():
-                        nodes.append(
-                            Node.from_sympy(
-                                eq,
-                                str(name) + "_" + str(i),
-                                freeze_terms[str(name) + "_" + str(i)],
-                                detach_names,
-                            )
+                    node_name = str(name) + "_" + str(i)
+                    if node_name in freeze_terms.keys():
+                        node = Node.from_sympy(
+                            eq,
+                            node_name,
+                            freeze_terms[node_name],
+                            detach_names,
                         )
                     else:
                         # set the freeze terms to an empty list
                         print(
                             "No freeze terms found for instance: "
-                            + str(name)
-                            + "_"
-                            + str(i)
+                            + node_name
                             + ", setting to empty"
                         )
-                        nodes.append(
-                            Node.from_sympy(
-                                eq,
-                                str(name) + "_" + str(i),
-                                [],
-                                detach_names,
-                            )
+                        node = Node.from_sympy(
+                            eq,
+                            node_name,
+                            [],
+                            detach_names,
                         )
-        return nodes
+                    nodes.append(node)
+                    if return_as_dict:
+                        node_dict[node_name] = node
+        
+        if return_as_dict:
+            return node_dict
+        else:
+            return nodes
