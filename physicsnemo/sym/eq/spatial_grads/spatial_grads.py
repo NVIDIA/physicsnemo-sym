@@ -198,38 +198,29 @@ def compute_connectivity_tensor(nodes, edges, max_neighbors=None):
         - indices: Tensor containing the neighbor indices for all nodes concatenated
         - neighbor_matrix: Tensor of shape [N, max_neighbors] for batched computation
     """
-    # Convert to numpy for faster processing
     edges_np = edges.cpu().numpy()
     nodes_np = nodes.cpu().numpy().flatten()
     
-    # Create bidirectional edges (both directions)
     bidirectional_edges = np.concatenate((edges_np, edges_np[:, ::-1]), axis=0)
     
-    # Sort edges by start point, then end point
     order = np.lexsort((bidirectional_edges[:, 1], bidirectional_edges[:, 0]))
     sorted_bidirectional_edges = bidirectional_edges[order]
     
-    # Remove duplicates using optimized function
     unique_edges = unique_axis0_fast(sorted_bidirectional_edges)
     
-    # Build adjacency list using numba-optimized function
     num_nodes = len(nodes_np)
     offsets, indices = edges_to_adjacency(unique_edges, num_nodes)
     
-    # Convert to tensors
     offsets_tensor = torch.tensor(offsets, dtype=torch.long, device=nodes.device)
     indices_tensor = torch.tensor(indices, dtype=torch.long, device=nodes.device)
     
-    # Create neighbor matrix for batched computation
     if max_neighbors is None:
-        # Calculate max neighbors from offsets
         neighbor_counts = offsets[1:] - offsets[:-1]
         max_neighbors = int(np.max(neighbor_counts))
     
     neighbor_matrix = torch.full((num_nodes, max_neighbors), -1, 
                                dtype=torch.long, device=nodes.device)
     
-    # Fill neighbor matrix efficiently
     for i in range(num_nodes):
         start_idx = offsets[i]
         end_idx = offsets[i + 1]
