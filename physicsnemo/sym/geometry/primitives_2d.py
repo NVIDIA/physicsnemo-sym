@@ -350,7 +350,7 @@ class Circle(Geometry):
 
 class Triangle(Geometry):
     """
-    2D Isosceles Triangle Symmetrical axis parallel to y-axis
+    2D Isosceles Triangle with symmetrical axis parallel to y-axis
 
     Parameters
     ----------
