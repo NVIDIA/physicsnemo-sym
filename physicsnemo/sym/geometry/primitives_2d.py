@@ -108,7 +108,12 @@ class Line(Geometry):
         )
 
     def sample_interior(self, *args, **kwargs):
-        # Overloads parent method to raise an error
+        """
+        Overloads the parent method to raise an error.
+
+        This is because while a Line is a 2D geometry, it is not a 2D manifold. Hence,
+        it has no interior that can be sampled.
+        """
         return TypeError(
             "Points cannot be sampled from the interior of a Line geometry.\n"
             "You can sample the boundary instead with `sample_boundary`."
