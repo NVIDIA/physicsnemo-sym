@@ -705,8 +705,6 @@ class FuncArch(nn.Module):
         optimize : bool
             If true then treat parameters as optimizable.
         """
-        # Forcing JIT off
-        jit = False
 
         # set name for loading and saving model
         self.name = name

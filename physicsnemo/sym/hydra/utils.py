@@ -106,7 +106,6 @@ def main(config_path: str, config_name: str = "config"):
                 return func(cfg_passthrough)
             else:
                 args_parser = get_args_parser()
-                args = args_parser.parse_args()
                 # multiple times (--multirun)
                 _run_hydra(
                     args=args_parser.parse_args(),

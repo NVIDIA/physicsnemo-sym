@@ -187,7 +187,6 @@ class DerivBase(torch.nn.Module):
         self.order = order
 
         # Create stencil set of points we need
-        eval_list = []
         self._stencil = set()
 
     @property

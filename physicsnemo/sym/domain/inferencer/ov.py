@@ -322,10 +322,10 @@ class OVVoxelInferencer(Inferencer):
     @eco.setter
     def eco(self, e: bool):
         self._eco = e
-        if e == False:
-            self.model.to(self.device)
-        else:
+        if e:
             self.model.cpu()
+        else:
+            self.model.to(self.device)
 
 
 class OVFourCastNetInferencer(Inferencer):
@@ -544,7 +544,7 @@ class OVFourCastNetInferencer(Inferencer):
     @eco.setter
     def eco(self, e: bool):
         self._eco = e
-        if e == False:
-            self.model.to(self.device)
-        else:
+        if e:
             self.model.cpu()
+        else:
+            self.model.to(self.device)

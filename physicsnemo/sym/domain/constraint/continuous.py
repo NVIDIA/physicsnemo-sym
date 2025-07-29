@@ -321,20 +321,23 @@ class PointwiseBoundaryConstraint(PointwiseConstraint):
         # else sample points every batch
         else:
             # invar function
-            invar_fn = lambda: geometry.sample_boundary(
-                batch_size,
-                criteria=criteria,
-                parameterization=parameterization,
-                quasirandom=quasirandom,
-            )
+            def invar_fn():
+                return geometry.sample_boundary(
+                            batch_size,
+                            criteria=criteria,
+                            parameterization=parameterization,
+                            quasirandom=quasirandom,
+                        )
 
             # outvar function
-            outvar_fn = lambda invar: _compute_outvar(invar, outvar)
+            def outvar_fn(invar):
+                return _compute_outvar(invar, outvar)
 
             # lambda weighting function
-            lambda_weighting_fn = lambda invar, outvar: _compute_lambda_weighting(
-                invar, outvar, lambda_weighting
-            )
+            def lambda_weighting_fn(invar, outvar):
+                return _compute_lambda_weighting(
+                            invar, outvar, lambda_weighting
+                        )
 
             # make point dataloader
             dataset = ContinuousPointwiseIterableDataset(
@@ -477,22 +480,25 @@ class PointwiseInteriorConstraint(PointwiseConstraint):
         # else sample points every batch
         else:
             # invar function
-            invar_fn = lambda: geometry.sample_interior(
-                batch_size,
-                bounds=bounds,
-                criteria=criteria,
-                parameterization=parameterization,
-                quasirandom=quasirandom,
-                compute_sdf_derivatives=compute_sdf_derivatives,
-            )
+            def invar_fn():
+                return geometry.sample_interior(
+                            batch_size,
+                            bounds=bounds,
+                            criteria=criteria,
+                            parameterization=parameterization,
+                            quasirandom=quasirandom,
+                            compute_sdf_derivatives=compute_sdf_derivatives,
+                        )
 
             # outvar function
-            outvar_fn = lambda invar: _compute_outvar(invar, outvar)
+            def outvar_fn(invar):
+                return _compute_outvar(invar, outvar)
 
             # lambda weighting function
-            lambda_weighting_fn = lambda invar, outvar: _compute_lambda_weighting(
-                invar, outvar, lambda_weighting
-            )
+            def lambda_weighting_fn(invar, outvar):
+                return _compute_lambda_weighting(
+                            invar, outvar, lambda_weighting
+                        )
 
             # make point dataloader
             dataset = ContinuousPointwiseIterableDataset(
@@ -740,27 +746,32 @@ class IntegralBoundaryConstraint(IntegralConstraint):
         else:
             # sample parameter ranges
             if parameterization:
-                param_ranges_fn = lambda: parameterization.sample(1)
+                def param_ranges_fn():
+                    return parameterization.sample(1)
             else:
-                param_ranges_fn = lambda: {}
+                def param_ranges_fn():
+                    return {}
 
             # invar function
-            invar_fn = lambda param_range: geometry.sample_boundary(
-                integral_batch_size,
-                criteria=criteria,
-                parameterization=Parameterization(
-                    {sp.Symbol(key): float(value) for key, value in param_range.items()}
-                ),
-                quasirandom=quasirandom,
-            )
+            def invar_fn(param_range):
+                return geometry.sample_boundary(
+                            integral_batch_size,
+                            criteria=criteria,
+                            parameterization=Parameterization(
+                                {sp.Symbol(key): float(value) for key, value in param_range.items()}
+                            ),
+                            quasirandom=quasirandom,
+                        )
 
             # outvar function
-            outvar_fn = lambda param_range: _compute_outvar(param_range, outvar)
+            def outvar_fn(param_range):
+                return _compute_outvar(param_range, outvar)
 
             # lambda weighting function
-            lambda_weighting_fn = lambda param_range, outvar: _compute_lambda_weighting(
-                param_range, outvar, lambda_weighting
-            )
+            def lambda_weighting_fn(param_range, outvar):
+                return _compute_lambda_weighting(
+                            param_range, outvar, lambda_weighting
+                        )
 
             # make dataset of integral planes
             dataset = ContinuousIntegralIterableDataset(

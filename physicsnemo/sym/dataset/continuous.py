@@ -109,9 +109,10 @@ class ContinuousPointwiseIterableDataset(IterableDataset):
         self.outvar_fn = outvar_fn
         self.lambda_weighting_fn = lambda_weighting_fn
         if lambda_weighting_fn is None:
-            lambda_weighting_fn = lambda _, outvar: {
-                key: np.ones_like(x) for key, x in outvar.items()
-            }
+            def lambda_weighting_fn(_, outvar):
+                return {
+                            key: np.ones_like(x) for key, x in outvar.items()
+                        }
 
         def iterable_function():
             while True:
@@ -282,11 +283,13 @@ class ContinuousIntegralIterableDataset(IterableDataset):
         self.outvar_fn = outvar_fn
         self.lambda_weighting_fn = lambda_weighting_fn
         if lambda_weighting_fn is None:
-            lambda_weighting_fn = lambda _, outvar: {
-                key: np.ones_like(x) for key, x in outvar.items()
-            }
+            def lambda_weighting_fn(_, outvar):
+                return {
+                            key: np.ones_like(x) for key, x in outvar.items()
+                        }
         if param_ranges_fn is None:
-            param_ranges_fn = lambda: {}  # Potentially unsafe?
+            def param_ranges_fn():
+                return {}  # Potentially unsafe?
         self.param_ranges_fn = param_ranges_fn
 
         self.batch_size = batch_size

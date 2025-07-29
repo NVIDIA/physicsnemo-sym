@@ -448,7 +448,7 @@ class DerivScaler(GradScaler):
         if not self._enabled:
             return False
 
-        if self._found_inf == None:
+        if self._found_inf is None:
             logger.warning(
                 "deriv_scaler.scale() never got called, "
                 "please make sure there are no derivative nodes in the model."

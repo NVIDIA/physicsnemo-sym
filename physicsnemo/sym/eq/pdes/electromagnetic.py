@@ -43,7 +43,6 @@ def _curl(v):
 
 # helper functions computing cross product
 def _cross(a, b):
-    x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
     dim = len(a)
     if dim == 3:
         a1, a2, a3 = a

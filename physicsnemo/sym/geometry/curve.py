@@ -171,12 +171,6 @@ class Curve:
                     nr_points, parameterization, quasirandom
                 )
 
-                # compute scale if needed
-                if isinstance(x, (float, int)):
-                    computed_scale = x
-                else:
-                    computed_scale = s(params)
-
                 # scale invar
                 for d in dims:
                     invar[d] *= x

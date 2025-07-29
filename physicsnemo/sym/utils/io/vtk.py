@@ -989,7 +989,6 @@ def grid_to_vtk(var_dict: Dict[str, np.array], file_path: str, batch_index: int 
     assert len(shape) > 2 and len(shape) < 6, "Input variables must be dim 3, 4, 5"
 
     # Padd for any missing dims
-    bsize = shape[0]
     cdim = shape[1]
     grid_shape = list(shape[2:])
     bounds = [[0, i - 1] for i in grid_shape]

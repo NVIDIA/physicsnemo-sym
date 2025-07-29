@@ -1059,9 +1059,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         device: torch.device,
     ):
         manager = DistributedManager()
-        model_parallel_rank = (
-            manager.group_rank("model_parallel") if manager.distributed else 0
-        )
 
         # attempt to restrore from initialization network dir
         if initialization_network_dir != "":

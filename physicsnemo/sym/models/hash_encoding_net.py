@@ -107,7 +107,6 @@ class MultiresolutionHashNetArch(Arch):
         in_features_params = sum(
             (v for k, v in self.input_key_dict.items() if k in self.params_var)
         )
-        in_features = in_features_xyzt + in_features_params
         out_features = sum(self.output_key_dict.values())
         if len(self.params_var) == 0:
             self.params_var = None
