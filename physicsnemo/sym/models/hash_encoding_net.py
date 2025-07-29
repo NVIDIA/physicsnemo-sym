@@ -101,9 +101,6 @@ class MultiresolutionHashNetArch(Arch):
         self.params_var = [
             x for x in self.input_key_dict if x not in ["x", "y", "z", "t"]
         ]
-        in_features_xyzt = sum(
-            (v for k, v in self.input_key_dict.items() if k in self.xyzt_var)
-        )
         in_features_params = sum(
             (v for k, v in self.input_key_dict.items() if k in self.params_var)
         )

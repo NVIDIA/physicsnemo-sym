@@ -1058,7 +1058,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         log: logging.Logger,
         device: torch.device,
     ):
-        manager = DistributedManager()
 
         # attempt to restrore from initialization network dir
         if initialization_network_dir != "":

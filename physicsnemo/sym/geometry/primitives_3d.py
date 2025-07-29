@@ -63,7 +63,7 @@ class Plane(Geometry):
         ), "Points must have same coordinate on normal dim"
 
         # make sympy symbols to use
-        x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+        x, _y, _z = Symbol("x"), Symbol("y"), Symbol("z")
         s_1, s_2 = Symbol(csg_curve_naming(0)), Symbol(csg_curve_naming(1))
         center = (
             point_1[0] + (point_2[0] - point_1[0]) / 2,
@@ -1482,19 +1482,13 @@ class IsoTriangularPrism(Geometry):
 
         N = CoordSys3D("N")
         P = (x) * N.i + y * N.j + center[2] * N.k
-        Q = x * N.i + y * N.j + center[2] * N.k
         O = center[0] * N.i + center[1] * N.j + center[2] * N.k
         H = center[0] * N.i + (center[1] + height) * N.j + center[2] * N.k
-        B = (center[0] + base / 2) * N.i + center[1] * N.j + center[2] * N.k
-        B_p = (center[0] - base / 2) * N.i + center[1] * N.j + center[2] * N.k
 
         OP = P - O
         OH = H - O
         PH = OH - OP
-        HB = B - H
-        HB_p = B_p - H
 
-        norm = ((HB_p).cross(HB)).normalize()
         hypo = sqrt(height**2 + (base / 2) ** 2)
         angle = acos(PH.dot(OH) / sqrt(PH.dot(PH)) / sqrt(OH.dot(OH)))
         apex_angle = asin(base / 2 / hypo)
