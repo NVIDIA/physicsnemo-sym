@@ -26,13 +26,14 @@ from physicsnemo.sym.eq.fd import grads as fd_grads
 from physicsnemo.sym.eq.ls import grads as ls_grads
 from physicsnemo.sym.eq.mfd import grads as mfd_grads
 
+
 @njit
 def edges_to_adjacency(
     sorted_bidirectional_edges: np.ndarray, n_points: int
 ) -> tuple[np.ndarray, np.ndarray]:
     """
     Convert a sorted bidirectional edge list to an adjacency list using numba.
-    
+
     Parameters
     ----------
     sorted_bidirectional_edges : np.ndarray
@@ -41,7 +42,7 @@ def edges_to_adjacency(
         then increasing end index.
     n_points : int
         The number of points in the mesh.
-    
+
     Returns
     -------
     tuple[np.ndarray, np.ndarray]
@@ -66,7 +67,9 @@ def edges_to_adjacency(
 
     return offsets, indices
 
+
 edges_to_adjacency(np.zeros((0, 2), dtype=np.int64), 0)  # Does the precompilation
+
 
 def unique_axis0_fast(array):
     """
@@ -74,7 +77,7 @@ def unique_axis0_fast(array):
     """
     if len(array) == 0:
         return array
-    
+
     idxs = np.lexsort(array.T[::-1])
     array = array[idxs]
     unique_idxs = np.empty(len(array), dtype=np.bool_)
@@ -200,38 +203,37 @@ def compute_connectivity_tensor(nodes, edges, max_neighbors=None):
     """
     edges_np = edges.cpu().numpy()
     nodes_np = nodes.cpu().numpy().flatten()
-    
+
     bidirectional_edges = np.concatenate((edges_np, edges_np[:, ::-1]), axis=0)
-    
+
     order = np.lexsort((bidirectional_edges[:, 1], bidirectional_edges[:, 0]))
     sorted_bidirectional_edges = bidirectional_edges[order]
-    
+
     unique_edges = unique_axis0_fast(sorted_bidirectional_edges)
-    
+
     num_nodes = len(nodes_np)
     offsets, indices = edges_to_adjacency(unique_edges, num_nodes)
-    
+
     offsets_tensor = torch.tensor(offsets, dtype=torch.long, device=nodes.device)
     indices_tensor = torch.tensor(indices, dtype=torch.long, device=nodes.device)
-    
+
     if max_neighbors is None:
         neighbor_counts = offsets[1:] - offsets[:-1]
         max_neighbors = int(np.max(neighbor_counts))
-    
-    neighbor_matrix = torch.full((num_nodes, max_neighbors), -1, 
-                               dtype=torch.long, device=nodes.device)
-    
+
+    neighbor_matrix = torch.full(
+        (num_nodes, max_neighbors), -1, dtype=torch.long, device=nodes.device
+    )
+
     for i in range(num_nodes):
         start_idx = offsets[i]
         end_idx = offsets[i + 1]
         num_neighbors = end_idx - start_idx
         if num_neighbors > 0:
             neighbor_matrix[i, :num_neighbors] = torch.tensor(
-                indices[start_idx:end_idx], 
-                dtype=torch.long, 
-                device=nodes.device
+                indices[start_idx:end_idx], dtype=torch.long, device=nodes.device
             )
-    
+
     return offsets_tensor, indices_tensor, neighbor_matrix
 
 

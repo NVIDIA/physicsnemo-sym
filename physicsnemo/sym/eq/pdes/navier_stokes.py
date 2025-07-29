@@ -292,6 +292,7 @@ class NavierStokes(PDE):
                 self.equations.pop("compatibility_w_xz")
                 self.equations.pop("compatibility_w_yz")
 
+
 class IncompressibleNavierStokes(PDE):
     """
     Incompressible Navier Stokes equations
@@ -366,28 +367,50 @@ class IncompressibleNavierStokes(PDE):
         mu = rho * nu
 
         tau_xx__x = 2 * mu * u.diff(x).diff(x) + 2 * mu.diff(x) * u.diff(x)
-        tau_xy__y = mu * (u.diff(y).diff(y) + v.diff(x).diff(y)) + mu.diff(y) * (u.diff(y) + v.diff(x))
-        tau_xz__z = mu * (u.diff(z).diff(z) + w.diff(x).diff(z)) + mu.diff(z) * (u.diff(z) + w.diff(x))
-        tau_xy__x = mu * (u.diff(y).diff(x) + v.diff(x).diff(x)) + mu.diff(x) * (u.diff(y) + v.diff(x))
+        tau_xy__y = mu * (u.diff(y).diff(y) + v.diff(x).diff(y)) + mu.diff(y) * (
+            u.diff(y) + v.diff(x)
+        )
+        tau_xz__z = mu * (u.diff(z).diff(z) + w.diff(x).diff(z)) + mu.diff(z) * (
+            u.diff(z) + w.diff(x)
+        )
+        tau_xy__x = mu * (u.diff(y).diff(x) + v.diff(x).diff(x)) + mu.diff(x) * (
+            u.diff(y) + v.diff(x)
+        )
         tau_yy__y = 2 * mu * v.diff(y).diff(y) + 2 * mu.diff(y) * v.diff(y)
-        tau_yz__z = mu * (v.diff(z).diff(z) + w.diff(y).diff(z)) + mu.diff(z) * (v.diff(z) + w.diff(y))
-        tau_xz__x = mu * (u.diff(z).diff(x) + w.diff(x).diff(x)) + mu.diff(x) * (u.diff(z) + w.diff(x)) 
-        tau_yz__y = mu * (v.diff(z).diff(y) + w.diff(y).diff(y)) + mu.diff(y) * (v.diff(z) + w.diff(y))
+        tau_yz__z = mu * (v.diff(z).diff(z) + w.diff(y).diff(z)) + mu.diff(z) * (
+            v.diff(z) + w.diff(y)
+        )
+        tau_xz__x = mu * (u.diff(z).diff(x) + w.diff(x).diff(x)) + mu.diff(x) * (
+            u.diff(z) + w.diff(x)
+        )
+        tau_yz__y = mu * (v.diff(z).diff(y) + w.diff(y).diff(y)) + mu.diff(y) * (
+            v.diff(z) + w.diff(y)
+        )
         tau_zz__z = 2 * mu * w.diff(z).diff(z) + 2 * mu.diff(z) * w.diff(z)
 
         # set equations
         self.equations = {}
-        self.equations["continuity"] = (
-            u.diff(x) + v.diff(y) + w.diff(z)
-        )
+        self.equations["continuity"] = u.diff(x) + v.diff(y) + w.diff(z)
         self.equations["momentum_x"] = (
-            rho * (u * u.diff(x) + v * u.diff(y) + w * u.diff(z)) + p.diff(x) - tau_xx__x - tau_xy__y - tau_xz__z
+            rho * (u * u.diff(x) + v * u.diff(y) + w * u.diff(z))
+            + p.diff(x)
+            - tau_xx__x
+            - tau_xy__y
+            - tau_xz__z
         )
         self.equations["momentum_y"] = (
-            rho * (u * v.diff(x) + v * v.diff(y) + w * v.diff(z)) + p.diff(y) - tau_xy__x - tau_yy__y - tau_yz__z
+            rho * (u * v.diff(x) + v * v.diff(y) + w * v.diff(z))
+            + p.diff(y)
+            - tau_xy__x
+            - tau_yy__y
+            - tau_yz__z
         )
         self.equations["momentum_z"] = (
-            rho * (u * w.diff(x) + v * w.diff(y) + w * w.diff(z)) + p.diff(z) - tau_xz__x - tau_yz__y - tau_zz__z
+            rho * (u * w.diff(x) + v * w.diff(y) + w * w.diff(z))
+            + p.diff(z)
+            - tau_xz__x
+            - tau_yz__y
+            - tau_zz__z
         )
 
         if self.dim == 2:

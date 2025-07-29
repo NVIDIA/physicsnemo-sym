@@ -78,7 +78,7 @@ class PDE(object):
         create_instances: int = 1,
         freeze_terms: Dict[str, List[int]] = {},
         detach_names: List[str] = [],
-        return_as_dict: bool = False
+        return_as_dict: bool = False,
     ):
         """
         Make a list of nodes from PDE.
@@ -103,7 +103,7 @@ class PDE(object):
         """
         nodes = []
         node_dict = {}
-        
+
         if create_instances == 1:
             if bool(freeze_terms):
                 print(
@@ -146,7 +146,7 @@ class PDE(object):
                     nodes.append(node)
                     if return_as_dict:
                         node_dict[node_name] = node
-        
+
         if return_as_dict:
             return node_dict
         else:
