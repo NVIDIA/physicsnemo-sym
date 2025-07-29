@@ -17,7 +17,6 @@
 @Author : Clement Etienam
 """
 
-
 import os
 import numpy as np
 
@@ -135,7 +134,6 @@ from physicsnemo.sym.dataset import DictGridDataset
 from physicsnemo.sym.models.fully_connected import *
 from physicsnemo.sym.models.fno import *
 from physicsnemo.sym.loss.loss import Loss
-from physicsnemo.sym.models.activation import Activation
 import requests
 from typing import Union, Tuple
 from pathlib import Path
@@ -584,7 +582,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -1008,7 +1005,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -1082,7 +1079,6 @@ def read_yaml(fname):
 
 
 def Get_Time(nx, ny, nz, N):
-
     Timee = []
     for k in range(N):
         check = np.ones((nx, ny, nz), dtype=np.float16)
@@ -1127,7 +1123,6 @@ def Get_source_sink(N, nx, ny, nz, steppi):
     QG = np.zeros((steppi, nx, ny, nz), dtype=np.float32)
 
     for k in range(steppi):
-
         QG[k, 24, 24, -1] = 1000
 
     Qg[0, :, :, :, :] = QG
@@ -1153,7 +1148,6 @@ SUPPORTED_DATA_TYPES = {
 
 
 def parse_egrid(path_to_result):
-
     egrid_path = path_to_result
     attrs = ("GRIDHEAD", "ACTNUM")
     egrid = _parse_ech_bin(egrid_path, attrs)
@@ -1162,7 +1156,6 @@ def parse_egrid(path_to_result):
 
 
 def parse_unrst(path_to_result):
-
     unrst_path = path_to_result
     attrs = ("PRESSURE", "SGAS", "SWAT")
     states = _parse_ech_bin(unrst_path, attrs)
@@ -1188,7 +1181,6 @@ def _check_and_fetch_type_info(data_type):
 
 
 def _check_and_fetch_file(path, pattern, return_relative=False):
-
     found = []
     reg_expr = re.compile(fnmatch.translate(pattern), re.IGNORECASE)
 
@@ -1206,7 +1198,6 @@ def _check_and_fetch_file(path, pattern, return_relative=False):
 
 
 def _parse_keywords(path, attrs=None):
-
     sections_counter = {} if attrs is None else {attr: 0 for attr in attrs}
 
     with open(path, "rb") as f:
@@ -1250,7 +1241,6 @@ def _parse_keywords(path, attrs=None):
 
 
 def _parse_ech_bin(path, attrs=None):
-
     if attrs is None:
         raise ValueError("Keyword attribute cannot be empty")
 
@@ -1264,7 +1254,6 @@ def _parse_ech_bin(path, attrs=None):
 
 
 def _fetch_keyword_data(section):
-
     n_elements, data_type, element_size, fmt, element_skip, binary_data = section
 
     n_skip = math.floor((n_elements - 1) / element_skip)
@@ -1284,7 +1273,6 @@ def _fetch_keyword_data(section):
 
 
 def Geta_all(folder, nx, ny, nz, oldfolder, check, steppi):
-
     os.chdir(folder)
 
     # os.system(string_Jesus)
@@ -1680,7 +1668,6 @@ def load_FNO_dataset(path, input_keys, output_keys, n_examples=None):
     invar, outvar = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar, output_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -1716,7 +1703,6 @@ def load_FNO_dataset2(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -1752,7 +1738,6 @@ def load_FNO_dataset2d(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -1788,7 +1773,6 @@ def load_FNO_dataset2a(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -1848,7 +1832,7 @@ def preprocess_FNO_mat(path):
 
 
 def to_absolute_path_and_create(
-    *args: Union[str, Path]
+    *args: Union[str, Path],
 ) -> Union[Path, str, Tuple[Union[Path, str]]]:
     """Converts file path to absolute path based on the current working directory and creates the subfolders."""
 
@@ -2054,7 +2038,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
     print("")
 
@@ -2075,7 +2058,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -2101,9 +2083,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     if torch.cuda.is_available():
         num_gpus = torch.cuda.device_count()
         if num_gpus >= 2:  # Choose GPU 1 (index 1)
-            device = torch.device(f"cuda:0")
+            device = torch.device("cuda:0")
         else:  # If there's only one GPU or no GPUs, choose the first one (index 0)
-            device = torch.device(f"cuda:0")
+            device = torch.device("cuda:0")
     else:  # If CUDA is not available, use the CPU
         raise RuntimeError("No GPU found. Please run on a system with a GPU.")
     torch.cuda.set_device(device)
@@ -2137,7 +2119,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 2-500")
             else:
-
                 break
 
     # print(steppi)
@@ -2196,7 +2177,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     poro_ensemble = clip_and_convert_to_float32(poro_ensemble)
 
     if interest == 1:
-
         for kk in range(N_ens):
             path_out = to_absolute_path("../RUNS/Realisation" + str(kk))
             os.makedirs(path_out, exist_ok=True)
@@ -2529,7 +2509,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         neededM[key] = replace_nans_and_infs(neededM[key])
 
     for kk in range(N_ens):
-
         # INPUTS
         for i in range(nz):
             cPerm[kk, 0, i, :, :] = clip_and_convert_to_float3(
@@ -2636,7 +2615,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     cSatg = np.zeros((N_ens, steppi, nz, nx, ny), dtype=np.float32)  # gas saturation
 
     for kk in range(N_ens):
-
         # INPUTS
         for i in range(nz):
             cPerm[kk, 0, i, :, :] = X_data1t["permeability"][kk, 0, :, :, i]

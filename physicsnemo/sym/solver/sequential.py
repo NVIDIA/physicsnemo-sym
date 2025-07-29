@@ -119,7 +119,6 @@ class SequentialSolver(Solver):
                 for iteration_index in range(
                     self.iteration_index, self.domains[domain_index][0]
                 ):
-
                     # set internal domain index and iteration index
                     self.domain_index = domain_index
                     self.iteration_index = iteration_index

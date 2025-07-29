@@ -65,7 +65,6 @@ def load_FNO_dataset(path, input_keys, output_keys, n_examples=None):
     invar, outvar = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar, output_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -108,7 +107,6 @@ def load_FNO_dataset2(
         (outvar3, output_keys3),
     ]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -144,7 +142,6 @@ def load_FNO_dataset2a(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -180,7 +177,6 @@ def load_FNO_dataset4(path, input_keys, n_examples=None):
     invar = dict()
     for d, keys in [(invar, input_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)

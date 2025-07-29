@@ -24,6 +24,7 @@ Geostatistics packages are also provided
 @Author: Clement Etienam
 
 """
+
 import os
 import sys
 import numpy as np
@@ -54,14 +55,10 @@ from sklearn.preprocessing import MinMaxScaler
 import os.path
 
 # import torch
-import datetime
 from collections import OrderedDict
-from gstools.random import MasterRNG
-from datetime import timedelta
 from scipy import interpolate
 import multiprocessing
 import mpslib as mps
-from gstools import SRF, Gaussian
 import numpy.matlib
 from pyDOE import lhs
 import matplotlib.colors
@@ -76,7 +73,6 @@ import numpy.matlib
 
 # os.environ['KERAS_BACKEND'] = 'tensorflow'
 import os.path
-import time
 import random
 
 # import dolfin as df
@@ -90,11 +86,7 @@ import logging
 import os
 from FyeldGenerator import generate_field
 import warnings
-import imp
 import yaml
-from FyeldGenerator import generate_field
-import matplotlib.colors
-from matplotlib import cm
 
 warnings.filterwarnings("ignore")
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"  # see issue #152
@@ -138,7 +130,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -149,7 +141,6 @@ def peaks(n):
 def Plot_petrophysical(
     permmean, poroo, nx, ny, nz, Low_K, High_K, Low_P, High_P, injectors, producers
 ):
-
     Low_Ka = Low_K
     High_Ka = High_K
 
@@ -357,7 +348,6 @@ def Plot_mean(
     injectors,
     producers,
 ):
-
     Low_Ka = Low_K
     High_Ka = High_K
 
@@ -602,7 +592,6 @@ def Gassmann(PORO, Pr, SO, nx, ny, nz):
     saturation = [cp.empty((nx, ny), dtype=cp.float64) for _ in range(nz)]
 
     for i in range(nz):
-
         # psia to MPa
         pressure[i] = field2Metric(PressureAfter1Year[:, :, i], "psi") * 1e-6
 
@@ -1145,7 +1134,6 @@ def restriction(A, f):
 
 
 def Plot_RSM_percentilee(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt[0]
@@ -1416,7 +1404,6 @@ def Plot_RSM_percentilee(pertoutt, True_mat, Namesz):
 
 
 def Plot_RSM_percentile(True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     plt.figure(figsize=(40, 40))
@@ -1592,7 +1579,6 @@ def Plot_RSM_percentile(True_mat, Namesz):
 
 
 def Plot_RSM_percentile2(True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     plt.figure(figsize=(40, 40))
@@ -1808,7 +1794,6 @@ def Plot_RSM_percentile2(True_mat, Namesz):
 
 
 def Plot_RSM_single(True_mat, Namesz):
-
     True_mat = True_mat[0]
     timezz = True_mat[:, 0].reshape(-1, 1)
 
@@ -1984,7 +1969,6 @@ def Plot_RSM_single(True_mat, Namesz):
 
 
 def Plot_RSM_singleT(True_mat, Namesz):
-
     # True_mat = True_mat[0]
     timezz = True_mat[:, 0].reshape(-1, 1)
 
@@ -2160,7 +2144,6 @@ def Plot_RSM_singleT(True_mat, Namesz):
 
 
 def Plot_RSM(predMatrix, True_mat, Namesz, Ne):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     Nt = predMatrix[0].shape[0]
@@ -2476,7 +2459,6 @@ def Plot_RSM(predMatrix, True_mat, Namesz, Ne):
 
 
 def Plot_RSM_percentile_model(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt
@@ -2784,7 +2766,6 @@ def plot_properties(perm, poro, nx, ny, nz, injectors, producers, path_save):
 def Plot_performance(
     trueF, nx, ny, nz, namet, itt, dt, MAXZ, steppi, injectors, producers
 ):
-
     lookf = trueF[itt, :, :]
     lookf_sat = trueF[itt + steppi, :, :]
     lookf_oil = 1 - lookf_sat
@@ -2843,7 +2824,6 @@ def Plot_performance(
 def Plot_performance2(
     trueF, nx, ny, nz, namet, itt, dt, MAXZ, steppi, injectors, producers
 ):
-
     lookf = trueF[itt, :, :]
     lookf_sat = trueF[itt + steppi, :, :]
     lookf_oil = trueF[itt + 2 * steppi, :, :]
@@ -3253,7 +3233,6 @@ def Peaceman_well2(
     NecessaryI,
     NecessaryP,
 ):
-
     # ct1[0,:,:] =  at1[:,:,0] # permeability
     # ct1[1,:,:] = quse1[:,:,0]#/UIR # Overall f
     # ct1[2,:,:] = A1[:,:,0]#/UIR# f for water injection
@@ -3460,7 +3439,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -3884,7 +3862,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -3985,7 +3963,6 @@ def Upstream_3PHASE(
     Tt,
     porosity,
 ):
-
     Nx = nx
     Ny = ny
     Nz = nz
@@ -4240,7 +4217,6 @@ def NewtRaph(
             it = 0
             I = I + 1
             while (dsn > 0.001) and (it < 10):
-
                 Mw, Mo, dMw, dMo = RelPerm2(S, UW, UO, BW, BO, SWI, SWR, nx, ny, nz)
                 df = cp.divide(dMw, (Mw + Mo)) - cp.multiply(
                     cp.divide(Mw, ((Mw + Mo) ** (2))), (dMw + dMo)
@@ -4322,7 +4298,6 @@ def NewtRaph2(
     BG,
     RS,
 ):
-
     Nx = nx
     Ny = ny
     Nz = nz
@@ -4354,7 +4329,6 @@ def NewtRaph2(
             it = 0
             I = I + 1
             while (dsn > 0.01) and (it < 5):
-
                 Mw, Mo, Mg, dMw, dMo, dMg = RelPerm3(
                     S, Soil, UW, UO, UG, BW, BO, BG, SWI, SWR, nx, ny, nz
                 )
@@ -4581,7 +4555,6 @@ def ShowBar(Bar):
 
 
 def Equivalent_time(tim1, max_t1, tim2, max_t2):
-
     tk2 = tim1 / max_t1
     tc2 = np.arange(0.0, 1 + tk2, tk2)
     tc2[tc2 >= 1] = 1
@@ -4634,7 +4607,6 @@ def Reservoir_Simulator(
     step2,
     pini_alt,
 ):
-
     """
     Reservoir_Simulator function for 2 phase flow
 
@@ -4778,7 +4750,6 @@ def Reservoir_Simulator(
 
     b = Qq
     for t in range(tc2.shape[0] - 1):
-
         # Mw,Mo,_,_= RelPerm(S,UW,UO,BW,BO,SWI,SWR)
 
         Sout = (S - SWI) / (1 - SWI - SWR)
@@ -4818,7 +4789,6 @@ def Reservoir_Simulator(
             u = spsolve(A, b)
 
         elif method == 3:  # CONJUGATE GRADIENT
-
             M2 = spilu(A)
             M_x = lambda x: M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
@@ -4827,7 +4797,6 @@ def Reservoir_Simulator(
         elif method == 4:  # LSQR
             u, istop, itn, normr = lsqr(A, b)[:4]
         else:  # adaptive AMG
-
             u = v_cycle(
                 A,
                 b,
@@ -4948,7 +4917,6 @@ def Reservoir_Simulator2(
     step2,
     pini_alt,
 ):
-
     # Compute transmissibilities by harmonic averaging using Two-point flux approimxation
 
     Nx = cp.int32(nx)
@@ -5014,7 +4982,6 @@ def Reservoir_Simulator2(
 
     b = Qq
     for t in range(tc2.shape[0] - 1):
-
         # step = t
 
         Mw, Mo, Mg, _, _, _ = RelPerm3(
@@ -5052,7 +5019,6 @@ def Reservoir_Simulator2(
             u = spsolve(A, b)
 
         elif method == 3:  # CONJUGATE GRADIENT
-
             M2 = spilu(A)
             M_x = lambda x: M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
@@ -5061,7 +5027,6 @@ def Reservoir_Simulator2(
         elif method == 4:  # LSQR
             u, istop, itn, normr = lsqr(A, b)[:4]
         else:  # adaptive AMG
-
             u = v_cycle(
                 A,
                 b,
@@ -5107,7 +5072,6 @@ def Reservoir_Simulator2(
             )
         else:
             for ts in range(step2):
-
                 S, Soil = NewtRaph2(
                     nx,
                     ny,
@@ -5233,7 +5197,6 @@ def rescale_linear_pytorch_numpy(array, new_min, new_max, minimum, maximum):
 
 
 def plot3d2static(arr_3d, nx, ny, nz, namet, titti, maxii, minii, injectors, producers):
-
     """
     Plot a 3D array with matplotlib and annotate specific points on the plot.
 
@@ -5383,7 +5346,6 @@ def plot3d2static(arr_3d, nx, ny, nz, namet, titti, maxii, minii, injectors, pro
 def plot3d2(
     arr_3d, nx, ny, nz, itt, dt, MAXZ, namet, titti, maxii, minii, injectors, producers
 ):
-
     """
     Plot a 3D array with matplotlib and annotate specific points on the plot.
 

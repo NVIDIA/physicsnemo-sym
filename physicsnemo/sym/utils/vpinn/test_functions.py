@@ -60,7 +60,6 @@ class Degree_nk:
         if self.L == 0:
             degrees = np.array([np.zeros(dim, dtype=int)])
         else:
-
             degrees = []
 
             mask0 = np.ones(len(self.last_degrees[0]), dtype=bool)
@@ -497,7 +496,7 @@ class RBF_Function:
         elif self.RBF_name == "Inverse multiquadric":
             self.RBF_prototype = 1 / sp.sqrt(1 + self.r_sympy**2)
         else:
-            self.RBF_prototype = sp.exp(-self.r_sympy**2)
+            self.RBF_prototype = sp.exp(-(self.r_sympy**2))
         self.initialize()
         self.make_fcn_list()
         self.lambdify_fcn_list()

@@ -26,13 +26,10 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from physicsnemo.sym.models.fno import *
-import shutil
 import cupy as cp
-from skimage.transform import resize
 import scipy.io as sio
 import requests
 
@@ -427,7 +424,6 @@ class CustomValidatorPlotterS(ValidatorPlotter):
         Accuracy_water = np.zeros((self.steppi, 2))
         Time_vector = np.zeros((self.steppi))
         for itt in range(self.steppi):
-
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(20, 20), dpi=100)
 

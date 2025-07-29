@@ -27,7 +27,7 @@ except:
         + "Find out information here: https://github.com/idies/pyJHTDB"
     )
 from tqdm import *
-from typing import List, Dict, Union
+from typing import List
 from pathlib import Path
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.distributed.manager import DistributedManager

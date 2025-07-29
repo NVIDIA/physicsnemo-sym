@@ -122,7 +122,6 @@ class Constraint:
 
     @staticmethod
     def _set_device(tensor_dict, device=None, requires_grad=False):
-
         # convert np to torch if needed
         tensor_dict = {
             key: torch.as_tensor(value, dtype=tf_dt, device=device)
@@ -162,7 +161,6 @@ class Constraint:
 
         # map-style
         if isinstance(dataset, Dataset):
-
             assert batch_size is not None, "error, batch_size must be specified"
             assert shuffle is not None, "error, shuffle must be specified"
             assert drop_last is not None, "error, drop_last must be specified"
@@ -218,7 +216,6 @@ class Constraint:
 
         # iterable-style
         elif isinstance(dataset, IterableDataset):
-
             # for iterable datasets, must do batching/sampling within dataset
             dataloader = DataLoader(
                 dataset,

@@ -294,7 +294,6 @@ class DistributedManager(object):
 
     @staticmethod
     def create_process_subgroup(name: str, size: int, group_name=None, verbose=False):
-
         manager = DistributedManager()
         if not manager.distributed:
             return None

@@ -26,11 +26,9 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from physicsnemo.sym.models.afno.afno import *
-import shutil
 import cupy as cp
 import scipy.io as sio
 import requests

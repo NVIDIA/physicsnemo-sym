@@ -19,26 +19,24 @@ import warnings
 
 import torch
 import numpy as np
-from sympy import Symbol, Eq, tanh, Or, And
+from sympy import Symbol, Eq, Or, And
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path, PhysicsNeMoConfig
 from physicsnemo.sym.utils.io import csv_to_dict
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
-from physicsnemo.sym.utils.sympy.functions import parabola
 from physicsnemo.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
 from physicsnemo.sym.eq.pdes.navier_stokes import GradNormal
 from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
-    IntegralBoundaryConstraint,
 )
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.domain.validator import PointwiseValidator
-from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.models.fourier_net import FourierNetArch

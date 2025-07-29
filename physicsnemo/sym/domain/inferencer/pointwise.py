@@ -59,7 +59,6 @@ class PointwiseInferencer(Inferencer):
         requires_grad: bool = False,
         model=None,
     ):
-
         # get dataset and dataloader
         self.dataset = DictInferencePointwiseDataset(
             invar=invar, output_names=output_names

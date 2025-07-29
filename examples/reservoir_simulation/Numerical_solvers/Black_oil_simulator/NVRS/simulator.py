@@ -16,12 +16,12 @@
 """
 @Author : Clement Etienam
 """
+
 from __future__ import print_function
 
 print(__doc__)
 import os
 from NVR import *
-import shutil
 import pandas as pd
 import scipy.io as sio
 import datetime
@@ -92,7 +92,6 @@ def inference_single(
     opennI,
     opennP,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -260,7 +259,6 @@ def inference_single2(
     SWOW,
     SWOG,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -761,7 +759,7 @@ class Simulator:
 
                     Parallel(n_jobs=-1)(
                         delayed(plot3d2)(
-                            ((1 - data_use1[0, kk + steppi, :, :][:, :, None])),
+                            (1 - data_use1[0, kk + steppi, :, :][:, :, None]),
                             nx,
                             ny,
                             nz,
@@ -873,7 +871,6 @@ class Simulator:
                     for f4 in glob("*unie_oil*"):
                         os.remove(f4)
                 else:
-
                     Parallel(n_jobs=-1)(
                         delayed(plot3d2)(
                             data_use1[0, kk, :, :, :][:, :, ::-1]
@@ -1050,12 +1047,10 @@ class Simulator:
                                     cp.asarray(data_use1[0, kk, :, :][:, :, None]),
                                     cp.asarray(
                                         (
-                                            (
-                                                1
-                                                - data_use1[0, kk + steppi, :, :][
-                                                    :, :, None
-                                                ]
-                                            )
+                                            1
+                                            - data_use1[0, kk + steppi, :, :][
+                                                :, :, None
+                                            ]
                                         )
                                     ),
                                     nx,
@@ -1131,7 +1126,7 @@ class Simulator:
                                     ),
                                     cp.asarray(data_use1[0, kk, :, :, :]),
                                     cp.asarray(
-                                        ((1 - data_use1[0, kk + steppi, :, :, :]))
+                                        (1 - data_use1[0, kk + steppi, :, :, :])
                                     ),
                                     nx,
                                     ny,
@@ -1378,7 +1373,7 @@ class Simulator:
 
                     Parallel(n_jobs=-1)(
                         delayed(plot3d2)(
-                            ((data_use1[0, kk + 3 * steppi, :, :][:, :, None])),
+                            (data_use1[0, kk + 3 * steppi, :, :][:, :, None]),
                             nx,
                             ny,
                             nz,
@@ -1389,12 +1384,12 @@ class Simulator:
                             "gas_sat",
                             max(
                                 (
-                                    (data_use1[0, kk + 3 * steppi, :, :][:, :, None])
+                                    data_use1[0, kk + 3 * steppi, :, :][:, :, None]
                                 ).ravel()
                             ),
                             min(
                                 (
-                                    (data_use1[0, kk + 3 * steppi, :, :][:, :, None])
+                                    data_use1[0, kk + 3 * steppi, :, :][:, :, None]
                                 ).ravel()
                             ),
                             injectors,

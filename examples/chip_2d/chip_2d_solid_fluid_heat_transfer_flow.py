@@ -21,12 +21,11 @@ import numpy as np
 from sympy import Symbol, Eq, And, Or
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path, PhysicsNeMoConfig
 from physicsnemo.sym.utils.io import csv_to_dict
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
-from physicsnemo.sym.utils.sympy.functions import parabola
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 from physicsnemo.sym.eq.pdes.basic import NormalDotVec
 from physicsnemo.sym.domain.constraint import (
@@ -37,7 +36,6 @@ from physicsnemo.sym.domain.constraint import (
 
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.models.fourier_net import FourierNetArch
 
 

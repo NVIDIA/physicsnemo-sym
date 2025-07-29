@@ -16,12 +16,12 @@
 """
 @Author : Clement Etienam
 """
+
 import numpy as np
 import torch
 from torch.utils.data import DataLoader
 import os
 import matplotlib.pyplot as plt
-from copy import deepcopy
 import physicsnemo
 from physicsnemo.sym.hydra import PhysicsNeMoConfig
 from physicsnemo.sym.hydra import to_absolute_path
@@ -30,13 +30,12 @@ from NVRS import *
 import time
 from datetime import timedelta
 from utilities import preprocess_FNO_mat
-from ops import dx, ddx
+from ops import dx
 from physicsnemo.sym.models.fno import *
 import cupy as cp
 from PIL import Image
 
 # import glob
-from glob import glob
 from sklearn.model_selection import train_test_split
 import scipy.io as sio
 import requests
@@ -94,7 +93,6 @@ def CustomValidatorPlotter(
     true_pressure,
     pred_pressure,
 ):
-
     water_true, water_pred = (
         true_water.detach().cpu().numpy(),
         pred_water.detach().cpu().numpy(),
@@ -283,7 +281,6 @@ def Black_oil(
     device,
     myloss,
 ):
-
     u = input_var["pressure"]
     perm = input_var["perm"]
     fin = input_var["Q"]
@@ -486,7 +483,6 @@ class Labelledset:
 
 class unLabelledset:
     def __init__(self, datacc):
-
         self.data1 = torch.from_numpy(datacc["perm"])
         self.data2 = torch.from_numpy(datacc["Q"])
         self.data3 = torch.from_numpy(datacc["Qw"])
@@ -522,7 +518,6 @@ class unLabelledset:
 
 
 def MyLossClement(a, b):
-
     loss = torch.sum(torch.abs(a - b) / a.shape[0])
 
     # loss = ((a-b)**2).mean()
@@ -552,7 +547,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -565,7 +559,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         method = 5
         typee = 0
     else:
-
         method = None
         while True:
             method = cp.int(
@@ -585,7 +578,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-6")
             else:
-
                 break
 
         if method == 6:
@@ -798,7 +790,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 permx = kjennq
 
             else:
-
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
                     "1TrAVvB-XXCzwHqDdCR4BJnmoe8nPsWIF",
@@ -957,7 +948,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
     if bb == False:
         if use_pretrained == 1:
-
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
                 "1I-27_S53ORRFB_hIN_41r3Ntc6PpOE40",
@@ -1517,7 +1507,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         print("Epoch " + str(epoch) + " | " + str(epochs))
         print("****************************************************************")
         for inputaa in unlabelled_loader:
-
             optimizer_pressure.zero_grad()
             optimizer_sat.zero_grad()
 
@@ -1890,7 +1879,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         print("Epoch " + str(epoch) + " | " + str(epochs))
         print("****************************************************************")
         for inputa in labelled_loader:
-
             # return {'perm':x1,'Q': x2,'Qw': x3,'Phi': x4,'Time': x5,'Pini': x6,'Swini': x7\
             #     ,'pressure': x8,'water_sat': x9}
             inputin = {

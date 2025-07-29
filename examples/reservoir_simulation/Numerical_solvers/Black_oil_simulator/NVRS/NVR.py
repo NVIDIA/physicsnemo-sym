@@ -17,8 +17,6 @@
 @Author : Clement Etienam
 """
 
-
-import numba
 import os
 import sys
 import numpy as np
@@ -78,8 +76,6 @@ from sklearn.preprocessing import MinMaxScaler
 import os.path
 
 # import torch
-import datetime
-from datetime import timedelta
 from scipy import interpolate
 import multiprocessing
 import mpslib as mps
@@ -113,7 +109,6 @@ import os
 from FyeldGenerator import generate_field
 from imresize import *
 import warnings
-import imp
 import yaml
 
 warnings.filterwarnings("ignore")
@@ -200,7 +195,6 @@ def Gassmann(PORO, Pr, SO, nx, ny, nz):
     saturation = [cp.empty((nx, ny), dtype=cp.float64) for _ in range(nz)]
 
     for i in range(nz):
-
         # psia to MPa
         pressure[i] = field2Metric(PressureAfter1Year[:, :, i], "psi") * 1e-6
 
@@ -743,7 +737,6 @@ def restriction(A, f):
 
 
 def Plot_RSM_percentile(True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     plt.figure(figsize=(40, 40))
@@ -919,7 +912,6 @@ def Plot_RSM_percentile(True_mat, Namesz):
 
 
 def Plot_RSM_percentile2(True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     plt.figure(figsize=(40, 40))
@@ -1232,7 +1224,6 @@ def print_section_title(text: str) -> None:
 
 
 def Plot_performance(trueF, nx, ny, namet, itt, dt, MAXZ, steppi, wells):
-
     progressBar = "\rPlotting Progress: " + ProgressBar(steppi - 1, itt - 1, steppi - 1)
     ShowBar(progressBar)
     time.sleep(1)
@@ -1297,7 +1288,6 @@ def Plot_performance(trueF, nx, ny, namet, itt, dt, MAXZ, steppi, wells):
 
 
 def Plot_impedance(trueF1, nx, ny, namet, itt, dt, MAXZ, steppi, injectors, producers):
-
     progressBar = "\rPlotting Progress: " + ProgressBar(steppi - 1, itt - 1, steppi - 1)
     ShowBar(progressBar)
     time.sleep(1)
@@ -1335,7 +1325,6 @@ def Plot_impedance(trueF1, nx, ny, namet, itt, dt, MAXZ, steppi, injectors, prod
 
 
 def Plot_performance2(trueF, nx, ny, namet, itt, dt, MAXZ, steppi, wells):
-
     progressBar = "\rPlotting Progress: " + ProgressBar(steppi - 1, itt - 1, steppi - 1)
     ShowBar(progressBar)
     time.sleep(1)
@@ -1758,7 +1747,6 @@ def Peaceman_well2(
     SWOG,
     PB,
 ):
-
     # ct1[0,:,:] =  at1[:,:,0] # permeability
     # ct1[1,:,:] = quse1[:,:,0]#/UIR # Overall f
     # ct1[2,:,:] = A1[:,:,0]#/UIR# f for water injection
@@ -1981,7 +1969,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -2405,7 +2392,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -2508,7 +2495,6 @@ def Upstream_3PHASE(
     SWOW,
     SWOG,
 ):
-
     Nx = nx
     Ny = ny
     Nz = nz
@@ -2793,7 +2779,6 @@ def NewtRaph(
             it = 0
             I = I + 1
             while (dsn > 0.001) and (it < 10):
-
                 Mw, Mo, dMw, dMo = RelPerm2(S, UW, UO, BW, BO, SWI, SWR, nx, ny, nz)
                 df = cp.divide(dMw, (Mw + Mo)) - cp.multiply(
                     cp.divide(Mw, ((Mw + Mo) ** (2))), (dMw + dMo)
@@ -2877,7 +2862,6 @@ def NewtRaph2(
     SWOW,
     SWOG,
 ):
-
     Nx = nx
     Ny = ny
     Nz = nz
@@ -2909,7 +2893,6 @@ def NewtRaph2(
             it = 0
             I = I + 1
             while (dsn > 0.01) and (it < 5):
-
                 Mw, Mo, Mg, dMw, dMo, dMg = RelPerm3(
                     S, Soil, UW, UO, UG, BW, BO, BG, SWI, SWR, nx, ny, nz, SWOW, SWOG
                 )
@@ -3136,7 +3119,6 @@ def ShowBar(Bar):
 
 
 def Equivalent_time(tim1, max_t1, tim2, max_t2):
-
     tk2 = tim1 / max_t1
     tc2 = np.arange(0.0, 1 + tk2, tk2)
     tc2[tc2 >= 1] = 1
@@ -3189,7 +3171,6 @@ def Reservoir_Simulator(
     step2,
     pini_alt,
 ):
-
     """
     Reservoir_Simulator function for 2 phase flow
 
@@ -3333,7 +3314,6 @@ def Reservoir_Simulator(
 
     b = Qq
     for t in range(tc2.shape[0] - 1):
-
         # step = t
         progressBar = "\rSimulation Progress: " + ProgressBar(Runs - 1, t, Runs - 1)
         ShowBar(progressBar)
@@ -3378,7 +3358,6 @@ def Reservoir_Simulator(
             u = spsolve(A, b)
 
         elif method == 3:  # CONJUGATE GRADIENT
-
             M2 = spilu(A)
             M_x = lambda x: M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
@@ -3387,7 +3366,6 @@ def Reservoir_Simulator(
         elif method == 4:  # LSQR
             u, istop, itn, normr = lsqr(A, b)[:4]
         else:  # adaptive AMG
-
             u = v_cycle(
                 A,
                 b,
@@ -3513,7 +3491,6 @@ def Reservoir_Simulator2(
     SWOW,
     SWOG,
 ):
-
     # Compute transmissibilities by harmonic averaging using Two-point flux approimxation
 
     Nx = cp.int32(nx)
@@ -3579,7 +3556,6 @@ def Reservoir_Simulator2(
 
     b = Qq
     for t in range(tc2.shape[0] - 1):
-
         # step = t
         progressBar = "\rSimulation Progress: " + ProgressBar(Runs - 1, t, Runs - 1)
         ShowBar(progressBar)
@@ -3620,7 +3596,6 @@ def Reservoir_Simulator2(
             u = spsolve(A, b)
 
         elif method == 3:  # CONJUGATE GRADIENT
-
             M2 = spilu(A)
             M_x = lambda x: M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
@@ -3629,7 +3604,6 @@ def Reservoir_Simulator2(
         elif method == 4:  # LSQR
             u, istop, itn, normr = lsqr(A, b)[:4]
         else:  # adaptive AMG
-
             u = v_cycle(
                 A,
                 b,
@@ -3677,7 +3651,6 @@ def Reservoir_Simulator2(
             )
         else:
             for ts in range(step2):
-
                 S, Soil = NewtRaph2(
                     nx,
                     ny,
@@ -3809,7 +3782,6 @@ def rescale_linear_pytorch_numpy(array, new_min, new_max, minimum, maximum):
 
 
 def plot3d2static(arr_3d, nx, ny, nz, namet, titti, maxii, minii, injectors, producers):
-
     """
     Plot a 3D array with matplotlib and annotate specific points on the plot.
 
@@ -3954,7 +3926,6 @@ def plot3d2static(arr_3d, nx, ny, nz, namet, titti, maxii, minii, injectors, pro
 def plot3d2(
     arr_3d, nx, ny, nz, itt, dt, MAXZ, namet, titti, maxii, minii, injectors, producers
 ):
-
     """
     Plot a 3D array with matplotlib and annotate specific points on the plot.
 

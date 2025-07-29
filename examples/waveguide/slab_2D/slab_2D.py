@@ -30,9 +30,7 @@ from physicsnemo.sym.domain.constraint import (
     PointwiseInteriorConstraint,
     PointwiseConstraint,
 )
-from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.domain.inferencer import VoxelInferencer
-from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.eq.pdes.wave_equation import HelmholtzEquation
 from physicsnemo.sym.eq.pdes.navier_stokes import GradNormal

@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import torch
-from typing import Dict, List, Optional
+from typing import Dict, List
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.constants import diff
 from physicsnemo.sym.node import Node

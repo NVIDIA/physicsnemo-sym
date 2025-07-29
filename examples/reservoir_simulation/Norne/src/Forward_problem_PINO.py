@@ -93,7 +93,6 @@ import h5py
 from physicsnemo.sym.hydra import to_absolute_path
 import scipy.io as sio
 import yaml
-import matplotlib
 import matplotlib as mpl
 import matplotlib.lines as mlines
 from typing import Dict
@@ -303,7 +302,6 @@ def NorneInitialEnsemble(ensembleSize=100, randomNumber=1.2345e5):
 
     indices = np.where(A == 1)
     for i in range(N):
-
         # multz
         A_MZ = A_L[:, [0, 7, 10, 11, 14, 17]]  # Adjusted indexing to 0-based
         A_MZ = A_MZ.flatten()
@@ -526,7 +524,6 @@ def NorneGeostat():
     p = p[act != 0]
 
     for nr in range(int(dim[2])):
-
         index_start = ldim * nr
         index_end = ldim * (nr + 1)
         values_range_start = int(np.sum(act[:index_start]))
@@ -556,7 +553,6 @@ def NorneGeostat():
     stdv = np.zeros(dim[2])
 
     for nr in range(int(dim[2])):
-
         index_start = ldim * nr
         index_end = ldim * (nr + 1)
         values_range_start = int(np.sum(act[:index_start]))
@@ -717,7 +713,6 @@ def Add_marker(plt, XX, YY, locc):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, timezz):
-
     columns = [
         "B_1BH",
         "B_1H",
@@ -827,7 +822,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, timezz):
 
 
 def MyLossClement(a, b):
-
     loss = torch.sum(torch.abs(a - b) / a.shape[0])
 
     # loss = ((a-b)**2).mean()
@@ -1091,7 +1085,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -1515,7 +1508,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -1668,7 +1661,6 @@ def Plot_2D(
     producers,
     gass,
 ):
-
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
     maxii = max(Pressz.ravel())
     minii = min(Pressz.ravel())
@@ -1747,7 +1739,6 @@ def Plot_2D(
 def Plot3DNorne(
     nx, ny, nz, Truee, N_injw, N_pr, N_injg, cgrid, varii, injectors, producers, gass
 ):
-
     # matplotlib.use('Agg')
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
 
@@ -2263,7 +2254,6 @@ def Plot3DNorne(
 
 
 def Plot_all_layesr(nx, ny, nz, see, injectors, producers, gass, varii):
-
     see[see == 0] = np.nan  # Convert zeros to NaNs
     plt.figure(figsize=(20, 20), dpi=300)
     Pressz = np.reshape(see, (nx, ny, nz), "F")
@@ -2516,7 +2506,6 @@ def Add_marker3(plt, XX, YY, injectors, producers, gass):
 
 
 def Get_Time(nx, ny, nz, steppi, steppi_indices, N):
-
     Timee = []
     for k in range(N):
         check = np.ones((nx, ny, nz), dtype=np.float16)
@@ -2611,7 +2600,6 @@ def Get_source_sink(N, nx, ny, nz, waterz, gasz, steppi, steppi_indices):
 
 
 def Get_falt(nx, ny, nz, floatz, N):
-
     Fault = np.ones((nx, ny, nz), dtype=np.float16)
     flt = []
     for k in range(N):
@@ -2709,7 +2697,6 @@ def ensemble_pytorch(
     device,
     steppi_indices,
 ):
-
     ini_ensemble1 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Permeability
     ini_ensemble2 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Porosity
     ini_ensemble4 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Fault
@@ -2758,7 +2745,6 @@ SUPPORTED_DATA_TYPES = {
 
 
 def parse_egrid(path_to_result):
-
     egrid_path = path_to_result
     attrs = ("GRIDHEAD", "ACTNUM")
     egrid = _parse_ech_bin(egrid_path, attrs)
@@ -2767,7 +2753,6 @@ def parse_egrid(path_to_result):
 
 
 def parse_unrst(path_to_result):
-
     unrst_path = path_to_result
     attrs = ("PRESSURE", "SGAS", "SWAT")
     states = _parse_ech_bin(unrst_path, attrs)
@@ -2793,7 +2778,6 @@ def _check_and_fetch_type_info(data_type):
 
 
 def _check_and_fetch_file(path, pattern, return_relative=False):
-
     found = []
     reg_expr = re.compile(fnmatch.translate(pattern), re.IGNORECASE)
 
@@ -2811,7 +2795,6 @@ def _check_and_fetch_file(path, pattern, return_relative=False):
 
 
 def _parse_keywords(path, attrs=None):
-
     sections_counter = {} if attrs is None else {attr: 0 for attr in attrs}
 
     with open(path, "rb") as f:
@@ -2855,7 +2838,6 @@ def _parse_keywords(path, attrs=None):
 
 
 def _parse_ech_bin(path, attrs=None):
-
     if attrs is None:
         raise ValueError("Keyword attribute cannot be empty")
 
@@ -2869,7 +2851,6 @@ def _parse_ech_bin(path, attrs=None):
 
 
 def _fetch_keyword_data(section):
-
     n_elements, data_type, element_size, fmt, element_skip, binary_data = section
 
     n_skip = math.floor((n_elements - 1) / element_skip)
@@ -2889,7 +2870,6 @@ def _fetch_keyword_data(section):
 
 
 def Geta_all(folder, nx, ny, nz, effective, oldfolder, check, steppi, steppi_indices):
-
     os.chdir(folder)
 
     # os.system(string_Jesus)
@@ -4042,7 +4022,6 @@ def Split_Matrix(matrix, sizee):
 def Get_data_FFNN(
     oldfolder, N, pressure, Sgas, Swater, Soil, perm, Time, steppi, steppi_indices
 ):
-
     ouut = np.zeros((N, steppi, 66))
     innn = np.zeros((N, steppi, 90))
     steppii = 246
@@ -4443,7 +4422,6 @@ def Get_data_FFNN1(
     steppi,
     steppi_indices,
 ):
-
     ouut = np.zeros((N, steppi, 66))
     innn = np.zeros((N, steppi, 90))
     steppii = 246
@@ -5414,7 +5392,7 @@ def interp_torch(cuda, reference_matrix1, reference_matrix2, tensor1):
 def RelPerm(Sa, Sg, SWI, SWR, SWOW, SWOG):
     one_minus_swi_swr = 1 - (SWI + SWR)
 
-    so = (((1 - (Sa + Sg))) - SWR) / one_minus_swi_swr
+    so = ((1 - (Sa + Sg)) - SWR) / one_minus_swi_swr
     sw = (Sa - SWI) / one_minus_swi_swr
     sg = Sg / one_minus_swi_swr
 
@@ -5778,7 +5756,6 @@ def load_FNO_dataset(path, input_keys, output_keys, n_examples=None):
     invar, outvar = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar, output_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5828,7 +5805,6 @@ def load_FNO_dataset2(
         (outvar4, output_keys4),
     ]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5864,7 +5840,6 @@ def load_FNO_dataset2d(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5900,7 +5875,6 @@ def load_FNO_dataset2a(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -6046,7 +6020,7 @@ def ddx1(inpt, dx, channel, dim, order=1, padding="zeros"):
 
 
 def to_absolute_path_and_create(
-    *args: Union[str, Path]
+    *args: Union[str, Path],
 ) -> Union[Path, str, Tuple[Union[Path, str]]]:
     """Converts file path to absolute path based on the current working directory and creates the subfolders."""
 
@@ -6246,7 +6220,6 @@ class Black_oil_peacemann(torch.nn.Module):
         self.CFO = CFO
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         in_var = input_var["X"]
         out_var = input_var["Y"]
 
@@ -6258,7 +6231,6 @@ class Black_oil_peacemann(torch.nn.Module):
         spit = torch.zeros(N, 66, self.steppi).to(self.device)
         # loss_rest = torch.zeros(self.steppi,13).to(self.device)
         for clement in range(N):
-
             inn = in_var[clement, :, :].T * self.max_inn_fcn
             outt = out_var[clement, :, :].T * self.max_out_fcn
 
@@ -6286,7 +6258,7 @@ class Black_oil_peacemann(torch.nn.Module):
             drawdown = pressure.mean() - pwf_producer
             qoil = torch.abs(-(drawdown * J))
             loss_oil = qoil - oil_rate
-            loss_oil = ((loss_oil)) / N
+            loss_oil = (loss_oil) / N
 
             # Compute water rate loss
             up = self.UW * self.BW
@@ -6297,7 +6269,7 @@ class Black_oil_peacemann(torch.nn.Module):
             drawdown = pressure.mean() - pwf_producer
             qwater = torch.abs(-(drawdown * J))
             loss_water = qwater - water_rate
-            loss_water = ((loss_water)) / N
+            loss_water = (loss_water) / N
 
             # Compute gas rate loss
             UG = calc_mu_g(pressure.mean())
@@ -6311,7 +6283,7 @@ class Black_oil_peacemann(torch.nn.Module):
             drawdown = pressure.mean() - pwf_producer
             qgas = torch.abs(-(drawdown * J))
             loss_gas = qgas - gas_rate
-            loss_gas = ((loss_gas)) / N
+            loss_gas = (loss_gas) / N
 
             overall_loss = torch.cat((loss_oil, loss_water, loss_gas), dim=1)
             overall_loss = overall_loss.T
@@ -6331,7 +6303,6 @@ class pdeinp(torch.nn.Module):
         self.device = device
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         in_var_water = input_var["water_sat"]
         in_var_oil = input_var["oil_sat"]
         in_var_gas = input_var["gas_sat"]
@@ -6412,7 +6383,6 @@ class Black_oil(torch.nn.Module):
         self.device = device
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         u = input_var["pressure"]
         perm = input_var["perm"]
         fin = self.neededM["Q"]
@@ -7206,7 +7176,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
     print("")
     if DEFAULT == 1:
@@ -7229,7 +7198,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     if DEFAULT == 1:
@@ -7247,7 +7215,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
         if fno_typee == 1:
             fno_type = "PINO"
@@ -7266,7 +7233,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     if Relperm == 2:
@@ -7298,7 +7264,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -7324,9 +7289,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     if torch.cuda.is_available():
         num_gpus = torch.cuda.device_count()
         if num_gpus >= 2:  # Choose GPU 1 (index 1)
-            device = torch.device(f"cuda:0")
+            device = torch.device("cuda:0")
         else:  # If there's only one GPU or no GPUs, choose the first one (index 0)
-            device = torch.device(f"cuda:0")
+            device = torch.device("cuda:0")
     else:  # If CUDA is not available, use the CPU
         raise RuntimeError("No GPU found. Please run on a system with a GPU.")
     torch.cuda.set_device(device)
@@ -7362,7 +7327,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-246")
             else:
-
                 break
         steppi_indices = np.linspace(1, 246, steppi, dtype=int)
 
@@ -7374,7 +7338,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 2-100")
             else:
-
                 break
 
     # print(steppi)
@@ -7959,7 +7922,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         neededM[key] = replace_nans_and_infs(neededM[key])
 
     for kk in range(N_ens):
-
         # INPUTS
         for i in range(nz):
             cPerm[kk, 0, i, :, :] = clip_and_convert_to_float3(
@@ -8083,7 +8045,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     cSato = np.zeros((N_ens, steppi, nz, nx, ny), dtype=np.float32)  # oil saturation
 
     for kk in range(N_ens):
-
         # INPUTS
         for i in range(nz):
             cPerm[kk, 0, i, :, :] = X_data1t["permeability"][kk, 0, :, :, i]

@@ -99,7 +99,7 @@ class WeightNormLinear(nn.Module):
 def get_activation_fn(
     activation: Union[Activation, Callable[[Tensor], Tensor]],
     module: bool = False,
-    **kwargs  # Optional parameters
+    **kwargs,  # Optional parameters
 ) -> Callable[[Tensor], Tensor]:
     activation_mapping = {
         Activation.ELU: F.elu,

@@ -15,15 +15,12 @@
 # limitations under the License.
 
 import torch
-import hydra
-from omegaconf import DictConfig, OmegaConf
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.geometry import Bounds
 from physicsnemo.sym.geometry.primitives_2d import Rectangle
-from physicsnemo.sym.models.fully_connected import FullyConnectedArch
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.eq.pdes.diffusion import Diffusion
 from physicsnemo.sym.utils.vpinn.test_functions import (
@@ -31,7 +28,7 @@ from physicsnemo.sym.utils.vpinn.test_functions import (
     Legendre_test,
     Trig_test,
 )
-from physicsnemo.sym.utils.vpinn.integral import tensor_int, Quad_Rect, Quad_Collection
+from physicsnemo.sym.utils.vpinn.integral import tensor_int
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,

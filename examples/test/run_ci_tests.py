@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from tflogs_reader import check_validation_error, plot_results
+from tflogs_reader import check_validation_error
 
 if __name__ == "__main__":
     check_validation_error(

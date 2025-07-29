@@ -66,7 +66,6 @@ def main(config_path: str, config_name: str = "config"):
     def register_decorator(func):
         @functools.wraps(func)
         def func_decorated(cfg_passthrough: Optional[DictConfig] = None) -> Any:
-
             # Register all physicsnemo groups before calling hydra main
             register_hydra_configs()
             register_callbacks_configs()

@@ -23,6 +23,7 @@ torch.manual_seed(0)
 np.random.seed(0)
 cuda_device = torch.device("cpu:0")
 
+
 ################################################################
 # 1d fourier neural operator
 # Based on: https://github.com/zongyi-li/fourier_neural_operator/blob/master/fourier_1d.py

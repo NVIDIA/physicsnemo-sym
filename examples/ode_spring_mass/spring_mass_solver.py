@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import numpy as np
-from sympy import Symbol, Eq
+from sympy import Symbol
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
@@ -24,11 +24,9 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry.primitives_1d import Point1D
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
-    PointwiseBoundaryConstraint,
 )
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 
 from spring_mass_ode import SpringMass
 

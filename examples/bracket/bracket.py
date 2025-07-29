@@ -17,6 +17,7 @@
 """
 Reference: https://www.mathworks.com/help/pde/ug/deflection-analysis-of-a-bracket.html
 """
+
 import os
 import warnings
 
@@ -36,7 +37,6 @@ from physicsnemo.sym.domain.constraint import (
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.linear_elasticity import LinearElasticity
 
 

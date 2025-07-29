@@ -24,6 +24,7 @@ Geostatistics packages are also provided
 @Author: Clement Etienam
 
 """
+
 print(".........................IMPORT SOME LIBRARIES.....................")
 import os
 import numpy as np
@@ -108,7 +109,6 @@ import os.path
 import time
 import random
 import os.path
-from datetime import timedelta
 
 # import dolfin as df
 import sys
@@ -463,7 +463,6 @@ def restriction(A, f):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt
@@ -656,7 +655,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
 
 
 def Plot_RSM_percentile2(pertoutt, P12, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt
@@ -819,7 +817,6 @@ def Plot_RSM_percentile2(pertoutt, P12, True_mat, Namesz):
 
 
 def Plot_RSM_Numerical(pertoutt, True_mat, Namesz):
-
     colors = [
         "#1f77b4",
         "#ff7f0e",
@@ -1956,7 +1953,6 @@ def Plot_RSM_Numerical(pertoutt, True_mat, Namesz):
 def Plot_performance(
     PINN, PINN2, trueF, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt, steppi, wells
 ):
-
     look = (PINN[itt, :, :]) * pini_alt
     look_sat = PINN2[itt, :, :]
     look_oil = 1 - look_sat
@@ -2097,7 +2093,6 @@ def Plot_performance(
 def Plot_performance_Numerical(
     trueF, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt, steppi, wells
 ):
-
     XX, YY = np.meshgrid(np.arange(nx), np.arange(ny))
     plt.figure(figsize=(20, 20), dpi=100)
 
@@ -2843,7 +2838,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -3267,7 +3261,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -3456,7 +3450,6 @@ def NewtRaph(
             it = 0
             I = I + 1
             while (dsn > 0.001) and (it < 10):
-
                 Mw, Mo, dMw, dMo = RelPerm2(S, UW, UO, BW, BO, SWI, SWR, nx, ny, nz)
                 df = cp.divide(dMw, (Mw + Mo)) - cp.multiply(
                     cp.divide(Mw, ((Mw + Mo) ** (2))), (dMw + dMo)
@@ -3643,7 +3636,6 @@ def ShowBar(Bar):
 
 
 def Equivalent_time(tim1, max_t1, tim2, max_t2):
-
     tk2 = tim1 / max_t1
     tc2 = np.arange(0.0, 1 + tk2, tk2)
     tc2[tc2 >= 1] = 1
@@ -3697,7 +3689,6 @@ def Reservoir_Simulator(
     step2,
     pini_alt,
 ):
-
     """
     Reservoir_Simulator function
 
@@ -3838,7 +3829,6 @@ def Reservoir_Simulator(
 
     b = Qq
     for t in range(tc2.shape[0] - 1):
-
         # step = t
         progressBar = "\rSimulation Progress: " + ProgressBar(Runs - 1, t, Runs - 1)
         ShowBar(progressBar)
@@ -3881,7 +3871,6 @@ def Reservoir_Simulator(
             u = spsolve(A, b)
 
         elif method == 3:  # CONJUGATE GRADIENT
-
             M2 = spilu(A)
             M_x = lambda x: M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
@@ -3890,7 +3879,6 @@ def Reservoir_Simulator(
         elif method == 4:  # LSQR
             u, istop, itn, normr = lsqr(A, b)[:4]
         elif method == 5:  # adaptive AMG
-
             u = v_cycle(
                 A,
                 b,
@@ -4025,7 +4013,6 @@ def Get_actual_few(
     input_channel,
     pena,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -4179,7 +4166,6 @@ def Get_actual_few_parallel(
     input_channel,
     pena,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -4333,7 +4319,6 @@ def No_Sim(
     input_channel,
     pena,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -4448,7 +4433,6 @@ def inference_single(
     input_channel,
     kka,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -4543,7 +4527,6 @@ def inference_single(
 
 
 def AMGX_Inverse_problem(M, rhs, sol, typee):
-
     # Initialize config and resources:
 
     if typee == 1:
@@ -4562,7 +4545,6 @@ def AMGX_Inverse_problem(M, rhs, sol, typee):
         )
 
     elif typee == 2:
-
         cfg = pyamgx.Config()
         cfg.create_from_dict(
             {
@@ -4929,7 +4911,6 @@ def rescale_linear_pytorch_numpy(array, new_min, new_max, minimum, maximum):
 
 
 def plot3d2(arr_3d, nx, ny, nz, itt, dt, MAXZ, namet, titti, maxii, minii):
-
     """
     Plot a 3D array with matplotlib and annotate specific points on the plot.
 

@@ -135,7 +135,6 @@ class IntegralLossNorm(Loss):
         step: int,
         ord: float,
     ) -> Dict[str, Tensor]:
-
         # compute integral losses
         losses = {key: 0 for key in list_pred_outvar[0].keys()}
         for invar, pred_outvar, true_outvar, lambda_weighting in zip(

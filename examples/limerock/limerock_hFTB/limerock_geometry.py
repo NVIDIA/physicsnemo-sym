@@ -15,9 +15,8 @@
 # limitations under the License.
 
 # import PhysicsNeMo library
-from sympy import Symbol, Eq, tanh, Max
+from sympy import Symbol
 import numpy as np
-import itertools
 from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
 from physicsnemo.sym.geometry import Parameterization, Parameter
 

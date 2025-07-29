@@ -276,7 +276,6 @@ class PointwiseBoundaryConstraint(PointwiseConstraint):
         loss: Loss = PointwiseLossNorm(),
         shuffle: bool = True,
     ):
-
         # assert that not using importance measure with continuous dataset
         assert not (
             (not fixed_dataset) and (importance_measure is not None)
@@ -431,7 +430,6 @@ class PointwiseInteriorConstraint(PointwiseConstraint):
         loss: Loss = PointwiseLossNorm(),
         shuffle: bool = True,
     ):
-
         # assert that not using importance measure with continuous dataset
         assert not (
             (not fixed_dataset) and (importance_measure is not None)
@@ -682,7 +680,6 @@ class IntegralBoundaryConstraint(IntegralConstraint):
         loss: Loss = IntegralLossNorm(),
         shuffle: bool = True,
     ):
-
         # convert dict to parameterization if needed
         if parameterization is None:
             parameterization = geometry.parameterization
@@ -816,7 +813,6 @@ class VariationalConstraint(Constraint):
         drop_last: bool = True,
         num_workers: int = 0,
     ):
-
         # Get DDP manager
         self.manager = DistributedManager()
         self.device = self.manager.device

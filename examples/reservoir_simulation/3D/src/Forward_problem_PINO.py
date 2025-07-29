@@ -17,7 +17,6 @@
 from typing import Dict
 import numpy as np
 import torch
-import torch.nn.functional as F
 import os
 import physicsnemo
 from physicsnemo.sym.hydra import PhysicsNeMoConfig
@@ -29,12 +28,10 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
 from physicsnemo.sym.models.fno import *
-import shutil
 import cupy as cp
 import scipy.io as sio
 import requests
@@ -428,7 +425,6 @@ class CustomValidatorPlotterS(ValidatorPlotter):
         Accuracy_water = np.zeros((self.steppi, 2))
         Time_vector = np.zeros((self.steppi))
         for itt in range(self.steppi):
-
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(20, 20), dpi=100)
 
@@ -903,7 +899,6 @@ class Black_oil(torch.nn.Module):
         self.nz = nz
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         # get inputs
 
         u = input_var["pressure"]

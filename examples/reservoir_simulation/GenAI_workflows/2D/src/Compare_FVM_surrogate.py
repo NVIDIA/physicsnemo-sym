@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 import os
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.key import Key
@@ -259,7 +260,6 @@ else:
             print("")
             print("please try again and select value between 1-4")
         else:
-
             break
 
 
@@ -275,7 +275,6 @@ if default == 1:
     method = 5
     typee = 0
 else:
-
     method = None
     while True:
         method = cp.int(
@@ -295,7 +294,6 @@ else:
             print("")
             print("please try again and select value between 1-6")
         else:
-
             break
 
     if method == 6:
@@ -413,7 +411,6 @@ while True:
         print("")
         print("please try again and select value between 1-2")
     else:
-
         break
 
 if chuu == 1:
@@ -642,7 +639,6 @@ if (surrogate == 1) or (surrogate == 2) or (surrogate == 3):
     )
 
 if (surrogate == 5) or (surrogate == 6):
-
     modelP = AFNOArch(
         [
             Key("perm", size=1),
@@ -700,7 +696,6 @@ if surrogate == 1:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_FNO/ResSim")
         print(" Surrogate model learned with FNO")
         modelP.load_state_dict(torch.load("fno_forward_model_pressure.0.pth"))
@@ -756,7 +751,6 @@ elif surrogate == 2:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO/ResSim")
         print(" Surrogate model learned with PINO")
         modelP.load_state_dict(torch.load("pino_forward_model_pressure.0.pth"))
@@ -811,7 +805,6 @@ elif surrogate == 3:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO2")
         print(" Surrogate model learned with original PINO")
         modelP.load_state_dict(torch.load("pressure_model.pth"))
@@ -866,7 +859,6 @@ elif surrogate == 4:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO3")
         print(" Surrogate model learned with original PINO")
 
@@ -925,7 +917,6 @@ elif surrogate == 5:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_AFNOD/ResSim")
         print(" Surrogate model learned with AFNO (data-driven)")
         modelP.load_state_dict(torch.load("afno_forward_model_pressure.0.pth"))
@@ -985,7 +976,6 @@ elif surrogate == 6:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_AFNOP/ResSim")
         print(" Surrogate model learned with AFNO (physics-driven)")
         modelP.load_state_dict(torch.load("afnop_forward_model_pressure.0.pth"))

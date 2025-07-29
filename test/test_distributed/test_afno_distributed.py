@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import physicsnemo
-from physicsnemo.sym.hydra import to_yaml, instantiate_arch
 from physicsnemo.sym.hydra.config import PhysicsNeMoConfig
 from physicsnemo.sym.models.afno.distributed import DistributedAFNONet
 from physicsnemo.sym.distributed.manager import DistributedManager

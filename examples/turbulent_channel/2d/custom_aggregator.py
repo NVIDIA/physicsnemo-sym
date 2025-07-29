@@ -16,8 +16,7 @@
 
 # Import libraries
 import torch
-from torch import nn
-from typing import Dict, List
+from typing import Dict
 
 # Import from PhysicsNeMo
 from physicsnemo.sym.loss.aggregator import Aggregator

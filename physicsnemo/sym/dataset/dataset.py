@@ -59,7 +59,6 @@ class _BaseDataset:
 
     @staticmethod
     def _to_tensor_dict(var_dict, device=None):
-
         # convert to torch
         tensor_dict = {
             key: torch.as_tensor(value, dtype=tf_dt, device=device)
@@ -104,7 +103,6 @@ class _DictDatasetMixin:
         outvar: Dict[str, np.array],
         lambda_weighting: Dict[str, np.array] = None,
     ):
-
         # get default lambda weighting
         if lambda_weighting is None:
             lambda_weighting = {key: np.ones_like(x) for key, x in outvar.items()}

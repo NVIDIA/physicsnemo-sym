@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.electromagnetic import MaxwellFreqReal, SommerfeldBC, PEC
 import torch
 import numpy as np
-import os
 
 
 def test_maxwell_freq_real():

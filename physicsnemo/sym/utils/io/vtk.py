@@ -80,7 +80,6 @@ class VTKBase:
         return data_array
 
     def get_data_from_map(self, vtk_data_map: Dict[str, List[str]]):
-
         data_dict = {}
         coord_map = {"x": 0, "y": 1, "z": 2}
         # Loop through input map values
@@ -270,7 +269,6 @@ class VTKUniformGrid(VTKBase):
         self.vtk_obj.SetDimensions(npoints[0], npoints[1], npoints[2])
 
     def get_points(self, dims: List[int] = [0, 1, 2]):
-
         # Slow but VTK Image data does not explicitly store point coords
         points = []
         for i in range(self.vtk_obj.GetNumberOfPoints()):

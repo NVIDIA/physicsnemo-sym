@@ -24,6 +24,7 @@ Geostatistics packages are also provided
 @Author: Clement Etienam
 
 """
+
 print(".........................IMPORT SOME LIBRARIES.....................")
 import os
 import numpy as np
@@ -77,7 +78,6 @@ else:
     from scipy.sparse import csr_matrix
     from scipy.sparse import spdiags
     from scipy.sparse.linalg import gmres, spsolve, cg
-    from scipy.sparse import csr_matrix as csr_gpu
     from scipy import sparse
 
     clementtt = 1
@@ -87,7 +87,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import MiniBatchKMeans
 import os.path
 import torch
-from joblib import Parallel, delayed
 from scipy import interpolate
 import multiprocessing
 import mpslib as mps
@@ -103,9 +102,6 @@ import numpy
 # from PIL import Image
 from scipy.fftpack import dct
 import numpy.matlib
-import pyvista
-from matplotlib import pyplot
-from matplotlib import cm
 
 # os.environ['KERAS_BACKEND'] = 'tensorflow'
 import os.path
@@ -422,7 +418,6 @@ def SOR(A, b, omega=1.5, tol=1e-6, max_iter=100):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt
@@ -617,7 +612,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
 def Plot_performance(
     PINN, PINN2, trueF, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt, steppi, wells
 ):
-
     look = (PINN[itt, :, :, :]) * pini_alt
     look_sat = PINN2[itt, :, :, :]
     look_oil = 1 - look_sat
@@ -1041,7 +1035,6 @@ def Plot_performance(
 def Plot_performance2(
     trueF, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt, steppi, wells
 ):
-
     lookf = (trueF[itt, :, :, :]) * pini_alt
     lookf_sat = trueF[itt + steppi, :, :, :]
     lookf_oil = 1 - lookf_sat
@@ -1571,7 +1564,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -1995,7 +1987,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -2183,7 +2175,6 @@ def NewtRaph(
             it = 0
             I = I + 1
             while (dsn > 0.001) and (it < 10):
-
                 Mw, Mo, dMw, dMo = RelPerm2(S, UW, UO, BW, BO, SWI, SWR, nx, ny, nz)
                 df = cp.divide(dMw, (Mw + Mo)) - cp.multiply(
                     cp.divide(Mw, ((Mw + Mo) ** (2))), (dMw + dMo)
@@ -2381,7 +2372,6 @@ def ShowBar(Bar):
 
 
 def Equivalent_time(tim1, max_t1, tim2, max_t2):
-
     tk2 = tim1 / max_t1
     tc2 = np.arange(0.0, 1 + tk2, tk2)
     tc2[tc2 >= 1] = 1
@@ -2558,7 +2548,6 @@ def Reservoir_Simulator(
     output_allp = cp.zeros((steppi, nx, ny, nz))
     output_alls = cp.zeros((steppi, nx, ny, nz))
     for t in range(tc2.shape[0] - 1):
-
         # step = t
         progressBar = "\rSimulation Progress: " + ProgressBar(Runs - 1, t, Runs - 1)
         ShowBar(progressBar)
@@ -2772,7 +2761,6 @@ def Get_actual_few(
     input_channel,
     pena,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -2923,7 +2911,6 @@ def Get_actual_few_parallel(
     input_channel,
     pena,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -3074,7 +3061,6 @@ def No_Sim(
     input_channel,
     pena,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -3189,7 +3175,6 @@ def inference_single(
     input_channel,
     kka,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -3281,7 +3266,6 @@ def inference_single(
 
 
 def AMGX_Inverse_problem(M, rhs, sol, typee):
-
     # Initialize config and resources:
 
     if typee == 1:
@@ -3300,7 +3284,6 @@ def AMGX_Inverse_problem(M, rhs, sol, typee):
         )
 
     elif typee == 2:
-
         cfg = pyamgx.Config()
         cfg.create_from_dict(
             {

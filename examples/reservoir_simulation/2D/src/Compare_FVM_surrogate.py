@@ -101,7 +101,6 @@ def sort_key(s):
 
 
 def process_step(kk):
-
     f_3 = plt.figure(figsize=(20, 20), dpi=200)
     current_time = int((kk + 1) * dt * MAXZ)
 
@@ -196,7 +195,6 @@ while True:
         print("")
         print("please try again and select value between 1-4")
     else:
-
         break
 if not os.path.exists("../COMPARE_RESULTS"):
     os.makedirs("../COMPARE_RESULTS")
@@ -452,7 +450,6 @@ if (surrogate == 1) or (surrogate == 2):
     )
 
 if (surrogate == 3) or (surrogate == 4):
-
     modelP = AFNOArch(
         [
             Key("perm", size=1),
@@ -510,7 +507,6 @@ if surrogate == 1:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_FNO/ResSim")
         print(" Surrogate model learned with FNO")
         modelP.load_state_dict(torch.load("fno_forward_model_pressure.0.pth"))
@@ -566,7 +562,6 @@ elif surrogate == 2:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO/ResSim")
         print(" Surrogate model learned with PINO")
         modelP.load_state_dict(torch.load("pino_forward_model_pressure.0.pth"))
@@ -627,7 +622,6 @@ elif surrogate == 3:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_AFNOD/ResSim")
         print(" Surrogate model learned with AFNO (data-driven)")
         modelP.load_state_dict(torch.load("afno_forward_model_pressure.0.pth"))
@@ -687,7 +681,6 @@ elif surrogate == 4:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_AFNOP/ResSim")
         print(" Surrogate model learned with AFNO (physics-driven)")
         modelP.load_state_dict(torch.load("afnop_forward_model_pressure.0.pth"))

@@ -36,7 +36,6 @@ def test_PointwiseBoundaryConstraint():
 
     ntests = 10
     for fixed_dataset in [True, False]:
-
         # define sinusodial node
         x, y = Symbol("x"), Symbol("y")
         node = Node.from_sympy(cos(x) + sin(y), "u")
@@ -93,7 +92,6 @@ def test_PointwiseBoundaryConstraint():
         height = float(height)
         width = float(width)
         for _ in range(ntests):
-
             # check losses are zero
             top_wall.load_data()
             top_wall.forward()
@@ -146,7 +144,6 @@ def test_PointwiseInteriorConstraint():
 
     ntests = 10
     for fixed_dataset in [True, False]:
-
         # define sinusodial node
         x, y = Symbol("x"), Symbol("y")
         node = Node.from_sympy(cos(x) + sin(y), "u")
@@ -169,7 +166,6 @@ def test_PointwiseInteriorConstraint():
         height = float(height)
         width = float(width)
         for _ in range(ntests):
-
             # check loss is zero
             constraint.load_data()
             constraint.forward()
@@ -187,7 +183,6 @@ def test_IntegralBoundaryConstraint():
 
     ntests = 10
     for fixed_dataset in [True, False]:
-
         # define parabola node
         node = Node.from_sympy(Symbol("z") ** 2, "u")
 
@@ -285,7 +280,6 @@ def test_VariationalDomainConstraint():
 
 
 if __name__ == "__main__":
-
     test_PointwiseBoundaryConstraint()
 
     test_PointwiseInteriorConstraint()

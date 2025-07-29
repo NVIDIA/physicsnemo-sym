@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 import os
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.key import Key
@@ -256,7 +257,6 @@ else:
             print("")
             print("please try again and select value between 1-4")
         else:
-
             break
 
 
@@ -362,7 +362,6 @@ while True:
         print("")
         print("please try again and select value between 1-2")
     else:
-
         break
 
 if chuu == 1:
@@ -636,7 +635,6 @@ if surrogate == 1:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_FNO/ResSim")
         print(" Surrogate model learned with FNO")
         modelP.load_state_dict(torch.load("fno_forward_model_pressure.0.pth"))
@@ -692,7 +690,6 @@ elif surrogate == 2:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO/ResSim")
         print(" Surrogate model learned with PINO")
         modelP.load_state_dict(torch.load("pino_forward_model_pressure.0.pth"))
@@ -747,7 +744,6 @@ elif surrogate == 3:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO2")
         print(" Surrogate model learned with original PINO")
         modelP.load_state_dict(torch.load("pressure_model.pth"))
@@ -802,7 +798,6 @@ else:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO3")
         print(" Surrogate model learned with original PINO")
 

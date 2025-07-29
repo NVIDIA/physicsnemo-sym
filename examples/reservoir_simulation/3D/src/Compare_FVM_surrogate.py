@@ -101,7 +101,6 @@ def sort_key(s):
 
 
 def process_step(kk):
-
     f_3 = plt.figure(figsize=(20, 20), dpi=200)
     current_time = int((kk + 1) * dt * MAXZ)
 
@@ -197,7 +196,6 @@ while True:
         print("")
         print("please try again and select value between 1-2")
     else:
-
         break
 
 
@@ -495,7 +493,6 @@ if surrogate == 1:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_FNO/ResSim")
         print(" Surrogate model learned with FNO")
         modelP.load_state_dict(torch.load("fno_forward_model_pressure.0.pth"))
@@ -551,7 +548,6 @@ else:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO/ResSim")
         print(" Surrogate model learned with PINO")
         modelP.load_state_dict(torch.load("pino_forward_model_pressure.0.pth"))

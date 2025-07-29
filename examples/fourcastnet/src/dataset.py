@@ -141,7 +141,7 @@ class ERA5HDF5GridBaseDataset:
 
     @property
     def outvar_keys(self):
-        return [f"x_t{(i+1)*self.tstep}" for i in range(self.n_tsteps)]
+        return [f"x_t{(i + 1) * self.tstep}" for i in range(self.n_tsteps)]
 
 
 class ERA5HDF5GridDataset(ERA5HDF5GridBaseDataset, Dataset):

@@ -345,7 +345,6 @@ class SympyCurve(Curve):
     """
 
     def __init__(self, functions, parameterization, area, criteria=None):
-
         # lambdify functions
         lambdify_functions = {}
         for key, func in functions.items():
@@ -382,7 +381,6 @@ class SympyCurve(Curve):
             def sample(
                 nr_points, parameterization=Parameterization(), quasirandom=False
             ):
-
                 # use internal parameterization if not given
                 i_parameterization = internal_parameterization.copy()
                 for key, value in parameterization.param_ranges.items():

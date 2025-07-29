@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from physicsnemo.sym.geometry.primitives_2d import Channel2D, Rectangle
+from physicsnemo.sym.geometry.primitives_2d import Channel2D
 from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
 
 import warp as wp
@@ -550,7 +550,6 @@ def sample_boundary(
 
 class Example:
     def __init__(self, n_points: int = 1000000):
-
         self.n_points = n_points
         self.xs = wp.zeros(n_points, dtype=float)
         self.ys = wp.zeros(n_points, dtype=float)
@@ -581,7 +580,6 @@ class Example:
         alpha_min: float,
         alpha_max: float,
     ):
-
         with wp.ScopedTimer(f"Sample Interior [{self.n_points:,} pts]"):
             wp.launch(
                 kernel=sample_interior,

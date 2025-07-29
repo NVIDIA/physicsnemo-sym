@@ -61,7 +61,6 @@ class LinearElasticity(PDE):
     def __init__(
         self, E=None, nu=None, lambda_=None, mu=None, rho=1, dim=3, time=False
     ):
-
         # set params
         self.dim = dim
         self.time = time
@@ -232,7 +231,6 @@ class LinearElasticityPlaneStress(PDE):
     name = "LinearElasticityPlaneStress"
 
     def __init__(self, E=None, nu=None, lambda_=None, mu=None, rho=1, time=False):
-
         # set params
         self.time = time
 

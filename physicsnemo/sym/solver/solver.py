@@ -38,7 +38,6 @@ class Solver(Trainer):
     """
 
     def __init__(self, cfg: DictConfig, domain: Domain):
-
         # set domain
         self.domain = domain
 

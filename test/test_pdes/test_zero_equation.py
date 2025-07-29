@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
 import torch
 import numpy as np
-import os
 
 
 def test_zero_equation():

@@ -267,7 +267,6 @@ class MeshlessFiniteDerivative(torch.nn.Module):
 
     @torch.jit.ignore()
     def forward(self, inputs: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         self.count += 1
         dx = self.dx
         self.first_deriv.dx = dx

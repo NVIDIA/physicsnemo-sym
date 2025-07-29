@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 print(".........................IMPORT SOME LIBRARIES.....................")
 import os
 import numpy as np
@@ -58,24 +59,21 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.cluster import MiniBatchKMeans
 import os.path
 import torch
-from torch.utils.data import DataLoader
 
 torch.set_default_dtype(torch.float32)
-from joblib import Parallel, delayed, dump, load
+from joblib import Parallel, delayed
 from scipy import interpolate
 import multiprocessing
 import mpslib as mps
 from shutil import rmtree
 import numpy.matlib
 import re
-from sklearn.model_selection import train_test_split
 from numpy import linalg as LA
 from scipy.spatial.distance import cdist
 from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
 import pickle
-from copy import copy
 import xgboost as xgb
 from kneed import KneeLocator
 import numpy
@@ -88,26 +86,16 @@ from scipy.fftpack import dct
 from torch.utils.dlpack import to_dlpack
 from torch.utils.dlpack import from_dlpack
 import numpy.matlib
-from matplotlib import pyplot
 
 # os.environ['KERAS_BACKEND'] = 'tensorflow'
 import os.path
-import math
-import time
 import random
-from matplotlib.font_manager import FontProperties
 import os.path
-from datetime import timedelta
 import pandas as pd
-from collections import namedtuple, defaultdict
 from skimage.transform import resize as rzz
-from mpl_toolkits.mplot3d import Axes3D
-import imp
 import h5py
 from physicsnemo.sym.hydra import to_absolute_path
-import scipy.io as sio
 import yaml
-import matplotlib
 import matplotlib as mpl
 import matplotlib.lines as mlines
 import os
@@ -121,9 +109,7 @@ except:
     gdown = None
 
 import scipy.io
-import h5py
 
-from loky import get_reusable_executor
 import shutil
 import sys
 from numpy import *
@@ -148,7 +134,6 @@ print("Cpu info")
 for k, v in s.items():
     print(f"\t{k}: {v}")
 cores = multiprocessing.cpu_count()
-import math
 
 logger = logging.getLogger(__name__)
 # numpy.random.seed(99)
@@ -304,7 +289,6 @@ def NorneInitialEnsemble(ensembleSize=100, randomNumber=1.2345e5):
 
     indices = np.where(A == 1)
     for i in range(N):
-
         # multz
         A_MZ = A_L[:, [0, 7, 10, 11, 14, 17]]  # Adjusted indexing to 0-based
         A_MZ = A_MZ.flatten()
@@ -527,7 +511,6 @@ def NorneGeostat():
     p = p[act != 0]
 
     for nr in range(int(dim[2])):
-
         index_start = ldim * nr
         index_end = ldim * (nr + 1)
         values_range_start = int(np.sum(act[:index_start]))
@@ -557,7 +540,6 @@ def NorneGeostat():
     stdv = np.zeros(dim[2])
 
     for nr in range(int(dim[2])):
-
         index_start = ldim * nr
         index_end = ldim * (nr + 1)
         values_range_start = int(np.sum(act[:index_start]))
@@ -718,7 +700,6 @@ def Add_marker(plt, XX, YY, locc):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, timezz):
-
     columns = [
         "B_1BH",
         "B_1H",
@@ -828,7 +809,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, timezz):
 
 
 def MyLossClement(a, b):
-
     loss = torch.sum(torch.abs(a - b) / a.shape[0])
 
     # loss = ((a-b)**2).mean()
@@ -1092,7 +1072,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -1516,7 +1495,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -1669,7 +1648,6 @@ def Plot_2D(
     producers,
     gass,
 ):
-
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
     maxii = max(Pressz.ravel())
     minii = min(Pressz.ravel())
@@ -1748,7 +1726,6 @@ def Plot_2D(
 def Plot3DNorne(
     nx, ny, nz, Truee, N_injw, N_pr, N_injg, cgrid, varii, injectors, producers, gass
 ):
-
     # matplotlib.use('Agg')
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
 
@@ -2264,7 +2241,6 @@ def Plot3DNorne(
 
 
 def Plot_all_layesr(nx, ny, nz, see, injectors, producers, gass, varii):
-
     see[see == 0] = np.nan  # Convert zeros to NaNs
     plt.figure(figsize=(20, 20), dpi=300)
     Pressz = np.reshape(see, (nx, ny, nz), "F")
@@ -2517,7 +2493,6 @@ def Add_marker3(plt, XX, YY, injectors, producers, gass):
 
 
 def Get_Time(nx, ny, nz, steppi, steppi_indices, N):
-
     Timee = []
     for k in range(N):
         check = np.ones((nx, ny, nz), dtype=np.float16)
@@ -2612,7 +2587,6 @@ def Get_source_sink(N, nx, ny, nz, waterz, gasz, steppi, steppi_indices):
 
 
 def Get_falt(nx, ny, nz, floatz, N):
-
     Fault = np.ones((nx, ny, nz), dtype=np.float16)
     flt = []
     for k in range(N):
@@ -2710,7 +2684,6 @@ def ensemble_pytorch(
     device,
     steppi_indices,
 ):
-
     ini_ensemble1 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Permeability
     ini_ensemble2 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Porosity
     ini_ensemble4 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Fault
@@ -3665,7 +3638,6 @@ def Forward_model_ensemble(
     pred_type,
     oldfolder,
 ):
-
     #### ===================================================================== ####
     #                     RESERVOIR SIMULATOR WITH MODULUS
     #
@@ -3768,7 +3740,6 @@ def Forward_model_ensemble(
         innn = np.zeros((N, steppi, 90))
 
     for i in range(N):
-
         ##INPUTS
         permuse = perm[i, 0, :, :, :]
         # Permeability
@@ -3973,7 +3944,6 @@ def Split_Matrix(matrix, sizee):
 def Get_data_FFNN(
     oldfolder, N, pressure, Sgas, Swater, perm, Time, steppi, steppi_indices
 ):
-
     ouut = np.zeros((N, steppi, 66))
     innn = np.zeros((N, steppi, 90))
     steppii = 246
@@ -4359,7 +4329,6 @@ def Get_data_FFNN(
 def Get_data_FFNN1(
     folder, oldfolder, N, pressure, Sgas, Swater, perm, Time, steppi, steppi_indices
 ):
-
     ouut = np.zeros((N, steppi, 66))
     innn = np.zeros((N, steppi, 90))
     steppii = 246
@@ -5286,7 +5255,7 @@ def interp_torch(cuda, reference_matrix1, reference_matrix2, tensor1):
 def RelPerm(Sa, Sg, SWI, SWR, SWOW, SWOG):
     one_minus_swi_swr = 1 - (SWI + SWR)
 
-    so = (((1 - (Sa + Sg))) - SWR) / one_minus_swi_swr
+    so = ((1 - (Sa + Sg)) - SWR) / one_minus_swi_swr
     sw = (Sa - SWI) / one_minus_swi_swr
     sg = Sg / one_minus_swi_swr
 
@@ -5650,7 +5619,6 @@ def load_FNO_dataset(path, input_keys, output_keys, n_examples=None):
     invar, outvar = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar, output_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5693,7 +5661,6 @@ def load_FNO_dataset2(
         (outvar3, output_keys3),
     ]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5729,7 +5696,6 @@ def load_FNO_dataset2d(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5765,7 +5731,6 @@ def load_FNO_dataset2a(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5913,7 +5878,6 @@ def getoptimumkcost(X, i, training_master, oldfolder):
 
 
 def best_fit(X, Y):
-
     xbar = sum(X) / len(X)
     ybar = sum(Y) / len(Y)
     n = len(X)  # or len(Y)
@@ -5927,7 +5891,6 @@ def best_fit(X, Y):
 
 
 def Performance_plot_cost(CCR, Trued, stringg, training_master, oldfolder):
-
     CoDview = np.zeros((1, Trued.shape[1]))
     R2view = np.zeros((1, Trued.shape[1]))
 

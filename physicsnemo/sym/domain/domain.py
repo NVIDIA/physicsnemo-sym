@@ -15,6 +15,7 @@
 # limitations under the License.
 
 """Domain"""
+
 import torch
 import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
@@ -142,7 +143,6 @@ class Domain:
     def compute_losses(self, step: int):
         losses = {}
         if self.ntk is None:
-
             for key, constraint in self.constraints.items():
                 # TODO: Test streaming here
                 torch.cuda.nvtx.range_push(f"Constraint Forward: {key}")

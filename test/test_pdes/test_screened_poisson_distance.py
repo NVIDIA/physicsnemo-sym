@@ -16,7 +16,6 @@
 
 import numpy as np
 import torch
-import os
 from physicsnemo.sym.eq.pdes.signed_distance_function import ScreenedPoissonDistance
 
 

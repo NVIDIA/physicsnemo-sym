@@ -33,7 +33,6 @@ from physicsnemo.sym.utils.vpinn.integral import tensor_int, Quad_Rect, Quad_Col
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
-    PointwiseInteriorConstraint,
     VariationalConstraint,
 )
 from physicsnemo.sym.dataset import DictVariationalDataset

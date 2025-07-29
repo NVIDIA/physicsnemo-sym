@@ -271,7 +271,6 @@ class FusedFourierNetArch(TinyCudaNNArchCore):
         fully_fused: bool = True,
         n_frequencies: int = 12,
     ) -> None:
-
         encoding_config = {
             "otype": "Frequency",
             "n_frequencies": n_frequencies,
@@ -357,7 +356,6 @@ class FusedGridEncodingNetArch(TinyCudaNNArchCore):
         per_level_scale: float = 2.0,
         interpolation: str = "Smoothstep",
     ) -> None:
-
         if indexing not in ["Hash", "Tiled", "Dense"]:
             raise ValueError(f"indexing type {indexing} not supported")
         if interpolation not in ["Nearest", "Linear", "Smoothstep"]:

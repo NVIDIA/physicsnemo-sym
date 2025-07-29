@@ -20,7 +20,7 @@
 from warnings import warn
 
 warn(
-    f"This example will be depricated soon! Please switch to the FourCastNet recipe from PhysicsNeMo Launch repo.",
+    "This example will be depricated soon! Please switch to the FourCastNet recipe from PhysicsNeMo Launch repo.",
     DeprecationWarning,
 )
 

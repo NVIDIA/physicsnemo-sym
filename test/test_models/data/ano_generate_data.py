@@ -15,7 +15,6 @@
 # limitations under the License.
 
 from functools import partial
-from re import S
 import numpy as np
 import torch
 import torch.nn as nn
@@ -25,6 +24,7 @@ import math
 torch.manual_seed(0)
 np.random.seed(0)
 cuda_device = torch.device("cpu:0")
+
 
 ################################################################
 # Baseline AFNO implementation from Jiadeeps original wind dataset implementation

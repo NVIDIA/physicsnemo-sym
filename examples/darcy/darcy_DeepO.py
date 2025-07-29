@@ -20,15 +20,9 @@ from physicsnemo.sym.key import Key
 
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.models.deeponet import DeepONetArch
-from physicsnemo.sym.models.fourier_net import FourierNetArch
-from physicsnemo.sym.models.pix2pix import Pix2PixArch
 from physicsnemo.sym.domain.constraint.continuous import DeepONetConstraint
 from physicsnemo.sym.domain.validator import PointwiseValidator
-from physicsnemo.sym.domain.validator import GridValidator
-from physicsnemo.sym.dataset import DictGridDataset
 
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 
 from utilities import download_FNO_dataset, load_deeponet_dataset
 

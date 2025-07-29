@@ -16,6 +16,7 @@
 """
 @Modified by: clement etienam
 """
+
 import math
 from pathlib import Path
 from random import random
@@ -250,7 +251,6 @@ class ResnetBlock(nn.Module):
         self.res_conv = nn.Conv2d(dim, dim_out, 1) if dim != dim_out else nn.Identity()
 
     def forward(self, x, time_emb=None):
-
         scale_shift = None
         if exists(self.mlp) and exists(time_emb):
             time_emb = self.mlp(time_emb)
@@ -978,7 +978,7 @@ class GaussianDiffusion(nn.Module):
         return loss.mean()
 
     def forward(self, img, *args, **kwargs):
-        b, c, h, w, device, img_size, = (
+        (b, c, h, w, device, img_size,) = (
             *img.shape,
             img.device,
             self.image_size,
@@ -1168,9 +1168,7 @@ class Trainer(object):
             total=self.train_num_steps,
             disable=not accelerator.is_main_process,
         ) as pbar:
-
             while self.step < self.train_num_steps:
-
                 total_loss = 0.0
 
                 for _ in range(self.gradient_accumulate_every):

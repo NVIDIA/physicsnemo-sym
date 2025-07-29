@@ -26,6 +26,7 @@ Geostatistics packages are also provided
 @Author: Clement Etienam
 
 """
+
 print(".........................IMPORT SOME LIBRARIES.....................")
 import os
 import numpy as np
@@ -96,10 +97,8 @@ import matplotlib.lines as mlines
 
 # os.environ['KERAS_BACKEND'] = 'tensorflow'
 import os.path
-import time
 import random
 import os.path
-from datetime import timedelta
 
 # import dolfin as df
 import sys
@@ -109,7 +108,6 @@ import numpy.linalg
 from numpy.linalg import norm
 from scipy.fftpack.realtransforms import idct
 import numpy.ma as ma
-from matplotlib.font_manager import FontProperties
 import logging
 import os
 import matplotlib as mpl
@@ -128,7 +126,6 @@ print("Cpu info")
 for k, v in s.items():
     print(f"\t{k}: {v}")
 cores = multiprocessing.cpu_count()
-import math
 
 logger = logging.getLogger(__name__)
 # numpy.random.seed(99)
@@ -205,7 +202,6 @@ def check_cupy_sparse_matrix(A):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt
@@ -400,7 +396,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
 def Plot_performance(
     PINN, PINN2, trueF, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt, steppi, wells
 ):
-
     look = (PINN[itt, :, :, :]) * pini_alt
     look_sat = PINN2[itt, :, :, :]
     look_oil = 1 - look_sat
@@ -824,7 +819,6 @@ def Plot_performance(
 def Plot_performance2(
     trueF, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt, steppi, wells
 ):
-
     lookf = (trueF[itt, :, :, :]) * pini_alt
     lookf_sat = trueF[itt + steppi, :, :, :]
     lookf_oil = 1 - lookf_sat
@@ -1354,7 +1348,6 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
@@ -1778,7 +1771,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -1907,7 +1900,6 @@ def ShowBar(Bar):
 
 
 def Equivalent_time(tim1, max_t1, tim2, max_t2):
-
     tk2 = tim1 / max_t1
     tc2 = np.arange(0.0, 1 + tk2, tk2)
     tc2[tc2 >= 1] = 1
@@ -2083,7 +2075,6 @@ def Add_marker2(plt, XX, YY, injectors, producers):
 
 
 def Plot_2D(XX, YY, plt, nx, ny, nz, Truee, N_injw, N_pr, varii, injectors, producers):
-
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
     maxii = max(Pressz.ravel())
     minii = min(Pressz.ravel())
@@ -3022,7 +3013,6 @@ def Plot_Models(True_mat):
 
 
 def Plot_bar(True_mat):
-
     a1 = rmsee(True_mat[1][:, 1:].ravel(), True_mat[0][:, 1:].ravel())
     a2 = rmsee(True_mat[2][:, 1:].ravel(), True_mat[0][:, 1:].ravel())
 

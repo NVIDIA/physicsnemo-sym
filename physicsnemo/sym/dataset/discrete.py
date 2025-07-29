@@ -30,7 +30,6 @@ class _DictGridDatasetMixin(_DictDatasetMixin):
     "Special mixin class for dealing with dictionaries as input"
 
     def save_dataset(self, filename):
-
         named_lambda_weighting = {
             "lambda_" + key: value for key, value in self.lambda_weighting.items()
         }
@@ -81,7 +80,6 @@ class HDF5GridDataset(Dataset):
         outvar_keys: List[str],
         n_examples: int = None,
     ):
-
         self._invar_keys = invar_keys
         self._outvar_keys = outvar_keys
         self.path = Path(filename)
@@ -95,7 +93,6 @@ class HDF5GridDataset(Dataset):
 
         # check dataset/ get length
         with h5py.File(self.path, "r") as f:
-
             # check keys exist
             for k in invar_keys + outvar_keys:
                 if k not in f.keys():

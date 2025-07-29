@@ -30,7 +30,6 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry import Bounds
 from physicsnemo.sym.geometry.primitives_2d import Rectangle, Circle
 from physicsnemo.sym.domain.constraint import (
-    PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
 )

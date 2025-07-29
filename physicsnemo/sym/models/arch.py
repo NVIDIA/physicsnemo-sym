@@ -367,7 +367,6 @@ class Arch(nn.Module):
         dim: int = 0,
         output_scales: Union[Dict[str, Tuple[float, float]], None] = None,
     ) -> Dict[str, Tensor]:
-
         # create unnormalised output tensor
         output = {}
         for k, v in zip(
@@ -768,7 +767,7 @@ class FuncArch(nn.Module):
             order = len(x.derivatives)
             if order == 0 or order >= 3:
                 raise ValueError(
-                    "FuncArch currently does not support " f"{order}th order derivative"
+                    f"FuncArch currently does not support {order}th order derivative"
                 )
             else:
                 deriv_key_dict[order].append(x)

@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.basic import GradNormal, Curl
 import torch
 import numpy as np
-import os
 
 
 def test_normal_gradient_equation():

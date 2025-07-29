@@ -696,7 +696,6 @@ class GradientsLeastSquares(torch.nn.Module):
         self.deriv_module = ls_grads.FirstDeriv(self.dim)
 
     def forward(self, input_dict):
-
         coords = input_dict["coordinates"]
 
         assert (

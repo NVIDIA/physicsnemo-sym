@@ -33,7 +33,6 @@ class DiscreteGeometry(Geometry):
     def __init__(
         self, geometries, parameterization=Parameterization(), interior_epsilon=1e-6
     ):
-
         # make sdf function
         def _sdf(list_sdf, discrete_parameterization, dims):
             def sdf(invar, params, compute_sdf_derivatives=False):

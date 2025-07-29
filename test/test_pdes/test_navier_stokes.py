@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 import torch
 import numpy as np
-import os
 
 
 def test_navier_stokes_equation():

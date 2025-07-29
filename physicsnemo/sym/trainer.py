@@ -321,7 +321,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 f"{self.step_str} saved constraint results to {self.network_dir}"
             )
             self.log.info(
-                f"{self.step_str} record constraint batch time: {time.time()-rec_inferencer_start:10.3e}s"
+                f"{self.step_str} record constraint batch time: {time.time() - rec_inferencer_start:10.3e}s"
             )
 
     def _record_validators(self, step):
@@ -335,7 +335,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 f"{self.step_str} saved validator results to {self.network_dir}"
             )
             self.log.info(
-                f"{self.step_str} record validators time: {time.time()-rec_validation_start:10.3e}s"
+                f"{self.step_str} record validators time: {time.time() - rec_validation_start:10.3e}s"
             )
 
     def _record_inferencers(self, step):
@@ -349,7 +349,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 f"{self.step_str} saved inferencer results to {self.network_dir}"
             )
             self.log.info(
-                f"{self.step_str} record inferencers time: {time.time()-rec_inferencer_start:10.3e}s"
+                f"{self.step_str} record inferencers time: {time.time() - rec_inferencer_start:10.3e}s"
             )
 
     def _record_monitors(self, step):
@@ -440,7 +440,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
 
             if self.has_monitors:
                 self.log.info(
-                    f"{self.step_str} record monitor time: {time.time()-rec_monitor_start:10.3e}s"
+                    f"{self.step_str} record monitor time: {time.time() - rec_monitor_start:10.3e}s"
                 )
 
     # check if stopping criterion is met
@@ -480,7 +480,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         self,
         sigterm_handler=None,
     ):  # TODO this train loop may be broken up into methods if need for future children classes
-
         # make directory if doesn't exist
         if self.manager.rank == 0:
             # exist_ok=True to skip creating directory that already exists
@@ -613,7 +612,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 stack.enter_context(torch.autograd.profiler.emit_nvtx())
 
             for step in range(self.initial_step, self.max_steps + 1):
-
                 if self.sigterm_handler():
                     if self.manager.rank == 0:
                         self.log.info(
@@ -668,7 +666,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                 # write train loss / learning rate tensorboard summaries
                 if step % self.summary_freq == 0:
                     if self.manager.rank == 0:
-
                         # add train loss scalars
                         for key, value in losses.items():
                             if TF_SUMMARY:
@@ -803,7 +800,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
                         f"{self.step_str} loss: {loss.cpu().detach().numpy():10.3e}"
                     )
                     if step >= self.initial_step + self.print_stats_freq:
-                        print_statement += f", time/iteration: {elapsed_time/self.print_stats_freq:10.3e} ms"
+                        print_statement += f", time/iteration: {elapsed_time / self.print_stats_freq:10.3e} ms"
                     if self.manager.rank == 0:
                         self.log.info(print_statement)
 
@@ -899,7 +896,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
     def _eval(
         self,
     ):
-
         # check the directory exists
         if not os.path.exists(self.network_dir):
             raise RuntimeError("Network checkpoint is required for eval mode.")
@@ -936,7 +932,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
     def _stream(
         self,
     ):
-
         # check the directory exists
         if not os.path.exists(self.network_dir):
             raise RuntimeError("Network checkpoint is required for stream mode.")
@@ -1058,7 +1053,6 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         log: logging.Logger,
         device: torch.device,
     ):
-
         # attempt to restrore from initialization network dir
         if initialization_network_dir != "":
             for i_dir in initialization_network_dir.split(","):

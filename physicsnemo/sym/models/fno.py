@@ -90,7 +90,6 @@ class FNO1DEncoder(nn.Module):
         self.padding_type = padding_type
 
     def forward(self, x: Tensor) -> Tensor:
-
         if self.coord_features:
             coord_feat = self.meshgrid(list(x.shape), x.device)
             x = torch.cat((x, coord_feat), dim=1)
@@ -130,7 +129,6 @@ class FNO2DEncoder(nn.Module):
         activation_fn: Activation = Activation.GELU,
         coord_features: bool = True,
     ) -> None:
-
         super().__init__()
         self.in_channels = in_channels
         self.nr_fno_layers = nr_fno_layers
@@ -258,7 +256,6 @@ class FNO3DEncoder(nn.Module):
         self.padding_type = padding_type
 
     def forward(self, x: Tensor) -> Tensor:
-
         if self.coord_features:
             coord_feat = self.meshgrid(list(x.shape), x.device)
             x = torch.cat((x, coord_feat), dim=1)

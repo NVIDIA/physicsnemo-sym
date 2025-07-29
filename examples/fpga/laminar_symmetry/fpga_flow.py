@@ -24,13 +24,11 @@ import sys
 import torch
 import physicsnemo.sym
 import numpy as np
-from sympy import Symbol, Eq, Abs, tanh, And, Or
+from sympy import Symbol, Eq, And, Or
 
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
-from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.hydra import to_absolute_path, PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
 from physicsnemo.sym.models.fourier_net import FourierNetArch
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
@@ -38,14 +36,10 @@ from physicsnemo.sym.domain.constraint import (
     IntegralBoundaryConstraint,
 )
 from physicsnemo.sym.domain.validator import PointwiseValidator
-from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
-from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes, Curl
-from physicsnemo.sym.eq.pdes.basic import NormalDotVec, GradNormal
-from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
-from physicsnemo.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
+from physicsnemo.sym.eq.pdes.basic import NormalDotVec
 
 
 @physicsnemo.sym.main(config_path="conf", config_name="config")

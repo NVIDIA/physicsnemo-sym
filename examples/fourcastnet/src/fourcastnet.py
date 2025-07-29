@@ -15,6 +15,7 @@
 # limitations under the License.
 
 """Defines the FCN architecture"""
+
 import logging
 import torch
 from torch import Tensor

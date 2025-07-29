@@ -23,8 +23,7 @@ from typing import List, Dict, Union
 import physicsnemo.sym
 from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch
 
-import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
 from physicsnemo.sym.distributed import DistributedManager
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain

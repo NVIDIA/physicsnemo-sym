@@ -45,7 +45,6 @@ class Tessellation(Geometry):
     """
 
     def __init__(self, mesh, airtight=True, parameterization=Parameterization()):
-
         # make curves
         def _sample(mesh):
             def sample(

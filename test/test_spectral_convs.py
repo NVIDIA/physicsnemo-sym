@@ -228,7 +228,6 @@ class SpectralConv3d_old(nn.Module):
 
 
 def test_spectral_convs():
-
     in_channels = 2
     out_channels = 3
     modes = 4

@@ -40,7 +40,6 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PhysicsNeMoConfig:
-
     # General parameters
     network_dir: str = "."
     initialization_network_dir: str = ""
@@ -145,7 +144,6 @@ class ExperimentalPhysicsNeMoConfig(PhysicsNeMoConfig):
 
 
 def register_physicsnemo_configs() -> None:
-
     if not torch.__version__ == JIT_PYTORCH_VERSION:
         logger.warning(
             "TorchScript default is being turned off due to PyTorch version mismatch."

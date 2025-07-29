@@ -20,7 +20,6 @@ from physicsnemo.sym.eq.pdes.linear_elasticity import (
 )
 import torch
 import numpy as np
-import os
 
 
 def test_linear_elasticity_equations():
