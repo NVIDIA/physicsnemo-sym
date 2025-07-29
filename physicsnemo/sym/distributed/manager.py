@@ -42,9 +42,7 @@ class DistributedManager(object):
         if not hasattr(obj, "_distributed"):
             obj._distributed = False
         if not hasattr(obj, "_device"):
-            obj._device = torch.device(
-                "cuda:0" if torch.cuda.is_available() else "cpu"
-            )
+            obj._device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         if not hasattr(obj, "_cuda"):
             obj._cuda = torch.cuda.is_available()
         if not hasattr(obj, "_broadcast_buffers"):

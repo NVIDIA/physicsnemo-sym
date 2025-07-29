@@ -234,11 +234,11 @@ class GradientsAutoDiff(torch.nn.Module):
                 result[f"{self.invar}__{axis_list[axis]}"] = grad[0][:, axis : axis + 1]
         elif self.order == 2:
             for axis in range(self.dim):
-                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
-                    gradient_autodiff(grad[0][:, axis : axis + 1], [x])[0][
-                        :, axis : axis + 1
-                    ]
-                )
+                result[
+                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
+                ] = gradient_autodiff(grad[0][:, axis : axis + 1], [x])[0][
+                    :, axis : axis + 1
+                ]
             if self.return_mixed_derivs:
                 # Need to compute them manually due to how pytorch builds graph
                 if self.dim == 2:
@@ -341,19 +341,19 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
                     out_name=f"{self.invar}__x__y",
                 )
                 if self.dim == 3:
-                    self.mixed_deriv_ops["dxdz"] = (
-                        mfd_grads.MixedSecondDerivSecondOrder(
-                            var=self.invar,
-                            indep_vars=["x", "z"],
-                            out_name=f"{self.invar}__x__z",
-                        )
+                    self.mixed_deriv_ops[
+                        "dxdz"
+                    ] = mfd_grads.MixedSecondDerivSecondOrder(
+                        var=self.invar,
+                        indep_vars=["x", "z"],
+                        out_name=f"{self.invar}__x__z",
                     )
-                    self.mixed_deriv_ops["dydz"] = (
-                        mfd_grads.MixedSecondDerivSecondOrder(
-                            var=self.invar,
-                            indep_vars=["y", "z"],
-                            out_name=f"{self.invar}__y__z",
-                        )
+                    self.mixed_deriv_ops[
+                        "dydz"
+                    ] = mfd_grads.MixedSecondDerivSecondOrder(
+                        var=self.invar,
+                        indep_vars=["y", "z"],
+                        out_name=f"{self.invar}__y__z",
                     )
 
     def forward(self, input_dict):
@@ -366,11 +366,11 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
                 )[f"{self.invar}__{axis_list[axis]}"]
         elif self.order == 2:
             for axis, op in self.second_deriv_ops.items():
-                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
-                    op.forward(input_dict, self.dx[axis])[
-                        f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                    ]
-                )
+                result[
+                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
+                ] = op.forward(input_dict, self.dx[axis])[
+                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
+                ]
             if self.return_mixed_derivs:
                 result[f"{self.invar}__x__y"] = self.mixed_deriv_ops["dxdy"].forward(
                     input_dict, self.dx[0]
@@ -470,9 +470,9 @@ class GradientsFiniteDifference(torch.nn.Module):
                 result[f"{self.invar}__{axis_list[axis]}"] = derivative
         elif self.order == 2:
             for axis, derivative in enumerate(derivatives):
-                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
-                    derivative
-                )
+                result[
+                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
+                ] = derivative
             if self.return_mixed_derivs:
                 result[f"{self.invar}__x__y"] = self.mixed_deriv_module.forward(u)[0]
                 result[f"{self.invar}__y__x"] = self.mixed_deriv_module.forward(u)[0]

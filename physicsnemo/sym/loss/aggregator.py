@@ -41,7 +41,9 @@ class Aggregator(nn.Module):
         self.device = list(set(p.device for p in self.params))[0]
         self.init_loss: torch.Tensor = torch.tensor(0.0, device=self.device)
 
-        def weigh_losses_initialize(weights: Optional[Dict[str, float]]) -> Callable[
+        def weigh_losses_initialize(
+            weights: Optional[Dict[str, float]]
+        ) -> Callable[
             [Dict[str, torch.Tensor], Optional[Dict[str, float]]],
             Dict[str, torch.Tensor],
         ]:
