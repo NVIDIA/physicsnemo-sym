@@ -18,7 +18,6 @@
 Supported optimizer configs
 """
 
-import torch
 
 from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore

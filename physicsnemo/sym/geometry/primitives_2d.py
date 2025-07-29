@@ -19,7 +19,6 @@ Primitives for 2D geometries
 see https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
 """
 
-import sys
 from operator import mul
 from sympy import (
     Symbol,

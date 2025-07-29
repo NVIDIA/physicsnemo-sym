@@ -101,7 +101,7 @@ class PhysicsNeMoModels(object):
     def add_model(cls, key: str, value):
         key = key.lower()
         assert (
-            not key in cls._model_classes
+            key not in cls._model_classes
         ), f"Model type name {key} already registered! Must be unique."
 
         cls._registered_archs[key] = value

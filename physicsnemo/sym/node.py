@@ -14,10 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo nodes
-"""
+"""PhysicsNeMo nodes"""
 from sympy import Add
-import torch
 from .constants import diff_str
 from .key import Key
 
@@ -87,7 +85,6 @@ class Node:
         """
 
         from physicsnemo.sym.utils.sympy.torch_printer import (
-            torch_lambdify,
             _subs_derivatives,
             SympyToTorch,
         )

@@ -18,7 +18,6 @@ from typing import Optional, Dict, Tuple, Union
 from physicsnemo.sym.key import Key
 
 import torch
-import torch.nn as nn
 from torch import Tensor
 
 import logging

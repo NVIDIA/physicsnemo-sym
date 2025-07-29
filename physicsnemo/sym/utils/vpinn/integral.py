@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Helper functions and classes for integration
-"""
+"""Helper functions and classes for integration"""
 
 import torch
 import quadpy as qd

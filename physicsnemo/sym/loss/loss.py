@@ -15,11 +15,10 @@
 # limitations under the License.
 
 import torch
-import pathlib
 import torch.nn as nn
 from torch import Tensor
 
-from typing import Dict, Tuple, List, Union
+from typing import Dict, List
 from torch.autograd import Function
 
 

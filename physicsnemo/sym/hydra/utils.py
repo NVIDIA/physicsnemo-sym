@@ -39,7 +39,7 @@ from physicsnemo.sym.models.utils import PhysicsNeMoModels
 
 from .amp import register_amp_configs
 from .arch import ModelConf
-from .config import register_physicsnemo_configs, PhysicsNeMoConfig
+from .config import register_physicsnemo_configs
 from .hydra import register_hydra_configs
 from .loss import register_loss_configs
 from .metric import register_metric_configs
@@ -206,11 +206,11 @@ def instantiate_arch(
         del model_cfg["arch_type"]
 
         # Add keys if present
-        if not input_keys is None:
+        if input_keys is not None:
             model_cfg["input_keys"] = input_keys
-        if not output_keys is None:
+        if output_keys is not None:
             model_cfg["output_keys"] = output_keys
-        if not detach_keys is None:
+        if detach_keys is not None:
             model_cfg["detach_keys"] = detach_keys
 
         # Add any additional kwargs
@@ -223,7 +223,7 @@ def instantiate_arch(
         # Verbose printing
         if verbose:
             pp = pprint.PrettyPrinter(indent=4)
-            logger.info(f"Initialized models with parameters: \n")
+            logger.info("Initialized models with parameters: \n")
             pp.pprint(param)
 
     except Exception as e:
@@ -250,7 +250,7 @@ def instantiate_optim(
 
     if verbose:
         pp = pprint.PrettyPrinter(indent=4)
-        logger.info(f"Initialized optimizer: \n")
+        logger.info("Initialized optimizer: \n")
         pp.pprint(optimizer)
 
     return optimizer

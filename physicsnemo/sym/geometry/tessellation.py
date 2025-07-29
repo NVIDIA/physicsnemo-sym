@@ -20,9 +20,7 @@ Defines base class for all mesh type geometries
 
 import numpy as np
 import warp as wp
-import csv
 from stl import mesh as np_mesh
-from sympy import Symbol
 
 from .geometry import Geometry
 from .parameterization import Parameterization, Bounds, Parameter

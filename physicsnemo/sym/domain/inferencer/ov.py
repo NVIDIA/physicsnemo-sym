@@ -396,7 +396,7 @@ class OVFourCastNetInferencer(Inferencer):
 
         logger.info(f"Initial condition loaded with shape {init_np.shape}")
         # Run dimension checks
-        assert init_np.ndim == 3, f"Initial state should have 3 dimensions"
+        assert init_np.ndim == 3, "Initial state should have 3 dimensions"
         assert (
             init_np.shape[0] == self.n_channels
         ), f"Incorrect channel size; expected {self.n_channels}, got {init_np.shape[0]}"
@@ -436,7 +436,7 @@ class OVFourCastNetInferencer(Inferencer):
         logger.info(f"Mu array loaded with shape {mu.shape}")
         logger.info(f"Std array loaded with shape {std.shape}")
         # Run dimension checks
-        assert mu.ndim == 3 and std.ndim == 3, f"Mu and Std should have 3 dimensions"
+        assert mu.ndim == 3 and std.ndim == 3, "Mu and Std should have 3 dimensions"
         assert (
             mu.shape[0] == self.n_channels
         ), f"Incorrect channel size; expected {self.n_channels}, got {mu.shape[0]}"
@@ -523,7 +523,7 @@ class OVFourCastNetInferencer(Inferencer):
         assert tar_file_path.is_file(), f"Invalid tar file path {tar_file_path}"
         # Open tarball
         with tarfile.open(tar_file_path, "r:gz") as tar:
-            logging.info(f"Loaded tar.gz with files:")
+            logging.info("Loaded tar.gz with files:")
             tar.list()
 
             array_file = BytesIO()

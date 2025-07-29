@@ -24,7 +24,7 @@ import ast
 from termcolor import colored
 from inspect import signature, _empty
 from typing import Optional, Callable, List, Dict, Union, Tuple
-from physicsnemo.sym.amp import DerivScaler, DerivScalers, AmpManager
+from physicsnemo.sym.amp import DerivScaler, DerivScalers
 from physicsnemo.sym.constants import NO_OP_SCALE
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
@@ -545,7 +545,7 @@ class Arch(nn.Module):
         model = cls(**params)
 
         # Set any variable scaling
-        if "scaling" in cfg and not cfg["scaling"] is None:
+        if "scaling" in cfg and cfg["scaling"] is not None:
             for scale_dict in cfg["scaling"]:
                 try:
                     name = next(iter(scale_dict))

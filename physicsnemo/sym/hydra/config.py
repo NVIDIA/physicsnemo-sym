@@ -18,13 +18,11 @@
 PhysicsNeMo main config
 """
 
-from platform import architecture
 import torch
 import logging
 from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore
-from hydra.conf import RunDir, HydraConf
-from omegaconf import MISSING, SI
+from omegaconf import MISSING
 from typing import List, Any
 from physicsnemo.sym.constants import JIT_PYTORCH_VERSION
 from packaging import version
@@ -150,7 +148,7 @@ def register_physicsnemo_configs() -> None:
 
     if not torch.__version__ == JIT_PYTORCH_VERSION:
         logger.warning(
-            f"TorchScript default is being turned off due to PyTorch version mismatch."
+            "TorchScript default is being turned off due to PyTorch version mismatch."
         )
 
     cs = ConfigStore.instance()

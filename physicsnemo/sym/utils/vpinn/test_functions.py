@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Helper functions for and classes for making test functions used in VPINNs
-"""
+"""Helper functions for and classes for making test functions used in VPINNs"""
 
 import torch
 import numpy as np
 import sympy as sp
 from sympy import I
-import random, itertools
+import random
+import itertools
 from physicsnemo.sym.utils.sympy.torch_printer import torch_lambdify
 
 x, y, z = sp.symbols("x, y ,z", real=True)
@@ -558,9 +558,9 @@ class RBF_Function:
                         + sp.diff(self.RBF_prototype, y, 2)
                     )
                 else:
-                    self.test_sympy_dict[
-                        "v" + "x" * k[0] + "y" * k[1]
-                    ] = self.simplify_fcn(sp.diff(self.RBF_prototype, x, k[0], y, k[1]))
+                    self.test_sympy_dict["v" + "x" * k[0] + "y" * k[1]] = (
+                        self.simplify_fcn(sp.diff(self.RBF_prototype, x, k[0], y, k[1]))
+                    )
         else:
             for k in self.diff_list:
                 if k == "grad":
@@ -580,10 +580,10 @@ class RBF_Function:
                         + sp.diff(self.RBF_prototype, z, 2)
                     )
                 else:
-                    self.test_sympy_dict[
-                        "v" + "x" * k[0] + "y" * k[1] + "z" * k[2]
-                    ] = self.simplify_fcn(
-                        sp.diff(self.RBF_prototype, x, k[0], y, k[1], z, k[2])
+                    self.test_sympy_dict["v" + "x" * k[0] + "y" * k[1] + "z" * k[2]] = (
+                        self.simplify_fcn(
+                            sp.diff(self.RBF_prototype, x, k[0], y, k[1], z, k[2])
+                        )
                     )
 
     def lambdify_fcn_list(self):

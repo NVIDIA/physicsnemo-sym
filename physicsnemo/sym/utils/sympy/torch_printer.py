@@ -18,11 +18,10 @@
 Helper functions for converting sympy equations to pytorch
 """
 
-from sympy import lambdify, Symbol, Derivative, Function, Basic, Add, Max, Min
+from sympy import lambdify, Symbol, Derivative, Function, Basic, Add
 from sympy.printing.str import StrPrinter
 import torch
 import numpy as np
-import functools
 from typing import List, Dict
 
 from physicsnemo.sym.constants import diff_str, tf_dt

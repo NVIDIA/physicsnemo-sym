@@ -14,15 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import numpy as np
-from typing import List, Union, Tuple, Callable
+from typing import List
 from omegaconf import DictConfig
 import warnings
 
 from physicsnemo.sym.trainer import Trainer
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.loss.aggregator import NTK
 from .solver import Solver
 
 

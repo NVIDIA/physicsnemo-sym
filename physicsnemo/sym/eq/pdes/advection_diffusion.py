@@ -21,7 +21,6 @@ https://en.wikipedia.org/wiki/Convection%E2%80%93diffusion_equation
 from sympy import Symbol, Function, Number
 
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class AdvectionDiffusion(PDE):

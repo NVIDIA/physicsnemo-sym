@@ -14,21 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Helper functions for generating vtk files
-"""
+"""Helper functions for generating vtk files"""
 
-import time
-import torch
-import scipy
 import numpy as np
-import matplotlib
-import sympy as sp
 import logging
 
 import vtk
 from vtk.util.numpy_support import numpy_to_vtk, vtk_to_numpy
 from pathlib import Path
-import pathlib
 from typing import List, Dict, Union, Tuple
 
 logger = logging.getLogger(__name__)

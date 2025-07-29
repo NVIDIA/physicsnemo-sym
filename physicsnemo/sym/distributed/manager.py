@@ -19,10 +19,10 @@ import torch.distributed as dist
 
 import logging
 import os
-import time
 import numpy as np
 
 logger = logging.getLogger("__name__")
+
 
 # Create singleton DistributedManager class
 class DistributedManager(object):
@@ -43,7 +43,7 @@ class DistributedManager(object):
             obj._distributed = False
         if not hasattr(obj, "_device"):
             obj._device = torch.device(
-                f"cuda:0" if torch.cuda.is_available() else "cpu"
+                "cuda:0" if torch.cuda.is_available() else "cpu"
             )
         if not hasattr(obj, "_cuda"):
             obj._cuda = torch.cuda.is_available()

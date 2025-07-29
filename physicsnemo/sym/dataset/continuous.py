@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Dataset constructors for continuous type data
-"""
+"""PhysicsNeMo Dataset constructors for continuous type data"""
 
 from typing import Dict, List, Callable
 

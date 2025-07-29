@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Screened Poisson Distance 
+"""Screened Poisson Distance
 Equation taken from,
 https://www.researchgate.net/publication/266149392_Dynamic_Distance-Based_Shape_Features_for_Gait_Recognition,
 Equation 6 in paper.

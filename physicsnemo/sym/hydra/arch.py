@@ -20,8 +20,8 @@ Architecture/Model configs
 
 from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore
-from omegaconf import MISSING, SI, II
-from typing import Any, Union, List, Dict, Tuple
+from omegaconf import MISSING
+from typing import Any, Tuple
 
 
 @dataclass

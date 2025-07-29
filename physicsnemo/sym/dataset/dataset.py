@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Dataset classes
-"""
+"""Dataset classes"""
 
 from typing import Dict
 
@@ -78,7 +77,8 @@ class Dataset(_BaseDataset, torch.utils.data.Dataset):
     def __getitem__(self, idx):
         """Must return a single example tuple e.g. (invar, outvar, lambda_weighting)
         if Dataset.auto_collation is False, or a batched example tuple if
-        Dataset.auto_collation is True. For the latter case idx is a batch of indices."""
+        Dataset.auto_collation is True. For the latter case idx is a batch of indices.
+        """
 
         raise NotImplementedError("subclass must implement this")
 

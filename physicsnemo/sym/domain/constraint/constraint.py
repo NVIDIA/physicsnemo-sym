@@ -21,7 +21,6 @@ import logging
 from torch.utils.data import DataLoader, BatchSampler, SequentialSampler, RandomSampler
 from torch.utils.data.distributed import DistributedSampler
 from torch.nn.parallel import DistributedDataParallel
-from typing import Union, List
 
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.constants import tf_dt

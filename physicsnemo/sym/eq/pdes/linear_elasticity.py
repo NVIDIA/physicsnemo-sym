@@ -14,13 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Equations related to linear elasticity
-"""
+"""Equations related to linear elasticity"""
 
 from sympy import Symbol, Function, Number
 
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class LinearElasticity(PDE):

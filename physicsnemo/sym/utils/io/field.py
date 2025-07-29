@@ -14,15 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import numpy as np
 import sympy as sp
-import scipy
 from scipy import interpolate
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 
 # functions to plot a variable
 def plot_field(

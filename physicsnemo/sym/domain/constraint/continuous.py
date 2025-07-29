@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Continuous type constraints
-"""
+"""Continuous type constraints"""
 
 import torch
 from torch.nn.parallel import DistributedDataParallel
@@ -23,7 +22,6 @@ import numpy as np
 from typing import Dict, List, Union, Tuple, Callable
 import sympy as sp
 import logging
-import torch
 
 from .constraint import Constraint
 from .utils import _compute_outvar, _compute_lambda_weighting
@@ -33,11 +31,9 @@ from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.loss import Loss, PointwiseLossNorm, IntegralLossNorm
 from physicsnemo.sym.distributed import DistributedManager
-from physicsnemo.sym.utils.sympy import np_lambdify
 
 from physicsnemo.sym.geometry import Geometry
-from physicsnemo.sym.geometry.helper import _sympy_criteria_to_criteria
-from physicsnemo.sym.geometry.parameterization import Parameterization, Bounds
+from physicsnemo.sym.geometry.parameterization import Parameterization
 
 from physicsnemo.sym.dataset import (
     DictPointwiseDataset,

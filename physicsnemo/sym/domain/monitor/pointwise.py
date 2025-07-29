@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Monitor for Solver class
-"""
+"""Monitor for Solver class"""
 
 import numpy as np
 

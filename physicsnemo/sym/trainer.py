@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Solver
-"""
+"""PhysicsNeMo Solver"""
 
 import os
 import time
@@ -27,21 +26,15 @@ from torch.optim.lr_scheduler import _LRScheduler
 import torch.nn as nn
 import torch.cuda.profiler as profiler
 import torch.distributed as dist
-from termcolor import colored, cprint
-from copy import copy
+from termcolor import colored
 from operator import add
 from omegaconf import DictConfig, OmegaConf
-import hydra
-import itertools
 from collections import Counter
-from typing import Dict, List, Optional
+from typing import List, Optional
 import logging
 from contextlib import ExitStack
 
 from .amp import DerivScalers, GradScaler, AmpManager
-from .domain.constraint import Constraint
-from .domain import Domain
-from .loss.aggregator import Sum
 from .utils.training.stop_criterion import StopCriterion
 from .constants import TF_SUMMARY, JIT_PYTORCH_VERSION
 from .hydra import (
@@ -201,9 +194,9 @@ class BFGSMixin:
 
     def bfgs_apply_gradients(self):
         assert (
-            not self.bfgs_aggregator is None
+            self.bfgs_aggregator is not None
         ), "Call bfgs_compute_gradients prior to this!"
-        assert not self.bfgs_step is None, "Call bfgs_compute_gradients prior to this!"
+        assert self.bfgs_step is not None, "Call bfgs_compute_gradients prior to this!"
         self.bfgs_optim_steps = 0
         self.log.info(f"[step: {self.bfgs_step:10d}] lbfgs optimization in running")
         self.optimizer.step(self.bfgs_closure_func)

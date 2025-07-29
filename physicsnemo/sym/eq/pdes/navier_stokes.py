@@ -14,14 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Equations related to Navier Stokes Equations
-"""
+"""Equations related to Navier Stokes Equations"""
 
 from sympy import Symbol, Function, Number
 
 from physicsnemo.sym.amp import AmpManager
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class NavierStokes(PDE):

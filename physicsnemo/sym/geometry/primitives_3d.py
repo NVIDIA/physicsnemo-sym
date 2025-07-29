@@ -21,7 +21,6 @@ see https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
 
 from sympy import (
     Symbol,
-    Function,
     Abs,
     Max,
     Min,
@@ -29,7 +28,6 @@ from sympy import (
     pi,
     sin,
     cos,
-    atan,
     atan2,
     acos,
     asin,
@@ -38,8 +36,6 @@ from sympy import (
 
 from sympy.vector import CoordSys3D
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from .geometry import Geometry, csg_curve_naming
 from .helper import _sympy_sdf_to_sdf
 from .curve import SympyCurve, Curve
@@ -1949,9 +1945,7 @@ class ElliCylinder(Geometry):
         )
         flat_outside_distance = Max(Abs(z - center[2]) - 0.5 * height, 0)
 
-        outside_distance = sqrt(
-            curved_outside_distance**2 + flat_outside_distance**2
-        )
+        outside_distance = sqrt(curved_outside_distance**2 + flat_outside_distance**2)
 
         # (sign((x-min)*(max-x))+1)/2       # gives 0 if outside range, 0.5 if on min/max, 1 if inside range
         inside_distance_1 = (

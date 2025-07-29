@@ -14,13 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Diffusion equation
-"""
+"""Diffusion equation"""
 
 from sympy import Symbol, Function, Number
 
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class Diffusion(PDE):

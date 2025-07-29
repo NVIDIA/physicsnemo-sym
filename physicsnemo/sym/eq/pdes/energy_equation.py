@@ -24,7 +24,6 @@ http://farside.ph.utexas.edu/teaching/336L/Fluidhtml/node14.html#e4.67
 from sympy import Symbol, Function, Number
 from sympy import *
 from physicsnemo.sym.eq.pde import PDE
-from ..constants import diff
 
 
 class EnergyFluid(PDE):  # TODO clean function simlar to others

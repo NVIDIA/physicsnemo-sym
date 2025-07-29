@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import torch
-import numpy as np
 
 from physicsnemo.sym.key import Key
 from typing import Dict, List
@@ -251,7 +250,7 @@ class FirstDeriv(DerivBase):
                 )
                 assert (
                     len(key.derivatives) == 1
-                ), f"Key must have one derivative for first derivative calc"
+                ), "Key must have one derivative for first derivative calc"
                 eval_list.append(
                     FirstDerivSecondOrder(key.name, str(key.derivatives[0]), str(key))
                 )
@@ -266,7 +265,7 @@ class FirstDeriv(DerivBase):
                 )
                 assert (
                     len(key.derivatives) == 1
-                ), f"Key must have one derivative for first derivative calc"
+                ), "Key must have one derivative for first derivative calc"
                 eval_list.append(
                     FirstDerivFourthOrder(key.name, str(key.derivatives[0]), str(key))
                 )
@@ -305,10 +304,10 @@ class SecondDeriv(DerivBase):
                     )
                     assert (
                         len(key.derivatives) == 2
-                    ), f"Key must have two derivatives for second derivative calc"
+                    ), "Key must have two derivatives for second derivative calc"
                     assert (
                         key.derivatives[0] == key.derivatives[1]
-                    ), f"Derivatives keys should be the same"
+                    ), "Derivatives keys should be the same"
                     eval_list.append(
                         SecondDerivSecondOrder(
                             key.name, str(key.derivatives[0]), str(key)
@@ -326,10 +325,10 @@ class SecondDeriv(DerivBase):
                     )
                     assert (
                         len(key.derivatives) == 2
-                    ), f"Key must have two derivatives for second derivative calc"
+                    ), "Key must have two derivatives for second derivative calc"
                     assert (
                         key.derivatives[0] == key.derivatives[1]
-                    ), f"Derivatives keys should be the same"
+                    ), "Derivatives keys should be the same"
                     eval_list.append(
                         SecondDerivFourthOrder(
                             key.name, str(key.derivatives[0]), str(key)
@@ -350,7 +349,7 @@ class SecondDeriv(DerivBase):
                     )
                     assert (
                         len(key.derivatives) == 2
-                    ), f"Key must have two derivatives for second derivative calc"
+                    ), "Key must have two derivatives for second derivative calc"
                     eval_list.append(
                         MixedSecondDerivSecondOrder(
                             key.name,
@@ -382,7 +381,7 @@ class ThirdDeriv(DerivBase):
             ), f"Key with {len(key.derivatives)} deriv keys supplied to third deriv"
             assert (
                 key.derivatives[0] == key.derivatives[1] == key.derivatives[2]
-            ), f"Mixed third derivatives not supported"
+            ), "Mixed third derivatives not supported"
 
         # Create stencil set of points we need
         eval_list = []
@@ -400,10 +399,10 @@ class ThirdDeriv(DerivBase):
                 )
                 assert (
                     len(key.derivatives) == 3
-                ), f"Key must have three derivatives for third derivative calc"
+                ), "Key must have three derivatives for third derivative calc"
                 assert (
                     key.derivatives[0] == key.derivatives[1] == key.derivatives[2]
-                ), f"Derivatives keys should be the same"
+                ), "Derivatives keys should be the same"
                 eval_list.append(
                     ThirdDerivSecondOrder(key.name, str(key.derivatives[0]), str(key))
                 )
@@ -430,7 +429,7 @@ class FourthDeriv(DerivBase):
                 == key.derivatives[1]
                 == key.derivatives[2]
                 == key.derivatives[3]
-            ), f"Mixed forth derivatives not supported"
+            ), "Mixed forth derivatives not supported"
 
         # Create stencil set of points we need
         eval_list = []
@@ -449,13 +448,13 @@ class FourthDeriv(DerivBase):
                 )
                 assert (
                     len(key.derivatives) == 4
-                ), f"Key must have three derivatives for forth derivative calc"
+                ), "Key must have three derivatives for forth derivative calc"
                 assert (
                     key.derivatives[0]
                     == key.derivatives[1]
                     == key.derivatives[2]
                     == key.derivatives[3]
-                ), f"Derivatives keys should be the same"
+                ), "Derivatives keys should be the same"
                 eval_list.append(
                     FourthDerivSecondOrder(key.name, str(key.derivatives[0]), str(key))
                 )

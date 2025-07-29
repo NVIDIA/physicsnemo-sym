@@ -22,7 +22,6 @@ import torch.nn as nn
 from torch import Tensor
 
 from physicsnemo.sym.amp import (
-    amp_manager_scaler_enabled_and_disable_autocast_activation,
     amp_manager_scaler_enabled_and_disable_autocast_firstlayer,
 )
 

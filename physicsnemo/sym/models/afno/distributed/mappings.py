@@ -14,17 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import types
 
 import torch
-import torch.distributed as dist
-from torch._utils import _flatten_dense_tensors, _unflatten_dense_tensors
 
 from physicsnemo.sym.distributed.manager import DistributedManager
-from physicsnemo.sym.distributed.helpers import split_tensor_along_dim
 from physicsnemo.sym.distributed.helpers import _reduce
 from physicsnemo.sym.distributed.helpers import _split
 from physicsnemo.sym.distributed.helpers import _gather
+
 
 # matmul parallel
 class _CopyToMatmulParallelRegion(torch.autograd.Function):

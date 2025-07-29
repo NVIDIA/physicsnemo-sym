@@ -15,15 +15,12 @@
 # limitations under the License.
 
 import os
-import numpy as np
 from typing import List, Union, Tuple, Callable
 from omegaconf import DictConfig
-import warnings
 
 from physicsnemo.sym.distributed.manager import DistributedManager
 from physicsnemo.sym.trainer import Trainer
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.loss.aggregator import NTK
 from .solver import Solver
 
 

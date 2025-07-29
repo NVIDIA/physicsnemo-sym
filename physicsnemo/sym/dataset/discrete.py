@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Dataset constructors for discrete type data
-"""
+"""PhysicsNeMo Dataset constructors for discrete type data"""
 
 from pathlib import Path
 from typing import Union, Dict, List
@@ -99,7 +98,7 @@ class HDF5GridDataset(Dataset):
 
             # check keys exist
             for k in invar_keys + outvar_keys:
-                if not k in f.keys():
+                if k not in f.keys():
                     raise KeyError(f"Variable {k} not found in HDF5 file")
 
             length = len(f[k])

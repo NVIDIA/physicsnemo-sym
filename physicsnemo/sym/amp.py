@@ -17,12 +17,10 @@
 import torch
 import logging
 from collections import defaultdict
-from torch.autograd import Function
 from torch.amp.grad_scaler import _refresh_per_optimizer_state
 from typing import List, Dict, Any
 from enum import Enum
 from termcolor import colored
-from . import physicsnemo_ext
 
 Tensor = torch.Tensor
 logger = logging.getLogger(__name__)

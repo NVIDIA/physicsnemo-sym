@@ -18,16 +18,10 @@
 Defines different Curve objects
 """
 
-import types
 import numpy as np
 import sympy
 import symengine
-from chaospy.distributions.sampler.sequences.primes import create_primes
-from chaospy.distributions.sampler.sequences.van_der_corput import (
-    create_van_der_corput_samples as create_samples,
-)
 
-from physicsnemo.sym.utils.sympy import np_lambdify
 from .parameterization import Parameterization, Parameter
 from .helper import _sympy_func_to_func
 

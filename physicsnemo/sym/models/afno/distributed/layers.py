@@ -36,9 +36,6 @@ from physicsnemo.sym.models.afno.distributed.mappings import (
     gather_from_matmul_parallel_region,
 )
 
-from physicsnemo.sym.distributed.helpers import _transpose
-from physicsnemo.sym.distributed.helpers import pad_helper
-from physicsnemo.sym.distributed.helpers import truncate_helper
 
 
 def _no_grad_trunc_normal_(tensor, mean, std, a, b):
