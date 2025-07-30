@@ -699,8 +699,6 @@ class FuncArch(nn.Module):
         ----------
         name : str
             This will be used as the name of created node.
-        jit : bool
-            If true then compile with jit, https://pytorch.org/docs/stable/jit.html.
         optimize : bool
             If true then treat parameters as optimizable.
         """
