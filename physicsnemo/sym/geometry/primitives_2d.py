@@ -15,8 +15,8 @@
 # limitations under the License.
 
 """
-Primitives for 2D geometries
-see https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
+Primitives for 2D geometries see
+https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
 """
 
 import sys
@@ -105,6 +105,18 @@ class Line(Geometry):
             dims=2,
             bounds=bounds,
             parameterization=parameterization,
+        )
+
+    def sample_interior(self, *args, **kwargs):
+        """
+        Overloads the parent method to raise an error.
+
+        This is because while a Line is a 2D geometry, it is not a 2D manifold. Hence,
+        it has no interior that can be sampled.
+        """
+        return TypeError(
+            "Points cannot be sampled from the interior of a Line geometry.\n"
+            "You can sample the boundary instead with `sample_boundary`."
         )
 
 
@@ -338,8 +350,7 @@ class Circle(Geometry):
 
 class Triangle(Geometry):
     """
-    2D Isosceles Triangle
-    Symmetrical axis parallel to y-axis
+    2D Isosceles Triangle with symmetrical axis parallel to y-axis
 
     Parameters
     ----------
