@@ -293,6 +293,130 @@ class NavierStokes(PDE):
                 self.equations.pop("compatibility_w_yz")
 
 
+class IncompressibleNavierStokes(PDE):
+    """
+    Incompressible Navier Stokes equations
+    Reference:
+    https://web.stanford.edu/class/me469b/handouts/incompressible.pdf
+
+    Parameters
+    ==========
+    nu : float, Sympy Symbol/Expr, str
+        The kinematic viscosity. If `nu` is a str then it is
+        converted to Sympy Function of form `nu(x,y,z,t)`.
+        If `nu` is a Sympy Symbol or Expression then this
+        is substituted into the equation. This allows for
+        variable viscosity.
+    rho : float
+        The density of the fluid. Default is 1.
+    dim : int
+        Dimension of the Navier Stokes (2 or 3). Default is 3.
+    time : bool
+        If time-dependent equations or not. Default is True.
+
+    Examples
+    ========
+    >>> inc_ns = IncompressibleNavierStokes(nu=0.01, rho=1, dim=2)
+    >>> inc_ns.pprint()
+    """
+
+    name = "IncompressibleNavierStokes"
+
+    def __init__(self, nu, rho=1, dim=3, time=True):
+        # set params
+        self.dim = dim
+        self.time = time
+
+        # coordinates
+        x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+
+        # time
+        t = Symbol("t")
+
+        # make input variables
+        input_variables = {"x": x, "y": y, "z": z, "t": t}
+        if self.dim == 2:
+            input_variables.pop("z")
+        if not self.time:
+            input_variables.pop("t")
+
+        # velocity componets
+        u = Function("u")(*input_variables)
+        v = Function("v")(*input_variables)
+        if self.dim == 3:
+            w = Function("w")(*input_variables)
+        else:
+            w = Number(0)
+
+        # pressure
+        p = Function("p")(*input_variables)
+
+        # kinematic viscosity
+        if isinstance(nu, str):
+            nu = Function(nu)(*input_variables)
+            # When AMP scalers are enabled, and we are using zero equation
+            # models with explicit nu expressions, we have to use a separate
+            # derivative scaler for nu because the dynamic range of nu is
+            # much smaller than the other second-order derivatives.
+            if AmpManager().scaler_enabled:
+                AmpManager().register_special_term(nu, max_scale=2**20)
+        elif isinstance(nu, (float, int)):
+            nu = Number(nu)
+
+        # dynamic viscosity
+        mu = rho * nu
+
+        tau_xx__x = 2 * mu * u.diff(x).diff(x) + 2 * mu.diff(x) * u.diff(x)
+        tau_xy__y = mu * (u.diff(y).diff(y) + v.diff(x).diff(y)) + mu.diff(y) * (
+            u.diff(y) + v.diff(x)
+        )
+        tau_xz__z = mu * (u.diff(z).diff(z) + w.diff(x).diff(z)) + mu.diff(z) * (
+            u.diff(z) + w.diff(x)
+        )
+        tau_xy__x = mu * (u.diff(y).diff(x) + v.diff(x).diff(x)) + mu.diff(x) * (
+            u.diff(y) + v.diff(x)
+        )
+        tau_yy__y = 2 * mu * v.diff(y).diff(y) + 2 * mu.diff(y) * v.diff(y)
+        tau_yz__z = mu * (v.diff(z).diff(z) + w.diff(y).diff(z)) + mu.diff(z) * (
+            v.diff(z) + w.diff(y)
+        )
+        tau_xz__x = mu * (u.diff(z).diff(x) + w.diff(x).diff(x)) + mu.diff(x) * (
+            u.diff(z) + w.diff(x)
+        )
+        tau_yz__y = mu * (v.diff(z).diff(y) + w.diff(y).diff(y)) + mu.diff(y) * (
+            v.diff(z) + w.diff(y)
+        )
+        tau_zz__z = 2 * mu * w.diff(z).diff(z) + 2 * mu.diff(z) * w.diff(z)
+
+        # set equations
+        self.equations = {}
+        self.equations["continuity"] = u.diff(x) + v.diff(y) + w.diff(z)
+        self.equations["momentum_x"] = (
+            rho * (u * u.diff(x) + v * u.diff(y) + w * u.diff(z))
+            + p.diff(x)
+            - tau_xx__x
+            - tau_xy__y
+            - tau_xz__z
+        )
+        self.equations["momentum_y"] = (
+            rho * (u * v.diff(x) + v * v.diff(y) + w * v.diff(z))
+            + p.diff(y)
+            - tau_xy__x
+            - tau_yy__y
+            - tau_yz__z
+        )
+        self.equations["momentum_z"] = (
+            rho * (u * w.diff(x) + v * w.diff(y) + w * w.diff(z))
+            + p.diff(z)
+            - tau_xz__x
+            - tau_yz__y
+            - tau_zz__z
+        )
+
+        if self.dim == 2:
+            self.equations.pop("momentum_z")
+
+
 class GradNormal(PDE):
     """
     Implementation of the gradient boundary condition

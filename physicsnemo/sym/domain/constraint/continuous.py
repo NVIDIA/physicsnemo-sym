@@ -133,7 +133,7 @@ class PointwiseConstraint(Constraint):
 
     def loss(self, step: int) -> Dict[str, torch.Tensor]:
         if self._output_vars is None:
-            logger.warn("Calling loss without forward call")
+            logger.warning("Calling loss without forward call")
             return {}
 
         losses = self._loss(
@@ -586,7 +586,7 @@ class IntegralConstraint(Constraint):
 
     def loss(self, step: int) -> Dict[str, torch.Tensor]:
         if self._output_vars is None:
-            logger.warn("Calling loss without forward call")
+            logger.warning("Calling loss without forward call")
             return {}
 
         # split for individual integration

@@ -76,8 +76,9 @@ class PDE(object):
     def make_nodes(
         self,
         create_instances: int = 1,
-        freeze_terms: Dict[str, List[int]] = {},
-        detach_names: List[str] = [],
+        freeze_terms: Dict[str, List[int]] = None,
+        detach_names: list[str] = None,
+        return_as_dict: bool = False,
     ):
         """
         Make a list of nodes from PDE.
@@ -90,52 +91,60 @@ class PDE(object):
             This will freeze the terms in appropiate equation
         detach_names : List[str]
             This will detach the inputs of the resulting node.
+        return_as_dict : bool
+            If True, return nodes as a dictionary with equation names as keys.
+            If False, return nodes as a list (default behavior).
 
         Returns
         -------
-        nodes : List[Node]
+        nodes : list[Node] | dict[str, Node]
             Makes a separate node for every equation.
+            Returns list of nodes if return_as_dict=False, dictionary if return_as_dict=True.
         """
-        nodes = []
+        if detach_names is None:
+            detach_names = []
+        if freeze_terms is None:
+            freeze_terms = {}
+
         if create_instances == 1:
             if bool(freeze_terms):
                 print(
                     "Freezing of terms is not supported when create_instance = 1. No terms will be frozen!"
                 )
                 freeze_terms = {}  # override with an empty dict
-            for name, eq in self.equations.items():
-                nodes.append(Node.from_sympy(eq, str(name), freeze_terms, detach_names))
+            node_dict = {
+                str(name): Node.from_sympy(eq, str(name), freeze_terms, detach_names)
+                for name, eq in self.equations.items()
+            }
         else:
             # look for empty lists in freeze_terms dict
-            for k in list(freeze_terms):
-                if not freeze_terms[k]:
-                    freeze_terms.pop(k)
+            freeze_terms = {k: v for k, v in freeze_terms.items() if v}
+
+            node_dict = {}
             for i in range(create_instances):
                 for name, eq in self.equations.items():
-                    if str(name) + "_" + str(i) in freeze_terms.keys():
-                        nodes.append(
-                            Node.from_sympy(
-                                eq,
-                                str(name) + "_" + str(i),
-                                freeze_terms[str(name) + "_" + str(i)],
-                                detach_names,
-                            )
+                    node_name = f"{name}_{i}"
+                    if node_name in freeze_terms.keys():
+                        node = Node.from_sympy(
+                            eq,
+                            node_name,
+                            freeze_terms[node_name],
+                            detach_names,
                         )
                     else:
                         # set the freeze terms to an empty list
                         print(
-                            "No freeze terms found for instance: "
-                            + str(name)
-                            + "_"
-                            + str(i)
-                            + ", setting to empty"
+                            f"No freeze terms found for instance {node_name}, setting to empty."
                         )
-                        nodes.append(
-                            Node.from_sympy(
-                                eq,
-                                str(name) + "_" + str(i),
-                                [],
-                                detach_names,
-                            )
+                        node = Node.from_sympy(
+                            eq,
+                            node_name,
+                            [],
+                            detach_names,
                         )
-        return nodes
+                    node_dict[node_name] = node
+
+        if return_as_dict:
+            return node_dict
+        else:
+            return list(node_dict.values())

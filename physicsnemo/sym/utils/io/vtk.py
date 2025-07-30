@@ -69,7 +69,7 @@ class VTKBase:
 
     def get_array(self, name: str, dim: Union[None, int] = None):
         if name not in self.get_array_names():
-            logger.warn(f"{name} not found in data arrays")
+            logger.warning(f"{name} not found in data arrays")
             return None
 
         data_array = vtk_to_numpy(self.vtk_obj.GetPointData().GetArray(name))
@@ -148,7 +148,7 @@ class VTKBase:
                         np.zeros((self.vtk_obj.GetNumberOfPoints(), 1), dtype=np.short)
                     )
 
-            # If we recieved any data that fits the map
+            # If we received any data that fits the map
             if len(vtk_array) > 0:
                 out_var[key] = np.squeeze(np.concatenate(vtk_array, axis=1))
 
@@ -210,7 +210,7 @@ class VTKBase:
         if name in self.get_array_names():
             self.vtk_obj.GetPointData().RemoveArray(name)
         else:
-            logger.warn(f"Point data {name} not present in VTK object")
+            logger.warning(f"Point data {name} not present in VTK object")
 
 
 class VTKUniformGrid(VTKBase):
@@ -507,7 +507,7 @@ class VTKUnstructuredGrid(VTKBase):
     cell_index : Tuple[ np.array, np.array ]
         Tuple of (cell_offsets, cell_connectivity) arrays.
         Cell offsets is a 1D array denoting how many points make up a face for each cell.
-        Cell connectivity is a 1D array that contains verticies of each cell face in order
+        Cell connectivity is a 1D array that contains vertices of each cell face in order
     cell_types : np.array
         Array of cell vtk types:
         https://vtk.org/doc/nightly/html/vtkCellType_8h_source.html
@@ -592,7 +592,7 @@ class VTKUnstructuredGrid(VTKBase):
     def get_cells(self):
         cells = self.vtk_obj.GetCells()
         # Get cells data contains array [nedges, v1, v2, v3, ..., nedges, v1, v2, v3,...]
-        # Need to seperate offset and connectivity array for practical use
+        # Need to separate offset and connectivity array for practical use
         cell_connectivity = vtk_to_numpy(cells.GetConnectivityArray())
         cell_offsets = vtk_to_numpy(cells.GetOffsetsArray())
         return cell_offsets, cell_connectivity
@@ -672,7 +672,7 @@ class VTKPolyData(VTKBase):
     poly_index : Tuple[poly_offsets, poly_connectivity]
         Tuple of polygon offsets and polygon connectivity arrays.
         Polygon offsets is a 1D array denoting how many points make up a face for each polygon.
-        Polygon connectivity is a 1D array that contains verticies of each polygon face in order, by default None
+        Polygon connectivity is a 1D array that contains vertices of each polygon face in order, by default None
     export_map : Dict[str, List[str]], optional
         Export map dictionary with keys that are VTK variables names and values that are lists of output variables. Will use 1 to 1 mapping if none is provided, by default {}
     file_name : str, optional
@@ -747,7 +747,7 @@ class VTKPolyData(VTKBase):
     def get_polys(self):
         polys = self.vtk_obj.GetPolys()
         # Poly data contains array [nedges, v1, v2, v3, ..., nedges, v1, v2, v3,...]
-        # Need to seperate offset and connectivity array for practical use
+        # Need to separate offset and connectivity array for practical use
         poly_connectivity = vtk_to_numpy(polys.GetConnectivityArray())
         poly_offsets = vtk_to_numpy(polys.GetOffsetsArray())
         return poly_offsets, poly_connectivity
@@ -860,14 +860,16 @@ class VTKFromFile(object):
                 vtk_reader = cls.readXMLVTK(file_path)
                 read_success = True
             except:
-                logger.warn("VTK file not valid XML format, will attempt legacy load")
+                logger.warning(
+                    "VTK file not valid XML format, will attempt legacy load"
+                )
         # If failed or legacy force, create VTK Reader
         if not read_success:
             try:
                 vtk_reader = cls.readLegacyVTK(file_path)
                 read_success = True
             except:
-                logger.warn("VTK file not valid VTK format")
+                logger.warning("VTK file not valid VTK format")
         # Hopefully VTK reader is loaded
         assert read_success, "Failed to load VTK file in either XML or Legacy format"
         logger.info(f"Read {Path(file_path).name} file successfully")
@@ -937,7 +939,7 @@ class VTKFromFile(object):
 def var_to_polyvtk(
     var_dict: Dict[str, np.array], file_path: str, coordinates=["x", "y", "z"]
 ):
-    """Helper method for nodes to export thier variables to a vtkPolyData file
+    """Helper method for nodes to export their variables to a vtkPolyData file
     Should be avoided when possible as other VTK formats can save on memory.
 
     Parameters
