@@ -199,7 +199,7 @@ class FirstDeriv(torch.nn.Module):
 
         return result
 
-    def compute_ls_grads(self, dv, du):
+    def compute_ls_grads(self, dv: torch.Tensor, du: torch.Tensor) -> torch.Tensor:
         """Given du and dv, compute the grads (batched)"""
 
         w_squared = 1 / ((dv**2).sum(dim=2) + 1e-8)
