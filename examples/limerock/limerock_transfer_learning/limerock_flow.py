@@ -59,7 +59,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     flow_domain = Domain()
 
     # add constraints to solver
-    x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+    x, _y, _z = Symbol("x"), Symbol("y"), Symbol("z")
 
     # inlet
     def channel_sdf(x, y, z):

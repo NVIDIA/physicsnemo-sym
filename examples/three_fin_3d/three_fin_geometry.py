@@ -99,7 +99,7 @@ class ThreeFin(object):
             ),
             parameterization=pr,
         )
-        fin_center = (
+        (
             fin_origin[0] + fin_dim[0] / 2,
             fin_origin[1] + fin_dim[1] / 2,
             fin_origin[2] + fin_dim[2] / 2,

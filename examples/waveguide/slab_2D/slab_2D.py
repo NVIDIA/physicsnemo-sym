@@ -65,11 +65,12 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     len_slab = 0.6
     eps0 = 1.0
     eps1 = 2.0
-    eps_numpy = lambda y: np.where(
-        np.logical_and(y > (height - len_slab) / 2, y < (height + len_slab) / 2),
-        eps1,
-        eps0,
-    )
+    def eps_numpy(y):
+        return np.where(
+            np.logical_and(y > (height - len_slab) / 2, y < (height + len_slab) / 2),
+            eps1,
+            eps0,
+        )
     eps_sympy = sqrt(
         eps0
         + (
@@ -80,7 +81,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     )
     eigvals, eigvecs, yv = Laplacian_1D_eig(0, height, 1000, eps=eps_numpy, k=3)
     yv = yv.reshape((-1, 1))
-    eigenmode = [1]
     wave_number = 16.0  # wave_number = freq/c
     waveguide_port_invar_numpy = {"x": np.zeros_like(yv), "y": yv}
     waveguide_port_outvar_numpy = {"u": 10 * eigvecs[:, 0:1]}

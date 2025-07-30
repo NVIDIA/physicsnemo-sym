@@ -587,9 +587,10 @@ class GaussianDiffusion(nn.Module):
 
         # helper function to register buffer from float64 to float32
 
-        register_buffer = lambda name, val: self.register_buffer(
-            name, val.to(torch.float32)
-        )
+        def register_buffer(name, val):
+            return self.register_buffer(
+                    name, val.to(torch.float32)
+                )
 
         register_buffer("betas", betas)
         register_buffer("alphas_cumprod", alphas_cumprod)
@@ -712,7 +713,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample(self, x, t: int, x_self_cond=None):
-        b, *_, device = *x.shape, x.device
+        _b, *_, _device = *x.shape, x.device
         batched_times = torch.full((x.shape[0],), t, device=x.device, dtype=torch.long)
         model_mean, _, model_log_variance, x_start = self.p_mean_variance(
             x=x, t=batched_times, x_self_cond=x_self_cond, clip_denoised=True
@@ -723,7 +724,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop(self, shape, return_all_timesteps=False):
-        batch, device = shape[0], self.betas.device
+        _batch, device = shape[0], self.betas.device
 
         img = torch.randn(shape, device=device)
         # img = inn
@@ -747,7 +748,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop_clem(self, shape, inn, return_all_timesteps=False):
-        batch, device = shape[0], self.betas.device
+        _batch, _device = shape[0], self.betas.device
 
         # img = torch.randn(shape, device = device)
         img = inn
@@ -771,7 +772,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def ddim_sample(self, shape, return_all_timesteps=False):
-        batch, device, total_timesteps, sampling_timesteps, eta, objective = (
+        batch, device, total_timesteps, sampling_timesteps, eta, _objective = (
             shape[0],
             self.betas.device,
             self.num_timesteps,
@@ -826,7 +827,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def ddim_sample_clem(self, shape, inn, return_all_timesteps=False):
-        batch, device, total_timesteps, sampling_timesteps, eta, objective = (
+        batch, device, total_timesteps, sampling_timesteps, eta, _objective = (
             shape[0],
             self.betas.device,
             self.num_timesteps,
@@ -982,7 +983,7 @@ class GaussianDiffusion(nn.Module):
     def forward(self, img, *args, **kwargs):
         (
             b,
-            c,
+            _c,
             h,
             w,
             device,

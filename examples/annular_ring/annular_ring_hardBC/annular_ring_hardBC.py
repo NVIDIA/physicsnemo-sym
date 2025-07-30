@@ -207,7 +207,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     cylinder_center = hard_bc.cylinder_center
     outer_cylinder_radius = hard_bc.outer_cylinder_radius
     inner_cylinder_radius = hard_bc.inner_cylinder_radius
-    inlet_vel = hard_bc.inlet_vel
 
     # make geometry
     x, y = Symbol("x"), Symbol("y")

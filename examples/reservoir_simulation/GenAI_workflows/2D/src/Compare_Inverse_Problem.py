@@ -371,7 +371,7 @@ wells = np.reshape(wells, (-1, 3), "C")
 
 
 bb = os.path.isfile("../PACKETS/iglesias2.out")
-if bb == False:
+if not bb:
     print("....Downloading Please hold.........")
     download_file_from_google_drive(
         "1bib2JAZfBpW4bKz5LdCmhAOtxQixkTzj", "../PACKETS/iglesias2.out"

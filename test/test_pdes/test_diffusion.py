@@ -26,15 +26,15 @@ def test_diffusion_equation():
     z = np.random.rand(1024, 1)
     t = np.random.rand(1024, 1)
 
-    u = np.sin(x) * np.sin(y) * np.sin(z) * np.cos(t)
+    np.sin(x) * np.sin(y) * np.sin(z) * np.cos(t)
 
     D = 0.1
     Q = 0.1
 
     u__t = -np.sin(x) * np.sin(y) * np.sin(z) * np.sin(t)
-    u__x = np.cos(x) * np.sin(y) * np.sin(z) * np.cos(t)
-    u__y = np.sin(x) * np.cos(y) * np.sin(z) * np.cos(t)
-    u__z = np.sin(x) * np.sin(y) * np.cos(z) * np.cos(t)
+    np.cos(x) * np.sin(y) * np.sin(z) * np.cos(t)
+    np.sin(x) * np.cos(y) * np.sin(z) * np.cos(t)
+    np.sin(x) * np.sin(y) * np.cos(z) * np.cos(t)
 
     u__x__x = -np.sin(x) * np.sin(y) * np.sin(z) * np.cos(t)
     u__y__y = -np.sin(x) * np.sin(y) * np.sin(z) * np.cos(t)

@@ -260,7 +260,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 "fin_length_s",
             ]
         }
-        openfoam_flow_outvar_numpy = {
+        {
             key: value
             for key, value in openfoam_var.items()
             if key in ["u", "v", "w", "p"]
@@ -319,7 +319,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 "fin_length_s",
             ]
         }
-        openfoam_outvar_solid_numpy = {
+        {
             key: value for key, value in openfoam_var.items() if key in ["theta_s"]
         }
         openfoam_solid_validator = PointwiseValidator(

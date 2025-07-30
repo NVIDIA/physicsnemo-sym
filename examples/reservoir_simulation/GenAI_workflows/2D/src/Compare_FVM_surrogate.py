@@ -415,7 +415,7 @@ while True:
 
 if chuu == 1:
     bb = os.path.isfile("../PACKETS/iglesias2.out")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1bib2JAZfBpW4bKz5LdCmhAOtxQixkTzj", "../PACKETS/iglesias2.out"
@@ -425,7 +425,7 @@ if chuu == 1:
     Truee = np.genfromtxt("../PACKETS/iglesias2.out", dtype="float")
 else:
     bb1 = os.path.isfile(("../PACKETS/Ganensemble.mat"))
-    if bb1 == False:
+    if not bb1:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1w81M5M2S0PD9CF2761dxmiKQ5c0OFPaH",
@@ -680,7 +680,7 @@ if surrogate == 1:
     bb = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1cldZ75k-kIJQU51F1w17yRYFAAjoYOXU",
@@ -706,7 +706,7 @@ if surrogate == 1:
     bba = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1IWTnWceqbCD3XdQmHOsw6Et9jS8hozML",
@@ -736,7 +736,7 @@ elif surrogate == 2:
     bb = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1Df3NHyAMW4fdAVwdSyQEvuD8Z9gpsNwt",
@@ -761,7 +761,7 @@ elif surrogate == 2:
     bba = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1QAYQJy9_2FiBrxL8TYtTvTJNmsTaUSh4",
@@ -790,7 +790,7 @@ elif surrogate == 3:
         pass
 
     bb = os.path.isfile("outputs/Forward_problem_PINO2/pressure_model.pth")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1sv_tbB91EWcJOBWdhhnTKspoAtR564o4",
@@ -813,7 +813,7 @@ elif surrogate == 3:
         os.chdir(oldfolder)
 
     bba = os.path.isfile("outputs/Forward_problem_PINO2/saturation_model.pth")
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "13BGxwvN2IV0eo0vbUxb16BhJ2MtJ-s0W",
@@ -844,7 +844,7 @@ elif surrogate == 4:
         pass
 
     bb = os.path.isfile("outputs/Forward_problem_PINO3/pressure_model.pth")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1jihu5qi0TWh22RuIxNEvUxvixUrnxzxB",
@@ -868,7 +868,7 @@ elif surrogate == 4:
         os.chdir(oldfolder)
 
     bba = os.path.isfile("outputs/Forward_problem_PINO3/saturation_model.pth")
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1FibuOGfBZHOrZgiPf6lggcCpKlaMaq7A",
@@ -901,7 +901,7 @@ elif surrogate == 5:
     bb = os.path.isfile(
         "outputs/Forward_problem_AFNOD/ResSim/afno_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1v1s5WtJ4HVYb1_Qm8GRLxlEbpOqzxMZU",
@@ -927,7 +927,7 @@ elif surrogate == 5:
     bba = os.path.isfile(
         "outputs/Forward_problem_AFNOD/ResSim/afno_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1UdAH2WyXdY87VncoDUjiM-SzmnSSpelY",
@@ -960,7 +960,7 @@ elif surrogate == 6:
     bb = os.path.isfile(
         "outputs/Forward_problem_AFNOP/ResSim/afnop_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "14Iq6ERuHfrd6u5HMiUVNU3zzaJRusnmJ",
@@ -986,7 +986,7 @@ elif surrogate == 6:
     bba = os.path.isfile(
         "outputs/Forward_problem_AFNOP/ResSim/afnop_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1qazyOOIfoXRHyJ99kfW3vICFEtPtR9sV",

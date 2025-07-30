@@ -67,11 +67,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     normalize_inlet_vel = 1.0
 
     # heat params
-    D_solid = 0.1
-    D_fluid = 0.02
-    inlet_T = 0
-    source_grad = 1.5
-    source_area = source_dim[0] * source_dim[2]
+    source_dim[0] * source_dim[2]
 
     u_profile = (
         normalize_inlet_vel

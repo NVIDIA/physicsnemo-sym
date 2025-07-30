@@ -167,7 +167,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
     import time as time
 
-    tic = time.time()
+    time.time()
 
     # inlet
     inlet = PointwiseBoundaryConstraint(

@@ -41,7 +41,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     Re = 590
     nu = 1 / Re
     y_plus = 30
-    karman_constant = 0.4187
     resolved_y_start = y_plus * nu
     channel_width = (-1, 1)
     channel_length = (-np.pi / 2, np.pi / 2)
@@ -57,7 +56,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         normal=1,
     )
 
-    geo_sdf = Channel2D(
+    Channel2D(
         (channel_length[0], channel_width[0]), (channel_length[1], channel_width[1])
     )
 

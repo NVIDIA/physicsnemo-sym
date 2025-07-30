@@ -587,29 +587,29 @@ def smoothn(
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -622,7 +622,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -727,7 +727,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -2067,7 +2067,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     if interest == 1:
         # bb = os.path.isfile(to_absolute_path('../PACKETS/conversions.mat'))
-        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")) == True:
+        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")):
             os.remove(to_absolute_path("../PACKETS/conversions.mat"))
         if not os.path.exists(to_absolute_path("../RUNS")):
             os.makedirs(to_absolute_path("../RUNS"))
@@ -2101,7 +2101,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     pini_alt = 200
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/conversions.mat"))
-    if bb == True:
+    if bb:
         mat = sio.loadmat(to_absolute_path("../PACKETS/conversions.mat"))
         steppi = int(mat["steppi"])
 
@@ -2137,7 +2137,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # N_ens = 2
     njobs = 3
     # njobs = int((multiprocessing.cpu_count() // 4) - 1)
-    num_cores = njobs
 
     source_dir = to_absolute_path("../Necessaryy")
     # dest_dir = 'path_to_folder_B'
@@ -2433,10 +2432,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     print("target_min value is:", target_min)
     print("target_max value is:", target_max)
 
-    minKx = torch.from_numpy(minK).to(device)
-    maxKx = torch.from_numpy(maxK).to(device)
-    minPx = torch.from_numpy(minP).to(device)
-    maxPx = torch.from_numpy(maxP).to(device)
+    torch.from_numpy(minK).to(device)
+    torch.from_numpy(maxK).to(device)
+    torch.from_numpy(minP).to(device)
+    torch.from_numpy(maxP).to(device)
 
     del mat
     gc.collect()

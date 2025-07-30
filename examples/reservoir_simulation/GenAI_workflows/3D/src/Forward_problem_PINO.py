@@ -103,7 +103,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
 
             lookf = (pressure_true[0, itt, :, :, :]) * self.pini_alt
 
-            diff1 = abs(look - lookf)
+            abs(look - lookf)
 
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(12, 12), dpi=100)
@@ -658,8 +658,8 @@ class Black_oil(torch.nn.Module):
             (self.UO * self.BO),
         )
 
-        krw = torch.square(S)
-        kroil = torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
+        torch.square(S)
+        torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
         Mt = Mw + Mo
         a1 = torch.mul(Mt, a)  # overall Effective permeability
         a1water = torch.mul(Mw, a)  # water Effective permeability
@@ -840,25 +840,6 @@ class Black_oil(torch.nn.Module):
 # [pde-loss]
 @physicsnemo.sym.main(config_path="conf", config_name="config_PINO")
 def run(cfg: PhysicsNeMoConfig) -> None:
-    text = """
-                                                              dddddddd                                                         
-    MMMMMMMM               MMMMMMMM                           d::::::d                lllllll                                  
-    M:::::::M             M:::::::M                           d::::::d                l:::::l                                  
-    M::::::::M           M::::::::M                           d::::::d                l:::::l                                  
-    M:::::::::M         M:::::::::M                           d:::::d                 l:::::l                                  
-    M::::::::::M       M::::::::::M  ooooooooooo      ddddddddd:::::duuuuuu    uuuuuu  l::::luuuuuu    uuuuuu     ssssssssss   
-    M:::::::::::M     M:::::::::::Moo:::::::::::oo  dd::::::::::::::du::::u    u::::u  l::::lu::::u    u::::u   ss::::::::::s  
-    M:::::::M::::M   M::::M:::::::o:::::::::::::::od::::::::::::::::du::::u    u::::u  l::::lu::::u    u::::u ss:::::::::::::s 
-    M::::::M M::::M M::::M M::::::o:::::ooooo:::::d:::::::ddddd:::::du::::u    u::::u  l::::lu::::u    u::::u s::::::ssss:::::s
-    M::::::M  M::::M::::M  M::::::o::::o     o::::d::::::d    d:::::du::::u    u::::u  l::::lu::::u    u::::u  s:::::s  ssssss 
-    M::::::M   M:::::::M   M::::::o::::o     o::::d:::::d     d:::::du::::u    u::::u  l::::lu::::u    u::::u    s::::::s      
-    M::::::M    M:::::M    M::::::o::::o     o::::d:::::d     d:::::du::::u    u::::u  l::::lu::::u    u::::u       s::::::s   
-    M::::::M     MMMMM     M::::::o::::o     o::::d:::::d     d:::::du:::::uuuu:::::u  l::::lu:::::uuuu:::::u ssssss   s:::::s 
-    M::::::M               M::::::o:::::ooooo:::::d::::::ddddd::::::du:::::::::::::::ul::::::u:::::::::::::::us:::::ssss::::::s
-    M::::::M               M::::::o:::::::::::::::od:::::::::::::::::du:::::::::::::::l::::::lu:::::::::::::::s::::::::::::::s 
-    M::::::M               M::::::Moo:::::::::::oo  d:::::::::ddd::::d uu::::::::uu:::l::::::l uu::::::::uu:::us:::::::::::ss  
-    MMMMMMMM               MMMMMMMM  ooooooooooo     ddddddddd   ddddd   uuuuuuuu  uuullllllll   uuuuuuuu  uuuu sssssssssss   
-    """
     print("")
     print("------------------------------------------------------------------")
     print("")
@@ -1041,7 +1022,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         print("Use already generated ensemble from Google drive folder")
         if choice == 1:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Multiple-point-statistics run")
 
                 print("....Downloading Please hold.........")
@@ -1070,7 +1051,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 ini_ensemblef = scaler1a.transform(ini_ensemblef)
         else:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble_gauss.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Two - point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -1173,7 +1154,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     imp = batch_size
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -1334,7 +1315,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     preprocess_FNO_mat(to_absolute_path("../PACKETS/simulations.mat"))
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/iglesias2.out"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1VSy2m3ocUkZnhCsorbkhcJB5ADrPxzIp",

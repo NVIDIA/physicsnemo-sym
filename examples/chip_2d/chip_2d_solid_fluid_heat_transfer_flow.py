@@ -86,7 +86,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     nd_fluid_conductivity = fluid_conductivity / (
         watt_scale / (length_scale * temp_scale)
     )
-    nd_fluid_diffusivity = nd_fluid_conductivity / (
+    nd_fluid_conductivity / (
         nd_fluid_specific_heat * nd_fluid_density
     )
 
@@ -98,14 +98,14 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     nd_copper_conductivity = copper_conductivity / (
         watt_scale / (length_scale * temp_scale)
     )
-    nd_copper_diffusivity = nd_copper_conductivity / (
+    nd_copper_conductivity / (
         nd_copper_specific_heat * nd_copper_density
     )
 
     # boundary params
     nd_inlet_velocity = inlet_velocity / (length_scale / time_scale)
-    nd_inlet_temp = inlet_temp / temp_scale
-    nd_copper_source_grad = copper_heat_flux * length_scale / temp_scale
+    inlet_temp / temp_scale
+    copper_heat_flux * length_scale / temp_scale
 
     # make list of nodes to unroll graph on
     ns = NavierStokes(
@@ -132,7 +132,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     chip_width = 1.0
 
     # define sympy variables to parametrize domain curves
-    x, y = Symbol("x"), Symbol("y")
+    x, _y = Symbol("x"), Symbol("y")
 
     # define geometry
     channel = Channel2D(

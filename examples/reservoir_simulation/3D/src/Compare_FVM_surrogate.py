@@ -84,7 +84,7 @@ def process_chunk(chunk):
         Runs = len(chunks)
         processed_chunks.value += 1
         completion_percentage = (processed_chunks.value / len(chunks)) * 100
-        remaining_percentage = 100 - completion_percentage
+        100 - completion_percentage
         # print(f"Processed chunk {processed_chunks.value}. {completion_percentage:.2f}% completed. {remaining_percentage:.2f}% remaining.")
         progressBar = "\rPlotting Progress: " + ProgressBar(
             Runs, processed_chunks.value, Runs
@@ -320,7 +320,7 @@ wells = np.array(
 wells = np.reshape(wells, (-1, 3), "C")
 
 bb = os.path.isfile(to_absolute_path("../PACKETS/Test4.mat"))
-if bb == False:
+if not bb:
     print("....Downloading Please hold.........")
     download_file_from_google_drive(
         "1PX2XFG1-elzQItvkUERJqeOerTO2kevq", to_absolute_path("../PACKETS/Test4.mat")
@@ -477,7 +477,7 @@ if surrogate == 1:
     bb = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "11cr3-7zvAZA5zI1SpfevZOQhsYuzAJjy",
@@ -503,7 +503,7 @@ if surrogate == 1:
     bba = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1EnYGi6MiJum-i-QzbRrpmvsqdR0KSa9a",
@@ -533,7 +533,7 @@ else:
     bb = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1unX_CW5_9aTV97LqkRWkYElwsjGkLYdl",
@@ -558,7 +558,7 @@ else:
     bba = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1d9Vk9UiVU0sUV2KSh_H4gyH5OVUl2rqS",

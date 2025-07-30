@@ -2843,29 +2843,29 @@ def smoothn(
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -2878,7 +2878,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -2983,7 +2983,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -3467,7 +3467,8 @@ def NewtRaph(
 
                 if method2 == 1:  # GMRES
                     M2 = spilu(-dG)
-                    M_x = lambda x: M2.solve(x)
+                    def M_x(x):
+                        return M2.solve(x)
                     M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
                     ds, exitCode = gmres(
                         -dG, G, tol=1e-6, atol=0, restart=20, maxiter=100, M=M
@@ -3477,7 +3478,8 @@ def NewtRaph(
                     ds = spsolve(-dG, G)
                 elif method2 == 3:
                     M2 = spilu(-dG)
-                    M_x = lambda x: M2.solve(x)
+                    def M_x(x):
+                        return M2.solve(x)
                     M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
                     ds, exitCode = cg(-dG, G, tol=1e-6, atol=0, maxiter=100, M=M)
                 elif method2 == 4:  # LSQR
@@ -3485,7 +3487,8 @@ def NewtRaph(
                     ds, istop, itn, normr = lsqr(-dG, G)[:4]
                 elif method2 == 5:  # CPR
                     M2 = spilu(-dG)
-                    M_x = lambda x: M2.solve(x)
+                    def M_x(x):
+                        return M2.solve(x)
                     M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
                     ds, exitCode = gmres(
                         -dG, G, tol=1e-6, atol=0, restart=20, maxiter=100, M=M
@@ -3863,7 +3866,8 @@ def Reservoir_Simulator(
 
         if method == 1:  # GMRES
             M2 = spilu(A)
-            M_x = lambda x: M2.solve(x)
+            def M_x(x):
+                return M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
             u, exitCode = gmres(A, b, tol=1e-6, atol=0, restart=20, maxiter=100, M=M)
 
@@ -3872,7 +3876,8 @@ def Reservoir_Simulator(
 
         elif method == 3:  # CONJUGATE GRADIENT
             M2 = spilu(A)
-            M_x = lambda x: M2.solve(x)
+            def M_x(x):
+                return M2.solve(x)
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
             u, exitCode = cg(A, b, tol=1e-6, atol=0, maxiter=100, M=M)
 

@@ -47,7 +47,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     geo = Point1D(0)
     t_max = 10.0
     t_symbol = Symbol("t")
-    x = Symbol("x")
+    Symbol("x")
     time_range = {t_symbol: (0, t_max)}
 
     # make domain

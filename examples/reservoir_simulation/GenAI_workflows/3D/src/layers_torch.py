@@ -737,7 +737,7 @@ def fourier_derivatives(x: Tensor, l: List[float]) -> Tuple[Tensor, Tensor]:
     pi = float(np.pi)
 
     # get needed dims
-    batchsize = x.size(0)
+    x.size(0)
     n = x.shape[2:]
     dim = len(l)
 

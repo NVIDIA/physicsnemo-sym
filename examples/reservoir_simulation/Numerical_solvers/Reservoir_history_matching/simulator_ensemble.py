@@ -386,8 +386,8 @@ def H(y, t0=0):
     """
     Step fn with step at t0
     """
-    h = np.zeros_like(y)
-    args = tuple([slice(0, y.shape[i]) for i in y.ndim])
+    np.zeros_like(y)
+    tuple([slice(0, y.shape[i]) for i in y.ndim])
 
 
 def smoothn(
@@ -411,29 +411,29 @@ def smoothn(
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -446,7 +446,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -551,7 +551,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -3555,7 +3555,7 @@ def Simulator(plan, ini, inip, path_out):
     wellsI[:, 2] = 1
     wellsP = np.array(np.vstack(producers)[:, :3], dtype=float)
     wellsP[:, 2] = 2
-    wells = np.vstack([wellsI, wellsP])
+    np.vstack([wellsI, wellsP])
 
     # NecessaryI = np.vstack(injectors)[:,4:7]
     # NecessaryP = np.vstack(producers)[:,4:7]
@@ -3696,7 +3696,7 @@ def Simulator(plan, ini, inip, path_out):
         os.chdir(oldfolder)
 
     elapsed_time_secs = time.time() - start_time_plots1
-    msg = "Reservoir simulation  took: %s secs (Wall clock time)" % timedelta(
+    "Reservoir simulation  took: %s secs (Wall clock time)" % timedelta(
         seconds=round(elapsed_time_secs)
     )
 
@@ -3707,7 +3707,7 @@ def Simulator(plan, ini, inip, path_out):
             # print('Plotting outputs')
             os.chdir(path_out)
             Runs = steppi
-            ty = np.arange(1, Runs + 1)
+            np.arange(1, Runs + 1)
 
             if nz == 1:
                 for kk in range(steppi):
@@ -3983,7 +3983,7 @@ def Simulator(plan, ini, inip, path_out):
                     os.remove(f4)
             os.chdir(oldfolder)
             elapsed_time_secs = time.time() - start_time_plots
-            msg = (
+            (
                 "pressure and saturation plots took: %s secs (Wall clock time)"
                 % timedelta(seconds=round(elapsed_time_secs))
             )
@@ -4071,7 +4071,7 @@ def Simulator(plan, ini, inip, path_out):
 
             os.chdir(oldfolder)
             elapsed_time_secs = time.time() - start_time_peaceman
-            msg = (
+            (
                 "Well rates and pressure computation took: %s secs (Wall clock time)"
                 % timedelta(seconds=round(elapsed_time_secs))
             )
@@ -4082,7 +4082,7 @@ def Simulator(plan, ini, inip, path_out):
 
             os.chdir(path_out)
             Runs = steppi
-            ty = np.arange(1, Runs + 1)
+            np.arange(1, Runs + 1)
 
             if nz == 1:
                 for kk in range(steppi):
@@ -4430,7 +4430,7 @@ def Simulator(plan, ini, inip, path_out):
                     os.remove(f4)
             os.chdir(oldfolder)
             elapsed_time_secs = time.time() - start_time_plots
-            msg = (
+            (
                 "pressure and saturation plots took: %s secs (Wall clock time)"
                 % timedelta(seconds=round(elapsed_time_secs))
             )
@@ -4532,7 +4532,7 @@ def Simulator(plan, ini, inip, path_out):
 
             os.chdir(oldfolder)
             elapsed_time_secs = time.time() - start_time_peaceman
-            msg = (
+            (
                 "Well rates and pressure computation took: %s secs (Wall clock time)"
                 % timedelta(seconds=round(elapsed_time_secs))
             )
@@ -4891,7 +4891,7 @@ device = torch.device(f"cuda:{cuda}" if torch.cuda.is_available() else "cpu")
 
 # True model
 bba = os.path.isfile("PACKETS/iglesias3.out")
-if bba == False:
+if not bba:
     print("....Downloading Please hold.........")
     download_file_from_google_drive(
         "1VSy2m3ocUkZnhCsorbkhcJB5ADrPxzIp", "PACKETS/iglesias3.out"
@@ -5236,7 +5236,7 @@ else:
 
 if DEFAULT == 1:
     bb = os.path.isfile("PACKETS/Training4.mat")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi", "PACKETS/Training4.mat"
@@ -5320,7 +5320,7 @@ else:
             if Ne <= 2000:
                 # yes
                 bb = os.path.isfile("PACKETS/Training4.mat")
-                if bb == False:
+                if not bb:
                     print("....Downloading Please hold.........")
                     download_file_from_google_drive(
                         "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi", "PACKETS/Training4.mat"
@@ -5354,7 +5354,7 @@ else:
                 ini_ensemble = ini_use
             else:
                 bb = os.path.isfile(("PACKETS/Ganensemble.mat"))
-                if bb == False:
+                if not bb:
                     print(
                         "Get initial geology from saved Multiple-point-statistics run"
                     )
@@ -5416,7 +5416,7 @@ else:
         else:
             filename = "PACKETS/Ganensemble_gauss.mat"  # Ensemble generated offline
             bb = os.path.isfile(filename)
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved two-point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -5480,7 +5480,7 @@ post-processing\n"
     if Geostats == 1:
         bb = os.path.isfile("PACKETS/denosingautoencoder.h5")
         # bb2=os.path.isfile('denosingautoencoderp.h5')
-        if bb == False:
+        if not bb:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -5497,7 +5497,7 @@ post-processing\n"
         else:
             pass
         bb2 = os.path.isfile("PACKETS/denosingautoencoderp.h5")
-        if bb2 == False:
+        if not bb2:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -6161,7 +6161,7 @@ Parametrisation\n"
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("PACKETS/encoder.h5")
     bb2 = os.path.isfile("PACKETS/encoderp.h5")
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -6184,7 +6184,7 @@ Parametrisation\n"
         else:
             Autoencoder2(nx, ny, nz, High_K1, Low_K1)  # Learn for permeability
 
-    if bb2 == False:
+    if not bb2:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -6222,7 +6222,7 @@ Parametrisation\n"
         if choice == 1:
             bb = os.path.isfile("PACKETS/denosingautoencoder.h5")
             # bb2=os.path.isfile('denosingautoencoderp.h5')
-            if bb == False:
+            if not bb:
                 if use_pretrained == 1:
                     print("....Downloading Please hold.........")
                     download_file_from_google_drive(
@@ -6238,7 +6238,7 @@ Parametrisation\n"
             else:
                 pass
             bb2 = os.path.isfile("PACKETS/denosingautoencoderp.h5")
-            if bb2 == False:
+            if not bb2:
                 if use_pretrained == 1:
                     print("....Downloading Please hold.........")
                     download_file_from_google_drive(
@@ -7018,7 +7018,7 @@ elif Technique_REKI == 3:
     if Geostats == 1:
         bb = os.path.isfile("PACKETS/denosingautoencoder.h5")
         # bb2=os.path.isfile('denosingautoencoderp.h5')
-        if bb == False:
+        if not bb:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -7034,7 +7034,7 @@ elif Technique_REKI == 3:
         else:
             pass
         bb2 = os.path.isfile("PACKETS/denosingautoencoderp.h5")
-        if bb2 == False:
+        if not bb2:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -8274,7 +8274,7 @@ Parametrisation with Generative adverserail network prior\n"
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("PACKETS/autoencoder.h5")
     # bb2=os.path.isfile('autoencoderp.h5')
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -8302,7 +8302,7 @@ Parametrisation with Generative adverserail network prior\n"
     print(" Learn the GAN module")
     aa = os.path.isfile("PACKETS/generator.h5")
     # aa2=aa=os.path.isfile('generatorp.h5')
-    if aa == False:
+    if not aa:
         if not os.path.exists("/images/"):
             os.makedirs("/images/")
         else:
@@ -8992,7 +8992,7 @@ adverserail network prior for permeability field alone\n"
     print(" Learn the permeability field GAN module")
 
     aa = os.path.isfile("PACKETS/generator.h5")
-    if aa == False:
+    if not aa:
         if not os.path.exists("/images/"):
             os.makedirs("/images/")
         else:
@@ -9675,7 +9675,7 @@ elif Technique_REKI == 7:
     print("Learn KMEANS Over complete dictionary of the permeability field")
     print("")
     bb = os.path.isfile("PACKETS/Dictionary_Perm_Kmeans.mat")
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(

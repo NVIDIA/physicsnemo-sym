@@ -32,7 +32,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # [datasets]
     # load training/ test data
     branch_input_keys = [Key("coeff")]
-    trunk_input_keys = [Key("x"), Key("y")]
+    [Key("x"), Key("y")]
     output_keys = [Key("sol")]
 
     download_FNO_dataset("Darcy_241", outdir="datasets/")

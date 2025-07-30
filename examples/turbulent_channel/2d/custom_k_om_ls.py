@@ -91,8 +91,6 @@ class kOmega(PDE):
         # Model constants
         sig = 0.5
         sig_star = 0.5
-        C_mu = 0.09
-        E = 9.793
         beta = 3 / 40
         alpha = 5 / 9
         beta_star = 9 / 100
@@ -184,8 +182,6 @@ class kOmegaLSWF(PDE):
         # Model constants
         C_mu = 0.09
         E = 9.793
-        C_k = -0.36
-        B_k = 8.15
         karman_constant = 0.4187
         beta_star = 9 / 100
 
@@ -242,8 +238,7 @@ class kOmegaLSWF(PDE):
         ) ** 0.5
         u_parallel_to_wall_true = u_plus * u_tau
 
-        k_normal_gradient = normal_x * k.diff(x) + normal_y * k.diff(y)
-        k_normal_gradient_true = 0
+        normal_x * k.diff(x) + normal_y * k.diff(y)
 
         # set equations
         self.equations = {}

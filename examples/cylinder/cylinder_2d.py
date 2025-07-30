@@ -82,7 +82,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         (channel_length_nd[1], channel_width_nd[1]),
         normal=1,
     )
-    wall_top = Line(
+    Line(
         (channel_length_nd[1], channel_width_nd[0]),
         (channel_length_nd[1], channel_width_nd[1]),
         normal=1,

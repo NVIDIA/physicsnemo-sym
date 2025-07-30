@@ -80,7 +80,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # Nondimensionalization Params
     ##############################
     # fluid params
-    nd_fluid_kinematic_viscosity = fluid_kinematic_viscosity / (
+    fluid_kinematic_viscosity / (
         length_scale**2 / time_scale
     )
     nd_fluid_density = fluid_density / density_scale
@@ -108,7 +108,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     print("nd_copper_diffusivity", nd_copper_diffusivity)
 
     # boundary params
-    nd_inlet_velocity = inlet_velocity / (length_scale / time_scale)
+    inlet_velocity / (length_scale / time_scale)
     nd_inlet_temp = inlet_temp / temp_scale
     nd_copper_source_grad = copper_heat_flux * length_scale / temp_scale
 
@@ -172,7 +172,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     chip_width = 1.0
     source_origin = (-0.7, -0.5)
     source_dim = (0.4, 0.0)
-    source_length = 0.4
 
     # define sympy variables to parametrize domain curves
     x, y = Symbol("x"), Symbol("y")
@@ -198,8 +197,8 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     chip2d = rec
     geo = channel - rec
     x_pos = Symbol("x_pos")
-    integral_line = Line((x_pos, channel_width[0]), (x_pos, channel_width[1]), 1)
-    x_pos_range = {
+    Line((x_pos, channel_width[0]), (x_pos, channel_width[1]), 1)
+    {
         x_pos: lambda batch_size: np.full(
             (batch_size, 1), np.random.uniform(channel_length[0], channel_length[1])
         )

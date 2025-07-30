@@ -461,7 +461,6 @@ params = {
     "in_channels": in_channels,
     "out_channels": out_channels,
     "n_layers": n_layers,
-    "modes": modes,
     "embed_dim": embed_dim,
 }
 np.savez_compressed(

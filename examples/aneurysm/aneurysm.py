@@ -104,9 +104,8 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     inlet_area = 21.1284 * (scale**2)
     inlet_center = (-4.24298030045776, 4.082857101816247, -4.637790193399717)
     inlet_radius = np.sqrt(inlet_area / np.pi)
-    outlet_normal = (0.33179, 0.43424, 0.83747)
     outlet_area = 12.0773 * (scale**2)
-    outlet_radius = np.sqrt(outlet_area / np.pi)
+    np.sqrt(outlet_area / np.pi)
 
     # make aneurysm domain
     domain = Domain()

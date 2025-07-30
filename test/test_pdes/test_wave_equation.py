@@ -26,7 +26,7 @@ def test_wave_equation():
     z = np.random.rand(1024, 1)
     t = np.random.rand(1024, 1)
 
-    u = np.sin(x) * np.sin(y) * np.sin(z) * np.cos(t)
+    np.sin(x) * np.sin(y) * np.sin(z) * np.cos(t)
 
     c = 0.1
 

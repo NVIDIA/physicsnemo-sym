@@ -113,7 +113,7 @@ def test_graph_no_loss_node():
     model_node = Node(["x", "y", "z"], ["u", "v", "w", "p"], model, name="Model")
 
     loss = torch.jit.script(Loss()).to(device)
-    loss_node = Node(
+    Node(
         [diff("u", "x"), diff("v", "y"), diff("w", "z")],
         ["divergence_loss"],
         loss,

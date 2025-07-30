@@ -30,8 +30,8 @@ os.environ["MODEL_PARALLEL_SIZE"] = "2"
 @physicsnemo.sym.main(config_path="conf", config_name="config_AFNO")
 def run(cfg: PhysicsNeMoConfig) -> None:
     manager = DistributedManager()
-    model_rank = manager.group_rank(name="model_parallel")
-    model_size = manager.group_size(name="model_parallel")
+    manager.group_rank(name="model_parallel")
+    manager.group_size(name="model_parallel")
 
     # Check that GPUs are available
     if not manager.cuda:
@@ -55,7 +55,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         cfg=cfg.arch.distributed_afno,
         img_shape=img_shape,
     )
-    nodes = [model.make_node(name="Distributed AFNO", jit=cfg.jit)]
+    [model.make_node(name="Distributed AFNO", jit=cfg.jit)]
 
     model = model.to(manager.device)
     sample = {

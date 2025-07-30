@@ -60,7 +60,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     diffusivity = 0.01 / 5
 
     # define sympy varaibles to parametize domain curves
-    x, y = Symbol("x"), Symbol("y")
+    _x, y = Symbol("x"), Symbol("y")
 
     # define geometry
     channel = Channel2D(

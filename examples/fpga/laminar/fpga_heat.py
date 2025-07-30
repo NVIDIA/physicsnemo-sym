@@ -49,7 +49,6 @@ from physicsnemo.sym.models.dgm import DGMArch
 def run(cfg: PhysicsNeMoConfig) -> None:
     # params for simulation
     # fluid params
-    nu = 0.02
     rho = 1
     # heat params
     k_fluid = 1.0
@@ -57,7 +56,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     D_solid = 0.10
     D_fluid = 0.02
     source_grad = 1.5
-    source_area = source_dim[0] * source_dim[2]
+    source_dim[0] * source_dim[2]
 
     # make list of nodes to unroll graph on
     ad = AdvectionDiffusion(T="theta_f", rho=rho, D=D_fluid, dim=3, time=False)
@@ -308,7 +307,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         openfoam_invar_numpy = {
             key: value for key, value in openfoam_var.items() if key in ["x", "y", "z"]
         }
-        openfoam_flow_outvar_numpy = {
+        {
             key: value
             for key, value in openfoam_var.items()
             if key in ["u", "v", "w", "p"]

@@ -1090,29 +1090,29 @@ def smoothn(
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -1125,7 +1125,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -1230,7 +1230,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -7269,7 +7269,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     if interest == 1:
         # bb = os.path.isfile(to_absolute_path('../PACKETS/conversions.mat'))
-        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")) == True:
+        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")):
             os.remove(to_absolute_path("../PACKETS/conversions.mat"))
         if not os.path.exists(to_absolute_path("../RUNS")):
             os.makedirs(to_absolute_path("../RUNS"))
@@ -7303,7 +7303,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     pini_alt = 600
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/conversions.mat"))
-    if bb == True:
+    if bb:
         mat = sio.loadmat(to_absolute_path("../PACKETS/conversions.mat"))
         steppi = int(mat["steppi"])
         steppi_indices = mat["steppi_indices"].flatten()
@@ -7819,19 +7819,19 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     minKx = torch.from_numpy(minK).to(device)
     maxKx = torch.from_numpy(maxK).to(device)
-    minTx = torch.from_numpy(minT).to(device)
-    maxTx = torch.from_numpy(maxT).to(device)
+    torch.from_numpy(minT).to(device)
+    torch.from_numpy(maxT).to(device)
     minPx = torch.from_numpy(minP).to(device)
     maxPx = torch.from_numpy(maxP).to(device)
-    minQx = torch.from_numpy(minQ).to(device)
-    maxQx = torch.from_numpy(maxQ).to(device)
-    minQgx = torch.from_numpy(minQg).to(device)
-    maxQgx = torch.from_numpy(maxQg).to(device)
-    minQwx = torch.from_numpy(minQw).to(device)
-    maxQwx = torch.from_numpy(maxQw).to(device)
-    min_inn_fcnx = torch.from_numpy(min_inn_fcn).to(device)
+    torch.from_numpy(minQ).to(device)
+    torch.from_numpy(maxQ).to(device)
+    torch.from_numpy(minQg).to(device)
+    torch.from_numpy(maxQg).to(device)
+    torch.from_numpy(minQw).to(device)
+    torch.from_numpy(maxQw).to(device)
+    torch.from_numpy(min_inn_fcn).to(device)
     max_inn_fcnx = torch.from_numpy(max_inn_fcn).to(device)
-    min_out_fcnx = torch.from_numpy(min_out_fcn).to(device)
+    torch.from_numpy(min_out_fcn).to(device)
     max_out_fcnx = torch.from_numpy(max_out_fcn).to(device)
 
     del mat

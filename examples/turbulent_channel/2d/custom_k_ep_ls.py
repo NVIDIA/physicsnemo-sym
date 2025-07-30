@@ -93,7 +93,6 @@ class kEpsilon(PDE):
         C_ep1 = 1.44
         C_ep2 = 1.92
         C_mu = 0.09
-        E = 9.793
 
         # Turbulent Viscosity
         nu_t = C_mu * (k**2) / (ep + 1e-4)
@@ -174,8 +173,6 @@ class kEpsilonLSWF(PDE):
         # Model constants
         C_mu = 0.09
         E = 9.793
-        C_k = -0.36
-        B_k = 8.15
         karman_constant = 0.4187
 
         # Turbulent Viscosity
@@ -223,8 +220,7 @@ class kEpsilonLSWF(PDE):
         ) ** 0.5
         u_parallel_to_wall_true = u_plus * u_tau
 
-        k_normal_gradient = normal_x * k.diff(x) + normal_y * k.diff(y)
-        k_normal_gradient_true = 0
+        normal_x * k.diff(x) + normal_y * k.diff(y)
 
         # set equations
         self.equations = {}

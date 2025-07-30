@@ -138,7 +138,7 @@ def make_jhtdb_dataset(
             [np.random.randint(1, 1024 - domain_size) for _ in range(3)], dtype=int
         )
         end = np.array([x + domain_size - 1 for x in start], dtype=int)
-        step = np.array(3 * [1], dtype=int)
+        np.array(3 * [1], dtype=int)
 
         # get high res data
         high_res_u = get_jhtdb(

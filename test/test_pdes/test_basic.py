@@ -29,7 +29,7 @@ def test_normal_gradient_equation():
     normal_y = np.random.rand(1024, 1)
     normal_z = np.random.rand(1024, 1)
 
-    u = np.exp(2 * x + y + z + t)
+    np.exp(2 * x + y + z + t)
     u__x = 2 * np.exp(2 * x + y + z + t)
     u__y = 1 * np.exp(2 * x + y + z + t)
     u__z = 1 * np.exp(2 * x + y + z + t)
@@ -62,18 +62,18 @@ def test_curl():
     y = np.random.rand(1024, 1)
     z = np.random.rand(1024, 1)
 
-    a = np.exp(2 * x + y + z)
-    b = np.exp(x + 2 * y + z)
-    c = np.exp(x + y + 2 * z)
-    a__x = 2 * np.exp(2 * x + y + z)
+    np.exp(2 * x + y + z)
+    np.exp(x + 2 * y + z)
+    np.exp(x + y + 2 * z)
+    2 * np.exp(2 * x + y + z)
     a__y = 1 * np.exp(2 * x + y + z)
     a__z = 1 * np.exp(2 * x + y + z)
     b__x = 1 * np.exp(x + 2 * y + z)
-    b__y = 2 * np.exp(x + 2 * y + z)
+    2 * np.exp(x + 2 * y + z)
     b__z = 1 * np.exp(x + 2 * y + z)
     c__x = 1 * np.exp(x + y + 2 * z)
     c__y = 1 * np.exp(x + y + 2 * z)
-    c__z = 2 * np.exp(x + y + 2 * z)
+    2 * np.exp(x + y + 2 * z)
 
     u_true = c__y - b__z
     v_true = a__z - c__x

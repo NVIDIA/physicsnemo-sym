@@ -354,7 +354,7 @@ def Black_oil(
             torch.square(torch.sub(torch.ones(S.shape, device=u.device), S)), (UO * BO)
         )
 
-        krw = torch.square(S)
+        torch.square(S)
         kroil = torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
         Mt = Mw + Mo
         a1 = torch.mul(Mt, a)  # overall Effective permeability
@@ -861,7 +861,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         print("Use already generated ensemble from Google drive folder")
         if choice == 1:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Multiple-point-statistics run")
 
                 print("....Downloading Please hold.........")
@@ -890,7 +890,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 ini_ensemblef = scaler1a.transform(ini_ensemblef)
         else:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble_gauss.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Two - point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -1100,7 +1100,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     imp = cfg.custom.batch_size2
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -1247,7 +1247,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     preprocess_FNO_mat(to_absolute_path("../PACKETS/simulations.mat"))
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/iglesias2.out"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1_9VRt8tEOF6IV7GvUnD7CFVM40DMHkxn",
@@ -1600,7 +1600,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     costa = []
     cost2a = []
     cost22a = []
-    overall_best = 0
     epochs = cfg.custom.epochs  #'number of epochs to train'
 
     myloss = LpLoss(size_average=True)

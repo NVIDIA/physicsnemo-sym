@@ -176,7 +176,7 @@ class FNO3d(nn.Module):
         self.fc2 = nn.Linear(128, 1)
 
     def forward(self, x):
-        batchsize = x.shape[0]
+        x.shape[0]
         grid = self.get_grid(x.shape, x.device)
         x = torch.cat((x, grid), dim=-1)
         x = self.fc0(x)

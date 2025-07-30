@@ -146,9 +146,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     geo = support + bracket + curve_lower + curve_upper - cylinder_hole
 
     # Doamin bounds
-    bounds_x = (-1, 1)
-    bounds_y = (-1, 1)
-    bounds_z = (-1, 1)
     bounds_support_x = (-1, -0.65)
     bounds_support_y = (-1, 1)
     bounds_support_z = (-1, 1)

@@ -1210,7 +1210,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     UO = cfg.custom.NVRS.UO  # oil viscosity in cP
     DX = cfg.custom.NVRS.DX  # size of pixel in x direction
     DY = cfg.custom.NVRS.DY  # sixze of pixel in y direction
-    DZ = cfg.custom.NVRS.DZ  # sizze of pixel in z direction
 
     DX = cp.float32(DX)
     DY = cp.float32(DY)
@@ -1237,24 +1236,17 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     )  # float(input ('Enter the maximum time in days for simulation(days): '))
     MAXZ = cfg.custom.NVRS.MAXZ  # reference maximum time in days of simulation
     steppi = int(max_t / timmee)
-    factorr = cfg.custom.NVRS.factorr  # from [0 1] excluding the limits for PermZ
-    LIR = cfg.custom.NVRS.LIR  # lower injection rate
     UIR = cfg.custom.NVRS.UIR  # uppwer injection rate
-    input_channel = (
-        cfg.custom.NVRS.input_channel
-    )  # [Perm, Q,QW,Phi,dt, initial_pressure, initial_water_sat]
 
-    injectors = cfg.custom.WELLSPECS.water_injector_wells
-    producers = cfg.custom.WELLSPECS.producer_wells
-    N_injw = len(cfg.custom.WELLSPECS.water_injector_wells)  # Number of water injectors
-    N_pr = len(cfg.custom.WELLSPECS.producer_wells)  # Number of producers
+    len(cfg.custom.WELLSPECS.water_injector_wells)  # Number of water injectors
+    len(cfg.custom.WELLSPECS.producer_wells)  # Number of producers
 
     # tc2 = Equivalent_time(timmee,2100,timmee,max_t)
     tc2 = Equivalent_time(timmee, MAXZ, timmee, max_t)
-    dt = np.diff(tc2)[0]  # Time-step
+    np.diff(tc2)[0]  # Time-step
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi",
@@ -1275,7 +1267,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         data_use1 = matt["OUTPUT"]
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Test4.mat"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1PX2XFG1-elzQItvkUERJqeOerTO2kevq",

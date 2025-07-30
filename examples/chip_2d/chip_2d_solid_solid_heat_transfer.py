@@ -52,12 +52,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     heat_sink_base_dim = (1.0, 0.2)
     fin_origin = heat_sink_base_origin
     fin_dim = (1.0, 0.6)
-    total_fins = 1
     box_origin = (-1.1, -0.5)
     box_dim = (1.2, 1.0)
     source_origin = (-0.7, -0.5)
     source_dim = (0.4, 0.0)
-    source_length = 0.4
 
     inlet_temp = 25.0
     conductivity_I = 0.01
@@ -120,7 +118,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             heat_sink_base_origin[1] + heat_sink_base_dim[1],
         ),
     )
-    fin_center = (fin_origin[0] + fin_dim[0] / 2, fin_origin[1] + fin_dim[1] / 2)
+    (fin_origin[0] + fin_dim[0] / 2, fin_origin[1] + fin_dim[1] / 2)
     fin = Rectangle(
         fin_origin, (fin_origin[0] + fin_dim[0], fin_origin[1] + fin_dim[1])
     )
@@ -138,11 +136,11 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     lr_geo = geo - box
     hr_geo = geo & box
 
-    lr_bounds_x = (channel_origin[0], channel_origin[0] + channel_dim[0])
-    lr_bounds_y = (channel_origin[1], channel_origin[1] + channel_dim[1])
+    (channel_origin[0], channel_origin[0] + channel_dim[0])
+    (channel_origin[1], channel_origin[1] + channel_dim[1])
 
-    hr_bounds_x = (box_origin[0], box_origin[0] + box_dim[0])
-    hr_bounds_y = (box_origin[1], box_origin[1] + box_dim[1])
+    (box_origin[0], box_origin[0] + box_dim[0])
+    (box_origin[1], box_origin[1] + box_dim[1])
 
     # inlet and outlet
     inlet = Line(

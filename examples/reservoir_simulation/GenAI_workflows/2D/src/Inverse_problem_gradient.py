@@ -1246,29 +1246,29 @@ def smoothn(
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -1281,7 +1281,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -1386,7 +1386,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -4679,7 +4679,7 @@ if surrogate == 1:
     bb = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1cldZ75k-kIJQU51F1w17yRYFAAjoYOXU",
@@ -4705,7 +4705,7 @@ if surrogate == 1:
     bba = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1IWTnWceqbCD3XdQmHOsw6Et9jS8hozML",
@@ -4735,7 +4735,7 @@ elif surrogate == 2:
     bb = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1Df3NHyAMW4fdAVwdSyQEvuD8Z9gpsNwt",
@@ -4760,7 +4760,7 @@ elif surrogate == 2:
     bba = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1QAYQJy9_2FiBrxL8TYtTvTJNmsTaUSh4",
@@ -4789,7 +4789,7 @@ elif surrogate == 3:
         pass
 
     bb = os.path.isfile("outputs/Forward_problem_PINO2/pressure_model.pth")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1sv_tbB91EWcJOBWdhhnTKspoAtR564o4",
@@ -4812,7 +4812,7 @@ elif surrogate == 3:
         os.chdir(oldfolder)
 
     bba = os.path.isfile("outputs/Forward_problem_PINO2/saturation_model.pth")
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "13BGxwvN2IV0eo0vbUxb16BhJ2MtJ-s0W",
@@ -4843,7 +4843,7 @@ else:
         pass
 
     bb = os.path.isfile("outputs/Forward_problem_PINO3/pressure_model.pth")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1jihu5qi0TWh22RuIxNEvUxvixUrnxzxB",
@@ -4867,7 +4867,7 @@ else:
         os.chdir(oldfolder)
 
     bba = os.path.isfile("outputs/Forward_problem_PINO3/saturation_model.pth")
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1FibuOGfBZHOrZgiPf6lggcCpKlaMaq7A",
@@ -4900,7 +4900,7 @@ wells = np.reshape(wells, (-1, 3), "C")
 
 # True model
 bba = os.path.isfile("../PACKETS/iglesias2.out")
-if bba == False:
+if not bba:
     print("....Downloading Please hold.........")
     download_file_from_google_drive(
         "1_9VRt8tEOF6IV7GvUnD7CFVM40DMHkxn", "../PACKETS/iglesias2.out"
@@ -5151,7 +5151,7 @@ print("Novel Implementation by Clement Etienam, SA-Nvidia: SA-ML/A.I/Energy")
 
 if DEFAULT == 1:
     bb = os.path.isfile("../PACKETS/Training4.mat")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1I-27_S53ORRFB_hIN_41r3Ntc6PpOE40", "../PACKETS/Training4.mat"
@@ -5263,7 +5263,7 @@ else:
             print("Use already generated ensemble from Google drive folder")
 
             bb = os.path.isfile(("../PACKETS/Ganensemble.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Multiple-point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -5436,7 +5436,7 @@ else:
         else:
             filename = "../PACKETS/Ganensemble_gauss.mat"  # Ensemble generated offline
             bb = os.path.isfile(filename)
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved two-point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -5553,7 +5553,7 @@ os.chdir(oldfolder)
 if Geostats == 1:
     bb = os.path.isfile("../PACKETS/denosingautoencoder.h5")
     # bb2=os.path.isfile('denosingautoencoderp.h5')
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -5567,7 +5567,7 @@ if Geostats == 1:
     else:
         pass
     bb2 = os.path.isfile("../PACKETS/denosingautoencoderp.h5")
-    if bb2 == False:
+    if not bb2:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(

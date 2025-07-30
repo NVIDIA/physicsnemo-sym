@@ -1774,7 +1774,6 @@ def _minimize_cg(
         t0 = torch.clamp(2.02 * (f - old_f) / gtd, max=1.0)
         if t0 <= 0:
             warnflag = 4
-            msg = "Initial step guess is negative."
             break
         old_f = f
 
@@ -2057,9 +2056,10 @@ def minimize_constr(
     # handle callbacks
     if callback is not None:
         callback_ = callback
-        callback = lambda x: callback_(
-            torch.tensor(x, dtype=x0.dtype, device=x0.device).view_as(x0)
-        )
+        def callback(x):
+            return callback_(
+                    torch.tensor(x, dtype=x0.dtype, device=x0.device).view_as(x0)
+                )
 
     # handle bounds
     if bounds is not None:
@@ -2105,7 +2105,8 @@ def _cg_iters(grad, hess, max_iter, normp=1):
     """
     # generalized dot product that supports batch inputs
     # TODO: let the user specify dot fn?
-    dot = lambda u, v: u.mul(v).sum(-1, keepdim=True)
+    def dot(u, v):
+        return u.mul(v).sum(-1, keepdim=True)
 
     g_norm = grad.norm(p=normp)
     tol = g_norm * g_norm.sqrt().clamp(0, 0.5)
@@ -2546,7 +2547,8 @@ def _strong_wolfe_extra(
     """
     # ported from https://github.com/torch/optim/blob/master/lswolfe.lua
     if extra_condition is None:
-        extra_condition = lambda *args: True
+        def extra_condition(*args):
+            return True
     d_norm = d.abs().max()
     g = g.clone(memory_format=torch.contiguous_format)
     # evaluate objective and gradient using initial step
@@ -2855,7 +2857,8 @@ class ScalarFunction(object):
         if self._hess:
             if self._I is None:
                 self._I = torch.eye(x.numel(), dtype=x.dtype, device=x.device)
-            hvp = lambda v: autograd.grad(grad, x, v, retain_graph=True)[0]
+            def hvp(v):
+                return autograd.grad(grad, x, v, retain_graph=True)[0]
             hess = _vmap(hvp)(self._I)
 
         return sf_value(f=f.detach(), grad=grad.detach(), hessp=hessp, hess=hess)
@@ -2912,7 +2915,8 @@ class VectorFunction(object):
         if self._jac:
             if self._I is None:
                 self._I = torch.eye(x.numel(), dtype=x.dtype, device=x.device)
-            jvp = lambda v: autograd.grad(f, x, v, retain_graph=True)[0]
+            def jvp(v):
+                return autograd.grad(f, x, v, retain_graph=True)[0]
             jac = _vmap(jvp)(self._I)
 
         return vf_value(f=f.detach(), jacp=jacp, jac=jac)
@@ -3478,7 +3482,8 @@ status_messages = (
 
 _constr_keys = {"fun", "lb", "ub", "jac", "hess", "hessp", "keep_feasible"}
 _bounds_keys = {"lb", "ub", "keep_feasible"}
-dot = lambda u, v: torch.dot(u.view(-1), v.view(-1))
+def dot(u, v):
+    return torch.dot(u.view(-1), v.view(-1))
 sf_value = namedtuple("sf_value", ["f", "grad", "hessp", "hess"])
 de_value = namedtuple("de_value", ["f", "grad"])
 vf_value = namedtuple("vf_value", ["f", "jacp", "jac"])
@@ -4321,29 +4326,29 @@ def smoothn(
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -4356,7 +4361,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -4461,7 +4466,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -6253,14 +6258,15 @@ class compositional_oil(torch.nn.Module):
                 x0 = torch.randn(sat.shape[1], 1).to(device, torch.float64)
 
                 # compute the reduced volume Vr
-                fn_Vr = lambda x: EOS(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    self.AS,
-                )
+                def fn_Vr(x):
+                    return EOS(
+                                    x,
+                                    pressure_mean[mm, :].reshape(-1, 1),
+                                    self.T,
+                                    self.Pc,
+                                    self.Tc,
+                                    self.AS,
+                                )
 
                 res = minimize(
                     fn_Vr, x0, method="l-bfgs", tol=1e-3, max_iter=5, disp=False
@@ -6279,7 +6285,7 @@ class compositional_oil(torch.nn.Module):
                 fugacitybig[mm, :] = fugac.ravel()
 
                 # Calcultae the chemical potential of CO2
-                uco2 = 1 + (
+                1 + (
                     (Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1))
                 )
 
@@ -6304,14 +6310,15 @@ class compositional_oil(torch.nn.Module):
 
                 # Compute co2 density
                 x0 = torch.randn(sat.shape[1], 1).to(device, torch.float64)
-                fhelmotz = lambda x: Helmhotz(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    Rgas,
-                )
+                def fhelmotz(x):
+                    return Helmhotz(
+                                    x,
+                                    pressure_mean[mm, :].reshape(-1, 1),
+                                    self.T,
+                                    self.Pc,
+                                    self.Tc,
+                                    Rgas,
+                                )
 
                 Rho_co2 = minimize(
                     fhelmotz, x0, method="l-bfgs", max_iter=5, tol=1e-3, disp=False
@@ -6337,14 +6344,15 @@ class compositional_oil(torch.nn.Module):
                 x0 = abs(np.random.rand(sat.shape[1], 1)) * 2
 
                 # compute the reduced volume Vr
-                fn_Vrn = lambda x: EOSn(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    self.AS,
-                )
+                def fn_Vrn(x):
+                    return EOSn(
+                                    x,
+                                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
+                                    self.T,
+                                    self.Pc,
+                                    self.Tc,
+                                    self.AS,
+                                )
 
                 Vr = scipy.optimize.fmin_powell(
                     fn_Vrn, x0, xtol=1e-6, ftol=1e-6, disp=False
@@ -6367,7 +6375,7 @@ class compositional_oil(torch.nn.Module):
                 fugacitybig[mm, :] = fugac.ravel()
 
                 # Calcultae the chemical potential of CO2
-                uco2 = 1 + (
+                1 + (
                     (Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1))
                 )
 
@@ -6393,14 +6401,15 @@ class compositional_oil(torch.nn.Module):
 
                 # Compute co2 density
                 x0 = abs(np.random.rand(sat.shape[1], 1)) * 10
-                fhelmotzn = lambda x: Helmhotzn(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    Rgas,
-                )
+                def fhelmotzn(x):
+                    return Helmhotzn(
+                                    x,
+                                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
+                                    self.T,
+                                    self.Pc,
+                                    self.Tc,
+                                    Rgas,
+                                )
 
                 Rho_co2 = scipy.optimize.fmin_powell(
                     fhelmotzn, x0, xtol=1e-6, ftol=1e-6, disp=False
@@ -7497,7 +7506,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     if interest == 1:
         # bb = os.path.isfile(to_absolute_path('../PACKETS/conversions.mat'))
-        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")) == True:
+        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")):
             os.remove(to_absolute_path("../PACKETS/conversions.mat"))
         if not os.path.exists(to_absolute_path("../RUNS")):
             os.makedirs(to_absolute_path("../RUNS"))
@@ -7531,7 +7540,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     pini_alt = 200
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/conversions.mat"))
-    if bb == True:
+    if bb:
         mat = sio.loadmat(to_absolute_path("../PACKETS/conversions.mat"))
         steppi = int(mat["steppi"])
 
@@ -7600,7 +7609,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     p_atm = cp.float32(float(cfg.custom.PROPS.PATM))
     p_bub = cp.float32(float(cfg.custom.PROPS.PB))
 
-    params1 = {
+    {
         "BO": torch.tensor(BO),
         "UO": torch.tensor(UO),
         "BW": torch.tensor(BW),
@@ -7617,7 +7626,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # N_ens = 2
     njobs = 3
     # njobs = int((multiprocessing.cpu_count() // 4) - 1)
-    num_cores = njobs
 
     source_dir = to_absolute_path("../Necessaryy")
     # dest_dir = 'path_to_folder_B'
