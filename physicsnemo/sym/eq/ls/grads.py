@@ -32,7 +32,7 @@ class FirstDeriv(torch.nn.Module):
             self.dim > 1
         ), "First Derivative through least squares method only supported for 2D and 3D inputs"
 
-    def forward(self, coords, connectivity_tensor, y, du=None, dv=None) -> List[Tensor]:
+    def forward(self, coords, connectivity_tensor, y, du=None, dv=None) -> list[Tensor]:
         """
         Compute first derivatives using least squares method with fully vectorized computation.
 
