@@ -134,7 +134,7 @@ class PDE(object):
                         # set the freeze terms to an empty list
                         print(
                             "No freeze terms found for instance: "
-                            + node_name
+f"No freeze terms found for instance {node_name}, setting to empty."
                             + ", setting to empty"
                         )
                         node = Node.from_sympy(
