@@ -76,7 +76,7 @@ class PDE(object):
     def make_nodes(
         self,
         create_instances: int = 1,
-        freeze_terms: Dict[str, List[int]] = {},
+        freeze_terms: Dict[str, List[int]] = None,
         detach_names: list[str] = None,
         return_as_dict: bool = False,
     ):
@@ -103,6 +103,8 @@ class PDE(object):
         """
         if detach_names is None:
             detach_names = []
+        if freeze_terms is None:
+            freeze_terms = {}
 
         if create_instances == 1:
             if bool(freeze_terms):
