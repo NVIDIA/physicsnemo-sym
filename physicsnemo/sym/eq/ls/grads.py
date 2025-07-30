@@ -96,7 +96,7 @@ class FirstDeriv(torch.nn.Module):
 
         return result
 
-    def _forward_sparse(self, coords, offsets, indices, y) -> List[Tensor]:
+    def _forward_sparse(self, coords, offsets, indices, y) -> list[Tensor]:
         """
         Compute derivatives using sparse connectivity format with parallel processing.
         Optimized for cases where all nodes have the same number of neighbors.
