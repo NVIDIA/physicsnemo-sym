@@ -69,7 +69,7 @@ class FirstDeriv(torch.nn.Module):
         else:
             raise ValueError("connectivity_tensor must be tuple of length 2 or 3")
 
-    def _forward_direct(self, du, dv) -> List[Tensor]:
+    def _forward_direct(self, du, dv) -> list[Tensor]:
         """
         Compute derivatives directly from provided du and dv tensors.
 
