@@ -165,7 +165,7 @@ class FirstDeriv(torch.nn.Module):
 
             return result
 
-    def _forward_batched(self, coords, neighbor_matrix, y) -> List[Tensor]:
+    def _forward_batched(self, coords, neighbor_matrix, y) -> list[Tensor]:
         """
         Compute derivatives using batched connectivity format.
         """
