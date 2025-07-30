@@ -193,9 +193,9 @@ class BFGSMixin:
         return loss
 
     def bfgs_apply_gradients(self):
-        assert (
-            self.bfgs_aggregator is not None
-        ), "Call bfgs_compute_gradients prior to this!"
+        assert self.bfgs_aggregator is not None, (
+            "Call bfgs_compute_gradients prior to this!"
+        )
         assert self.bfgs_step is not None, "Call bfgs_compute_gradients prior to this!"
         self.bfgs_optim_steps = 0
         self.log.info(f"[step: {self.bfgs_step:10d}] lbfgs optimization in running")

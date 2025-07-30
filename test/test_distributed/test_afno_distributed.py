@@ -62,9 +62,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     # Check that model is using the correct local embedding size
     expected_embed_dim_local = embed_dim // model_size
-    assert (
-        model.embed_dim_local == expected_embed_dim_local
-    ), f"Incorrect local embedding size. Expected {expected_embed_dim_local}, got {model.embed_dim_local}"
+    assert model.embed_dim_local == expected_embed_dim_local, (
+        f"Incorrect local embedding size. Expected {expected_embed_dim_local}, got {model.embed_dim_local}"
+    )
 
     sample = torch.randn(1, in_chans, 720, 1440)
 
@@ -98,9 +98,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     expected_result_shape = [1, local_out_chans, 720, 1440]
     local_result_shape = list(local_result.shape)
-    assert (
-        local_result_shape == expected_result_shape
-    ), f"Incorrect result size. Expected {expected_result_shape}, got {local_result_shape}"
+    assert local_result_shape == expected_result_shape, (
+        f"Incorrect result size. Expected {expected_result_shape}, got {local_result_shape}"
+    )
 
 
 if __name__ == "__main__":

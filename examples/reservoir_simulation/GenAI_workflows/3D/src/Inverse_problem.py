@@ -496,8 +496,8 @@ def Forward_model_ensemble(
                 Ptito = smoothn(Ptito, s=1e1)[0]
 
             average_pressure = (
-                Ptito.ravel()[producer_location]
-            ) * pini_alt  # np.mean(Ptito.ravel()) * pini_alt
+                (Ptito.ravel()[producer_location]) * pini_alt
+            )  # np.mean(Ptito.ravel()) * pini_alt
             p_inj = (Ptito.ravel()[Injector_location]) * pini_alt
             # p_prod = (Ptito.ravel()[producer_location] ) * pini_alt
 

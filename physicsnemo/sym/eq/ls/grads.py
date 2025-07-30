@@ -27,9 +27,9 @@ class FirstDeriv(torch.nn.Module):
         super().__init__()
 
         self.dim = dim
-        assert (
-            self.dim > 1
-        ), "First Derivative through least squares method only supported for 2D and 3D inputs"
+        assert self.dim > 1, (
+            "First Derivative through least squares method only supported for 2D and 3D inputs"
+        )
 
     def forward(self, coords, connectivity_tensor, y) -> List[Tensor]:
         p1 = coords[connectivity_tensor[:, :, 0]]

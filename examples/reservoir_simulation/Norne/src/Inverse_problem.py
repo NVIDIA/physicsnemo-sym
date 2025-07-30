@@ -8184,9 +8184,9 @@ else:
         else:
             break
 if Trainmoe == 2:
-    TEMPLATEFILE[
-        "Peaceman modelling inference"
-    ] = "Inference peacemann = Mixture of Experts"
+    TEMPLATEFILE["Peaceman modelling inference"] = (
+        "Inference peacemann = Mixture of Experts"
+    )
 else:
     TEMPLATEFILE["Peaceman modelling inference"] = "Inference peacemann = FNO"
 print("")
@@ -8263,13 +8263,13 @@ percentage of data value = 1:\nConstant float value = 2:\n"
         else:
             break
 if BASSE == 1:
-    TEMPLATEFILE[
-        "Covariance matrix generation"
-    ] = "Covariance noise matrix generation = data percentage\n"
+    TEMPLATEFILE["Covariance matrix generation"] = (
+        "Covariance noise matrix generation = data percentage\n"
+    )
 else:
-    TEMPLATEFILE[
-        "Covariance matrix generation"
-    ] = "Covariance noise matrix generation = constant value\n"
+    TEMPLATEFILE["Covariance matrix generation"] = (
+        "Covariance noise matrix generation = constant value\n"
+    )
 
 print("")
 print("---------------------------------------------------------------------")
@@ -8445,9 +8445,9 @@ print("Novel Implementation by Clement Etienam, SA-Nvidia: SA-ML/A.I/Energy")
 batch_clem = 1
 
 Technique_REKI = 1
-TEMPLATEFILE[
-    "Data assimilation method"
-] = "ADAPT_REKI (Vanilla Adaptive Ensemble Kalman Inversion)\n"
+TEMPLATEFILE["Data assimilation method"] = (
+    "ADAPT_REKI (Vanilla Adaptive Ensemble Kalman Inversion)\n"
+)
 
 
 print("")

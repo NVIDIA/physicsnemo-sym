@@ -297,12 +297,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             ),
             output_names=["p"],
             metrics={
-                "force_x_r"
-                + str(radius): lambda var: torch.sum(
+                "force_x_r" + str(radius): lambda var: torch.sum(
                     var["normal_x"] * var["area"] * var["p"]
                 ),
-                "force_y_r"
-                + str(radius): lambda var: torch.sum(
+                "force_y_r" + str(radius): lambda var: torch.sum(
                     var["normal_y"] * var["area"] * var["p"]
                 ),
             },

@@ -352,9 +352,9 @@ class DistributedAFNOArch(Arch):
 
         comm_size = DistributedManager().group_size("model_parallel")
         if channel_parallel_inputs:
-            assert (
-                in_channels % comm_size == 0
-            ), "Error, in_channels needs to be divisible by model_parallel size"
+            assert in_channels % comm_size == 0, (
+                "Error, in_channels needs to be divisible by model_parallel size"
+            )
 
         self._impl = DistributedAFNONet(
             img_size=img_shape,

@@ -56,9 +56,9 @@ class Node:
 
         # check that model has name if optimizable
         if self._optimize:
-            assert hasattr(
-                self.evaluate, "name"
-            ), "Optimizable nodes require model to have unique name"
+            assert hasattr(self.evaluate, "name"), (
+                "Optimizable nodes require model to have unique name"
+            )
 
     @classmethod
     def from_sympy(cls, eq, out_name, freeze_terms=[], detach_names=[]):

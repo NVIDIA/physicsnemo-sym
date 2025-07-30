@@ -51,9 +51,9 @@ def test_normal_gradient_equation():
     normal_gradient_u_eval_pred = evaluations["normal_gradient_u"].numpy()
 
     # verify PDE computation
-    assert np.allclose(
-        normal_gradient_u_eval_pred, normal_gradient_u_true
-    ), "Test Failed!"
+    assert np.allclose(normal_gradient_u_eval_pred, normal_gradient_u_true), (
+        "Test Failed!"
+    )
 
 
 def test_curl():

@@ -101,9 +101,9 @@ class HDF5GridDataset(Dataset):
             length = len(f[k])
 
         if n_examples is not None:
-            assert (
-                n_examples <= length
-            ), "error, n_examples greater than length of file data"
+            assert n_examples <= length, (
+                "error, n_examples greater than length of file data"
+            )
             length = min(n_examples, length)
 
         self.length = length

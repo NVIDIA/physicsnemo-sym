@@ -187,9 +187,9 @@ class VTKBase:
         data : np.array
             1D or 2D numpy data array
         """
-        assert (
-            data.shape[0] == self.vtk_obj.GetNumberOfPoints()
-        ), f"Input array incorrect size. Got {data.shape[0]} instead of {self.vtk_obj.GetNumberOfPoints()}"
+        assert data.shape[0] == self.vtk_obj.GetNumberOfPoints(), (
+            f"Input array incorrect size. Got {data.shape[0]} instead of {self.vtk_obj.GetNumberOfPoints()}"
+        )
         assert data.ndim < 3, "1D and 2D arrays supported"
 
         data_array = numpy_to_vtk(data, deep=True)
@@ -248,12 +248,12 @@ class VTKUniformGrid(VTKBase):
         bounds: List[List[int]],
         npoints: List[int],
     ):
-        assert len(bounds) == len(
-            npoints
-        ), f"Bounds and npoints must be same length {len(bounds)}, {len(npoints)}"
-        assert (
-            len(bounds) > 0 and len(bounds) < 4
-        ), "Only 1, 2, 3 grid dimensionality allowed"
+        assert len(bounds) == len(npoints), (
+            f"Bounds and npoints must be same length {len(bounds)}, {len(npoints)}"
+        )
+        assert len(bounds) > 0 and len(bounds) < 4, (
+            "Only 1, 2, 3 grid dimensionality allowed"
+        )
         # Padd for missing dimensions
         npoints = np.array(npoints + [1, 1])
         bounds = np.array(bounds + [[0, 0], [0, 0]])
@@ -431,9 +431,9 @@ class VTKStructuredGrid(VTKBase):
             [points, np.zeros((points.shape[0], 2), dtype=np.short)], axis=1
         )
         dims = dims + [1, 1]
-        assert (
-            dims[0] * dims[1] * dims[2] == points.shape[0]
-        ), "Number of points do not match provided dimensions"
+        assert dims[0] * dims[1] * dims[2] == points.shape[0], (
+            "Number of points do not match provided dimensions"
+        )
 
         pts = vtk.vtkPoints()
         pts.SetNumberOfPoints(points.shape[0])
@@ -451,9 +451,9 @@ class VTKStructuredGrid(VTKBase):
             [points, np.zeros((points.shape[0], 2), dtype=np.short)], axis=1
         )
         dims = dims + [1, 1]
-        assert (
-            dims[0] * dims[1] * dims[2] == points.shape[0]
-        ), "Number of points do not match provided dimensions"
+        assert dims[0] * dims[1] * dims[2] == points.shape[0], (
+            "Number of points do not match provided dimensions"
+        )
 
         pts = vtk.vtkPoints()
         pts.SetNumberOfPoints(points.shape[0])
@@ -540,9 +540,9 @@ class VTKUnstructuredGrid(VTKBase):
     ):
         assert points.ndim == 2, "Points array must have 2 dimensions [npoints, dim]"
         assert points.shape[1] < 4, "Maximum  of 3 spacial point arrays accepted"
-        assert (
-            len(cell_index) == 2
-        ), "Cell index must be tuple of numpy arrays containing [offsets, connectivity]"
+        assert len(cell_index) == 2, (
+            "Cell index must be tuple of numpy arrays containing [offsets, connectivity]"
+        )
         # Could check cell type and cell index are consistent, but we assume the user
         # knows what they are doing
 
@@ -606,9 +606,9 @@ class VTKUnstructuredGrid(VTKBase):
         self.vtk_obj.SetPoints(pts)
 
     def set_cells(self, cell_index: Tuple[np.array, np.array], cell_types: np.array):
-        assert (
-            len(cell_index) == 2
-        ), "Cell index must be tuple of numpy arrays containing [offsets, connectivity]"
+        assert len(cell_index) == 2, (
+            "Cell index must be tuple of numpy arrays containing [offsets, connectivity]"
+        )
 
         vtk_celltypes = vtk.vtkIntArray()
         vtk_celltypes.SetNumberOfComponents(1)
@@ -767,9 +767,9 @@ class VTKPolyData(VTKBase):
         self.vtk_obj.SetVerts(vert_cells)
 
     def set_lines(self, edge_index: np.array):
-        assert (
-            edge_index.ndim == 2 and edge_index.shape[1] == 2
-        ), "Edge index array must have 2 dimensions [npoints, 2]"
+        assert edge_index.ndim == 2 and edge_index.shape[1] == 2, (
+            "Edge index array must have 2 dimensions [npoints, 2]"
+        )
 
         lines = vtk.vtkCellArray()
         for i in range(edge_index.shape[0]):
@@ -780,9 +780,9 @@ class VTKPolyData(VTKBase):
         self.vtk_obj.SetLines(lines)
 
     def set_polys(self, poly_index: Tuple[np.array, np.array]):
-        assert (
-            len(poly_index) == 2
-        ), "poly_index should be tuple of (poly_offsets, poly_connectivity)"
+        assert len(poly_index) == 2, (
+            "poly_index should be tuple of (poly_offsets, poly_connectivity)"
+        )
 
         vtk_polys = vtk.vtkCellArray()
         vtk_offsets = numpy_to_vtk(

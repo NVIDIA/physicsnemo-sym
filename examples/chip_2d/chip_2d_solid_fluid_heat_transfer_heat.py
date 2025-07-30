@@ -74,9 +74,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     pressure_scale = mass_scale / (length_scale * time_scale**2)  # kg / (m s**2)
     density_scale = mass_scale / length_scale**3  # kg/m3
     watt_scale = (mass_scale * length_scale**2) / (time_scale**3)  # kg m**2 / s**3
-    joule_scale = (mass_scale * length_scale**2) / (
-        time_scale**2
-    )  # kg * m**2 / s**2
+    joule_scale = (mass_scale * length_scale**2) / (time_scale**2)  # kg * m**2 / s**2
 
     ##############################
     # Nondimensionalization Params

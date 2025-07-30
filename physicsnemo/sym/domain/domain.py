@@ -177,9 +177,9 @@ class Domain:
                 if (m not in models) and m.saveable:
                     models.append(m)
         models = sorted(models, key=lambda x: x.name)
-        assert len(set([m.name for m in models])) == len(
-            models
-        ), "Every model in graph needs a unique name: " + str([m.name for m in models])
+        assert len(set([m.name for m in models])) == len(models), (
+            "Every model in graph needs a unique name: " + str([m.name for m in models])
+        )
         return models
 
     def create_global_optimizer_model(self):
@@ -197,9 +197,9 @@ class Domain:
                 if m not in models:
                     models.append(m)
         models = sorted(models, key=lambda x: x.name)
-        assert len(set([m.name for m in models])) == len(
-            models
-        ), "Every model in graph needs a unique name: " + str([m.name for m in models])
+        assert len(set([m.name for m in models])) == len(models), (
+            "Every model in graph needs a unique name: " + str([m.name for m in models])
+        )
         models = nn.ModuleList(models)
         return models
 

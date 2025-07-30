@@ -1531,11 +1531,7 @@ def calc_rs(p_bub, p):
         torch.tensor(1.0).to(device1, torch.float32),
         torch.tensor(1e-6).to(device1, torch.float32),
     )
-    rs = (
-        (178.11**2)
-        / 5.615
-        * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
-    )
+    rs = (178.11**2) / 5.615 * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
     return rs
 
 
@@ -7536,19 +7532,11 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             to_absolute_path("../Necessaryy/Book1.xlsx"), sheet_name=1, header=None
         )  # Reads the second sheet
         waterz = np.nan_to_num(
-            clip_and_convert_to_float32(
-                data1.values[
-                    1:,
-                ]
-            ),
+            clip_and_convert_to_float32(data1.values[1:,]),
             nan=0,
         )
         gasz = np.nan_to_num(
-            clip_and_convert_to_float32(
-                data2.values[
-                    1:,
-                ]
-            ),
+            clip_and_convert_to_float32(data2.values[1:,]),
             nan=0,
         )
 

@@ -188,11 +188,11 @@ def instantiate_arch(
     **kwargs,
 ) -> Arch:
     # Function for instantiating a physicsnemo architecture with hydra
-    assert hasattr(
-        cfg, "arch_type"
-    ), "Model configs are required to have an arch_type defined. \
+    assert hasattr(cfg, "arch_type"), (
+        "Model configs are required to have an arch_type defined. \
         Improper architecture supplied, please make sure config \
         provided is a single arch config NOT the full hydra config!"
+    )
 
     try:
         # Convert to python dictionary

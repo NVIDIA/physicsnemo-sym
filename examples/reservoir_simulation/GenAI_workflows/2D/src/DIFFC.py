@@ -552,7 +552,9 @@ class GaussianDiffusion(nn.Module):
             "pred_noise",
             "pred_x0",
             "pred_v",
-        }, "objective must be either pred_noise (predict noise) or pred_x0 (predict image start) or pred_v (predict v [v-parameterization as defined in appendix D of progressive distillation paper, used in imagen-video successfully])"
+        }, (
+            "objective must be either pred_noise (predict noise) or pred_x0 (predict image start) or pred_v (predict v [v-parameterization as defined in appendix D of progressive distillation paper, used in imagen-video successfully])"
+        )
 
         if beta_schedule == "linear":
             beta_schedule_fn = linear_beta_schedule
@@ -978,14 +980,21 @@ class GaussianDiffusion(nn.Module):
         return loss.mean()
 
     def forward(self, img, *args, **kwargs):
-        (b, c, h, w, device, img_size,) = (
+        (
+            b,
+            c,
+            h,
+            w,
+            device,
+            img_size,
+        ) = (
             *img.shape,
             img.device,
             self.image_size,
         )
-        assert (
-            h == img_size and w == img_size
-        ), f"height and width of image must be {img_size}"
+        assert h == img_size and w == img_size, (
+            f"height and width of image must be {img_size}"
+        )
         t = torch.randint(0, self.num_timesteps, (b,), device=device).long()
 
         img = normalize_to_neg_one_to_one(img)
@@ -1070,9 +1079,9 @@ class Trainer(object):
 
         self.model = diffusion_model
 
-        assert has_int_squareroot(
-            num_samples
-        ), "number of samples must have an integer square root"
+        assert has_int_squareroot(num_samples), (
+            "number of samples must have an integer square root"
+        )
         self.num_samples = num_samples
         self.save_and_sample_every = save_and_sample_every
 

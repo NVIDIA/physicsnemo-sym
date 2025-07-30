@@ -368,9 +368,9 @@ def test_residuals_finite_difference(general_setup):
                 - residuals_fd[key].reshape(100, 100, 100)[pad:-pad, pad:-pad, pad:-pad]
             )
         )
-        assert (
-            error < 0.5
-        ), f"Finite Difference gradient error too high for {key}: {error}"
+        assert error < 0.5, (
+            f"Finite Difference gradient error too high for {key}: {error}"
+        )
 
 
 @pytest.mark.parametrize("general_setup", ["cuda"], indirect=True)

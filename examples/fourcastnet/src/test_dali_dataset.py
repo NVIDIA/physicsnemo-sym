@@ -180,9 +180,9 @@ def test_dali_shuffle(test_data: Path, batch_size: int, num_workers: int):
 
         for i in range(NUM_SAMPLES):
             dst_idx = epoch_indices[epoch][i]
-            assert (
-                x_t0_shuf[i] == x_t0_base[dst_idx]
-            ).all(), f"Mismatch at epoch {epoch}, sample {i}."
+            assert (x_t0_shuf[i] == x_t0_base[dst_idx]).all(), (
+                f"Mismatch at epoch {epoch}, sample {i}."
+            )
 
 
 @pytest.mark.skip(reason="The test should be run using mpirun, not pytest.")
@@ -197,9 +197,9 @@ def test_distributed_dali_loader(data_path: Path):
     m = DistributedManager()
     world_size = m.world_size
     # TODO: temporary restriction, remove.
-    assert (
-        world_size == 2
-    ), "Only 2-GPU configuration is supported for now. Please run with mpirun -np 2"
+    assert world_size == 2, (
+        "Only 2-GPU configuration is supported for now. Please run with mpirun -np 2"
+    )
 
     base_loader, _ = _create_default_dataloader(
         data_path,

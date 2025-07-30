@@ -581,12 +581,12 @@ class FuncArch(nn.Module):
             raise RuntimeError(
                 f"Found {type(arch)}, currently FuncArch does not work with jit."
             )
-        assert isinstance(
-            arch, Arch
-        ), f"arch should be an instantiated Arch object, but found to be {type(arch)}."
-        assert (
-            arch.supports_func_arch
-        ), f"{type(arch)} currently does not support FuncArch."
+        assert isinstance(arch, Arch), (
+            f"arch should be an instantiated Arch object, but found to be {type(arch)}."
+        )
+        assert arch.supports_func_arch, (
+            f"{type(arch)} currently does not support FuncArch."
+        )
 
         if forward_func is None:
             forward_func = arch._tensor_forward
@@ -760,9 +760,9 @@ class FuncArch(nn.Module):
             assert output_key_dict[x.name] == 1, f"key ({x.name}) size must be 1"
             for deriv in x.derivatives:
                 assert deriv.name in input_key_dict, f"Cannot calculate {x}"
-                assert (
-                    input_key_dict[deriv.name] == 1
-                ), f"key ({deriv.name}) size must be 1"
+                assert input_key_dict[deriv.name] == 1, (
+                    f"key ({deriv.name}) size must be 1"
+                )
             # collect each order derivatives
             order = len(x.derivatives)
             if order == 0 or order >= 3:

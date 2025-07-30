@@ -138,15 +138,15 @@ def test_maxwell_freq_real():
     ].numpy()
 
     # verify PDE computation
-    assert np.allclose(
-        Maxwell_Freq_real_x_eval_pred, Maxwell_Freq_real_x_true
-    ), "Test Failed!"
-    assert np.allclose(
-        Maxwell_Freq_real_y_eval_pred, Maxwell_Freq_real_y_true
-    ), "Test Failed!"
-    assert np.allclose(
-        Maxwell_Freq_real_z_eval_pred, Maxwell_Freq_real_z_true
-    ), "Test Failed!"
+    assert np.allclose(Maxwell_Freq_real_x_eval_pred, Maxwell_Freq_real_x_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(Maxwell_Freq_real_y_eval_pred, Maxwell_Freq_real_y_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(Maxwell_Freq_real_z_eval_pred, Maxwell_Freq_real_z_true), (
+        "Test Failed!"
+    )
 
 
 def test_sommerfeld_bc():

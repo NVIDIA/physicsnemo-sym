@@ -74,9 +74,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     expected_result_shape = [1, output_keys[0].size, *img_shape]
     result_shape = list(result["sol"].shape)
-    assert (
-        result_shape == expected_result_shape
-    ), f"Incorrect result size. Expected {expected_result_shape}, got {local_result_shape}"
+    assert result_shape == expected_result_shape, (
+        f"Incorrect result size. Expected {expected_result_shape}, got {local_result_shape}"
+    )
 
 
 if __name__ == "__main__":

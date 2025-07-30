@@ -277,9 +277,9 @@ class PointwiseBoundaryConstraint(PointwiseConstraint):
         shuffle: bool = True,
     ):
         # assert that not using importance measure with continuous dataset
-        assert not (
-            (not fixed_dataset) and (importance_measure is not None)
-        ), "Using Importance measure with continuous dataset is not supported"
+        assert not ((not fixed_dataset) and (importance_measure is not None)), (
+            "Using Importance measure with continuous dataset is not supported"
+        )
 
         # if fixed dataset then sample points and fix for all of training
         if fixed_dataset:
@@ -431,9 +431,9 @@ class PointwiseInteriorConstraint(PointwiseConstraint):
         shuffle: bool = True,
     ):
         # assert that not using importance measure with continuous dataset
-        assert not (
-            (not fixed_dataset) and (importance_measure is not None)
-        ), "Using Importance measure with continuous dataset is not supported"
+        assert not ((not fixed_dataset) and (importance_measure is not None)), (
+            "Using Importance measure with continuous dataset is not supported"
+        )
 
         # if fixed dataset then sample points and fix for all of training
         if fixed_dataset:

@@ -154,9 +154,7 @@ def test_primitives():
 
     # torus
     g = Torus((0, 1, 2), 2, 1)
-    check_geometry(
-        g, boundary_area=8 * np.pi**2, interior_area=4 * np.pi**2, max_sdf=1
-    )
+    check_geometry(g, boundary_area=8 * np.pi**2, interior_area=4 * np.pi**2, max_sdf=1)
 
     """
     # cone

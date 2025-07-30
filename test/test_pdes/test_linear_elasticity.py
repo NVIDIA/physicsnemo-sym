@@ -293,15 +293,15 @@ def test_linear_elasticity_equations():
     assert np.allclose(traction_x_eval_pred, traction_x_true), "Test Failed!"
     assert np.allclose(traction_y_eval_pred, traction_y_true), "Test Failed!"
     assert np.allclose(traction_z_eval_pred, traction_z_true), "Test Failed!"
-    assert np.allclose(
-        navier_x_eval_pred, navier_x_true, atol=1e-3, rtol=1e-2
-    ), "Test Failed!"
-    assert np.allclose(
-        navier_y_eval_pred, navier_y_true, atol=1e-3, rtol=1e-2
-    ), "Test Failed!"
-    assert np.allclose(
-        navier_z_eval_pred, navier_z_true, atol=1e-3, rtol=1e-2
-    ), "Test Failed!"
+    assert np.allclose(navier_x_eval_pred, navier_x_true, atol=1e-3, rtol=1e-2), (
+        "Test Failed!"
+    )
+    assert np.allclose(navier_y_eval_pred, navier_y_true, atol=1e-3, rtol=1e-2), (
+        "Test Failed!"
+    )
+    assert np.allclose(navier_z_eval_pred, navier_z_true, atol=1e-3, rtol=1e-2), (
+        "Test Failed!"
+    )
 
 
 def test_linear_elasticity_plane_stress_equations():

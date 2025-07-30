@@ -56,14 +56,14 @@ class SequentialSolver(Solver):
         custom_update_operation: Union[Callable, None] = None,
     ):
         # check that domains have different names
-        assert len(set([d.name for _, d in domains])) == len(
-            domains
-        ), "domains need to have unique names, " + str([d.name for _, d in domains])
+        assert len(set([d.name for _, d in domains])) == len(domains), (
+            "domains need to have unique names, " + str([d.name for _, d in domains])
+        )
 
         # check not using ntk with seq solver
-        assert (
-            not cfg.training.ntk.use_ntk
-        ), "ntk is not supported with SequentialSolver"
+        assert not cfg.training.ntk.use_ntk, (
+            "ntk is not supported with SequentialSolver"
+        )
 
         # set domains
         self.domains = domains

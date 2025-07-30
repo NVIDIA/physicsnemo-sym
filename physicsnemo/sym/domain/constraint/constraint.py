@@ -149,9 +149,9 @@ class Constraint:
     ):
         "Return an appropriate dataloader given a dataset"
 
-        assert isinstance(dataset, Dataset) or isinstance(
-            dataset, IterableDataset
-        ), "error, dataset must be a subclass of Dataset or IterableDataset"
+        assert isinstance(dataset, Dataset) or isinstance(dataset, IterableDataset), (
+            "error, dataset must be a subclass of Dataset or IterableDataset"
+        )
 
         manager = DistributedManager()
 

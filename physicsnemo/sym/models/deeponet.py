@@ -160,12 +160,12 @@ class DeepONetArch(Arch):
             branch_output = branch_output.view(branch_output.shape[0], -1)
             trunk_output = trunk_output.view(trunk_output.shape[0], -1)
 
-        assert (
-            branch_output.size(-1) == self.branch_dim
-        ), f"Invalid feature dimension from branch net, expected {self.branch_dim} but found {branch_output.size(-1)}"
-        assert (
-            trunk_output.size(-1) == self.trunk_dim
-        ), f"Invalid feature dimension from trunk net, expected {self.trunk_dim} but found {trunk_output.size(-1)}"
+        assert branch_output.size(-1) == self.branch_dim, (
+            f"Invalid feature dimension from branch net, expected {self.branch_dim} but found {branch_output.size(-1)}"
+        )
+        assert trunk_output.size(-1) == self.trunk_dim, (
+            f"Invalid feature dimension from trunk net, expected {self.trunk_dim} but found {trunk_output.size(-1)}"
+        )
 
         # Send through final linear layers
         branch_output = self.branch_linear(branch_output)
@@ -196,12 +196,12 @@ class DeepONetArch(Arch):
         branch_output = branch_output.view(branch_output.shape[0], -1)
         trunk_output = trunk_output.view(trunk_output.shape[0], -1)
 
-        assert (
-            branch_output.size(-1) == self.branch_dim
-        ), f"Invalid feature dimension from branch net, expected {self.branch_dim} but found {branch_output.size(-1)}"
-        assert (
-            trunk_output.size(-1) == self.trunk_dim
-        ), f"Invalid feature dimension from trunk net, expected {self.trunk_dim} but found {trunk_output.size(-1)}"
+        assert branch_output.size(-1) == self.branch_dim, (
+            f"Invalid feature dimension from branch net, expected {self.branch_dim} but found {branch_output.size(-1)}"
+        )
+        assert trunk_output.size(-1) == self.trunk_dim, (
+            f"Invalid feature dimension from trunk net, expected {self.trunk_dim} but found {trunk_output.size(-1)}"
+        )
 
         # Send through final linear layers
         branch_output = self.branch_linear(branch_output)

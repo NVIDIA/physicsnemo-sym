@@ -173,18 +173,18 @@ def test_navier_stokes_equation():
     momentum_z_eq_eval_pred = evaluations_momentum_z["momentum_z"].numpy()
 
     # verify PDE computation
-    assert np.allclose(
-        continuity_eq_eval_pred, continuity_equation_true
-    ), "Test Failed!"
-    assert np.allclose(
-        momentum_x_eq_eval_pred, momentum_x_equation_true
-    ), "Test Failed!"
-    assert np.allclose(
-        momentum_y_eq_eval_pred, momentum_y_equation_true
-    ), "Test Failed!"
-    assert np.allclose(
-        momentum_z_eq_eval_pred, momentum_z_equation_true
-    ), "Test Failed!"
+    assert np.allclose(continuity_eq_eval_pred, continuity_equation_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(momentum_x_eq_eval_pred, momentum_x_equation_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(momentum_y_eq_eval_pred, momentum_y_equation_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(momentum_z_eq_eval_pred, momentum_z_equation_true), (
+        "Test Failed!"
+    )
 
 
 if __name__ == "__main__":

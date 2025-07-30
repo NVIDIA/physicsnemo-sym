@@ -37,14 +37,14 @@ class MultiDomainSolver(Solver):
         )
 
         # check that domains have different names
-        assert len(set([d.name for d in domains])) == len(
-            domains
-        ), "domains need to have unique names, " + str([d.name for _, d in domains])
+        assert len(set([d.name for d in domains])) == len(domains), (
+            "domains need to have unique names, " + str([d.name for _, d in domains])
+        )
 
         # check not using ntk with seq solver
-        assert (
-            not cfg.training.ntk.use_ntk
-        ), "ntk is not supported with MultiDomainSolver"
+        assert not cfg.training.ntk.use_ntk, (
+            "ntk is not supported with MultiDomainSolver"
+        )
 
         # set number of domains per iteration
         self.domain_batch_size = cfg["domain_batch_size"]

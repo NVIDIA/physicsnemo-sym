@@ -230,13 +230,13 @@ class FirstDeriv(DerivBase):
         self, derivative_keys: List[Key], dx: float, order: int = 2, jit: bool = True
     ) -> None:
         super().__init__(derivative_keys, dx, order, jit)
-        assert (
-            len(derivative_keys) == 0 or order == 2 or order == 4
-        ), "Second and forth order first derivatives supported"
+        assert len(derivative_keys) == 0 or order == 2 or order == 4, (
+            "Second and forth order first derivatives supported"
+        )
         for key in derivative_keys:
-            assert (
-                len(key.derivatives) == 1
-            ), f"Key with {len(key.derivatives)} derivs supplied to first order deriv"
+            assert len(key.derivatives) == 1, (
+                f"Key with {len(key.derivatives)} derivs supplied to first order deriv"
+            )
 
         # Create stencil set of points we need
         eval_list = []
@@ -247,9 +247,9 @@ class FirstDeriv(DerivBase):
                 self._stencil = self._stencil.union(
                     {f"{indep_vars[0]}::-1", f"{indep_vars[0]}::1"}
                 )
-                assert (
-                    len(key.derivatives) == 1
-                ), "Key must have one derivative for first derivative calc"
+                assert len(key.derivatives) == 1, (
+                    "Key must have one derivative for first derivative calc"
+                )
                 eval_list.append(
                     FirstDerivSecondOrder(key.name, str(key.derivatives[0]), str(key))
                 )
@@ -262,9 +262,9 @@ class FirstDeriv(DerivBase):
                         f"{indep_vars[0]}::2",
                     }
                 )
-                assert (
-                    len(key.derivatives) == 1
-                ), "Key must have one derivative for first derivative calc"
+                assert len(key.derivatives) == 1, (
+                    "Key must have one derivative for first derivative calc"
+                )
                 eval_list.append(
                     FirstDerivFourthOrder(key.name, str(key.derivatives[0]), str(key))
                 )
@@ -279,13 +279,13 @@ class SecondDeriv(DerivBase):
         self, derivative_keys: List[Key], dx: float, order: int = 2, jit: bool = True
     ) -> None:
         super().__init__(derivative_keys, dx, order, jit)
-        assert (
-            len(derivative_keys) == 0 or order == 2 or order == 4
-        ), "Second and forth order second derivatives supported"
+        assert len(derivative_keys) == 0 or order == 2 or order == 4, (
+            "Second and forth order second derivatives supported"
+        )
         for key in derivative_keys:
-            assert (
-                len(key.derivatives) == 2
-            ), f"Key with {len(key.derivatives)} deriv keys supplied to second deriv"
+            assert len(key.derivatives) == 2, (
+                f"Key with {len(key.derivatives)} deriv keys supplied to second deriv"
+            )
 
         # Create stencil set of points we need
         eval_list = []
@@ -301,12 +301,12 @@ class SecondDeriv(DerivBase):
                             f"{indep_vars[0]}::1",
                         }
                     )
-                    assert (
-                        len(key.derivatives) == 2
-                    ), "Key must have two derivatives for second derivative calc"
-                    assert (
-                        key.derivatives[0] == key.derivatives[1]
-                    ), "Derivatives keys should be the same"
+                    assert len(key.derivatives) == 2, (
+                        "Key must have two derivatives for second derivative calc"
+                    )
+                    assert key.derivatives[0] == key.derivatives[1], (
+                        "Derivatives keys should be the same"
+                    )
                     eval_list.append(
                         SecondDerivSecondOrder(
                             key.name, str(key.derivatives[0]), str(key)
@@ -322,12 +322,12 @@ class SecondDeriv(DerivBase):
                             f"{indep_vars[0]}::2",
                         }
                     )
-                    assert (
-                        len(key.derivatives) == 2
-                    ), "Key must have two derivatives for second derivative calc"
-                    assert (
-                        key.derivatives[0] == key.derivatives[1]
-                    ), "Derivatives keys should be the same"
+                    assert len(key.derivatives) == 2, (
+                        "Key must have two derivatives for second derivative calc"
+                    )
+                    assert key.derivatives[0] == key.derivatives[1], (
+                        "Derivatives keys should be the same"
+                    )
                     eval_list.append(
                         SecondDerivFourthOrder(
                             key.name, str(key.derivatives[0]), str(key)
@@ -346,9 +346,9 @@ class SecondDeriv(DerivBase):
                             f"{indep_vars[0]}::1&&{indep_vars[1]}::1",
                         }
                     )
-                    assert (
-                        len(key.derivatives) == 2
-                    ), "Key must have two derivatives for second derivative calc"
+                    assert len(key.derivatives) == 2, (
+                        "Key must have two derivatives for second derivative calc"
+                    )
                     eval_list.append(
                         MixedSecondDerivSecondOrder(
                             key.name,
@@ -371,16 +371,16 @@ class ThirdDeriv(DerivBase):
         self, derivative_keys: List[Key], dx: float, order: int = 2, jit: bool = True
     ) -> None:
         super().__init__(derivative_keys, dx, order, jit)
-        assert (
-            len(derivative_keys) == 0 or order == 2
-        ), "Second order third derivatives supported"
+        assert len(derivative_keys) == 0 or order == 2, (
+            "Second order third derivatives supported"
+        )
         for key in derivative_keys:
-            assert (
-                len(key.derivatives) == 3
-            ), f"Key with {len(key.derivatives)} deriv keys supplied to third deriv"
-            assert (
-                key.derivatives[0] == key.derivatives[1] == key.derivatives[2]
-            ), "Mixed third derivatives not supported"
+            assert len(key.derivatives) == 3, (
+                f"Key with {len(key.derivatives)} deriv keys supplied to third deriv"
+            )
+            assert key.derivatives[0] == key.derivatives[1] == key.derivatives[2], (
+                "Mixed third derivatives not supported"
+            )
 
         # Create stencil set of points we need
         eval_list = []
@@ -396,12 +396,12 @@ class ThirdDeriv(DerivBase):
                         f"{indep_vars[0]}::2",
                     }
                 )
-                assert (
-                    len(key.derivatives) == 3
-                ), "Key must have three derivatives for third derivative calc"
-                assert (
-                    key.derivatives[0] == key.derivatives[1] == key.derivatives[2]
-                ), "Derivatives keys should be the same"
+                assert len(key.derivatives) == 3, (
+                    "Key must have three derivatives for third derivative calc"
+                )
+                assert key.derivatives[0] == key.derivatives[1] == key.derivatives[2], (
+                    "Derivatives keys should be the same"
+                )
                 eval_list.append(
                     ThirdDerivSecondOrder(key.name, str(key.derivatives[0]), str(key))
                 )
@@ -416,13 +416,13 @@ class FourthDeriv(DerivBase):
         self, derivative_keys: List[Key], dx: float, order: int = 2, jit: bool = True
     ) -> None:
         super().__init__(derivative_keys, dx, order, jit)
-        assert (
-            len(derivative_keys) == 0 or order == 2
-        ), "Second order forth derivatives supported"
+        assert len(derivative_keys) == 0 or order == 2, (
+            "Second order forth derivatives supported"
+        )
         for key in derivative_keys:
-            assert (
-                len(key.derivatives) == 4
-            ), f"Key with {len(key.derivatives)} deriv keys supplied to forth deriv"
+            assert len(key.derivatives) == 4, (
+                f"Key with {len(key.derivatives)} deriv keys supplied to forth deriv"
+            )
             assert (
                 key.derivatives[0]
                 == key.derivatives[1]
@@ -445,9 +445,9 @@ class FourthDeriv(DerivBase):
                         f"{indep_vars[0]}::2",
                     }
                 )
-                assert (
-                    len(key.derivatives) == 4
-                ), "Key must have three derivatives for forth derivative calc"
+                assert len(key.derivatives) == 4, (
+                    "Key must have three derivatives for forth derivative calc"
+                )
                 assert (
                     key.derivatives[0]
                     == key.derivatives[1]

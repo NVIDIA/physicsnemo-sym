@@ -221,15 +221,15 @@ class GradScaler(torch.cuda.amp.GradScaler):
             self._max_scale = max_scale
             self._recover_threshold = recover_threshold
             self._recover_growth_interval = recover_growth_interval
-            assert (
-                self._init_scale <= self._max_scale
-            ), "init_scale should not be greater than max_scale"
-            assert (
-                self._recover_threshold <= self._max_scale
-            ), "recover_threshold should not be greater than max_scale"
-            assert (
-                self._recover_growth_interval <= self._growth_interval
-            ), "recover_growth_interval should not be greater than growth_interval"
+            assert self._init_scale <= self._max_scale, (
+                "init_scale should not be greater than max_scale"
+            )
+            assert self._recover_threshold <= self._max_scale, (
+                "recover_threshold should not be greater than max_scale"
+            )
+            assert self._recover_growth_interval <= self._growth_interval, (
+                "recover_growth_interval should not be greater than growth_interval"
+            )
 
     def update(self, new_scale=None):
         """

@@ -114,12 +114,12 @@ def test_diffusion_interface():
     eq_2_eval = evaluations["diffusion_interface_neumann_u_1_u_2"].numpy()
 
     # verify PDE computation
-    assert np.allclose(
-        eq_1_eval, diffusion_interface_dirichlet_u_1_u_2_true
-    ), "Test Failed!"
-    assert np.allclose(
-        eq_2_eval, diffusion_interface_neumann_u_1_u_2_true
-    ), "Test Failed!"
+    assert np.allclose(eq_1_eval, diffusion_interface_dirichlet_u_1_u_2_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(eq_2_eval, diffusion_interface_neumann_u_1_u_2_true), (
+        "Test Failed!"
+    )
 
 
 if __name__ == "__main__":

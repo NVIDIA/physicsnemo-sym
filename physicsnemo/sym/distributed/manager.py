@@ -306,9 +306,9 @@ class DistributedManager(object):
         num_groups = manager.world_size // group_size
 
         # Get number of sub-groups per parent group
-        assert (
-            group_size % size == 0
-        ), f"Cannot divide group size {group_size} evenly into subgroups of size {size}"
+        assert group_size % size == 0, (
+            f"Cannot divide group size {group_size} evenly into subgroups of size {size}"
+        )
         num_subgroups = group_size // size
 
         # Create all the sub-groups
@@ -343,9 +343,9 @@ class DistributedManager(object):
         if not manager.distributed:
             return None
 
-        assert (
-            group_name in manager._groups
-        ), f"Group with name {group_name} does not exist"
+        assert group_name in manager._groups, (
+            f"Group with name {group_name} does not exist"
+        )
         assert name not in manager._groups, f"Group with name {name} already exists"
 
         group_ranks = manager._group_ranks[group_name]

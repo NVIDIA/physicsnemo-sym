@@ -269,9 +269,9 @@ class SympyToTorch(torch.nn.Module):
         if not self.freeze_terms:
             self.torch_expr = torch_lambdify(sympy_expr, self.keys)
         else:
-            assert all(
-                x < len(Add.make_args(sympy_expr)) for x in freeze_terms
-            ), "The freeze term index cannot be larger than the total terms in the expression"
+            assert all(x < len(Add.make_args(sympy_expr)) for x in freeze_terms), (
+                "The freeze term index cannot be larger than the total terms in the expression"
+            )
             self.torch_expr = []
             for i in range(len(Add.make_args(sympy_expr))):
                 self.torch_expr.append(

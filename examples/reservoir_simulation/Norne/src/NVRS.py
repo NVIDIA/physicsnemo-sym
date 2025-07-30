@@ -1518,11 +1518,7 @@ def calc_rs(p_bub, p):
         torch.tensor(1.0).to(device1, torch.float32),
         torch.tensor(0.0).to(device1, torch.float32),
     )
-    rs = (
-        (178.11**2)
-        / 5.615
-        * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
-    )
+    rs = (178.11**2) / 5.615 * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
     return rs
 
 

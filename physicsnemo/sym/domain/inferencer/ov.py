@@ -162,9 +162,9 @@ class OVVoxelInferencer(Inferencer):
             Masking function to remove points from inferencing, by default None
         """
         # Start by setting up the
-        assert len(bounds) == len(
-            npoints
-        ), f"Bounds and npoints must be same length {len(bounds)}, {len(npoints)}"
+        assert len(bounds) == len(npoints), (
+            f"Bounds and npoints must be same length {len(bounds)}, {len(npoints)}"
+        )
         assert 0 < len(bounds) < 4, "Only 1, 2, 3 grid dimensionality allowed"
         # Pad for missing dimensions
         self.npoints = np.array(npoints + [1, 1])[:3]
@@ -397,9 +397,9 @@ class OVFourCastNetInferencer(Inferencer):
         logger.info(f"Initial condition loaded with shape {init_np.shape}")
         # Run dimension checks
         assert init_np.ndim == 3, "Initial state should have 3 dimensions"
-        assert (
-            init_np.shape[0] == self.n_channels
-        ), f"Incorrect channel size; expected {self.n_channels}, got {init_np.shape[0]}"
+        assert init_np.shape[0] == self.n_channels, (
+            f"Incorrect channel size; expected {self.n_channels}, got {init_np.shape[0]}"
+        )
         assert (
             init_np.shape[1] == self.img_shape[0]
             and init_np.shape[2] == self.img_shape[1]
@@ -437,12 +437,12 @@ class OVFourCastNetInferencer(Inferencer):
         logger.info(f"Std array loaded with shape {std.shape}")
         # Run dimension checks
         assert mu.ndim == 3 and std.ndim == 3, "Mu and Std should have 3 dimensions"
-        assert (
-            mu.shape[0] == self.n_channels
-        ), f"Incorrect channel size; expected {self.n_channels}, got {mu.shape[0]}"
-        assert (
-            std.shape[0] == self.n_channels
-        ), f"Incorrect channel size; expected {self.n_channels}, got {std.shape[0]}"
+        assert mu.shape[0] == self.n_channels, (
+            f"Incorrect channel size; expected {self.n_channels}, got {mu.shape[0]}"
+        )
+        assert std.shape[0] == self.n_channels, (
+            f"Incorrect channel size; expected {self.n_channels}, got {std.shape[0]}"
+        )
 
         self.mu = torch.Tensor(mu).unsqueeze(0)
         self.std = torch.Tensor(std).unsqueeze(0)

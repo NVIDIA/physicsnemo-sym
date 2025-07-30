@@ -1379,8 +1379,8 @@ def Peaceman_well(
             pass
 
         average_pressure = (
-            Ptito.ravel()[producer_location]
-        ) * pini_alt  # np.mean(Ptito.ravel()) * pini_alt #* (1/aug)
+            (Ptito.ravel()[producer_location]) * pini_alt
+        )  # np.mean(Ptito.ravel()) * pini_alt #* (1/aug)
         p_inj = (Ptito.ravel()[Injector_location]) * pini_alt  # *(1/aug)
         # p_prod = (Ptito.ravel()[producer_location] ) * pini_alt
 

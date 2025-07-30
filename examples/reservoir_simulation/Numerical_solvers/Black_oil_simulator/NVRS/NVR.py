@@ -263,11 +263,7 @@ def Gassmann(PORO, Pr, SO, nx, ny, nz):
         # density corrected for pressure and temperature
         rhoOil = (
             1000
-            * (
-                rho0
-                + (0.00277 * P - 1.71e-7 * P**3) * (rhoG - 1.15) ** 2
-                + P * 3.49e-4
-            )
+            * (rho0 + (0.00277 * P - 1.71e-7 * P**3) * (rhoG - 1.15) ** 2 + P * 3.49e-4)
             / (0.972 + 3.81e-4 * (T + 17.78) ** 1.175)
         )  # kg/m3
 
