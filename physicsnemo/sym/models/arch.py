@@ -692,7 +692,7 @@ class FuncArch(nn.Module):
             )
         return out
 
-    def make_node(self, name: str, jit: bool = False, optimize: bool = True):
+    def make_node(self, name: str, optimize: bool = True):
         """Makes functional arch node for unrolling with PhysicsNeMo `Graph`.
 
         Parameters
