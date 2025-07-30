@@ -1053,6 +1053,7 @@ class Trainer(AdamMixin, AdaHessianMixin, BFGSMixin):
         log: logging.Logger,
         device: torch.device,
     ):
+        DistributedManager()  # This may not be needed
         # attempt to restrore from initialization network dir
         if initialization_network_dir != "":
             for i_dir in initialization_network_dir.split(","):
