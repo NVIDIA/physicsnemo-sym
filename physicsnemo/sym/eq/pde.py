@@ -97,7 +97,7 @@ class PDE(object):
 
         Returns
         -------
-        nodes : Union[List[Node], Dict[str, Node]]
+        nodes : list[Node] | dict[str, Node]
             Makes a separate node for every equation.
             Returns list of nodes if return_as_dict=False, dictionary if return_as_dict=True.
         """
