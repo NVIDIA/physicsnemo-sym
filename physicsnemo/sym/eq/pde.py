@@ -122,7 +122,7 @@ class PDE(object):
                     freeze_terms.pop(k)
             for i in range(create_instances):
                 for name, eq in self.equations.items():
-                    node_name = str(name) + "_" + str(i)
+                    node_name = f"{name}_{i}"
                     if node_name in freeze_terms.keys():
                         node = Node.from_sympy(
                             eq,
