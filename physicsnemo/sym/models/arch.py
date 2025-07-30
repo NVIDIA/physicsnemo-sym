@@ -640,7 +640,7 @@ class FuncArch(nn.Module):
         self.scaler_enabled: bool = False
         self.deriv_scalers: Dict[int, DerivScaler] = {}
 
-    def forward(self, in_vars: Dict[str, Tensor]) -> Dict[str, Tensor]:
+    def forward(self, in_vars: dict[str, Tensor]) -> dict[str, Tensor]:
         x = self.arch.concat_input(
             in_vars,
             self.arch.input_key_dict.keys(),
@@ -726,7 +726,7 @@ class FuncArch(nn.Module):
         return net_node
 
     @staticmethod
-    def _get_key_dim(keys: List[Key]):
+    def _get_key_dim(keys: list[Key]):
         """
         Find the corresponding dims of the keys.
         For example: Suppose we have the following keys and corresponding size
