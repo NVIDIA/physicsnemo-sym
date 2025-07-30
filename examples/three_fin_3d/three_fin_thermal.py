@@ -319,9 +319,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 "fin_length_s",
             ]
         }
-        {
-            key: value for key, value in openfoam_var.items() if key in ["theta_s"]
-        }
+        {key: value for key, value in openfoam_var.items() if key in ["theta_s"]}
         openfoam_solid_validator = PointwiseValidator(
             nodes=thermal_nodes,
             invar=openfoam_invar_solid_numpy,

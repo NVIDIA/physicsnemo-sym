@@ -2056,10 +2056,11 @@ def minimize_constr(
     # handle callbacks
     if callback is not None:
         callback_ = callback
+
         def callback(x):
             return callback_(
-                    torch.tensor(x, dtype=x0.dtype, device=x0.device).view_as(x0)
-                )
+                torch.tensor(x, dtype=x0.dtype, device=x0.device).view_as(x0)
+            )
 
     # handle bounds
     if bounds is not None:
@@ -2103,6 +2104,7 @@ def _cg_iters(grad, hess, max_iter, normp=1):
     Derived from Algorithm 7.1 of "Numerical Optimization (2nd Ed.)"
     (Nocedal & Wright, 2006; pp. 169)
     """
+
     # generalized dot product that supports batch inputs
     # TODO: let the user specify dot fn?
     def dot(u, v):
@@ -2547,8 +2549,10 @@ def _strong_wolfe_extra(
     """
     # ported from https://github.com/torch/optim/blob/master/lswolfe.lua
     if extra_condition is None:
+
         def extra_condition(*args):
             return True
+
     d_norm = d.abs().max()
     g = g.clone(memory_format=torch.contiguous_format)
     # evaluate objective and gradient using initial step
@@ -2857,8 +2861,10 @@ class ScalarFunction(object):
         if self._hess:
             if self._I is None:
                 self._I = torch.eye(x.numel(), dtype=x.dtype, device=x.device)
+
             def hvp(v):
                 return autograd.grad(grad, x, v, retain_graph=True)[0]
+
             hess = _vmap(hvp)(self._I)
 
         return sf_value(f=f.detach(), grad=grad.detach(), hessp=hessp, hess=hess)
@@ -2915,8 +2921,10 @@ class VectorFunction(object):
         if self._jac:
             if self._I is None:
                 self._I = torch.eye(x.numel(), dtype=x.dtype, device=x.device)
+
             def jvp(v):
                 return autograd.grad(f, x, v, retain_graph=True)[0]
+
             jac = _vmap(jvp)(self._I)
 
         return vf_value(f=f.detach(), jacp=jacp, jac=jac)
@@ -3482,8 +3490,12 @@ status_messages = (
 
 _constr_keys = {"fun", "lb", "ub", "jac", "hess", "hessp", "keep_feasible"}
 _bounds_keys = {"lb", "ub", "keep_feasible"}
+
+
 def dot(u, v):
     return torch.dot(u.view(-1), v.view(-1))
+
+
 sf_value = namedtuple("sf_value", ["f", "grad", "hessp", "hess"])
 de_value = namedtuple("de_value", ["f", "grad"])
 vf_value = namedtuple("vf_value", ["f", "jacp", "jac"])
@@ -6260,13 +6272,13 @@ class compositional_oil(torch.nn.Module):
                 # compute the reduced volume Vr
                 def fn_Vr(x):
                     return EOS(
-                                    x,
-                                    pressure_mean[mm, :].reshape(-1, 1),
-                                    self.T,
-                                    self.Pc,
-                                    self.Tc,
-                                    self.AS,
-                                )
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        self.AS,
+                    )
 
                 res = minimize(
                     fn_Vr, x0, method="l-bfgs", tol=1e-3, max_iter=5, disp=False
@@ -6285,9 +6297,7 @@ class compositional_oil(torch.nn.Module):
                 fugacitybig[mm, :] = fugac.ravel()
 
                 # Calcultae the chemical potential of CO2
-                1 + (
-                    (Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1))
-                )
+                1 + ((Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1)))
 
                 # calculate solubility of co2 in brine
                 # solco2brine = sol_co2_brine(Rgas,self.T,uco2,fugac,brine_salinity, pressure_mean[mm,:].reshape(-1,1))
@@ -6310,15 +6320,16 @@ class compositional_oil(torch.nn.Module):
 
                 # Compute co2 density
                 x0 = torch.randn(sat.shape[1], 1).to(device, torch.float64)
+
                 def fhelmotz(x):
                     return Helmhotz(
-                                    x,
-                                    pressure_mean[mm, :].reshape(-1, 1),
-                                    self.T,
-                                    self.Pc,
-                                    self.Tc,
-                                    Rgas,
-                                )
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        Rgas,
+                    )
 
                 Rho_co2 = minimize(
                     fhelmotz, x0, method="l-bfgs", max_iter=5, tol=1e-3, disp=False
@@ -6346,13 +6357,13 @@ class compositional_oil(torch.nn.Module):
                 # compute the reduced volume Vr
                 def fn_Vrn(x):
                     return EOSn(
-                                    x,
-                                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
-                                    self.T,
-                                    self.Pc,
-                                    self.Tc,
-                                    self.AS,
-                                )
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        self.AS,
+                    )
 
                 Vr = scipy.optimize.fmin_powell(
                     fn_Vrn, x0, xtol=1e-6, ftol=1e-6, disp=False
@@ -6375,9 +6386,7 @@ class compositional_oil(torch.nn.Module):
                 fugacitybig[mm, :] = fugac.ravel()
 
                 # Calcultae the chemical potential of CO2
-                1 + (
-                    (Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1))
-                )
+                1 + ((Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1)))
 
                 # calculate solubility of co2 in brine
                 # solco2brine = sol_co2_brine(Rgas,self.T,uco2,fugac,brine_salinity, pressure_mean[mm,:].reshape(-1,1))
@@ -6401,15 +6410,16 @@ class compositional_oil(torch.nn.Module):
 
                 # Compute co2 density
                 x0 = abs(np.random.rand(sat.shape[1], 1)) * 10
+
                 def fhelmotzn(x):
                     return Helmhotzn(
-                                    x,
-                                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
-                                    self.T,
-                                    self.Pc,
-                                    self.Tc,
-                                    Rgas,
-                                )
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        Rgas,
+                    )
 
                 Rho_co2 = scipy.optimize.fmin_powell(
                     fhelmotzn, x0, xtol=1e-6, ftol=1e-6, disp=False

@@ -80,9 +80,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # Nondimensionalization Params
     ##############################
     # fluid params
-    fluid_kinematic_viscosity / (
-        length_scale**2 / time_scale
-    )
+    fluid_kinematic_viscosity / (length_scale**2 / time_scale)
     nd_fluid_density = fluid_density / density_scale
     nd_fluid_specific_heat = fluid_specific_heat / (
         joule_scale / (mass_scale * temp_scale)

@@ -588,9 +588,7 @@ class GaussianDiffusion(nn.Module):
         # helper function to register buffer from float64 to float32
 
         def register_buffer(name, val):
-            return self.register_buffer(
-                    name, val.to(torch.float32)
-                )
+            return self.register_buffer(name, val.to(torch.float32))
 
         register_buffer("betas", betas)
         register_buffer("alphas_cumprod", alphas_cumprod)

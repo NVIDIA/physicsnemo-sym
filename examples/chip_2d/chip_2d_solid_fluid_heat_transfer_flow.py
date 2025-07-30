@@ -86,9 +86,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     nd_fluid_conductivity = fluid_conductivity / (
         watt_scale / (length_scale * temp_scale)
     )
-    nd_fluid_conductivity / (
-        nd_fluid_specific_heat * nd_fluid_density
-    )
+    nd_fluid_conductivity / (nd_fluid_specific_heat * nd_fluid_density)
 
     # copper params
     nd_copper_density = copper_density / (mass_scale / length_scale**3)
@@ -98,9 +96,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     nd_copper_conductivity = copper_conductivity / (
         watt_scale / (length_scale * temp_scale)
     )
-    nd_copper_conductivity / (
-        nd_copper_specific_heat * nd_copper_density
-    )
+    nd_copper_conductivity / (nd_copper_specific_heat * nd_copper_density)
 
     # boundary params
     nd_inlet_velocity = inlet_velocity / (length_scale / time_scale)

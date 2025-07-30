@@ -3467,8 +3467,10 @@ def NewtRaph(
 
                 if method2 == 1:  # GMRES
                     M2 = spilu(-dG)
+
                     def M_x(x):
                         return M2.solve(x)
+
                     M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
                     ds, exitCode = gmres(
                         -dG, G, tol=1e-6, atol=0, restart=20, maxiter=100, M=M
@@ -3478,8 +3480,10 @@ def NewtRaph(
                     ds = spsolve(-dG, G)
                 elif method2 == 3:
                     M2 = spilu(-dG)
+
                     def M_x(x):
                         return M2.solve(x)
+
                     M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
                     ds, exitCode = cg(-dG, G, tol=1e-6, atol=0, maxiter=100, M=M)
                 elif method2 == 4:  # LSQR
@@ -3487,8 +3491,10 @@ def NewtRaph(
                     ds, istop, itn, normr = lsqr(-dG, G)[:4]
                 elif method2 == 5:  # CPR
                     M2 = spilu(-dG)
+
                     def M_x(x):
                         return M2.solve(x)
+
                     M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
                     ds, exitCode = gmres(
                         -dG, G, tol=1e-6, atol=0, restart=20, maxiter=100, M=M
@@ -3866,8 +3872,10 @@ def Reservoir_Simulator(
 
         if method == 1:  # GMRES
             M2 = spilu(A)
+
             def M_x(x):
                 return M2.solve(x)
+
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
             u, exitCode = gmres(A, b, tol=1e-6, atol=0, restart=20, maxiter=100, M=M)
 
@@ -3876,8 +3884,10 @@ def Reservoir_Simulator(
 
         elif method == 3:  # CONJUGATE GRADIENT
             M2 = spilu(A)
+
             def M_x(x):
                 return M2.solve(x)
+
             M = LinearOperator((nx * ny * nz, nx * ny * nz), M_x)
             u, exitCode = cg(A, b, tol=1e-6, atol=0, maxiter=100, M=M)
 

@@ -65,12 +65,14 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     len_slab = 0.6
     eps0 = 1.0
     eps1 = 2.0
+
     def eps_numpy(y):
         return np.where(
             np.logical_and(y > (height - len_slab) / 2, y < (height + len_slab) / 2),
             eps1,
             eps0,
         )
+
     eps_sympy = sqrt(
         eps0
         + (

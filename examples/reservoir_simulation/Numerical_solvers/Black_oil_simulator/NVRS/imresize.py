@@ -58,8 +58,10 @@ def cubic(x):
 
 def contributions(in_length, out_length, scale, kernel, k_width):
     if scale < 1:
+
         def h(x):
             return scale * kernel(scale * x)
+
         kernel_width = 1.0 * k_width / scale
     else:
         h = kernel
