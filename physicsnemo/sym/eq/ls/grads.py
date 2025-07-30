@@ -67,7 +67,9 @@ class FirstDeriv(torch.nn.Module):
             _, _, neighbor_matrix = connectivity_tensor
             return self._forward_batched(coords, neighbor_matrix, y)
         else:
-            raise ValueError(f"connectivity_tensor must be tuple of length 2 or 3; got {len(connectivity_tensor)=}")
+            raise ValueError(
+                f"connectivity_tensor must be tuple of length 2 or 3; got {len(connectivity_tensor)=}"
+            )
 
     def _forward_direct(self, du, dv) -> list[Tensor]:
         """
@@ -90,9 +92,7 @@ class FirstDeriv(torch.nn.Module):
         grad_u = grad_u.squeeze(-1)  # [batch_size, N, dim]
 
         # Split into individual components
-        result = []
-        for i in range(self.dim):
-            result.append(grad_u[:, i : i + 1])
+        result = [grad_u[:, i : i + 1] for i in range(self.dim)]
 
         return result
 
@@ -159,9 +159,7 @@ class FirstDeriv(torch.nn.Module):
             grad_u = grad_u.squeeze(-1)  # [N, dim]
 
             # Split into individual components
-            result = []
-            for i in range(self.dim):
-                result.append(grad_u[:, i : i + 1])  # [N, 1]
+            result = [grad_u[:, i : i + 1] for i in range(self.dim)]
 
             return result
 
@@ -193,9 +191,7 @@ class FirstDeriv(torch.nn.Module):
         grad_u = grad_u.squeeze(-1)  # [N, dim]
 
         # Split into individual components
-        result = []
-        for i in range(self.dim):
-            result.append(grad_u[:, i : i + 1])
+        result = [grad_u[:, i : i + 1] for i in range(self.dim)]
 
         return result
 

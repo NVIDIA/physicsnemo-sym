@@ -101,25 +101,21 @@ class PDE(object):
             Makes a separate node for every equation.
             Returns list of nodes if return_as_dict=False, dictionary if return_as_dict=True.
         """
-        nodes = []
-        node_dict = {}
-
         if create_instances == 1:
             if bool(freeze_terms):
                 print(
                     "Freezing of terms is not supported when create_instance = 1. No terms will be frozen!"
                 )
                 freeze_terms = {}  # override with an empty dict
-            for name, eq in self.equations.items():
-                node = Node.from_sympy(eq, str(name), freeze_terms, detach_names)
-                nodes.append(node)
-                if return_as_dict:
-                    node_dict[str(name)] = node
+            node_dict = {
+                str(name): Node.from_sympy(eq, str(name), freeze_terms, detach_names)
+                for name, eq in self.equations.items()
+            }
         else:
             # look for empty lists in freeze_terms dict
-            for k in list(freeze_terms):
-                if not freeze_terms[k]:
-                    freeze_terms.pop(k)
+            freeze_terms = {k: v for k, v in freeze_terms.items() if v}
+
+            node_dict = {}
             for i in range(create_instances):
                 for name, eq in self.equations.items():
                     node_name = f"{name}_{i}"
@@ -133,9 +129,7 @@ class PDE(object):
                     else:
                         # set the freeze terms to an empty list
                         print(
-                            "No freeze terms found for instance: "
-f"No freeze terms found for instance {node_name}, setting to empty."
-                            + ", setting to empty"
+                            f"No freeze terms found for instance {node_name}, setting to empty."
                         )
                         node = Node.from_sympy(
                             eq,
@@ -143,11 +137,9 @@ f"No freeze terms found for instance {node_name}, setting to empty."
                             [],
                             detach_names,
                         )
-                    nodes.append(node)
-                    if return_as_dict:
-                        node_dict[node_name] = node
+                    node_dict[node_name] = node
 
         if return_as_dict:
             return node_dict
         else:
-            return nodes
+            return list(node_dict.values())
