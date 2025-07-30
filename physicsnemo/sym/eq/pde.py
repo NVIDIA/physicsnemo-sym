@@ -77,7 +77,7 @@ class PDE(object):
         self,
         create_instances: int = 1,
         freeze_terms: Dict[str, List[int]] = {},
-        detach_names: List[str] = [],
+        detach_names: list[str] = [],
         return_as_dict: bool = False,
     ):
         """
