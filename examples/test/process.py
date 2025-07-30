@@ -14,10 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys
 import os
 import time
-import glob
 import subprocess
 from termcolor import colored
 
@@ -60,7 +58,7 @@ class Process:
                     self.return_status = "FAIL"
                     self.return_code = self.process.returncode
                     output, error = self.process.communicate()
-                    if not error is None:
+                    if error is not None:
                         self.error = error.decode("utf-8")
                     else:
                         self.error = "No error message. :("

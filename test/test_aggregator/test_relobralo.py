@@ -30,9 +30,7 @@ class FitToPoly(nn.Module):
     def forward(self, x):
         x1, x2, x3 = x[:, 0:1], x[:, 1:2], x[:, 2:3]
         losses = {
-            "loss_x": (torch.relu(torch.mm(self.w, x1) + self.b - x1**2))
-            .abs()
-            .mean(),
+            "loss_x": (torch.relu(torch.mm(self.w, x1) + self.b - x1**2)).abs().mean(),
             "loss_y": (torch.relu(torch.mm(self.w, x2) + self.b - x2**2.0))
             .abs()
             .mean(),

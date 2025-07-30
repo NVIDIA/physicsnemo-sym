@@ -17,7 +17,7 @@
 import os
 import warnings
 
-from sympy import Symbol, Eq, Abs, Function, Piecewise, Heaviside, tanh
+from sympy import Symbol, Eq, Abs, Function, Heaviside
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
@@ -47,8 +47,6 @@ def generate_pde_copies(eq, num_copies=2):
     Generate multiple copies of a equation to use it
     for different domains.
     """
-
-    from sympy import Function
 
     eq_copies = []
     for i in range(num_copies):
@@ -220,7 +218,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # add validator
     file_path = "openfoam/cavity_uniformVel0.csv"
     if os.path.exists(to_absolute_path(file_path)):
-
         mapping = {"Points:0": "x", "Points:1": "y", "U:0": "u", "U:1": "v", "p": "p"}
         openfoam_var = csv_to_dict(to_absolute_path(file_path), mapping)
         openfoam_var["x"] += -width / 2  # center OpenFoam data

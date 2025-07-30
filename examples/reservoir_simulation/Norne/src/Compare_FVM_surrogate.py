@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 from __future__ import print_function
 
 print(__doc__)
@@ -78,7 +79,6 @@ from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
 import pickle
-import physicsnemo
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.models.fno import *
@@ -96,7 +96,6 @@ from scipy.fftpack import dct
 from torch.utils.dlpack import to_dlpack
 from torch.utils.dlpack import from_dlpack
 import numpy.matlib
-from matplotlib import pyplot
 
 # os.environ['KERAS_BACKEND'] = 'tensorflow'
 import os.path
@@ -107,12 +106,9 @@ from matplotlib.font_manager import FontProperties
 import os.path
 from datetime import timedelta
 from skimage.transform import resize as rzz
-from mpl_toolkits.mplot3d import Axes3D
-import imp
 import h5py
 import scipy.io as sio
 import yaml
-import matplotlib
 import matplotlib as mpl
 import matplotlib.lines as mlines
 import os
@@ -303,7 +299,6 @@ def NorneInitialEnsemble(ensembleSize=100, randomNumber=1.2345e5):
 
     indices = np.where(A == 1)
     for i in range(N):
-
         # multz
         A_MZ = A_L[:, [0, 7, 10, 11, 14, 17]]  # Adjusted indexing to 0-based
         A_MZ = A_MZ.flatten()
@@ -526,7 +521,6 @@ def NorneGeostat():
     p = p[act != 0]
 
     for nr in range(int(dim[2])):
-
         index_start = ldim * nr
         index_end = ldim * (nr + 1)
         values_range_start = int(np.sum(act[:index_start]))
@@ -556,7 +550,6 @@ def NorneGeostat():
     stdv = np.zeros(dim[2])
 
     for nr in range(int(dim[2])):
-
         index_start = ldim * nr
         index_end = ldim * (nr + 1)
         values_range_start = int(np.sum(act[:index_start]))
@@ -717,7 +710,6 @@ def Add_marker(plt, XX, YY, locc):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, timezz):
-
     columns = [
         "B_1BH",
         "B_1H",
@@ -827,7 +819,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, timezz):
 
 
 def MyLossClement(a, b):
-
     loss = torch.sum(torch.abs(a - b) / a.shape[0])
 
     # loss = ((a-b)**2).mean()
@@ -1091,35 +1082,34 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -1132,7 +1122,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -1237,7 +1227,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -1515,7 +1505,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -1538,11 +1528,7 @@ def calc_rs(p_bub, p):
         torch.tensor(1.0).to(device1, torch.float32),
         torch.tensor(0.0).to(device1, torch.float32),
     )
-    rs = (
-        (178.11**2)
-        / 5.615
-        * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
-    )
+    rs = (178.11**2) / 5.615 * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
     return rs
 
 
@@ -1668,7 +1654,6 @@ def Plot_2D(
     producers,
     gass,
 ):
-
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
     maxii = max(Pressz.ravel())
     minii = min(Pressz.ravel())
@@ -1747,7 +1732,6 @@ def Plot_2D(
 def Plot3DNorne(
     nx, ny, nz, Truee, N_injw, N_pr, N_injg, cgrid, varii, injectors, producers, gass
 ):
-
     # matplotlib.use('Agg')
     Pressz = np.reshape(Truee, (nx, ny, nz), "F")
 
@@ -2263,7 +2247,6 @@ def Plot3DNorne(
 
 
 def Plot_all_layesr(nx, ny, nz, see, injectors, producers, gass, varii):
-
     see[see == 0] = np.nan  # Convert zeros to NaNs
     plt.figure(figsize=(20, 20), dpi=300)
     Pressz = np.reshape(see, (nx, ny, nz), "F")
@@ -2516,7 +2499,6 @@ def Add_marker3(plt, XX, YY, injectors, producers, gass):
 
 
 def Get_Time(nx, ny, nz, steppi, steppi_indices, N):
-
     Timee = []
     for k in range(N):
         check = np.ones((nx, ny, nz), dtype=np.float16)
@@ -2611,7 +2593,6 @@ def Get_source_sink(N, nx, ny, nz, waterz, gasz, steppi, steppi_indices):
 
 
 def Get_falt(nx, ny, nz, floatz, N):
-
     Fault = np.ones((nx, ny, nz), dtype=np.float16)
     flt = []
     for k in range(N):
@@ -2709,7 +2690,6 @@ def ensemble_pytorch(
     device,
     steppi_indices,
 ):
-
     ini_ensemble1 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Permeability
     ini_ensemble2 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Porosity
     ini_ensemble4 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)  # Fault
@@ -2758,7 +2738,6 @@ SUPPORTED_DATA_TYPES = {
 
 
 def parse_egrid(path_to_result):
-
     egrid_path = path_to_result
     attrs = ("GRIDHEAD", "ACTNUM")
     egrid = _parse_ech_bin(egrid_path, attrs)
@@ -2767,7 +2746,6 @@ def parse_egrid(path_to_result):
 
 
 def parse_unrst(path_to_result):
-
     unrst_path = path_to_result
     attrs = ("PRESSURE", "SGAS", "SWAT")
     states = _parse_ech_bin(unrst_path, attrs)
@@ -2793,7 +2771,6 @@ def _check_and_fetch_type_info(data_type):
 
 
 def _check_and_fetch_file(path, pattern, return_relative=False):
-
     found = []
     reg_expr = re.compile(fnmatch.translate(pattern), re.IGNORECASE)
 
@@ -2811,7 +2788,6 @@ def _check_and_fetch_file(path, pattern, return_relative=False):
 
 
 def _parse_keywords(path, attrs=None):
-
     sections_counter = {} if attrs is None else {attr: 0 for attr in attrs}
 
     with open(path, "rb") as f:
@@ -2855,7 +2831,6 @@ def _parse_keywords(path, attrs=None):
 
 
 def _parse_ech_bin(path, attrs=None):
-
     if attrs is None:
         raise ValueError("Keyword attribute cannot be empty")
 
@@ -2869,7 +2844,6 @@ def _parse_ech_bin(path, attrs=None):
 
 
 def _fetch_keyword_data(section):
-
     n_elements, data_type, element_size, fmt, element_skip, binary_data = section
 
     n_skip = math.floor((n_elements - 1) / element_skip)
@@ -2889,7 +2863,6 @@ def _fetch_keyword_data(section):
 
 
 def Geta_all(folder, nx, ny, nz, effective, oldfolder, check, steppi, steppi_indices):
-
     os.chdir(folder)
 
     # os.system(string_Jesus)
@@ -3765,7 +3738,6 @@ def Forward_model_ensemble(
     degg,
     experts,
 ):
-
     #### ===================================================================== ####
     #                     RESERVOIR SIMULATOR WITH MODULUS
     #
@@ -4108,7 +4080,6 @@ def Split_Matrix(matrix, sizee):
 def Get_data_FFNN(
     oldfolder, N, pressure, Sgas, Swater, Soil, perm, Time, steppi, steppi_indices
 ):
-
     ouut = np.zeros((N, steppi, 66))
     innn = np.zeros((N, steppi, 90))
     steppii = 246
@@ -4509,7 +4480,6 @@ def Get_data_FFNN1(
     steppi,
     steppi_indices,
 ):
-
     ouut = np.zeros((N, steppi, 66))
     innn = np.zeros((N, steppi, 90))
     steppii = 246
@@ -5463,7 +5433,7 @@ def interp_torch(cuda, reference_matrix1, reference_matrix2, tensor1):
 def RelPerm(Sa, Sg, SWI, SWR, SWOW, SWOG):
     one_minus_swi_swr = 1 - (SWI + SWR)
 
-    so = (((1 - (Sa + Sg))) - SWR) / one_minus_swi_swr
+    so = ((1 - (Sa + Sg)) - SWR) / one_minus_swi_swr
     sw = (Sa - SWI) / one_minus_swi_swr
     sg = Sg / one_minus_swi_swr
 
@@ -5827,7 +5797,6 @@ def load_FNO_dataset(path, input_keys, output_keys, n_examples=None):
     invar, outvar = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar, output_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5870,7 +5839,6 @@ def load_FNO_dataset2(
         (outvar3, output_keys3),
     ]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5906,7 +5874,6 @@ def load_FNO_dataset2d(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5942,7 +5909,6 @@ def load_FNO_dataset2a(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -6024,7 +5990,6 @@ def gaussianizeit(input1):
 
 
 def best_fit(X, Y):
-
     xbar = sum(X) / len(X)
     ybar = sum(Y) / len(Y)
     n = len(X)  # or len(Y)
@@ -6041,7 +6006,6 @@ from copy import copy
 
 
 def Performance_plot_cost(CCR, Trued, stringg, training_master, oldfolder):
-
     CoDview = np.zeros((1, Trued.shape[1]))
     R2view = np.zeros((1, Trued.shape[1]))
 
@@ -6148,7 +6112,6 @@ def PREDICTION_CCR__MACHINE(
     deg,
     experts,
 ):
-
     filenamex = "clfx_%d.asv" % ii
     filenamey = "clfy_%d.asv" % ii
 
@@ -6285,7 +6248,6 @@ def process_step(
     fol,
     fol1,
 ):
-
     os.chdir(fol)
     progressBar = "\rPlotting Progress: " + ProgressBar(steppi - 1, kk - 1, steppi - 1)
     ShowBar(progressBar)
@@ -6457,8 +6419,8 @@ def process_step(
     Accuracy_oil[kk, 0] = R2o
     Accuracy_oil[kk, 1] = L2o
 
-    look = (((Sgas[0, kk, :, :, :])) * effectiveuse)[:, :, ::-1]
-    lookf = (((Sgas_true[0, kk, :, :, :])) * effectiveuse)[:, :, ::-1]
+    look = ((Sgas[0, kk, :, :, :]) * effectiveuse)[:, :, ::-1]
+    lookf = ((Sgas_true[0, kk, :, :, :]) * effectiveuse)[:, :, ::-1]
     diff1 = ((abs(look - lookf)) * effectiveuse)[:, :, ::-1]
     ax1 = f_3.add_subplot(4, 3, 10, projection="3d")
     Plot_PhysicsNeMo(
@@ -6736,9 +6698,9 @@ print("")
 if torch.cuda.is_available():
     num_gpus = torch.cuda.device_count()
     if num_gpus >= 2:  # Choose GPU 1 (index 1)
-        device = torch.device(f"cuda:0")
+        device = torch.device("cuda:0")
     else:  # If there's only one GPU or no GPUs, choose the first one (index 0)
-        device = torch.device(f"cuda:0")
+        device = torch.device("cuda:0")
 else:  # If CUDA is not available, use the CPU
     raise RuntimeError("No GPU found. Please run on a system with a GPU.")
 torch.cuda.set_device(device)

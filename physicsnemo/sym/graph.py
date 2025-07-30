@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Helper functions for unrolling computational graph
-"""
+"""Helper functions for unrolling computational graph"""
 
 from copy import copy
 import torch
@@ -26,7 +25,6 @@ from .amp import DerivScalers
 from .models.arch import Arch, FuncArch
 from .node import Node
 from .key import Key
-from .constants import diff_str
 from .eq.derivatives import Derivative
 from .manager import JitManager, GraphManager
 

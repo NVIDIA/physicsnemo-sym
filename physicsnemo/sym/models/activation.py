@@ -29,7 +29,7 @@ class ActivationMeta(enum.EnumMeta):
     def __getitem__(self, name):
         try:
             return super().__getitem__(name.upper())
-        except (KeyError) as error:
+        except KeyError:
             raise KeyError(f"Invalid activation function {name}")
 
 
@@ -125,6 +125,7 @@ def get_activation_fn(
 
     if activation in activation_mapping and not module:
         activation_fn_ = activation_mapping[activation]
+
         # wraps the function because torch.sin and F.gelu could not be scripted directly
         def activation_fn(x: Tensor) -> Tensor:
             return activation_fn_(x)

@@ -14,13 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Equations related to linear elasticity
-"""
+"""Equations related to linear elasticity"""
 
 from sympy import Symbol, Function, Number
 
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class LinearElasticity(PDE):
@@ -31,13 +29,13 @@ class LinearElasticity(PDE):
     Parameters
     ==========
     E : float, Sympy Symbol/Expr, str
-        The Young's physicsnemo
+        The Young's modulus
     nu : float, Sympy Symbol/Expr, str
         The Poisson's ratio
     lambda_: float, Sympy Symbol/Expr, str
         Lamé's first parameter
     mu: float, Sympy Symbol/Expr, str
-        Lamé's second parameter (shear physicsnemo)
+        Lamé's second parameter (shear modulus)
     rho: float, Sympy Symbol/Expr, str
         Mass density.
     dim : int
@@ -63,7 +61,6 @@ class LinearElasticity(PDE):
     def __init__(
         self, E=None, nu=None, lambda_=None, mu=None, rho=1, dim=3, time=False
     ):
-
         # set params
         self.dim = dim
         self.time = time
@@ -208,13 +205,13 @@ class LinearElasticityPlaneStress(PDE):
     Parameters
     ==========
     E : float, Sympy Symbol/Expr, str
-        The Young's physicsnemo
+        The Young's modulus
     nu : float, Sympy Symbol/Expr, str
         The Poisson's ratio
     lambda_: float, Sympy Symbol/Expr, str
         Lamé's first parameter.
     mu: float, Sympy Symbol/Expr, str
-        Lamé's second parameter (shear physicsnemo)
+        Lamé's second parameter (shear modulus)
     rho: float, Sympy Symbol/Expr, str
         Mass density.
 
@@ -234,7 +231,6 @@ class LinearElasticityPlaneStress(PDE):
     name = "LinearElasticityPlaneStress"
 
     def __init__(self, E=None, nu=None, lambda_=None, mu=None, rho=1, time=False):
-
         # set params
         self.time = time
 

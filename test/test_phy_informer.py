@@ -103,7 +103,7 @@ def general_setup(request):
         + torch.sin(2 * coords[:, 1:2])
         + torch.sin(9 * coords[:, 2:3])
     )
-    p = (
+    (
         torch.sin(1 * coords[:, 0:1])
         + torch.sin(1 * coords[:, 1:2])
         + torch.sin(1 * coords[:, 2:3])
@@ -195,7 +195,7 @@ def least_squares_setup(request):
         + torch.sin(2 * coords[:, 1:2])
         + torch.sin(9 * coords[:, 2:3])
     )
-    p = (
+    (
         torch.sin(1 * coords[:, 0:1])
         + torch.sin(1 * coords[:, 1:2])
         + torch.sin(1 * coords[:, 2:3])
@@ -230,7 +230,6 @@ def least_squares_setup(request):
 @pytest.mark.parametrize("general_setup", ["cuda"], indirect=True)
 def test_residuals_autodiff(general_setup):
     coords, coords_unstructured, residuals_analytical, model = general_setup
-    steps = 100
     ns = NavierStokes(nu=0.01, rho=1.0, dim=3, time=False)
     phy_informer = PhysicsInformer(
         required_outputs=["continuity", "momentum_x"],
@@ -274,7 +273,6 @@ def test_residuals_meshless_fd(general_setup):
         coords_unstructured, model, dx=0.001
     )
 
-    steps = 100
     ns = NavierStokes(nu=0.01, rho=1.0, dim=3, time=False)
     phy_informer = PhysicsInformer(
         required_outputs=["continuity", "momentum_x"],
@@ -368,15 +366,14 @@ def test_residuals_finite_difference(general_setup):
                 - residuals_fd[key].reshape(100, 100, 100)[pad:-pad, pad:-pad, pad:-pad]
             )
         )
-        assert (
-            error < 0.5
-        ), f"Finite Difference gradient error too high for {key}: {error}"
+        assert error < 0.5, (
+            f"Finite Difference gradient error too high for {key}: {error}"
+        )
 
 
 @pytest.mark.parametrize("general_setup", ["cuda"], indirect=True)
 def test_residuals_spectral(general_setup):
     coords, coords_unstructured, residuals_analytical, model = general_setup
-    steps = 100
     ns = NavierStokes(nu=0.01, rho=1.0, dim=3, time=False)
     phy_informer = PhysicsInformer(
         required_outputs=["continuity", "momentum_x"],
@@ -422,7 +419,6 @@ def test_residuals_least_squares(least_squares_setup):
         node_ids,
         edges,
     ) = least_squares_setup
-    steps = 100
     ns = NavierStokes(nu=0.01, rho=1.0, dim=3, time=False)
     phy_informer = PhysicsInformer(
         required_outputs=["continuity", "momentum_x"],

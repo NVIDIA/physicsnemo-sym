@@ -18,15 +18,12 @@ import os
 import sys
 import warnings
 
-import torch
 import numpy as np
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import (
     to_absolute_path,
-    instantiate_arch,
     PhysicsNeMoConfig,
-    to_yaml,
 )
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain

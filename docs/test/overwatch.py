@@ -74,7 +74,7 @@ def get_doc_codeblock_files(userguide_path: Path, file_pattern: str = "*.rst"):
             for match in re.finditer(regex_pattern, line):
                 python_file = str(Path(*Path(match.group()).parts[3:]))
                 doc_file_local = str(Path(*Path(doc_file).parts[1:]))
-                if not python_file in files:
+                if python_file not in files:
                     files[python_file] = {str(doc_file_local): [i + 1]}
                 else:
                     if doc_file_local in files[python_file]:
@@ -111,7 +111,7 @@ def create_gitlab_issue(commit_files, doc_files, gl_token: str):
         commit_time = datetime.datetime.fromtimestamp(commit_time_stamp)
         commit_time = commit_time.astimezone(timezone("US/Pacific"))
 
-        desc_str = f"---\n\n"
+        desc_str = "---\n\n"
         desc_str += f"[{file_name}]({examples_repo_url}{file_name})\n\n"
         desc_str += f":date: Editted: {commit_time.strftime('%Y-%m-%d %H:%M PST')}\n\n"
         desc_str += f":fox: Commit: simnet/examples@{commit_hash[:8]}\n\n"

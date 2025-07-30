@@ -37,7 +37,6 @@ from physicsnemo.sym.domain.constraint import (
 
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 
 
 @physicsnemo.sym.main(config_path="conf", config_name="config")

@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Helper functions and classes for integration
-"""
+"""Helper functions and classes for integration"""
 
 import torch
 import quadpy as qd
@@ -192,9 +191,9 @@ class Quad_Sphere(Quadrature):
 # 3D domain
 class Quad_Ball(Quadrature):
     def __init__(self, r, c, n, scheme_fcn=qd.s3.get_good_scheme):
-        assert (
-            n <= 7
-        ), "The degree of the cubature is not more than 7. Otherwise use nD ball scheme!"
+        assert n <= 7, (
+            "The degree of the cubature is not more than 7. Otherwise use nD ball scheme!"
+        )
         self.r = np.array(r)
         self.c = np.array(c)
 
@@ -210,9 +209,9 @@ class Quad_Ball(Quadrature):
 
 class Quad_Tet(Quadrature):
     def __init__(self, v, n, scheme_fcn=qd.t3.get_good_scheme):
-        assert (
-            n <= 14
-        ), "The degree of the cubature is not more than 14. Otherwise use nD simplex scheme!"
+        assert n <= 14, (
+            "The degree of the cubature is not more than 14. Otherwise use nD simplex scheme!"
+        )
         self.v = np.array(v)
         if self.v.shape != (4, 3):
             self.v = self.v.T
@@ -229,9 +228,9 @@ class Quad_Cube(Quadrature):
     def __init__(self, v, n, region_type=True, scheme_fcn=qd.c3.get_good_scheme):
         from quadpy.cn._helpers import transform, get_detJ
 
-        assert (
-            n <= 11
-        ), "The degree of the cubature is not more than 11. Otherwise use nD cube scheme!"
+        assert n <= 11, (
+            "The degree of the cubature is not more than 11. Otherwise use nD cube scheme!"
+        )
         if region_type:
             from quadpy.c3 import cube_points
 

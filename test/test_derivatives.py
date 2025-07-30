@@ -14,9 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import torch
-from typing import List, Optional
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.constants import diff
 from physicsnemo.sym.eq.derivatives import Derivative

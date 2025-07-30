@@ -32,7 +32,6 @@ from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
 from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
-from physicsnemo.sym.utils.io.vtk import grid_to_vtk
 
 from utilities import download_FNO_dataset, load_FNO_dataset
 from ops import dx, ddx

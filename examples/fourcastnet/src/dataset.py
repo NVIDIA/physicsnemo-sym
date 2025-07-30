@@ -75,12 +75,12 @@ class ERA5HDF5GridBaseDataset:
             self.stats_dir = self.data_dir.parent / "stats"
 
         # check root directory exists
-        assert (
-            self.data_dir.is_dir()
-        ), f"Error, data directory {self.data_dir} does not exist"
-        assert (
-            self.stats_dir.is_dir()
-        ), f"Error, stats directory {self.stats_dir} does not exist"
+        assert self.data_dir.is_dir(), (
+            f"Error, data directory {self.data_dir} does not exist"
+        )
+        assert self.stats_dir.is_dir(), (
+            f"Error, stats directory {self.stats_dir} does not exist"
+        )
 
         # get all input data files
         self.data_paths = sorted(self.data_dir.glob("????.h5"))
@@ -131,9 +131,9 @@ class ERA5HDF5GridBaseDataset:
         self.mu = np.load(self.stats_dir / "global_means.npy")[:, self.chans]
         # has shape [1, C, 1, 1]
         self.sd = np.load(self.stats_dir / "global_stds.npy")[:, self.chans]
-        assert (
-            self.mu.shape == self.sd.shape == (1, self.nchans, 1, 1)
-        ), "Error, normalisation arrays have wrong shape"
+        assert self.mu.shape == self.sd.shape == (1, self.nchans, 1, 1), (
+            "Error, normalisation arrays have wrong shape"
+        )
 
     @property
     def invar_keys(self):
@@ -141,7 +141,7 @@ class ERA5HDF5GridBaseDataset:
 
     @property
     def outvar_keys(self):
-        return [f"x_t{(i+1)*self.tstep}" for i in range(self.n_tsteps)]
+        return [f"x_t{(i + 1) * self.tstep}" for i in range(self.n_tsteps)]
 
 
 class ERA5HDF5GridDataset(ERA5HDF5GridBaseDataset, Dataset):

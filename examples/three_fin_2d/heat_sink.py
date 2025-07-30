@@ -19,7 +19,7 @@ import warnings
 
 import torch
 import numpy as np
-from sympy import Symbol, Eq
+from sympy import Symbol
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
@@ -40,7 +40,6 @@ from physicsnemo.sym.domain.constraint import (
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.geometry import Parameterization, Parameter
 
 
@@ -61,7 +60,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     diffusivity = 0.01 / 5
 
     # define sympy varaibles to parametize domain curves
-    x, y = Symbol("x"), Symbol("y")
+    _x, y = Symbol("x"), Symbol("y")
 
     # define geometry
     channel = Channel2D(

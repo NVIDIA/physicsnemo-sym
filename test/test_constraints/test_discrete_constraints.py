@@ -118,7 +118,6 @@ def test_DeepONetConstraints():
 
 
 if __name__ == "__main__":
-
     test_SupervisedGridConstraint()
 
     test_DeepONetConstraints()

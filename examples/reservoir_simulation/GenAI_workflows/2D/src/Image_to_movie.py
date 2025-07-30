@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 import os
 from PIL import Image
 

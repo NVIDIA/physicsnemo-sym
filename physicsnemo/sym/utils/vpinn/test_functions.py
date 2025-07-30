@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Helper functions for and classes for making test functions used in VPINNs
-"""
+"""Helper functions for and classes for making test functions used in VPINNs"""
 
 import torch
 import numpy as np
 import sympy as sp
 from sympy import I
-import random, itertools
+import random
+import itertools
 from physicsnemo.sym.utils.sympy.torch_printer import torch_lambdify
 
 x, y, z = sp.symbols("x, y ,z", real=True)
@@ -60,7 +60,6 @@ class Degree_nk:
         if self.L == 0:
             degrees = np.array([np.zeros(dim, dtype=int)])
         else:
-
             degrees = []
 
             mask0 = np.ones(len(self.last_degrees[0]), dtype=bool)
@@ -330,9 +329,9 @@ class Test_Function:
                 assert y is not None, "please provide tensor y"
                 tmp_list.append(f(x, y))
             elif self.dim == 3:
-                assert (y is not None) and (
-                    z is not None
-                ), "please provide tensor y and z"
+                assert (y is not None) and (z is not None), (
+                    "please provide tensor y and z"
+                )
                 tmp_list.append(f(x, y, z))
 
         return torch.cat(tmp_list, 1)  ### tf.concat -> torch.cat
@@ -497,7 +496,7 @@ class RBF_Function:
         elif self.RBF_name == "Inverse multiquadric":
             self.RBF_prototype = 1 / sp.sqrt(1 + self.r_sympy**2)
         else:
-            self.RBF_prototype = sp.exp(-self.r_sympy**2)
+            self.RBF_prototype = sp.exp(-(self.r_sympy**2))
         self.initialize()
         self.make_fcn_list()
         self.lambdify_fcn_list()
@@ -558,9 +557,9 @@ class RBF_Function:
                         + sp.diff(self.RBF_prototype, y, 2)
                     )
                 else:
-                    self.test_sympy_dict[
-                        "v" + "x" * k[0] + "y" * k[1]
-                    ] = self.simplify_fcn(sp.diff(self.RBF_prototype, x, k[0], y, k[1]))
+                    self.test_sympy_dict["v" + "x" * k[0] + "y" * k[1]] = (
+                        self.simplify_fcn(sp.diff(self.RBF_prototype, x, k[0], y, k[1]))
+                    )
         else:
             for k in self.diff_list:
                 if k == "grad":
@@ -580,10 +579,10 @@ class RBF_Function:
                         + sp.diff(self.RBF_prototype, z, 2)
                     )
                 else:
-                    self.test_sympy_dict[
-                        "v" + "x" * k[0] + "y" * k[1] + "z" * k[2]
-                    ] = self.simplify_fcn(
-                        sp.diff(self.RBF_prototype, x, k[0], y, k[1], z, k[2])
+                    self.test_sympy_dict["v" + "x" * k[0] + "y" * k[1] + "z" * k[2]] = (
+                        self.simplify_fcn(
+                            sp.diff(self.RBF_prototype, x, k[0], y, k[1], z, k[2])
+                        )
                     )
 
     def lambdify_fcn_list(self):

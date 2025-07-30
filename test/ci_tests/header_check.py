@@ -99,7 +99,6 @@ def get_top_comments(_data):
 
 
 def main():
-
     with open(Path(__file__).parent.resolve() / Path("config.json")) as f:
         config = json.loads(f.read())
     print("License check config:")

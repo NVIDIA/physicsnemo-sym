@@ -46,8 +46,6 @@ def make_dict(nr_layers):
 def test_fully_fused_mlp(layer_size, pytestconfig):
     from physicsnemo.sym.models.fused_mlp import (
         FusedMLPArch,
-        FusedFourierNetArch,
-        FusedGridEncodingNetArch,
     )
 
     batch_size = 1024
@@ -84,9 +82,7 @@ def test_fully_fused_mlp(layer_size, pytestconfig):
 @pytest.mark.parametrize("layer_size", layer_size_params)
 def test_fused_fourier_net(layer_size, pytestconfig):
     from physicsnemo.sym.models.fused_mlp import (
-        FusedMLPArch,
         FusedFourierNetArch,
-        FusedGridEncodingNetArch,
     )
 
     batch_size = 1024
@@ -124,8 +120,6 @@ def test_fused_fourier_net(layer_size, pytestconfig):
 @pytest.mark.parametrize("layer_size", layer_size_params)
 def test_fused_grid_encoding_net(layer_size, pytestconfig):
     from physicsnemo.sym.models.fused_mlp import (
-        FusedMLPArch,
-        FusedFourierNetArch,
         FusedGridEncodingNetArch,
     )
 

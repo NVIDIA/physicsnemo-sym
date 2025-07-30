@@ -20,7 +20,6 @@ from physicsnemo.sym.geometry.primitives_3d import (
     Box,
     Sphere,
     Cylinder,
-    VectorizedBoxes,
 )
 from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
 from stl import mesh as np_mesh

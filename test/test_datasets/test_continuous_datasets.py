@@ -64,5 +64,4 @@ def test_DictImportanceSampledPointwiseIterableDataset():
 
 
 if __name__ == "__main__":
-
     test_DictImportanceSampledPointwiseIterableDataset()

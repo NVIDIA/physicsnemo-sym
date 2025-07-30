@@ -14,15 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import numpy as np
 import sympy as sp
-import scipy
 from scipy import interpolate
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
 
 # functions to plot a variable
 def plot_field(
@@ -35,7 +34,6 @@ def plot_field(
     resolution=128,
     figsize=(8, 8),
 ):
-
     plt.figure(figsize=figsize)
     nr_plots = len(list(var.keys())) - 2  # not plotting x or y
     plot_index = 1
@@ -81,7 +79,6 @@ def plot_field_compare(
     figsize=(12, 10),
     same_colorbar=False,
 ):
-
     plt.figure(figsize=figsize)
     nr_plots = len(list(true_var.keys())) - 2  # not plotting x or y
     plot_index = 1
@@ -180,7 +177,6 @@ def _compile_criteria(coordinates, criteria):
 def _var_to_mesh(
     var, key, coordinates=["x", "y"], bounds_var=None, criteria=None, resolution=128
 ):
-
     X, Y = _make_mesh(var, coordinates, bounds_var, resolution)
     pos = np.concatenate([var[coordinates[0]], var[coordinates[1]]], axis=1)
     value_star = interpolate.griddata(pos, var[key].flatten(), (X, Y), method="linear")

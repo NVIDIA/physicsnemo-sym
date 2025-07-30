@@ -15,7 +15,6 @@
 # limitations under the License.
 
 from sympy import Symbol, Abs
-import numpy as np
 from .geometry import Geometry, csg_curve_naming
 from .curve import SympyCurve
 from .parameterization import Parameterization, Parameter, Bounds

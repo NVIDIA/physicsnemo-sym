@@ -19,12 +19,9 @@ Defines a Discrete geometry
 """
 
 import numpy as np
-import csv
-from stl import mesh as np_mesh
-from sympy import Symbol
 
 from .geometry import Geometry
-from .parameterization import Parameterization, Bounds, Parameter
+from .parameterization import Parameterization, Parameter
 from physicsnemo.sym.constants import diff_str
 
 
@@ -36,7 +33,6 @@ class DiscreteGeometry(Geometry):
     def __init__(
         self, geometries, parameterization=Parameterization(), interior_epsilon=1e-6
     ):
-
         # make sdf function
         def _sdf(list_sdf, discrete_parameterization, dims):
             def sdf(invar, params, compute_sdf_derivatives=False):

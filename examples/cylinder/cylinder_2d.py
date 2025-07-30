@@ -17,8 +17,7 @@
 import os
 import warnings
 
-import numpy as np
-from sympy import Symbol, Eq
+from sympy import Symbol
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
@@ -83,7 +82,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         (channel_length_nd[1], channel_width_nd[1]),
         normal=1,
     )
-    wall_top = Line(
+    Line(
         (channel_length_nd[1], channel_width_nd[0]),
         (channel_length_nd[1], channel_width_nd[1]),
         normal=1,

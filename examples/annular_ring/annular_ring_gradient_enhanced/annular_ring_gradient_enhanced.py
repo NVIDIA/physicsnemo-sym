@@ -14,14 +14,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" References: 
-(1) "Son, H., Jang, J.W., Han, W.J. and Hwang, H.J., 2021. 
-Sobolev training for the neural network solutions of pdes. 
+"""References:
+(1) "Son, H., Jang, J.W., Han, W.J. and Hwang, H.J., 2021.
+Sobolev training for the neural network solutions of pdes.
 arXiv preprint arXiv:2101.08932."
-(2) Yu, J., Lu, L., Meng, X. and Karniadakis, G.E., 2021. 
-Gradient-enhanced physics-informed neural networks for forward 
+(2) Yu, J., Lu, L., Meng, X. and Karniadakis, G.E., 2021.
+Gradient-enhanced physics-informed neural networks for forward
 and inverse PDE problems. arXiv preprint arXiv:2111.02801.
 """
+
 import os
 import warnings
 
@@ -46,7 +47,6 @@ from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.basic import NormalDotVec
 from pdes.navier_stokes import NavierStokes
 

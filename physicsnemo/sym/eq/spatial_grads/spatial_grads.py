@@ -18,11 +18,72 @@ import logging
 from typing import List, Optional, Union
 
 import numpy as np
+from numba import njit
+from typing import List, Optional, Union
 import torch
 from physicsnemo.sym.eq.derivatives import gradient_autodiff
 from physicsnemo.sym.eq.fd import grads as fd_grads
 from physicsnemo.sym.eq.ls import grads as ls_grads
 from physicsnemo.sym.eq.mfd import grads as mfd_grads
+
+
+@njit
+def edges_to_adjacency(
+    sorted_bidirectional_edges: np.ndarray, n_points: int
+) -> tuple[np.ndarray, np.ndarray]:
+    """
+    Convert a sorted bidirectional edge list to an adjacency list using numba.
+
+    Parameters
+    ----------
+    sorted_bidirectional_edges : np.ndarray
+        A 2D array of shape (n_edges, 2) where each row contains the start
+        and end indices of an edge. Edges are sorted by increasing start index,
+        then increasing end index.
+    n_points : int
+        The number of points in the mesh.
+
+    Returns
+    -------
+    tuple[np.ndarray, np.ndarray]
+        A tuple of (offsets, indices) arrays.
+    """
+    n_edges = len(sorted_bidirectional_edges)
+    offsets = np.zeros(n_points + 1, dtype=sorted_bidirectional_edges.dtype)
+    indices = np.zeros(n_edges, dtype=sorted_bidirectional_edges.dtype)
+
+    edge_idx = 0
+    for adj_index in range(n_points):
+        start_offset = offsets[adj_index]
+        while edge_idx < n_edges:
+            start_idx = sorted_bidirectional_edges[edge_idx, 0]
+            if start_idx == adj_index:
+                indices[start_offset] = sorted_bidirectional_edges[edge_idx, 1]
+                start_offset += 1
+            elif start_idx > adj_index:
+                break
+            edge_idx += 1
+        offsets[adj_index + 1] = start_offset
+
+    return offsets, indices
+
+
+edges_to_adjacency(np.zeros((0, 2), dtype=np.int64), 0)  # Does the precompilation
+
+
+def unique_axis0_fast(array):
+    """
+    A faster version of np.unique(array, axis=0) for 2D arrays using numba.
+    """
+    if len(array) == 0:
+        return array
+
+    idxs = np.lexsort(array.T[::-1])
+    array = array[idxs]
+    unique_idxs = np.empty(len(array), dtype=np.bool_)
+    unique_idxs[0] = True
+    unique_idxs[1:] = np.any(array[:-1, :] != array[1:, :], axis=-1)
+    return array[unique_idxs]
 
 
 def compute_stencil2d(coords, model, dx, return_mixed_derivs=False):
@@ -117,9 +178,9 @@ def compute_stencil3d(coords, model, dx, return_mixed_derivs=False):
         return uposx, unegx, uposy, unegy, uposz, unegz
 
 
-def compute_connectivity_tensor(nodes, edges):
+def compute_connectivity_tensor(nodes, edges, max_neighbors=None):
     """
-    Compute connectivity tensor for given nodes and edges.
+    Compute connectivity tensor for given nodes and edges using optimized numba functions.
 
     Parameters
     ----------
@@ -129,47 +190,51 @@ def compute_connectivity_tensor(nodes, edges):
     edges :
         Edges of the mesh in [M, 2] format.
         Where M is the number of edges.
+    max_neighbors : int, optional
+        Maximum number of neighbors to pad to. If None, uses the maximum found in the mesh.
 
     Returns
     -------
-    torch.Tensor
-        Tensor containing neighbor nodes for each node. Each node is made to have
-        same neighbors by finding the max neighbors and adding (0, 0) for points with
-        fewer neighbors.
+    tuple[torch.Tensor, torch.Tensor, torch.Tensor]
+        A tuple containing:
+        - offsets: Tensor of shape [N+1] containing the start index for each node's neighbors
+        - indices: Tensor containing the neighbor indices for all nodes concatenated
+        - neighbor_matrix: Tensor of shape [N, max_neighbors] for batched computation
     """
-    edge_list = []
-    for i in range(edges.size(0)):
-        node1, node2 = edges[i][0].item(), edges[i][1].item()
-        edge_list.append(tuple(sorted((node1, node2))))
-    unique_edges = set(edge_list)
-    node_edges = {node.item(): [] for node in nodes}
-    for edge in unique_edges:
-        node1, node2 = edge
-        if node1 in node_edges:
-            node_edges[node1].append((node1, node2))
-        if node2 in node_edges:
-            node_edges[node2].append((node2, node1))
-    max_connectivity = []
-    for k, v in node_edges.items():
-        max_connectivity.append(len(v))
-    max_connectivity = np.array(max_connectivity).max()
-    for k, v in node_edges.items():
-        if len(v) < max_connectivity:
-            empty_list = [(0, 0) for _ in range(max_connectivity - len(v))]
-            v = v + empty_list
-            node_edges[k] = torch.tensor(v)
-        elif len(v) > max_connectivity:
-            v = v[0:max_connectivity]
-            node_edges[k] = torch.tensor(v)
-        else:
-            node_edges[k] = torch.tensor(v)
-    connectivity_tensor = (
-        torch.stack([v for v in node_edges.values()], dim=0)
-        .to(torch.long)
-        .to(nodes.device)
+    edges_np = edges.cpu().numpy()
+    nodes_np = nodes.cpu().numpy().flatten()
+
+    bidirectional_edges = np.concatenate((edges_np, edges_np[:, ::-1]), axis=0)
+
+    order = np.lexsort((bidirectional_edges[:, 1], bidirectional_edges[:, 0]))
+    sorted_bidirectional_edges = bidirectional_edges[order]
+
+    unique_edges = unique_axis0_fast(sorted_bidirectional_edges)
+
+    num_nodes = len(nodes_np)
+    offsets, indices = edges_to_adjacency(unique_edges, num_nodes)
+
+    offsets_tensor = torch.tensor(offsets, dtype=torch.long, device=nodes.device)
+    indices_tensor = torch.tensor(indices, dtype=torch.long, device=nodes.device)
+
+    if max_neighbors is None:
+        neighbor_counts = offsets[1:] - offsets[:-1]
+        max_neighbors = int(np.max(neighbor_counts))
+
+    neighbor_matrix = torch.full(
+        (num_nodes, max_neighbors), -1, dtype=torch.long, device=nodes.device
     )
 
-    return connectivity_tensor
+    for i in range(num_nodes):
+        start_idx = offsets[i]
+        end_idx = offsets[i + 1]
+        num_neighbors = end_idx - start_idx
+        if num_neighbors > 0:
+            neighbor_matrix[i, :num_neighbors] = torch.tensor(
+                indices[start_idx:end_idx], dtype=torch.long, device=nodes.device
+            )
+
+    return offsets_tensor, indices_tensor, neighbor_matrix
 
 
 class GradientsAutoDiff(torch.nn.Module):
@@ -207,9 +272,9 @@ class GradientsAutoDiff(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
     def forward(self, input_dict):
         y = input_dict[self.invar]
@@ -221,9 +286,9 @@ class GradientsAutoDiff(torch.nn.Module):
                 + "the computations might be incorrect!"
             )
 
-        assert (
-            x.shape[1] == self.dim
-        ), f"Expected shape (N, {self.dim}), but got {x.shape}"
+        assert x.shape[1] == self.dim, (
+            f"Expected shape (N, {self.dim}), but got {x.shape}"
+        )
 
         grad = gradient_autodiff(y, [x])
 
@@ -234,11 +299,11 @@ class GradientsAutoDiff(torch.nn.Module):
                 result[f"{self.invar}__{axis_list[axis]}"] = grad[0][:, axis : axis + 1]
         elif self.order == 2:
             for axis in range(self.dim):
-                result[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ] = gradient_autodiff(grad[0][:, axis : axis + 1], [x])[0][
-                    :, axis : axis + 1
-                ]
+                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
+                    gradient_autodiff(grad[0][:, axis : axis + 1], [x])[0][
+                        :, axis : axis + 1
+                    ]
+                )
             if self.return_mixed_derivs:
                 # Need to compute them manually due to how pytorch builds graph
                 if self.dim == 2:
@@ -307,9 +372,9 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
         self.init_derivative_operators()
 
@@ -341,19 +406,19 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
                     out_name=f"{self.invar}__x__y",
                 )
                 if self.dim == 3:
-                    self.mixed_deriv_ops[
-                        "dxdz"
-                    ] = mfd_grads.MixedSecondDerivSecondOrder(
-                        var=self.invar,
-                        indep_vars=["x", "z"],
-                        out_name=f"{self.invar}__x__z",
+                    self.mixed_deriv_ops["dxdz"] = (
+                        mfd_grads.MixedSecondDerivSecondOrder(
+                            var=self.invar,
+                            indep_vars=["x", "z"],
+                            out_name=f"{self.invar}__x__z",
+                        )
                     )
-                    self.mixed_deriv_ops[
-                        "dydz"
-                    ] = mfd_grads.MixedSecondDerivSecondOrder(
-                        var=self.invar,
-                        indep_vars=["y", "z"],
-                        out_name=f"{self.invar}__y__z",
+                    self.mixed_deriv_ops["dydz"] = (
+                        mfd_grads.MixedSecondDerivSecondOrder(
+                            var=self.invar,
+                            indep_vars=["y", "z"],
+                            out_name=f"{self.invar}__y__z",
+                        )
                     )
 
     def forward(self, input_dict):
@@ -366,17 +431,15 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
                 )[f"{self.invar}__{axis_list[axis]}"]
         elif self.order == 2:
             for axis, op in self.second_deriv_ops.items():
-                result[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ] = op.forward(input_dict, self.dx[axis])[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ]
+                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
+                    op.forward(input_dict, self.dx[axis])[
+                        f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
+                    ]
+                )
             if self.return_mixed_derivs:
                 result[f"{self.invar}__x__y"] = self.mixed_deriv_ops["dxdy"].forward(
                     input_dict, self.dx[0]
-                )[
-                    f"{self.invar}__x__y"
-                ]  # TODO: enable different dx and dy?
+                )[f"{self.invar}__x__y"]  # TODO: enable different dx and dy?
                 result[f"{self.invar}__y__x"] = self.mixed_deriv_ops["dxdy"].forward(
                     input_dict, self.dx[0]
                 )[f"{self.invar}__x__y"]
@@ -441,9 +504,9 @@ class GradientsFiniteDifference(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
         if self.order == 1:
             self.deriv_modulue = fd_grads.FirstDerivSecondOrder(self.dim, self.dx)
@@ -457,9 +520,9 @@ class GradientsFiniteDifference(torch.nn.Module):
     def forward(self, input_dict):
         u = input_dict[self.invar]
 
-        assert (
-            u.dim() - 2
-        ) == self.dim, f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        assert (u.dim() - 2) == self.dim, (
+            f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        )
 
         # compute finite difference based on convolutional operation
         result = {}
@@ -470,9 +533,9 @@ class GradientsFiniteDifference(torch.nn.Module):
                 result[f"{self.invar}__{axis_list[axis]}"] = derivative
         elif self.order == 2:
             for axis, derivative in enumerate(derivatives):
-                result[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ] = derivative
+                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
+                    derivative
+                )
             if self.return_mixed_derivs:
                 result[f"{self.invar}__x__y"] = self.mixed_deriv_module.forward(u)[0]
                 result[f"{self.invar}__y__x"] = self.mixed_deriv_module.forward(u)[0]
@@ -536,9 +599,9 @@ class GradientsSpectral(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
     def forward(self, input_dict):
         u = input_dict[self.invar]
@@ -546,9 +609,9 @@ class GradientsSpectral(torch.nn.Module):
         pi = float(np.pi)
 
         n = tuple(u.shape[2:])
-        assert (
-            len(n) == self.dim
-        ), f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        assert len(n) == self.dim, (
+            f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        )
 
         # compute the fourier transform
         u_h = torch.fft.fftn(u, dim=list(range(2, self.dim + 2)))
@@ -682,26 +745,25 @@ class GradientsLeastSquares(torch.nn.Module):
         self.order = order
         self.return_mixed_derivs = return_mixed_derivs
 
-        assert (
-            self.dim > 1
-        ), "1D gradients using Least squares is not supported. Please try other methods."
+        assert self.dim > 1, (
+            "1D gradients using Least squares is not supported. Please try other methods."
+        )
         assert self.order < 3, "Derivatives only upto 2nd order are supported"
 
         if self.return_mixed_derivs:
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
         # TODO add a seperate SecondDeriv module
         self.deriv_module = ls_grads.FirstDeriv(self.dim)
 
     def forward(self, input_dict):
-
         coords = input_dict["coordinates"]
 
-        assert (
-            coords.shape[1] == self.dim
-        ), f"Expected shape (N, {self.dim}), but got {coords.shape}"
+        assert coords.shape[1] == self.dim, (
+            f"Expected shape (N, {self.dim}), but got {coords.shape}"
+        )
 
         connectivity_tensor = input_dict["connectivity_tensor"]
 

@@ -161,10 +161,10 @@ def check_validation_error(path, threshold, save_path):
     np_log_data, run_time = read_tensorboard_eventfiles(path)
     for key in np_log_data.keys():
         if "Validators" in key:
-            assert (
-                np_log_data[key]["value"][-1] < threshold
-            ), "Validation error for {} is not below the specified threshold of {}".format(
-                key, threshold
+            assert np_log_data[key]["value"][-1] < threshold, (
+                "Validation error for {} is not below the specified threshold of {}".format(
+                    key, threshold
+                )
             )
     plot_results(np_log_data, save_path)
     print_final_results(np_log_data, run_time)

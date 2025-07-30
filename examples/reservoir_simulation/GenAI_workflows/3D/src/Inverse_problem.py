@@ -46,6 +46,7 @@ The Field has 4 producers and 4 Injectors
 
 @Author : Clement Etienam
 """
+
 from __future__ import print_function
 
 print(__doc__)
@@ -462,7 +463,6 @@ def Forward_model_ensemble(
     large_ensemble = []
     simulated = []
     for amm in range(Ne):
-
         Injector_location = np.where(
             Reinvent(inn["Qw"][amm, 0, :, :, :].detach().cpu().numpy()).ravel() > 0
         )[0]
@@ -496,8 +496,8 @@ def Forward_model_ensemble(
                 Ptito = smoothn(Ptito, s=1e1)[0]
 
             average_pressure = (
-                Ptito.ravel()[producer_location]
-            ) * pini_alt  # np.mean(Ptito.ravel()) * pini_alt
+                (Ptito.ravel()[producer_location]) * pini_alt
+            )  # np.mean(Ptito.ravel()) * pini_alt
             p_inj = (Ptito.ravel()[Injector_location]) * pini_alt
             # p_prod = (Ptito.ravel()[producer_location] ) * pini_alt
 
@@ -622,8 +622,8 @@ def H(y, t0=0):
     """
     Step fn with step at t0
     """
-    h = np.zeros_like(y)
-    args = tuple([slice(0, y.shape[i]) for i in y.ndim])
+    np.zeros_like(y)
+    tuple([slice(0, y.shape[i]) for i in y.ndim])
 
 
 def smoothn(
@@ -642,35 +642,34 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -683,7 +682,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -788,7 +787,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -1067,7 +1066,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -1100,7 +1099,6 @@ def Add_marker(plt, XX, YY, locc):
 
 def honour2(sgsim2, DupdateK, nx, ny, nz, N_ens, High_K, Low_K, High_P, Low_p):
     if Yet == 0:
-
         sgsim2 = cp.asarray(sgsim2)
         DupdateK = cp.asarray(DupdateK)
     else:
@@ -1436,7 +1434,6 @@ class LpLoss(object):
 
 
 def Equivalent_time(tim1, max_t1, tim2, max_t2):
-
     tk2 = tim1 / max_t1
     tc2 = np.arange(0.0, 1 + tk2, tk2)
     tc2[tc2 >= 1] = 1
@@ -1516,7 +1513,6 @@ def ensemble_pytorch(
     Ne,
     input_channel,
 ):
-
     A = np.zeros((nx, ny, nz))
     A1 = np.zeros((nx, ny, nz))
     ini_ensemble1 = np.zeros((Ne, 1, nz, nx, ny), dtype=np.float32)
@@ -1581,7 +1577,6 @@ def ensemble_pytorch(
 
 
 def Plot_mean(permbest, permmean, iniperm, nx, ny, Low_K, High_K, True_perm):
-
     Low_Ka = Low_K
     High_Ka = High_K
 
@@ -1760,7 +1755,6 @@ def Plot_mean(permbest, permmean, iniperm, nx, ny, Low_K, High_K, True_perm):
 
 
 def Plot_petrophysical(permmean, poroo, nx, ny, nz, Low_K, High_K):
-
     Low_Ka = Low_K
     High_Ka = High_K
 
@@ -1956,7 +1950,6 @@ def Plot_petrophysical(permmean, poroo, nx, ny, nz, Low_K, High_K):
 
 
 def Getporosity_ensemble(ini_ensemble, machine_map, N_ens):
-
     ini_ensemblep = []
     for ja in range(N_ens):
         usek = np.reshape(ini_ensemble[:, ja], (-1, 1), "F")
@@ -1978,7 +1971,6 @@ def Getporosity_ensemble(ini_ensemble, machine_map, N_ens):
 
 
 def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt[0]
@@ -2249,7 +2241,6 @@ def Plot_RSM_percentile(pertoutt, True_mat, Namesz):
 
 
 def Plot_RSM_percentile_model(pertoutt, True_mat, Namesz):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     P10 = pertoutt
@@ -2458,7 +2449,6 @@ def Plot_RSM_percentile_model(pertoutt, True_mat, Namesz):
 
 
 def Plot_RSM_single(True_mat, Namesz):
-
     True_mat = True_mat[0]
     timezz = True_mat[:, 0].reshape(-1, 1)
 
@@ -2634,7 +2624,6 @@ def Plot_RSM_single(True_mat, Namesz):
 
 
 def Plot_RSM_singleT(True_mat, Namesz):
-
     # True_mat = True_mat[0]
     timezz = True_mat[:, 0].reshape(-1, 1)
 
@@ -2810,7 +2799,6 @@ def Plot_RSM_singleT(True_mat, Namesz):
 
 
 def Plot_RSM(predMatrix, True_mat, Namesz, Ne):
-
     timezz = True_mat[:, 0].reshape(-1, 1)
 
     Nt = predMatrix[0].shape[0]
@@ -3155,7 +3143,6 @@ def Get_Latentp(ini_ensemble, N_ens, nx, ny, nz, High_P):
 
 
 def Recover_image(x, Ne, nx, ny, nz, High_K):
-
     X_unie = np.zeros((Ne, 20, 20, 4))
     for i in range(Ne):
         X_unie[i, :, :, :] = np.reshape(x[:, i], (20, 20, 4), "F")
@@ -3170,7 +3157,6 @@ def Recover_image(x, Ne, nx, ny, nz, High_K):
 
 
 def Recover_imagep(x, Ne, nx, ny, nz, High_P):
-
     X_unie = np.zeros((Ne, 20, 20, 4))
     for i in range(Ne):
         X_unie[i, :, :, :] = np.reshape(x[:, i], (20, 20, 4), "F")
@@ -3615,7 +3601,6 @@ def Autoencoder2p(nx, ny, nz, High_P, High_K, Low_K):
 
 
 def Select_TI(oldfolder, ressimmaster, N_small, nx, ny, nz, True_data, Low_K, High_K):
-
     valueTI = np.zeros((5, 1))
 
     N_enss = N_small
@@ -4116,7 +4101,6 @@ def Select_TI(oldfolder, ressimmaster, N_small, nx, ny, nz, True_data, Low_K, Hi
 
 
 def parad2_TI(X_train, y_traind, namezz):
-
     namezz = "../PACKETS/" + namezz + ".h5"
     # np.random.seed(7)
     modelDNN = Sequential()
@@ -4441,7 +4425,6 @@ def REKI_ASSIMILATION_NORMAL_SCORE(
     Low_P,
     CDd,
 ):
-
     sizeclem = cp.asarray(nx * ny * nz)
 
     quantileperm = QuantileTransformer(
@@ -4609,7 +4592,6 @@ class WGAN:
         return tensorflow.keras.backend.mean(y_true * y_pred)
 
     def build_generator(self):
-
         model = Sequential()
 
         model.add(Dense(128 * 20 * 20, activation="relu", input_dim=self.latent_dim))
@@ -4633,7 +4615,6 @@ class WGAN:
         return Model(noise, img)
 
     def build_critic(self):
-
         model = Sequential()
 
         model.add(
@@ -4667,7 +4648,6 @@ class WGAN:
         return Model(img, validity)
 
     def train(self, dataa, epochs, batch_size=128, sample_interval=50):
-
         # Load the dataset
         # (X_train, _), (_, _) = mnist.load_data()
         X_train = dataa
@@ -4683,9 +4663,7 @@ class WGAN:
         fake = np.ones((batch_size, 1))
 
         for epoch in range(epochs):
-
             for _ in range(self.n_critic):
-
                 # ---------------------
                 #  Train Discriminator
                 # ---------------------
@@ -4737,7 +4715,6 @@ class WGAN:
         plt.figure(figsize=(20, 20))
         XX, YY = np.meshgrid(np.arange(nx), np.arange(ny))
         for i in range(3):
-
             jj = gen_imgs[i, :, :, :]
             ii = i + 1
             # aa=i
@@ -4811,7 +4788,6 @@ class WGANP:
         return tensorflow.keras.backend.mean(y_true * y_pred)
 
     def build_generator(self):
-
         model = Sequential()
 
         model.add(Dense(128 * 20 * 20, activation="relu", input_dim=self.latent_dim))
@@ -4835,7 +4811,6 @@ class WGANP:
         return Model(noise, img)
 
     def build_critic(self):
-
         model = Sequential()
 
         model.add(
@@ -4869,7 +4844,6 @@ class WGANP:
         return Model(img, validity)
 
     def train(self, dataa, epochs, batch_size=128, sample_interval=50):
-
         # Load the dataset
         # (X_train, _), (_, _) = mnist.load_data()
         X_train = dataa
@@ -4885,9 +4859,7 @@ class WGANP:
         fake = np.ones((batch_size, 1))
 
         for epoch in range(epochs):
-
             for _ in range(self.n_critic):
-
                 # ---------------------
                 #  Train Discriminator
                 # ---------------------
@@ -4939,7 +4911,6 @@ class WGANP:
         plt.figure(figsize=(20, 20))
         XX, YY = np.meshgrid(np.arange(nx), np.arange(ny))
         for i in range(3):
-
             jj = gen_imgs[i, :, :, :]
             ii = i + 1
             # aa=i
@@ -5028,7 +4999,6 @@ def WGAN_LEARNING_PERM(High_K, Low_K, nx, ny, nz):
 
 
 def AE_GAN_PERM(spitt, Ne, nx, ny, nz, generator, High_K):
-
     noise = spitt
 
     gen_imgs = ((generator.predict(noise.T)) + 1) * (High_K / 2)
@@ -5049,7 +5019,6 @@ def AE_GAN_PERM(spitt, Ne, nx, ny, nz, generator, High_K):
 
 
 def AE_GAN(spitt, Ne, nx, ny, nz, generatora, High_K):
-
     noise = spitt
     gen_imgs = ((generatora.predict(noise.T)) + 1) * (High_K / 2)
 
@@ -5118,7 +5087,6 @@ def Split_Matrix(matrix, sizee):
 
 
 def Recover_imageV(x, Ne, nx, ny, nz, latent_dim, vae, High_K, mem):
-
     X_unie = np.zeros((Ne, latent_dim))
     for i in range(Ne):
         X_unie[i, :] = np.reshape(x[:, i], (latent_dim,), "F")
@@ -5190,7 +5158,6 @@ class VAE(keras.Model):
 
 
 def Variational_Autoencoder(latent_dim, nx, ny, nz, High_K, Low_K, mem):
-
     filename = "../PACKETS/Ganensemble.mat"
     mat = sio.loadmat(filename)
     ini_ensemble = mat["Z"]
@@ -5480,7 +5447,6 @@ def plot3d2(arr_3d, nx, ny, nz, itt, dt, MAXZ, namet, titti, maxii, minii):
 
 
 def Plot_performance_model(PINN, PINN2, nx, ny, namet, UIR, itt, dt, MAXZ, pini_alt):
-
     look = (PINN[itt, :, :, :]) * pini_alt
     look_sat = PINN2[itt, :, :, :]
     look_oil = 1 - look_sat
@@ -5700,7 +5666,6 @@ while True:
         print("")
         print("please try again and select value between 1-2")
     else:
-
         break
 
 if DEFAULT == 1:
@@ -5719,7 +5684,6 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 # load data
 
@@ -5859,13 +5823,11 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
 if DEFAULT == 1:
     use_pretrained = 1
 else:
-
     use_pretrained = None
     while True:
         use_pretrained = int(
@@ -5881,7 +5843,6 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
 print("*******************Load the trained Forward models*******************")
@@ -5932,7 +5893,7 @@ if surrogate == 1:
     bb = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1WcLz50Iz5nlBtAYYdAjpigwc7qCtxG9W",
@@ -5948,7 +5909,6 @@ if surrogate == 1:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_FNO/ResSim")
         print(" Surrogate model learned with FNO")
         modelP.load_state_dict(torch.load("fno_forward_model_pressure.0.pth"))
@@ -5959,7 +5919,7 @@ if surrogate == 1:
     bba = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1V-7wSyaV7Fd_tThedqlL-q7861p6ZzHj",
@@ -5989,7 +5949,7 @@ else:
     bb = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1YxNkCTEWCUDyYbztFSTnEaRV2h3AR6yT",
@@ -6004,7 +5964,6 @@ else:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO/ResSim")
         print(" Surrogate model learned with PINO")
         modelP.load_state_dict(torch.load("pino_forward_model_pressure.0.pth"))
@@ -6015,7 +5974,7 @@ else:
     bba = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1L1b9Jhaz-jAgFUGASqf5QY6onsiRf9VZ",
@@ -6048,7 +6007,7 @@ wells = np.reshape(wells, (-1, 3), "C")
 
 # True model
 bba = os.path.isfile("../PACKETS/iglesias2.out")
-if bba == False:
+if not bba:
     print("....Downloading Please hold.........")
     download_file_from_google_drive(
         "1VSy2m3ocUkZnhCsorbkhcJB5ADrPxzIp", "../PACKETS/iglesias2.out"
@@ -6087,7 +6046,6 @@ locc = 10
 if DEFAULT == 1:
     BASSE = 1
 else:
-
     BASSE = None
     while True:
         BASSE = int(
@@ -6101,7 +6059,6 @@ percentage of data value = 1:\nConstant float value = 2:\n"
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
 print("")
@@ -6198,7 +6155,6 @@ yett = 3
 if DEFAULT == 1:
     Jesus = 1
 else:
-
     Jesus = None
     while True:
         Jesus = int(input("Input Geostatistics type:\n1=MPS\n2=SGSIM\n"))
@@ -6207,7 +6163,6 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
 """
@@ -6261,7 +6216,6 @@ print("-------------------Decorrelate the ensemble---------------------------")
 if DEFAULT == 1:
     Deccorr = 2
 else:
-
     Deccor = None
     while True:
         Deccor = int(input("De-correlate the ensemble:\n1=Yes\n2=No\n"))
@@ -6270,7 +6224,6 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
 # """
@@ -6282,7 +6235,6 @@ print("-----------------------Alpha Parameter-------------------------------")
 if DEFAULT == 1:
     DE_alpha = 1
 else:
-
     De_alpha = None
     while True:
         De_alpha = int(input("Use recommended alpha:\n1=Yes\n2=No\n"))
@@ -6291,7 +6243,6 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 print("")
 print("---------------------------------------------------------------------")
@@ -6299,7 +6250,6 @@ print("---------------------------------------------------------------------")
 if DEFAULT == 1:
     afresh = 2
 else:
-
     afresh = None
     while True:
         afresh = int(
@@ -6313,7 +6263,6 @@ else:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 print("")
 print("---------------------------------------------------------------------")
@@ -6334,7 +6283,6 @@ if DEFAULT == 1:
         "Default method is the Weighted  Adaptive Ensemble Kalman Inversion + Convolution Autoencoder "
     )
 else:
-
     Technique_REKI = None
     while True:
         Technique_REKI = int(
@@ -6361,7 +6309,6 @@ This method is optimal for multiple point statistics alone (MPS))\n\
             print("")
             print("please try again and select value between 1-10")
         else:
-
             break
 
 if DEFAULT == 1:
@@ -6375,12 +6322,11 @@ else:
             print("")
             print("please try again and select value between 6-20")
         else:
-
             break
 
 if DEFAULT == 1:
     bb = os.path.isfile("../PACKETS/Training4.mat")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi", "../PACKETS/Training4.mat"
@@ -6415,7 +6361,6 @@ if DEFAULT == 1:
             print("")
             print("please try again and select value between 100-" + str(value))
         else:
-
             break
     N_ens = Ne
 
@@ -6437,7 +6382,6 @@ else:
             print("")
             print("please try again and select value between 100-9000")
         else:
-
             break
     N_ens = Ne
     if Geostats == 1:
@@ -6525,7 +6469,7 @@ else:
             if Ne <= 2000:
                 # yes
                 bb = os.path.isfile("../PACKETS/Training4.mat")
-                if bb == False:
+                if not bb:
                     print("....Downloading Please hold.........")
                     download_file_from_google_drive(
                         "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi", "../PACKETS/Training4.mat"
@@ -6558,9 +6502,8 @@ else:
                     ini_use = ini_ensemble
                 ini_ensemble = ini_use
             else:
-
                 bb = os.path.isfile(("../PACKETS/Ganensemble.mat"))
-                if bb == False:
+                if not bb:
                     print(
                         "Get initial geology from saved Multiple-point-statistics run"
                     )
@@ -6739,7 +6682,7 @@ else:
         else:
             filename = "../PACKETS/Ganensemble_gauss.mat"  # Ensemble generated offline
             bb = os.path.isfile(filename)
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved two-point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -6840,7 +6783,6 @@ post-processing\n"
     if DEFAULT == 1:
         choice = 2
     else:
-
         choice = None
         while True:
             choice = int(input("Denoise the update:\n1=Yes\n2=No\n"))
@@ -6849,7 +6791,6 @@ post-processing\n"
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     os.chdir(oldfolder)
@@ -6857,7 +6798,7 @@ post-processing\n"
     if Geostats == 1:
         bb = os.path.isfile("../PACKETS/denosingautoencoder.h5")
         # bb2=os.path.isfile('denosingautoencoderp.h5')
-        if bb == False:
+        if not bb:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -6874,8 +6815,7 @@ post-processing\n"
         else:
             pass
         bb2 = os.path.isfile("../PACKETS/denosingautoencoderp.h5")
-        if bb2 == False:
-
+        if not bb2:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -7032,7 +6972,7 @@ post-processing\n"
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5 * ((Dd - simDatafinal).T @ ((inv(CDd))) @ (Dd - simDatafinal)), axis=1
+            0.5 * ((Dd - simDatafinal).T @ (inv(CDd)) @ (Dd - simDatafinal)), axis=1
         )
         yyy = yyy.reshape(-1, 1)
         yyy = np.nan_to_num(yyy, copy=True, nan=0)
@@ -8228,7 +8168,7 @@ Parametrisation\n"
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("../PACKETS/encoder.h5")
     bb2 = os.path.isfile("../PACKETS/encoderp.h5")
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -8251,7 +8191,7 @@ Parametrisation\n"
         else:
             Autoencoder2(nx, ny, nz, High_K1, Low_K1)  # Learn for permeability
 
-    if bb2 == False:
+    if not bb2:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -8284,13 +8224,12 @@ Parametrisation\n"
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
         if choice == 1:
             bb = os.path.isfile("../PACKETS/denosingautoencoder.h5")
             # bb2=os.path.isfile('denosingautoencoderp.h5')
-            if bb == False:
+            if not bb:
                 if use_pretrained == 1:
                     print("....Downloading Please hold.........")
                     download_file_from_google_drive(
@@ -8306,8 +8245,7 @@ Parametrisation\n"
             else:
                 pass
             bb2 = os.path.isfile("../PACKETS/denosingautoencoderp.h5")
-            if bb2 == False:
-
+            if not bb2:
                 if use_pretrained == 1:
                     print("....Downloading Please hold.........")
                     download_file_from_google_drive(
@@ -8566,8 +8504,7 @@ Parametrisation\n"
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -9760,7 +9697,7 @@ elif Technique_REKI == 3:
     if Geostats == 1:
         bb = os.path.isfile("../PACKETS/denosingautoencoder.h5")
         # bb2=os.path.isfile('denosingautoencoderp.h5')
-        if bb == False:
+        if not bb:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -9776,8 +9713,7 @@ elif Technique_REKI == 3:
         else:
             pass
         bb2 = os.path.isfile("../PACKETS/denosingautoencoderp.h5")
-        if bb2 == False:
-
+        if not bb2:
             if use_pretrained == 1:
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -9931,8 +9867,7 @@ elif Technique_REKI == 3:
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -11257,8 +11192,7 @@ elif Technique_REKI == 4:
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -12359,7 +12293,7 @@ Parametrisation with Generative adverserail network prior\n"
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("../PACKETS/autoencoder.h5")
     # bb2=os.path.isfile('autoencoderp.h5')
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
@@ -12387,7 +12321,7 @@ Parametrisation with Generative adverserail network prior\n"
     print(" Learn the GAN module")
     aa = os.path.isfile("../PACKETS/generator.h5")
     # aa2=aa=os.path.isfile('generatorp.h5')
-    if aa == False:
+    if not aa:
         if not os.path.exists("../images/"):
             os.makedirs("../images/")
         else:
@@ -12551,8 +12485,7 @@ Parametrisation with Generative adverserail network prior\n"
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -13749,7 +13682,7 @@ adverserail network prior for permeability field alone\n"
     print(" Learn the permeability field GAN module")
 
     aa = os.path.isfile("../PACKETS/generator.h5")
-    if aa == False:
+    if not aa:
         if not os.path.exists("../images/"):
             os.makedirs("../images/")
         else:
@@ -13917,8 +13850,7 @@ adverserail network prior for permeability field alone\n"
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -15134,9 +15066,8 @@ elif Technique_REKI == 7:
     print("Learn KMEANS Over complete dictionary of the permeability field")
     print("")
     bb = os.path.isfile("../PACKETS/Dictionary_Perm_Kmeans.mat")
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
-
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
                 "1rv152M5sMIhluyjGAVdpviVVzCVXHD5j",
@@ -15301,8 +15232,7 @@ elif Technique_REKI == 7:
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -16833,8 +16763,7 @@ Parametrisation\n"
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -18051,7 +17980,6 @@ elif Technique_REKI == 9:
             print("")
             print("please try again and select value between 10-50")
         else:
-
             break
     sizedct = sizedct / 100
     size1, size2 = int(cp.ceil(int(sizedct * nx))), int(cp.ceil(int(sizedct * ny)))
@@ -18291,8 +18219,7 @@ elif Technique_REKI == 9:
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5
-            * ((Dd - simDatafinal).T @ ((np.linalg.inv(CDd))) @ (Dd - simDatafinal)),
+            0.5 * ((Dd - simDatafinal).T @ (np.linalg.inv(CDd)) @ (Dd - simDatafinal)),
             axis=1,
         )
         yyy = yyy.reshape(-1, 1)
@@ -19185,7 +19112,7 @@ post-processing\n"
         alpha_star = np.mean(yyy, axis=0)
 
         yyy = np.mean(
-            0.5 * ((Dd - simDatafinal).T @ ((inv(CDd))) @ (Dd - simDatafinal)), axis=1
+            0.5 * ((Dd - simDatafinal).T @ (inv(CDd)) @ (Dd - simDatafinal)), axis=1
         )
         yyy = yyy.reshape(-1, 1)
         yyy = np.nan_to_num(yyy, copy=True, nan=0)

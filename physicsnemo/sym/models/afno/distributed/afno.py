@@ -15,19 +15,11 @@
 # limitations under the License.
 
 from functools import partial
-from collections import OrderedDict
-from copy import Error, deepcopy
-from numpy import pad
-import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.fft
 from torch import Tensor
-from torch.nn.modules.container import Sequential
-from torch.utils.checkpoint import checkpoint_sequential
-from typing import Optional, Dict, List, Tuple
-import math
+from typing import Dict, List, Tuple
 
 # distributed stuff
 import torch.distributed as dist
@@ -109,7 +101,6 @@ class DistributedBlock(nn.Module):
         self.double_skip = double_skip
 
     def forward(self, x):
-
         if not self.input_is_matmul_parallel:
             x = scatter_to_matmul_parallel_region(x, dim=1)
 
@@ -258,7 +249,6 @@ class DistributedAFNONet(nn.Module):
         return x
 
     def forward(self, x):
-
         # fw pass on features
         x = self.forward_features(x)
 
@@ -362,9 +352,9 @@ class DistributedAFNOArch(Arch):
 
         comm_size = DistributedManager().group_size("model_parallel")
         if channel_parallel_inputs:
-            assert (
-                in_channels % comm_size == 0
-            ), "Error, in_channels needs to be divisible by model_parallel size"
+            assert in_channels % comm_size == 0, (
+                "Error, in_channels needs to be divisible by model_parallel size"
+            )
 
         self._impl = DistributedAFNONet(
             img_size=img_shape,

@@ -59,7 +59,6 @@ class GridValidator(Validator):
         requires_grad: bool = False,
         num_workers: int = 0,
     ):
-
         # get dataset and dataloader
         self.dataset = dataset
         self.dataloader = Constraint.get_dataloader(
@@ -90,7 +89,6 @@ class GridValidator(Validator):
         self.plotter = plotter
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-
         invar_cpu = {key: [] for key in self.dataset.invar_keys}
         true_outvar_cpu = {key: [] for key in self.dataset.outvar_keys}
         pred_outvar_cpu = {key: [] for key in self.dataset.outvar_keys}
@@ -145,7 +143,6 @@ class GridValidator(Validator):
                 results_dir + name, {**invar, **named_true_outvar, **named_pred_outvar}
             )
         if "vtk" in save_filetypes:
-
             grid_to_vtk(
                 {**invar, **named_true_outvar, **named_pred_outvar}, results_dir + name
             )
@@ -185,7 +182,6 @@ class _DeepONet_Validator(Validator):
         plotter: DeepONetValidatorPlotter,
         requires_grad: bool,
     ):
-
         # TODO: add support for other datasets?
 
         # get dataset and dataloader
@@ -235,7 +231,6 @@ class DeepONet_Physics_Validator(_DeepONet_Validator):
         requires_grad: bool = False,
         tile_trunk_input: bool = True,
     ):
-
         super().__init__(
             nodes=nodes,
             invar_branch=invar_branch,
@@ -253,7 +248,6 @@ class DeepONet_Physics_Validator(_DeepONet_Validator):
         self.batch_size = batch_size
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-
         invar_cpu = {key: [] for key in self.dataset.invar_keys}
         invar_trunk_gpu = Constraint._set_device(
             self.invar_trunk, device=self.device, requires_grad=self.requires_grad
@@ -377,7 +371,6 @@ class DeepONet_Data_Validator(_DeepONet_Validator):
         plotter: DeepONetValidatorPlotter = None,
         requires_grad: bool = False,
     ):
-
         super().__init__(
             nodes=nodes,
             invar_branch=invar_branch,
@@ -397,7 +390,6 @@ class DeepONet_Data_Validator(_DeepONet_Validator):
         self.invar_trunk = invar_trunk
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-
         invar_cpu = {key: [] for key in self.dataset.invar_keys}
         invar_trunk_gpu = Constraint._set_device(
             self.invar_trunk, device=self.device, requires_grad=self.requires_grad

@@ -29,7 +29,6 @@ from physicsnemo.sym.domain.constraint import (
 
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from wave_equation import WaveEquation1D
 
 

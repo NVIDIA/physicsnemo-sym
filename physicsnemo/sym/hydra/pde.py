@@ -21,10 +21,9 @@ Architecture params need to be updated to more primative focused
 This file is largely a place folder right now
 """
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from hydra.core.config_store import ConfigStore
-from omegaconf import MISSING, SI, II
-from typing import Any, Union, List, Dict
+from omegaconf import MISSING
 
 
 @dataclass

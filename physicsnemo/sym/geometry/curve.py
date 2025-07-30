@@ -18,16 +18,10 @@
 Defines different Curve objects
 """
 
-import types
 import numpy as np
 import sympy
 import symengine
-from chaospy.distributions.sampler.sequences.primes import create_primes
-from chaospy.distributions.sampler.sequences.van_der_corput import (
-    create_van_der_corput_samples as create_samples,
-)
 
-from physicsnemo.sym.utils.sympy import np_lambdify
 from .parameterization import Parameterization, Parameter
 from .helper import _sympy_func_to_func
 
@@ -176,12 +170,6 @@ class Curve:
                 invar, params = internal_sample(
                     nr_points, parameterization, quasirandom
                 )
-
-                # compute scale if needed
-                if isinstance(x, (float, int)):
-                    computed_scale = x
-                else:
-                    computed_scale = s(params)
 
                 # scale invar
                 for d in dims:
@@ -357,7 +345,6 @@ class SympyCurve(Curve):
     """
 
     def __init__(self, functions, parameterization, area, criteria=None):
-
         # lambdify functions
         lambdify_functions = {}
         for key, func in functions.items():
@@ -394,7 +381,6 @@ class SympyCurve(Curve):
             def sample(
                 nr_points, parameterization=Parameterization(), quasirandom=False
             ):
-
                 # use internal parameterization if not given
                 i_parameterization = internal_parameterization.copy()
                 for key, value in parameterization.param_ranges.items():

@@ -18,11 +18,10 @@
 Helper functions for converting sympy equations to pytorch
 """
 
-from sympy import lambdify, Symbol, Derivative, Function, Basic, Add, Max, Min
+from sympy import lambdify, Symbol, Derivative, Function, Basic, Add
 from sympy.printing.str import StrPrinter
 import torch
 import numpy as np
-import functools
 from typing import List, Dict
 
 from physicsnemo.sym.constants import diff_str, tf_dt
@@ -270,9 +269,9 @@ class SympyToTorch(torch.nn.Module):
         if not self.freeze_terms:
             self.torch_expr = torch_lambdify(sympy_expr, self.keys)
         else:
-            assert all(
-                x < len(Add.make_args(sympy_expr)) for x in freeze_terms
-            ), "The freeze term index cannot be larger than the total terms in the expression"
+            assert all(x < len(Add.make_args(sympy_expr)) for x in freeze_terms), (
+                "The freeze term index cannot be larger than the total terms in the expression"
+            )
             self.torch_expr = []
             for i in range(len(Add.make_args(sympy_expr))):
                 self.torch_expr.append(

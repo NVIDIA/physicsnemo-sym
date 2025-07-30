@@ -18,8 +18,6 @@
 Supported PyTorch scheduler configs
 """
 
-import torch
-
 from dataclasses import dataclass
 from hydra.core.config_store import ConfigStore
 from omegaconf import MISSING

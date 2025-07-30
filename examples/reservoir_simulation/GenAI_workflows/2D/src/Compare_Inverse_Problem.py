@@ -16,16 +16,14 @@
 """
 @Author : Clement Etienam
 """
+
 import os
-from physicsnemo.sym.hydra import to_absolute_path
-from physicsnemo.sym.key import Key
 from NVRS import *
 from physicsnemo.sym.models.fno import *
 import shutil
 import pandas as pd
 import scipy.io as sio
 import torch
-from PIL import Image
 import requests
 
 
@@ -249,7 +247,6 @@ if default == 1:
     method = 5
     typee = 0
 else:
-
     method = None
     while True:
         method = cp.int(
@@ -269,7 +266,6 @@ else:
             print("")
             print("please try again and select value between 1-6")
         else:
-
             break
 
     if method == 6:
@@ -375,7 +371,7 @@ wells = np.reshape(wells, (-1, 3), "C")
 
 
 bb = os.path.isfile("../PACKETS/iglesias2.out")
-if bb == False:
+if not bb:
     print("....Downloading Please hold.........")
     download_file_from_google_drive(
         "1bib2JAZfBpW4bKz5LdCmhAOtxQixkTzj", "../PACKETS/iglesias2.out"

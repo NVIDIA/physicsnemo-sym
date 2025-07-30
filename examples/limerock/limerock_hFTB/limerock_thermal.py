@@ -15,23 +15,17 @@
 # limitations under the License.
 
 import torch
-from torch.utils.data import DataLoader, Dataset
 from torch import Tensor
 import copy
 
 import numpy as np
 from sympy import Symbol, Eq, tanh, Or, And
-from omegaconf import DictConfig, OmegaConf
-import hydra
-from hydra.utils import to_absolute_path
 from typing import Dict
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
-from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
 from physicsnemo.sym.solver import SequentialSolver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
 from physicsnemo.sym.models.fourier_net import FourierNetArch
 from physicsnemo.sym.models.arch import Arch
 from physicsnemo.sym.domain.constraint import (
@@ -44,8 +38,7 @@ from physicsnemo.sym.utils.io import (
     VTKUniformGrid,
 )
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
-from physicsnemo.sym.eq.pdes.basic import NormalDotVec, GradNormal
+from physicsnemo.sym.eq.pdes.basic import GradNormal
 from physicsnemo.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
 from physicsnemo.sym.distributed.manager import DistributedManager
 
@@ -174,7 +167,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
     import time as time
 
-    tic = time.time()
+    time.time()
 
     # inlet
     inlet = PointwiseBoundaryConstraint(
