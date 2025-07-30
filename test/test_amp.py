@@ -20,6 +20,7 @@ import torch.nn as nn
 
 from physicsnemo.sym.amp import DerivScaler, AmpManager
 from physicsnemo.sym.eq.derivatives import gradient_autodiff
+from physicsnemo.sym import physicsnemo_ext  # noqa: F401
 
 
 Tensor = torch.Tensor
