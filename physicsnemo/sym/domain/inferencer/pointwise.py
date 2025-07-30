@@ -14,11 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from typing import Dict, List, Union, Callable
-from pathlib import Path
-import inspect
+from typing import Dict, List
 
-import torch
 import numpy as np
 
 from physicsnemo.sym.domain.inferencer import Inferencer
@@ -28,7 +25,7 @@ from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.distributed import DistributedManager
 from physicsnemo.sym.utils.io import InferencerPlotter
-from physicsnemo.sym.utils.io.vtk import var_to_polyvtk, VTKBase, VTKUniformGrid
+from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
 from physicsnemo.sym.dataset import DictInferencePointwiseDataset
 
 
@@ -62,7 +59,6 @@ class PointwiseInferencer(Inferencer):
         requires_grad: bool = False,
         model=None,
     ):
-
         # get dataset and dataloader
         self.dataset = DictInferencePointwiseDataset(
             invar=invar, output_names=output_names

@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 import os
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.key import Key
@@ -256,7 +257,6 @@ else:
             print("")
             print("please try again and select value between 1-4")
         else:
-
             break
 
 
@@ -362,12 +362,11 @@ while True:
         print("")
         print("please try again and select value between 1-2")
     else:
-
         break
 
 if chuu == 1:
     bb = os.path.isfile("../PACKETS/iglesias2.out")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1bib2JAZfBpW4bKz5LdCmhAOtxQixkTzj", "../PACKETS/iglesias2.out"
@@ -377,7 +376,7 @@ if chuu == 1:
     Truee = np.genfromtxt("../PACKETS/iglesias2.out", dtype="float")
 else:
     bb1 = os.path.isfile(("../PACKETS/Ganensemble.mat"))
-    if bb1 == False:
+    if not bb1:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1w81M5M2S0PD9CF2761dxmiKQ5c0OFPaH",
@@ -620,7 +619,7 @@ if surrogate == 1:
     bb = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1cldZ75k-kIJQU51F1w17yRYFAAjoYOXU",
@@ -636,7 +635,6 @@ if surrogate == 1:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_FNO/ResSim")
         print(" Surrogate model learned with FNO")
         modelP.load_state_dict(torch.load("fno_forward_model_pressure.0.pth"))
@@ -647,7 +645,7 @@ if surrogate == 1:
     bba = os.path.isfile(
         "outputs/Forward_problem_FNO/ResSim/fno_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1IWTnWceqbCD3XdQmHOsw6Et9jS8hozML",
@@ -677,7 +675,7 @@ elif surrogate == 2:
     bb = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_pressure.0.pth"
     )
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1Df3NHyAMW4fdAVwdSyQEvuD8Z9gpsNwt",
@@ -692,7 +690,6 @@ elif surrogate == 2:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO/ResSim")
         print(" Surrogate model learned with PINO")
         modelP.load_state_dict(torch.load("pino_forward_model_pressure.0.pth"))
@@ -703,7 +700,7 @@ elif surrogate == 2:
     bba = os.path.isfile(
         "outputs/Forward_problem_PINO/ResSim/pino_forward_model_saturation.0.pth"
     )
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1QAYQJy9_2FiBrxL8TYtTvTJNmsTaUSh4",
@@ -732,7 +729,7 @@ elif surrogate == 3:
         pass
 
     bb = os.path.isfile("outputs/Forward_problem_PINO2/pressure_model.pth")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1sv_tbB91EWcJOBWdhhnTKspoAtR564o4",
@@ -747,7 +744,6 @@ elif surrogate == 3:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO2")
         print(" Surrogate model learned with original PINO")
         modelP.load_state_dict(torch.load("pressure_model.pth"))
@@ -756,7 +752,7 @@ elif surrogate == 3:
         os.chdir(oldfolder)
 
     bba = os.path.isfile("outputs/Forward_problem_PINO2/saturation_model.pth")
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "13BGxwvN2IV0eo0vbUxb16BhJ2MtJ-s0W",
@@ -787,7 +783,7 @@ else:
         pass
 
     bb = os.path.isfile("outputs/Forward_problem_PINO3/pressure_model.pth")
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1jihu5qi0TWh22RuIxNEvUxvixUrnxzxB",
@@ -802,7 +798,6 @@ else:
         modelP.eval()
         os.chdir(oldfolder)
     else:
-
         os.chdir("outputs/Forward_problem_PINO3")
         print(" Surrogate model learned with original PINO")
 
@@ -812,7 +807,7 @@ else:
         os.chdir(oldfolder)
 
     bba = os.path.isfile("outputs/Forward_problem_PINO3/saturation_model.pth")
-    if bba == False:
+    if not bba:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1FibuOGfBZHOrZgiPf6lggcCpKlaMaq7A",

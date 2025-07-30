@@ -16,7 +16,6 @@
 
 # import libraries
 import numpy as np
-import csv
 import chaospy
 
 # load data
@@ -46,9 +45,10 @@ val_idx = np.random.choice(
     np.arange(num_samples, dtype=int), int(val_portion * num_samples), replace=False
 )
 val_x, val_y = samples[val_idx], y_vec[val_idx]
-train_x, train_y = np.delete(samples, val_idx, axis=0).T, np.delete(
-    y_vec, val_idx
-).reshape(-1, 1)
+train_x, train_y = (
+    np.delete(samples, val_idx, axis=0).T,
+    np.delete(y_vec, val_idx).reshape(-1, 1),
+)
 
 # Construct the PCE
 distribution = chaospy.J(

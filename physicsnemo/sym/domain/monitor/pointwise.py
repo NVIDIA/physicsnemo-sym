@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Monitor for Solver class
-"""
+"""Monitor for Solver class"""
 
 import numpy as np
 
@@ -61,7 +60,6 @@ class PointwiseMonitor(Monitor):
         summary_histograms="off",
         requires_grad=False,
     ):
-
         # construct model from nodes
         self.requires_grad = requires_grad
         self.model = Graph(
@@ -94,7 +92,6 @@ class PointwiseMonitor(Monitor):
         self.summary_histograms = summary_histograms
 
     def save_results(self, name, writer, step, data_dir):
-
         # run forward inference
         invar = Constraint._set_device(
             self.invar, device=self.device, requires_grad=self.requires_grad

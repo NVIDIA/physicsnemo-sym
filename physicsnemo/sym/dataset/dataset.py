@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Dataset classes
-"""
+"""Dataset classes"""
 
 from typing import Dict
 
@@ -60,7 +59,6 @@ class _BaseDataset:
 
     @staticmethod
     def _to_tensor_dict(var_dict, device=None):
-
         # convert to torch
         tensor_dict = {
             key: torch.as_tensor(value, dtype=tf_dt, device=device)
@@ -78,7 +76,8 @@ class Dataset(_BaseDataset, torch.utils.data.Dataset):
     def __getitem__(self, idx):
         """Must return a single example tuple e.g. (invar, outvar, lambda_weighting)
         if Dataset.auto_collation is False, or a batched example tuple if
-        Dataset.auto_collation is True. For the latter case idx is a batch of indices."""
+        Dataset.auto_collation is True. For the latter case idx is a batch of indices.
+        """
 
         raise NotImplementedError("subclass must implement this")
 
@@ -104,7 +103,6 @@ class _DictDatasetMixin:
         outvar: Dict[str, np.array],
         lambda_weighting: Dict[str, np.array] = None,
     ):
-
         # get default lambda weighting
         if lambda_weighting is None:
             lambda_weighting = {key: np.ones_like(x) for key, x in outvar.items()}

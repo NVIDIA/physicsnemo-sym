@@ -21,7 +21,6 @@ import logging
 from torch.utils.data import DataLoader, BatchSampler, SequentialSampler, RandomSampler
 from torch.utils.data.distributed import DistributedSampler
 from torch.nn.parallel import DistributedDataParallel
-from typing import Union, List
 
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.constants import tf_dt
@@ -123,7 +122,6 @@ class Constraint:
 
     @staticmethod
     def _set_device(tensor_dict, device=None, requires_grad=False):
-
         # convert np to torch if needed
         tensor_dict = {
             key: torch.as_tensor(value, dtype=tf_dt, device=device)
@@ -151,9 +149,9 @@ class Constraint:
     ):
         "Return an appropriate dataloader given a dataset"
 
-        assert isinstance(dataset, Dataset) or isinstance(
-            dataset, IterableDataset
-        ), "error, dataset must be a subclass of Dataset or IterableDataset"
+        assert isinstance(dataset, Dataset) or isinstance(dataset, IterableDataset), (
+            "error, dataset must be a subclass of Dataset or IterableDataset"
+        )
 
         manager = DistributedManager()
 
@@ -163,7 +161,6 @@ class Constraint:
 
         # map-style
         if isinstance(dataset, Dataset):
-
             assert batch_size is not None, "error, batch_size must be specified"
             assert shuffle is not None, "error, shuffle must be specified"
             assert drop_last is not None, "error, drop_last must be specified"
@@ -219,7 +216,6 @@ class Constraint:
 
         # iterable-style
         elif isinstance(dataset, IterableDataset):
-
             # for iterable datasets, must do batching/sampling within dataset
             dataloader = DataLoader(
                 dataset,

@@ -25,14 +25,14 @@ def build_html(src_dir: Path, warning_file: Path = Path("./warnings.txt")):
     # Write warning messages to a file (instead of stderr)
     try:
         warning_file.unlink()
-    except OSError as e:
+    except OSError:
         print("Couldn't delete old warning file")
     warning = open(warning_file, "w")
 
     # clean build path if it exists
     try:
         build_dir.unlink()
-    except OSError as e:
+    except OSError:
         print("Couldn't delete build directory")
 
     # Create the Sphinx application object
@@ -43,5 +43,4 @@ def build_html(src_dir: Path, warning_file: Path = Path("./warnings.txt")):
 
 
 if __name__ == "__main__":
-
     build_html(Path("."))

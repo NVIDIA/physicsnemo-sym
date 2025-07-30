@@ -19,7 +19,6 @@ Primitives for 2D geometries see
 https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
 """
 
-import sys
 from operator import mul
 from sympy import (
     Symbol,
@@ -373,7 +372,6 @@ class Triangle(Geometry):
         P = x * N.i + y * N.j
         O = center[0] * N.i + center[1] * N.j
         H = center[0] * N.i + (center[1] + height) * N.j
-        B = (center[0] + base / 2) * N.i + center[1] * N.j
         OP = P - O
         OH = H - O
         PH = OH - OP
@@ -543,9 +541,6 @@ class Polygon(Geometry):
             dy = v2[1] - v1[1]
             area = (dx**2 + dy**2) ** 0.5
 
-            # generate normals
-            normal_x = dy / area
-            normal_y = -dx / area
             line = SympyCurve(
                 functions={
                     "x": dx * s + v1[0],

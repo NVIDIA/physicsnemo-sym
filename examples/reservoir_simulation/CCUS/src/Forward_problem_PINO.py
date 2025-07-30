@@ -17,7 +17,6 @@
 @Author : Clement Etienam
 """
 
-
 import os
 import numpy as np
 
@@ -247,9 +246,7 @@ class BaseQuadraticSubproblem(ABC):
     def hess(self):
         """Value of Hessian of objective function at current iteration."""
         if self.hess_prod:
-            raise Exception(
-                "class {} does not have " "method `hess`".format(type(self))
-            )
+            raise Exception("class {} does not have method `hess`".format(type(self)))
         return self._h
 
     def hessp(self, p):
@@ -586,7 +583,6 @@ class CGSteihaugSubproblem(BaseQuadraticSubproblem):
 
         # Search for the min of the approximation of the objective function.
         while True:
-
             # do an iteration
             Bd = self.hessp(d)
             dBd = d.dot(Bd)
@@ -1004,7 +1000,6 @@ class IterativeSubproblem(BaseQuadraticSubproblem):
     hess_prod = False
 
     def __init__(self, x, fun, k_easy=0.1, k_hard=0.2):
-
         super().__init__(x, fun)
 
         # When the trust-region shrinks in two consecutive
@@ -1378,7 +1373,7 @@ def _minimize_trust_region(
     """
     if subproblem is None:
         raise ValueError(
-            "A subproblem solving strategy is required for " "trust-region methods"
+            "A subproblem solving strategy is required for trust-region methods"
         )
     if not (0 <= eta < 0.25):
         raise Exception("invalid acceptance stringency")
@@ -1388,7 +1383,7 @@ def _minimize_trust_region(
         raise ValueError("the initial trust radius must be positive")
     if initial_trust_radius >= max_trust_radius:
         raise ValueError(
-            "the initial trust radius must be less than the " "max trust radius"
+            "the initial trust radius must be less than the max trust radius"
         )
 
     # Input check/pre-process
@@ -1419,7 +1414,6 @@ def _minimize_trust_region(
     # search for the function min
     # do not even start if the gradient is small enough
     while k < max_iter:
-
         # Solve the sub-problem.
         # This gives us the proposed step relative to the current position
         # and it tells us whether the proposed step
@@ -1780,7 +1774,6 @@ def _minimize_cg(
         t0 = torch.clamp(2.02 * (f - old_f) / gtd, max=1.0)
         if t0 <= 0:
             warnflag = 4
-            msg = "Initial step guess is negative."
             break
         old_f = f
 
@@ -2063,9 +2056,11 @@ def minimize_constr(
     # handle callbacks
     if callback is not None:
         callback_ = callback
-        callback = lambda x: callback_(
-            torch.tensor(x, dtype=x0.dtype, device=x0.device).view_as(x0)
-        )
+
+        def callback(x):
+            return callback_(
+                torch.tensor(x, dtype=x0.dtype, device=x0.device).view_as(x0)
+            )
 
     # handle bounds
     if bounds is not None:
@@ -2109,9 +2104,11 @@ def _cg_iters(grad, hess, max_iter, normp=1):
     Derived from Algorithm 7.1 of "Numerical Optimization (2nd Ed.)"
     (Nocedal & Wright, 2006; pp. 169)
     """
+
     # generalized dot product that supports batch inputs
     # TODO: let the user specify dot fn?
-    dot = lambda u, v: u.mul(v).sum(-1, keepdim=True)
+    def dot(u, v):
+        return u.mul(v).sum(-1, keepdim=True)
 
     g_norm = grad.norm(p=normp)
     tol = g_norm * g_norm.sqrt().clamp(0, 0.5)
@@ -2239,7 +2236,6 @@ def _minimize_newton_cg(
 
     # begin optimization loop
     for n_iter in range(1, max_iter + 1):
-
         # ============================================================
         #  Compute a search direction pk by applying the CG method to
         #       H_f(xk) p = - J_f(xk) starting from 0.
@@ -2406,7 +2402,6 @@ def _minimize_newton_exact(
 
     # begin optimization loop
     for n_iter in range(1, max_iter + 1):
-
         # ==================================================
         #  Compute a search direction d by solving
         #          H_f(x) d = - J_f(x)
@@ -2554,7 +2549,10 @@ def _strong_wolfe_extra(
     """
     # ported from https://github.com/torch/optim/blob/master/lswolfe.lua
     if extra_condition is None:
-        extra_condition = lambda *args: True
+
+        def extra_condition(*args):
+            return True
+
     d_norm = d.abs().max()
     g = g.clone(memory_format=torch.contiguous_format)
     # evaluate objective and gradient using initial step
@@ -2863,7 +2861,10 @@ class ScalarFunction(object):
         if self._hess:
             if self._I is None:
                 self._I = torch.eye(x.numel(), dtype=x.dtype, device=x.device)
-            hvp = lambda v: autograd.grad(grad, x, v, retain_graph=True)[0]
+
+            def hvp(v):
+                return autograd.grad(grad, x, v, retain_graph=True)[0]
+
             hess = _vmap(hvp)(self._I)
 
         return sf_value(f=f.detach(), grad=grad.detach(), hessp=hessp, hess=hess)
@@ -2901,7 +2902,7 @@ class VectorFunction(object):
         f = self._fun(x)
         if f.dim() == 0:
             raise RuntimeError(
-                "VectorFunction expected vector outputs but " "received a scalar."
+                "VectorFunction expected vector outputs but received a scalar."
             )
         elif f.dim() > 1:
             f = f.view(-1)
@@ -2920,7 +2921,10 @@ class VectorFunction(object):
         if self._jac:
             if self._I is None:
                 self._I = torch.eye(x.numel(), dtype=x.dtype, device=x.device)
-            jvp = lambda v: autograd.grad(f, x, v, retain_graph=True)[0]
+
+            def jvp(v):
+                return autograd.grad(f, x, v, retain_graph=True)[0]
+
             jac = _vmap(jvp)(self._I)
 
         return vf_value(f=f.detach(), jacp=jacp, jac=jac)
@@ -3123,7 +3127,6 @@ def _minimize_bfgs_core(
 
     # BFGS iterations
     for n_iter in range(1, max_iter + 1):
-
         # ==================================
         #   compute Quasi-Newton direction
         # ==================================
@@ -3201,7 +3204,6 @@ def _minimize_bfgs_core(
         warnflag = 1
 
     if disp:
-
         print("         Current function value: %f" % f)
         print("         Iterations: %d" % n_iter)
         print("         Function evaluations: %d" % sf.nfev)
@@ -3488,7 +3490,12 @@ status_messages = (
 
 _constr_keys = {"fun", "lb", "ub", "jac", "hess", "hessp", "keep_feasible"}
 _bounds_keys = {"lb", "ub", "keep_feasible"}
-dot = lambda u, v: torch.dot(u.view(-1), v.view(-1))
+
+
+def dot(u, v):
+    return torch.dot(u.view(-1), v.view(-1))
+
+
 sf_value = namedtuple("sf_value", ["f", "grad", "hessp", "hess"])
 de_value = namedtuple("de_value", ["f", "grad"])
 vf_value = namedtuple("vf_value", ["f", "jacp", "jac"])
@@ -3501,7 +3508,6 @@ def print_header(title, num_breaks=1):
 
 
 def residual_energy_equation(delta, tau):
-
     delta = (
         torch.tensor(delta, dtype=torch.float32)
         if not isinstance(delta, torch.Tensor)
@@ -3792,7 +3798,6 @@ def residual_energy_equationn(delta, tau):
 
 
 def Helmhotz(x, P, T, Pc, Tc, R, reduce=True):
-
     T = abs(T)
     rhoc = 467  # kg/m3 is the critical density of co2
     delta = x / rhoc
@@ -3813,7 +3818,6 @@ def Helmhotz(x, P, T, Pc, Tc, R, reduce=True):
 
 
 def Helmhotzn(x, P, T, Pc, Tc, R):
-
     T = abs(T)
     rhoc = 467  # kg/m3 is the critical density of co2
     delta = x / rhoc
@@ -3830,7 +3834,6 @@ def Helmhotzn(x, P, T, Pc, Tc, R):
 
 
 def EOS(x, P, T, Pc, Tc, AS, reduce=True):
-
     T = abs(T)
 
     Pr = P / Pc
@@ -3859,7 +3862,6 @@ def EOS(x, P, T, Pc, Tc, AS, reduce=True):
 
 
 def EOSn(x, P, T, Pc, Tc, AS):
-
     T = abs(T)
     Pr = P / Pc
     Tr = T / Tc
@@ -3882,7 +3884,6 @@ def EOSn(x, P, T, Pc, Tc, AS):
 
 
 def sol_co2_brine(R, T, potential, fugg, salinityy, pressure):
-
     T = abs(T)
     eps = 1e-6
 
@@ -3908,7 +3909,6 @@ def sol_co2_brine(R, T, potential, fugg, salinityy, pressure):
 
 
 def fugacity(Vr, AS, P, T, Pc, Tc):
-
     T = abs(T)
     Pr = P / Pc
     Tr = T / Tc
@@ -3966,7 +3966,6 @@ def calculate_mu_co2(ρg, T):
 
 
 def calculate_h2o_density_viscosity(m, T, P, y_co2l):
-
     T = abs(T)
     A = -3.033405
     B = 10.128163
@@ -4334,35 +4333,34 @@ def smoothn(
     TolZ=1e-3,
     weightstr="bisquare",
 ):
-
     if type(y) == ma.core.MaskedArray:  # masked array
         # is_masked = True
         mask = y.mask
         y = np.array(y)
         y[mask] = 0.0
-        if np.any(W != None):
+        if np.any(W is not None):
             W = np.array(W)
             W[mask] = 0.0
-        if np.any(sd != None):
+        if np.any(sd is not None):
             W = np.array(1.0 / sd**2)
             W[mask] = 0.0
             sd = None
         y[mask] = np.nan
 
-    if np.any(sd != None):
+    if np.any(sd is not None):
         sd_ = np.array(sd)
         mask = sd > 0.0
         W = np.zeros_like(sd_)
         W[mask] = 1.0 / sd_[mask] ** 2
         sd = None
 
-    if np.any(W != None):
+    if np.any(W is not None):
         W = W / W.max()
 
     sizy = y.shape
 
     # sort axis
-    if axis == None:
+    if axis is None:
         axis = tuple(np.arange(y.ndim))
 
     noe = y.size  # number of elements
@@ -4375,7 +4373,7 @@ def smoothn(
     # Smoothness parameter and weights
     # if s != None:
     #  s = []
-    if np.all(W == None):
+    if np.all(W is None):
         W = np.ones(sizy)
 
     # if z0 == None:
@@ -4480,7 +4478,7 @@ def smoothn(
         # purpose, a nearest neighbor interpolation followed by a coarse
         # smoothing are performed.
         # ---
-        if z0 != None:  # an initial guess (z0) has been provided
+        if z0 is not None:  # an initial guess (z0) has been provided
             z = z0
         else:
             z = y  # InitialGuess(y,IsFinite);
@@ -4758,7 +4756,7 @@ def peaks(n):
         f = np.exp(
             -(((x - x0) / sdx) ** 2)
             - ((y - y0) / sdy) ** 2
-            - (((x - x0) / sdx)) * ((y - y0) / sdy) * c
+            - ((x - x0) / sdx) * ((y - y0) / sdy) * c
         )
         # f /= f.sum()
         f *= random()
@@ -4781,11 +4779,7 @@ def calc_rs(p_bub, p):
         torch.tensor(1.0).to(device1, torch.float32),
         torch.tensor(0.0).to(device1, torch.float32),
     )
-    rs = (
-        (178.11**2)
-        / 5.615
-        * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
-    )
+    rs = (178.11**2) / 5.615 * (torch.pow(p / p_bub, 1.3) * rs_factor + (1 - rs_factor))
     return rs
 
 
@@ -4874,7 +4868,6 @@ def read_yaml(fname):
 
 
 def Get_Time(nx, ny, nz, N):
-
     Timee = []
     for k in range(N):
         check = np.ones((nx, ny, nz), dtype=np.float16)
@@ -4919,7 +4912,6 @@ def Get_source_sink(N, nx, ny, nz, steppi):
     QG = np.zeros((steppi, nx, ny, nz), dtype=np.float32)
 
     for k in range(steppi):
-
         QG[k, 24, 24, -1] = 1000
 
     Qg[0, :, :, :, :] = QG
@@ -4945,7 +4937,6 @@ SUPPORTED_DATA_TYPES = {
 
 
 def parse_egrid(path_to_result):
-
     egrid_path = path_to_result
     attrs = ("GRIDHEAD", "ACTNUM")
     egrid = _parse_ech_bin(egrid_path, attrs)
@@ -4954,7 +4945,6 @@ def parse_egrid(path_to_result):
 
 
 def parse_unrst(path_to_result):
-
     unrst_path = path_to_result
     attrs = ("PRESSURE", "SGAS", "SWAT")
     states = _parse_ech_bin(unrst_path, attrs)
@@ -4980,7 +4970,6 @@ def _check_and_fetch_type_info(data_type):
 
 
 def _check_and_fetch_file(path, pattern, return_relative=False):
-
     found = []
     reg_expr = re.compile(fnmatch.translate(pattern), re.IGNORECASE)
 
@@ -4998,7 +4987,6 @@ def _check_and_fetch_file(path, pattern, return_relative=False):
 
 
 def _parse_keywords(path, attrs=None):
-
     sections_counter = {} if attrs is None else {attr: 0 for attr in attrs}
 
     with open(path, "rb") as f:
@@ -5042,7 +5030,6 @@ def _parse_keywords(path, attrs=None):
 
 
 def _parse_ech_bin(path, attrs=None):
-
     if attrs is None:
         raise ValueError("Keyword attribute cannot be empty")
 
@@ -5056,7 +5043,6 @@ def _parse_ech_bin(path, attrs=None):
 
 
 def _fetch_keyword_data(section):
-
     n_elements, data_type, element_size, fmt, element_skip, binary_data = section
 
     n_skip = math.floor((n_elements - 1) / element_skip)
@@ -5076,7 +5062,6 @@ def _fetch_keyword_data(section):
 
 
 def Geta_all(folder, nx, ny, nz, oldfolder, check, steppi):
-
     os.chdir(folder)
 
     # os.system(string_Jesus)
@@ -5751,7 +5736,7 @@ def interp_torch(cuda, reference_matrix1, reference_matrix2, tensor1):
 def RelPerm(Sa, Sg, SWI, SWR, SWOW, SWOG):
     one_minus_swi_swr = 1 - (SWI + SWR)
 
-    so = (((1 - (Sa + Sg))) - SWR) / one_minus_swi_swr
+    so = ((1 - (Sa + Sg)) - SWR) / one_minus_swi_swr
     sw = (Sa - SWI) / one_minus_swi_swr
     sg = Sg / one_minus_swi_swr
 
@@ -5787,7 +5772,6 @@ def load_FNO_dataset(path, input_keys, output_keys, n_examples=None):
     invar, outvar = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar, output_keys)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5823,7 +5807,6 @@ def load_FNO_dataset2(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5859,7 +5842,6 @@ def load_FNO_dataset2d(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -5895,7 +5877,6 @@ def load_FNO_dataset2a(path, input_keys, output_keys1, n_examples=None):
     invar, outvar1 = dict(), dict()
     for d, keys in [(invar, input_keys), (outvar1, output_keys1)]:
         for k in keys:
-
             # get data
             x = data[k]  # N, C, H, W
             x = x.astype(np.float16)
@@ -6041,7 +6022,7 @@ def ddx1(inpt, dx, channel, dim, order=1, padding="zeros"):
 
 
 def to_absolute_path_and_create(
-    *args: Union[str, Path]
+    *args: Union[str, Path],
 ) -> Union[Path, str, Tuple[Union[Path, str]]]:
     """Converts file path to absolute path based on the current working directory and creates the subfolders."""
 
@@ -6212,7 +6193,6 @@ class compositional_oil(torch.nn.Module):
         self.pytt = pytt
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         u = input_var["pressure"]
         perm = input_var["perm"]
         fin = self.neededM["Q"]
@@ -6290,14 +6270,15 @@ class compositional_oil(torch.nn.Module):
                 x0 = torch.randn(sat.shape[1], 1).to(device, torch.float64)
 
                 # compute the reduced volume Vr
-                fn_Vr = lambda x: EOS(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    self.AS,
-                )
+                def fn_Vr(x):
+                    return EOS(
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        self.AS,
+                    )
 
                 res = minimize(
                     fn_Vr, x0, method="l-bfgs", tol=1e-3, max_iter=5, disp=False
@@ -6316,9 +6297,7 @@ class compositional_oil(torch.nn.Module):
                 fugacitybig[mm, :] = fugac.ravel()
 
                 # Calcultae the chemical potential of CO2
-                uco2 = 1 + (
-                    (Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1))
-                )
+                1 + ((Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1)))
 
                 # calculate solubility of co2 in brine
                 # solco2brine = sol_co2_brine(Rgas,self.T,uco2,fugac,brine_salinity, pressure_mean[mm,:].reshape(-1,1))
@@ -6341,14 +6320,16 @@ class compositional_oil(torch.nn.Module):
 
                 # Compute co2 density
                 x0 = torch.randn(sat.shape[1], 1).to(device, torch.float64)
-                fhelmotz = lambda x: Helmhotz(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    Rgas,
-                )
+
+                def fhelmotz(x):
+                    return Helmhotz(
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        Rgas,
+                    )
 
                 Rho_co2 = minimize(
                     fhelmotz, x0, method="l-bfgs", max_iter=5, tol=1e-3, disp=False
@@ -6374,14 +6355,15 @@ class compositional_oil(torch.nn.Module):
                 x0 = abs(np.random.rand(sat.shape[1], 1)) * 2
 
                 # compute the reduced volume Vr
-                fn_Vrn = lambda x: EOSn(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    self.AS,
-                )
+                def fn_Vrn(x):
+                    return EOSn(
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        self.AS,
+                    )
 
                 Vr = scipy.optimize.fmin_powell(
                     fn_Vrn, x0, xtol=1e-6, ftol=1e-6, disp=False
@@ -6404,9 +6386,7 @@ class compositional_oil(torch.nn.Module):
                 fugacitybig[mm, :] = fugac.ravel()
 
                 # Calcultae the chemical potential of CO2
-                uco2 = 1 + (
-                    (Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1))
-                )
+                1 + ((Rgas * self.T) * torch.log(pressure_mean[mm, :].reshape(-1, 1)))
 
                 # calculate solubility of co2 in brine
                 # solco2brine = sol_co2_brine(Rgas,self.T,uco2,fugac,brine_salinity, pressure_mean[mm,:].reshape(-1,1))
@@ -6430,14 +6410,16 @@ class compositional_oil(torch.nn.Module):
 
                 # Compute co2 density
                 x0 = abs(np.random.rand(sat.shape[1], 1)) * 10
-                fhelmotzn = lambda x: Helmhotzn(
-                    x,
-                    pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
-                    self.T,
-                    self.Pc,
-                    self.Tc,
-                    Rgas,
-                )
+
+                def fhelmotzn(x):
+                    return Helmhotzn(
+                        x,
+                        pressure_mean[mm, :].reshape(-1, 1).detach().cpu().numpy(),
+                        self.T,
+                        self.Pc,
+                        self.Tc,
+                        Rgas,
+                    )
 
                 Rho_co2 = scipy.optimize.fmin_powell(
                     fhelmotzn, x0, xtol=1e-6, ftol=1e-6, disp=False
@@ -6526,7 +6508,6 @@ class compositional_oil(torch.nn.Module):
         # Pressure equation Loss
 
         if self.Relperm == 2:
-
             KRW, _, KRG = StoneIIModel(
                 self.params, device, prior_gas, prior_sat
             )  # Highly tuned to use case
@@ -6563,7 +6544,6 @@ class compositional_oil(torch.nn.Module):
         a1gas = Mg * a  # gas Effective permeability
 
         if self.pde_method == 1:
-
             # Pressure equation for CO2 in gas
             # compute first dffrential for pressure
             dudx_fdm = compute_gradient_3d(
@@ -7448,7 +7428,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
     print("")
 
@@ -7464,7 +7443,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
     print("")
 
@@ -7489,7 +7467,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     print("")
@@ -7504,7 +7481,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     paramss = {
@@ -7531,7 +7507,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-2")
             else:
-
                 break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -7541,7 +7516,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     if interest == 1:
         # bb = os.path.isfile(to_absolute_path('../PACKETS/conversions.mat'))
-        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")) == True:
+        if os.path.isfile(to_absolute_path("../PACKETS/conversions.mat")):
             os.remove(to_absolute_path("../PACKETS/conversions.mat"))
         if not os.path.exists(to_absolute_path("../RUNS")):
             os.makedirs(to_absolute_path("../RUNS"))
@@ -7557,9 +7532,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     if torch.cuda.is_available():
         num_gpus = torch.cuda.device_count()
         if num_gpus >= 2:  # Choose GPU 1 (index 1)
-            device = torch.device(f"cuda:0")
+            device = torch.device("cuda:0")
         else:  # If there's only one GPU or no GPUs, choose the first one (index 0)
-            device = torch.device(f"cuda:0")
+            device = torch.device("cuda:0")
     else:  # If CUDA is not available, use the CPU
         raise RuntimeError("No GPU found. Please run on a system with a GPU.")
     torch.cuda.set_device(device)
@@ -7575,7 +7550,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     pini_alt = 200
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/conversions.mat"))
-    if bb == True:
+    if bb:
         mat = sio.loadmat(to_absolute_path("../PACKETS/conversions.mat"))
         steppi = int(mat["steppi"])
 
@@ -7593,7 +7568,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 2-500")
             else:
-
                 break
 
     # print(steppi)
@@ -7645,7 +7619,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     p_atm = cp.float32(float(cfg.custom.PROPS.PATM))
     p_bub = cp.float32(float(cfg.custom.PROPS.PB))
 
-    params1 = {
+    {
         "BO": torch.tensor(BO),
         "UO": torch.tensor(UO),
         "BW": torch.tensor(BW),
@@ -7662,7 +7636,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # N_ens = 2
     njobs = 3
     # njobs = int((multiprocessing.cpu_count() // 4) - 1)
-    num_cores = njobs
 
     source_dir = to_absolute_path("../Necessaryy")
     # dest_dir = 'path_to_folder_B'
@@ -7702,7 +7675,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     poro_ensemble = clip_and_convert_to_float32(poro_ensemble)
 
     if interest == 1:
-
         for kk in range(N_ens):
             path_out = to_absolute_path("../RUNS/Realisation" + str(kk))
             os.makedirs(path_out, exist_ok=True)
@@ -8048,7 +8020,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         neededM[key] = replace_nans_and_infs(neededM[key])
 
     for kk in range(N_ens):
-
         # INPUTS
         for i in range(nz):
             cPerm[kk, 0, i, :, :] = clip_and_convert_to_float3(
@@ -8155,7 +8126,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     cSatg = np.zeros((N_ens, steppi, nz, nx, ny), dtype=np.float32)  # gas saturation
 
     for kk in range(N_ens):
-
         # INPUTS
         for i in range(nz):
             cPerm[kk, 0, i, :, :] = X_data1t["permeability"][kk, 0, :, :, i]

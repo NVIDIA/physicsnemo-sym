@@ -17,7 +17,6 @@
 from typing import Dict
 import numpy as np
 import torch
-import torch.nn.functional as F
 import os
 import physicsnemo
 from physicsnemo.sym.hydra import PhysicsNeMoConfig
@@ -29,12 +28,10 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
 from physicsnemo.sym.models.fno import *
-import shutil
 import cupy as cp
 import scipy.io as sio
 import requests
@@ -428,7 +425,6 @@ class CustomValidatorPlotterS(ValidatorPlotter):
         Accuracy_water = np.zeros((self.steppi, 2))
         Time_vector = np.zeros((self.steppi))
         for itt in range(self.steppi):
-
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(20, 20), dpi=100)
 
@@ -903,7 +899,6 @@ class Black_oil(torch.nn.Module):
         self.nz = nz
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         # get inputs
 
         u = input_var["pressure"]
@@ -1215,7 +1210,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     UO = cfg.custom.NVRS.UO  # oil viscosity in cP
     DX = cfg.custom.NVRS.DX  # size of pixel in x direction
     DY = cfg.custom.NVRS.DY  # sixze of pixel in y direction
-    DZ = cfg.custom.NVRS.DZ  # sizze of pixel in z direction
 
     DX = cp.float32(DX)
     DY = cp.float32(DY)
@@ -1242,24 +1236,17 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     )  # float(input ('Enter the maximum time in days for simulation(days): '))
     MAXZ = cfg.custom.NVRS.MAXZ  # reference maximum time in days of simulation
     steppi = int(max_t / timmee)
-    factorr = cfg.custom.NVRS.factorr  # from [0 1] excluding the limits for PermZ
-    LIR = cfg.custom.NVRS.LIR  # lower injection rate
     UIR = cfg.custom.NVRS.UIR  # uppwer injection rate
-    input_channel = (
-        cfg.custom.NVRS.input_channel
-    )  # [Perm, Q,QW,Phi,dt, initial_pressure, initial_water_sat]
 
-    injectors = cfg.custom.WELLSPECS.water_injector_wells
-    producers = cfg.custom.WELLSPECS.producer_wells
-    N_injw = len(cfg.custom.WELLSPECS.water_injector_wells)  # Number of water injectors
-    N_pr = len(cfg.custom.WELLSPECS.producer_wells)  # Number of producers
+    len(cfg.custom.WELLSPECS.water_injector_wells)  # Number of water injectors
+    len(cfg.custom.WELLSPECS.producer_wells)  # Number of producers
 
     # tc2 = Equivalent_time(timmee,2100,timmee,max_t)
     tc2 = Equivalent_time(timmee, MAXZ, timmee, max_t)
-    dt = np.diff(tc2)[0]  # Time-step
+    np.diff(tc2)[0]  # Time-step
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi",
@@ -1280,7 +1267,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         data_use1 = matt["OUTPUT"]
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Test4.mat"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1PX2XFG1-elzQItvkUERJqeOerTO2kevq",

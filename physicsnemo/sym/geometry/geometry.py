@@ -24,12 +24,10 @@ import itertools
 import sympy
 from typing import Callable, Union, List
 
-from physicsnemo.sym.utils.sympy import np_lambdify
 from physicsnemo.sym.constants import diff_str
 from .parameterization import Parameterization, Bounds
 from .helper import (
     _concat_numpy_dict_list,
-    _sympy_sdf_to_sdf,
     _sympy_criteria_to_criteria,
     _sympy_func_to_func,
 )

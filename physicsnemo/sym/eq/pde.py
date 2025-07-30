@@ -14,25 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" base class for PDEs
-"""
+"""base class for PDEs"""
 
 from sympy import (
-    Symbol,
     Function,
     init_printing,
-    pprint,
-    latex,
     preview,
     Matrix,
     Eq,
-    Basic,
 )
-from typing import Dict, Tuple, List, Union
+from typing import Dict, List
 
 from physicsnemo.sym.node import Node
-from physicsnemo.sym.constants import diff_str
-from physicsnemo.sym.key import Key
 
 
 class PDE(object):

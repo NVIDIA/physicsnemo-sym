@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 import torch
 import numpy as np
-import os
 
 
 def test_navier_stokes_equation():
@@ -30,7 +29,7 @@ def test_navier_stokes_equation():
     u = np.exp(2 * x + y + z + t)
     v = np.exp(x + 2 * y + z + t)
     w = np.exp(x + y + 2 * z + t)
-    p = np.exp(x + y + z + t)
+    np.exp(x + y + z + t)
 
     rho = 1.0
 
@@ -43,12 +42,9 @@ def test_navier_stokes_equation():
     u__x__x = 2 * 2 * np.exp(2 * x + y + z + t)
     u__y__y = 1 * 1 * np.exp(2 * x + y + z + t)
     u__z__z = 1 * 1 * np.exp(2 * x + y + z + t)
-    u__x__y = 1 * 2 * np.exp(2 * x + y + z + t)
-    u__x__z = 1 * 2 * np.exp(2 * x + y + z + t)
-    u__y__z = 1 * 1 * np.exp(2 * x + y + z + t)
-    u__y__x = u__x__y
-    u__z__x = u__x__z
-    u__z__y = u__y__z
+    1 * 2 * np.exp(2 * x + y + z + t)
+    1 * 2 * np.exp(2 * x + y + z + t)
+    1 * 1 * np.exp(2 * x + y + z + t)
 
     v__t = 1 * np.exp(x + 2 * y + z + t)
     v__x = 1 * np.exp(x + 2 * y + z + t)
@@ -57,12 +53,9 @@ def test_navier_stokes_equation():
     v__x__x = 1 * 1 * np.exp(x + 2 * y + z + t)
     v__y__y = 2 * 2 * np.exp(x + 2 * y + z + t)
     v__z__z = 1 * 1 * np.exp(x + 2 * y + z + t)
-    v__x__y = 2 * 1 * np.exp(x + 2 * y + z + t)
-    v__x__z = 1 * 1 * np.exp(x + 2 * y + z + t)
-    v__y__z = 1 * 2 * np.exp(x + 2 * y + z + t)
-    v__y__x = v__x__y
-    v__z__x = v__x__z
-    v__z__y = v__y__z
+    2 * 1 * np.exp(x + 2 * y + z + t)
+    1 * 1 * np.exp(x + 2 * y + z + t)
+    1 * 2 * np.exp(x + 2 * y + z + t)
 
     w__t = 1 * np.exp(x + y + 2 * z + t)
     w__x = 1 * np.exp(x + y + 2 * z + t)
@@ -71,12 +64,9 @@ def test_navier_stokes_equation():
     w__x__x = 1 * 1 * np.exp(x + y + 2 * z + t)
     w__y__y = 1 * 1 * np.exp(x + y + 2 * z + t)
     w__z__z = 2 * 2 * np.exp(x + y + 2 * z + t)
-    w__x__y = 1 * 1 * np.exp(x + y + 2 * z + t)
-    w__x__z = 2 * 1 * np.exp(x + y + 2 * z + t)
-    w__y__z = 2 * 1 * np.exp(x + y + 2 * z + t)
-    w__y__x = w__x__y
-    w__z__x = w__x__z
-    w__z__y = w__y__z
+    1 * 1 * np.exp(x + y + 2 * z + t)
+    2 * 1 * np.exp(x + y + 2 * z + t)
+    2 * 1 * np.exp(x + y + 2 * z + t)
 
     p__x = 1 * np.exp(x + y + z + t)
     p__y = 1 * np.exp(x + y + z + t)
@@ -174,18 +164,18 @@ def test_navier_stokes_equation():
     momentum_z_eq_eval_pred = evaluations_momentum_z["momentum_z"].numpy()
 
     # verify PDE computation
-    assert np.allclose(
-        continuity_eq_eval_pred, continuity_equation_true
-    ), "Test Failed!"
-    assert np.allclose(
-        momentum_x_eq_eval_pred, momentum_x_equation_true
-    ), "Test Failed!"
-    assert np.allclose(
-        momentum_y_eq_eval_pred, momentum_y_equation_true
-    ), "Test Failed!"
-    assert np.allclose(
-        momentum_z_eq_eval_pred, momentum_z_equation_true
-    ), "Test Failed!"
+    assert np.allclose(continuity_eq_eval_pred, continuity_equation_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(momentum_x_eq_eval_pred, momentum_x_equation_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(momentum_y_eq_eval_pred, momentum_y_equation_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(momentum_z_eq_eval_pred, momentum_z_equation_true), (
+        "Test Failed!"
+    )
 
 
 if __name__ == "__main__":

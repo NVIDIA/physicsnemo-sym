@@ -14,14 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Neural Differential Equation Solver
-"""
+"""PhysicsNeMo Neural Differential Equation Solver"""
 
-import os
-import numpy as np
-from typing import List, Union, Tuple, Callable
 from omegaconf import DictConfig
-import warnings
 
 from physicsnemo.sym.amp import DerivScalers
 from physicsnemo.sym.trainer import Trainer
@@ -43,7 +38,6 @@ class Solver(Trainer):
     """
 
     def __init__(self, cfg: DictConfig, domain: Domain):
-
         # set domain
         self.domain = domain
 

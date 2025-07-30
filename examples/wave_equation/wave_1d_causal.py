@@ -37,7 +37,6 @@ from physicsnemo.sym.utils.io import (
 from physicsnemo.sym.loss.loss import CausalLossNorm
 
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from wave_equation import WaveEquation1D
 
 

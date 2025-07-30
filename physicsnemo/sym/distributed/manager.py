@@ -19,10 +19,10 @@ import torch.distributed as dist
 
 import logging
 import os
-import time
 import numpy as np
 
 logger = logging.getLogger("__name__")
+
 
 # Create singleton DistributedManager class
 class DistributedManager(object):
@@ -42,9 +42,7 @@ class DistributedManager(object):
         if not hasattr(obj, "_distributed"):
             obj._distributed = False
         if not hasattr(obj, "_device"):
-            obj._device = torch.device(
-                f"cuda:0" if torch.cuda.is_available() else "cpu"
-            )
+            obj._device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         if not hasattr(obj, "_cuda"):
             obj._cuda = torch.cuda.is_available()
         if not hasattr(obj, "_broadcast_buffers"):
@@ -296,7 +294,6 @@ class DistributedManager(object):
 
     @staticmethod
     def create_process_subgroup(name: str, size: int, group_name=None, verbose=False):
-
         manager = DistributedManager()
         if not manager.distributed:
             return None
@@ -306,13 +303,12 @@ class DistributedManager(object):
         # Get parent group's params
         group = manager._group[group_name] if group_name else None
         group_size = dist.get_world_size(group=group)
-        group_rank = dist.get_rank(group=group)
         num_groups = manager.world_size // group_size
 
         # Get number of sub-groups per parent group
-        assert (
-            group_size % size == 0
-        ), f"Cannot divide group size {group_size} evenly into subgroups of size {size}"
+        assert group_size % size == 0, (
+            f"Cannot divide group size {group_size} evenly into subgroups of size {size}"
+        )
         num_subgroups = group_size // size
 
         # Create all the sub-groups
@@ -347,9 +343,9 @@ class DistributedManager(object):
         if not manager.distributed:
             return None
 
-        assert (
-            group_name in manager._groups
-        ), f"Group with name {group_name} does not exist"
+        assert group_name in manager._groups, (
+            f"Group with name {group_name} does not exist"
+        )
         assert name not in manager._groups, f"Group with name {name} already exists"
 
         group_ranks = manager._group_ranks[group_name]

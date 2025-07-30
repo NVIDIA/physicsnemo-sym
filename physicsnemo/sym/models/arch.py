@@ -24,7 +24,7 @@ import ast
 from termcolor import colored
 from inspect import signature, _empty
 from typing import Optional, Callable, List, Dict, Union, Tuple
-from physicsnemo.sym.amp import DerivScaler, DerivScalers, AmpManager
+from physicsnemo.sym.amp import DerivScaler, DerivScalers
 from physicsnemo.sym.constants import NO_OP_SCALE
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
@@ -367,7 +367,6 @@ class Arch(nn.Module):
         dim: int = 0,
         output_scales: Union[Dict[str, Tuple[float, float]], None] = None,
     ) -> Dict[str, Tensor]:
-
         # create unnormalised output tensor
         output = {}
         for k, v in zip(
@@ -545,7 +544,7 @@ class Arch(nn.Module):
         model = cls(**params)
 
         # Set any variable scaling
-        if "scaling" in cfg and not cfg["scaling"] is None:
+        if "scaling" in cfg and cfg["scaling"] is not None:
             for scale_dict in cfg["scaling"]:
                 try:
                     name = next(iter(scale_dict))
@@ -582,12 +581,12 @@ class FuncArch(nn.Module):
             raise RuntimeError(
                 f"Found {type(arch)}, currently FuncArch does not work with jit."
             )
-        assert isinstance(
-            arch, Arch
-        ), f"arch should be an instantiated Arch object, but found to be {type(arch)}."
-        assert (
-            arch.supports_func_arch
-        ), f"{type(arch)} currently does not support FuncArch."
+        assert isinstance(arch, Arch), (
+            f"arch should be an instantiated Arch object, but found to be {type(arch)}."
+        )
+        assert arch.supports_func_arch, (
+            f"{type(arch)} currently does not support FuncArch."
+        )
 
         if forward_func is None:
             forward_func = arch._tensor_forward
@@ -641,7 +640,7 @@ class FuncArch(nn.Module):
         self.scaler_enabled: bool = False
         self.deriv_scalers: Dict[int, DerivScaler] = {}
 
-    def forward(self, in_vars: Dict[str, Tensor]) -> Dict[str, Tensor]:
+    def forward(self, in_vars: dict[str, Tensor]) -> dict[str, Tensor]:
         x = self.arch.concat_input(
             in_vars,
             self.arch.input_key_dict.keys(),
@@ -693,20 +692,16 @@ class FuncArch(nn.Module):
             )
         return out
 
-    def make_node(self, name: str, jit: bool = False, optimize: bool = True):
+    def make_node(self, name: str, optimize: bool = True):
         """Makes functional arch node for unrolling with PhysicsNeMo `Graph`.
 
         Parameters
         ----------
         name : str
             This will be used as the name of created node.
-        jit : bool
-            If true then compile with jit, https://pytorch.org/docs/stable/jit.html.
         optimize : bool
             If true then treat parameters as optimizable.
         """
-        # Forcing JIT off
-        jit = False
 
         # set name for loading and saving model
         self.name = name
@@ -729,7 +724,7 @@ class FuncArch(nn.Module):
         return net_node
 
     @staticmethod
-    def _get_key_dim(keys: List[Key]):
+    def _get_key_dim(keys: list[Key]):
         """
         Find the corresponding dims of the keys.
         For example: Suppose we have the following keys and corresponding size
@@ -763,14 +758,14 @@ class FuncArch(nn.Module):
             assert output_key_dict[x.name] == 1, f"key ({x.name}) size must be 1"
             for deriv in x.derivatives:
                 assert deriv.name in input_key_dict, f"Cannot calculate {x}"
-                assert (
-                    input_key_dict[deriv.name] == 1
-                ), f"key ({deriv.name}) size must be 1"
+                assert input_key_dict[deriv.name] == 1, (
+                    f"key ({deriv.name}) size must be 1"
+                )
             # collect each order derivatives
             order = len(x.derivatives)
             if order == 0 or order >= 3:
                 raise ValueError(
-                    "FuncArch currently does not support " f"{order}th order derivative"
+                    f"FuncArch currently does not support {order}th order derivative"
                 )
             else:
                 deriv_key_dict[order].append(x)

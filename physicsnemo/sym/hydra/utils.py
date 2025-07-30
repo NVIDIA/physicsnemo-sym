@@ -39,7 +39,7 @@ from physicsnemo.sym.models.utils import PhysicsNeMoModels
 
 from .amp import register_amp_configs
 from .arch import ModelConf
-from .config import register_physicsnemo_configs, PhysicsNeMoConfig
+from .config import register_physicsnemo_configs
 from .hydra import register_hydra_configs
 from .loss import register_loss_configs
 from .metric import register_metric_configs
@@ -66,7 +66,6 @@ def main(config_path: str, config_name: str = "config"):
     def register_decorator(func):
         @functools.wraps(func)
         def func_decorated(cfg_passthrough: Optional[DictConfig] = None) -> Any:
-
             # Register all physicsnemo groups before calling hydra main
             register_hydra_configs()
             register_callbacks_configs()
@@ -106,7 +105,6 @@ def main(config_path: str, config_name: str = "config"):
                 return func(cfg_passthrough)
             else:
                 args_parser = get_args_parser()
-                args = args_parser.parse_args()
                 # multiple times (--multirun)
                 _run_hydra(
                     args=args_parser.parse_args(),
@@ -190,11 +188,11 @@ def instantiate_arch(
     **kwargs,
 ) -> Arch:
     # Function for instantiating a physicsnemo architecture with hydra
-    assert hasattr(
-        cfg, "arch_type"
-    ), "Model configs are required to have an arch_type defined. \
+    assert hasattr(cfg, "arch_type"), (
+        "Model configs are required to have an arch_type defined. \
         Improper architecture supplied, please make sure config \
         provided is a single arch config NOT the full hydra config!"
+    )
 
     try:
         # Convert to python dictionary
@@ -206,11 +204,11 @@ def instantiate_arch(
         del model_cfg["arch_type"]
 
         # Add keys if present
-        if not input_keys is None:
+        if input_keys is not None:
             model_cfg["input_keys"] = input_keys
-        if not output_keys is None:
+        if output_keys is not None:
             model_cfg["output_keys"] = output_keys
-        if not detach_keys is None:
+        if detach_keys is not None:
             model_cfg["detach_keys"] = detach_keys
 
         # Add any additional kwargs
@@ -223,7 +221,7 @@ def instantiate_arch(
         # Verbose printing
         if verbose:
             pp = pprint.PrettyPrinter(indent=4)
-            logger.info(f"Initialized models with parameters: \n")
+            logger.info("Initialized models with parameters: \n")
             pp.pprint(param)
 
     except Exception as e:
@@ -250,7 +248,7 @@ def instantiate_optim(
 
     if verbose:
         pp = pprint.PrettyPrinter(indent=4)
-        logger.info(f"Initialized optimizer: \n")
+        logger.info("Initialized optimizer: \n")
         pp.pprint(optimizer)
 
     return optimizer

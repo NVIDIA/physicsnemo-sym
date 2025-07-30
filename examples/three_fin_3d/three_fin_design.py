@@ -15,7 +15,7 @@
 # limitations under the License.
 
 """
-NOTE: run three_fin_flow and Three_fin_thermal in "eval" mode 
+NOTE: run three_fin_flow and Three_fin_thermal in "eval" mode
 after training to get the monitor values for different designs.
 """
 
@@ -25,7 +25,8 @@ from physicsnemo.sym.hydra import to_absolute_path
 
 # import other libraries
 import numpy as np
-import os, sys
+import os
+import sys
 import csv
 
 # specify the design optimization requirements

@@ -16,9 +16,7 @@
 
 import itertools
 import torch
-import numpy as np
 import logging
-from torch.autograd import Function
 
 from physicsnemo.sym.amp import DerivScaler, DerivScalers, AmpManager, AmpMode
 from physicsnemo.sym.constants import diff
@@ -26,10 +24,11 @@ from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.mfd import FirstDeriv, SecondDeriv, ThirdDeriv, FourthDeriv
 
-from typing import Dict, List, Set, Optional, Union, Callable
+from typing import Dict, List, Optional, Union, Callable
 
 Tensor = torch.Tensor
 logger = logging.getLogger(__name__)
+
 
 # ==== Autodiff ====
 @torch.jit.script
@@ -268,14 +267,13 @@ class MeshlessFiniteDerivative(torch.nn.Module):
 
     @torch.jit.ignore()
     def forward(self, inputs: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         self.count += 1
         dx = self.dx
         self.first_deriv.dx = dx
         self.second_deriv.dx = dx
         self.third_deriv.dx = dx
         self.fourth_deriv.dx = dx
-        torch.cuda.nvtx.range_push(f"Calculating meshless finite derivatives")
+        torch.cuda.nvtx.range_push("Calculating meshless finite derivatives")
 
         # Assemble global stencil
         global_stencil = []
@@ -303,7 +301,7 @@ class MeshlessFiniteDerivative(torch.nn.Module):
         index = 0
         finite_diff_inputs = inputs.copy()
         while index < len(global_stencil):
-            torch.cuda.nvtx.range_push(f"Running stencil forward pass")
+            torch.cuda.nvtx.range_push("Running stencil forward pass")
             # Batch up stencil inputs
             stencil_batch = [global_stencil[index]]
             index += 1
@@ -325,7 +323,7 @@ class MeshlessFiniteDerivative(torch.nn.Module):
             torch.cuda.nvtx.range_pop()
 
         # Calc finite diff grads
-        torch.cuda.nvtx.range_push(f"Calc finite difference")
+        torch.cuda.nvtx.range_push("Calc finite difference")
         if self.double_cast:  # Cast tensors to doubles for finite diff calc
             for key, value in finite_diff_inputs.items():
                 finite_diff_inputs[key] = value.double()

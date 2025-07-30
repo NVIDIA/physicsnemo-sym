@@ -19,18 +19,12 @@ from pathlib import Path
 import inspect
 import sys
 
-import torch
 import numpy as np
 
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.domain.constraint import Constraint
-from physicsnemo.sym.graph import Graph
-from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
-from physicsnemo.sym.distributed import DistributedManager
-from physicsnemo.sym.utils.io import InferencerPlotter
-from physicsnemo.sym.utils.io.vtk import var_to_polyvtk, VTKBase, VTKUniformGrid
-from physicsnemo.sym.dataset import DictInferencePointwiseDataset
+from physicsnemo.sym.utils.io.vtk import VTKBase
 
 
 def _get_function_argspec(func):

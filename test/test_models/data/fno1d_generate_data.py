@@ -23,6 +23,7 @@ torch.manual_seed(0)
 np.random.seed(0)
 cuda_device = torch.device("cpu:0")
 
+
 ################################################################
 # 1d fourier neural operator
 # Based on: https://github.com/zongyi-li/fourier_neural_operator/blob/master/fourier_1d.py
@@ -110,7 +111,7 @@ class FNO1d(nn.Module):
 
     def forward(self, x):
         grid = self.get_grid(x.shape, x.device)
-        batchsize = x.shape[0]
+        x.shape[0]
         x = torch.cat((x, grid), dim=-1)
         x = self.fc0(x)
         x = x.permute(0, 2, 1)

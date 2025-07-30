@@ -15,15 +15,12 @@
 # limitations under the License.
 
 import os
-import numpy as np
 from typing import List, Union, Tuple, Callable
 from omegaconf import DictConfig
-import warnings
 
 from physicsnemo.sym.distributed.manager import DistributedManager
 from physicsnemo.sym.trainer import Trainer
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.loss.aggregator import NTK
 from .solver import Solver
 
 
@@ -59,14 +56,14 @@ class SequentialSolver(Solver):
         custom_update_operation: Union[Callable, None] = None,
     ):
         # check that domains have different names
-        assert len(set([d.name for _, d in domains])) == len(
-            domains
-        ), "domains need to have unique names, " + str([d.name for _, d in domains])
+        assert len(set([d.name for _, d in domains])) == len(domains), (
+            "domains need to have unique names, " + str([d.name for _, d in domains])
+        )
 
         # check not using ntk with seq solver
-        assert (
-            not cfg.training.ntk.use_ntk
-        ), "ntk is not supported with SequentialSolver"
+        assert not cfg.training.ntk.use_ntk, (
+            "ntk is not supported with SequentialSolver"
+        )
 
         # set domains
         self.domains = domains
@@ -122,7 +119,6 @@ class SequentialSolver(Solver):
                 for iteration_index in range(
                     self.iteration_index, self.domains[domain_index][0]
                 ):
-
                     # set internal domain index and iteration index
                     self.domain_index = domain_index
                     self.iteration_index = iteration_index

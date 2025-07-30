@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import numpy as np
 import torch
 
@@ -90,7 +89,6 @@ class GeometryDatapipe:
         process_rank: int = 0,
         world_size: int = 1,
     ):
-
         self.geom_objects = geom_objects
         self.batch_size = batch_size
         self.num_points = num_points
@@ -248,7 +246,6 @@ class GeometrySource:
         process_rank: int = 0,
         world_size: int = 1,
     ):
-
         self.geom_objects = list(geom_objects)
         self.batch_size = batch_size
         self.num_points = num_points

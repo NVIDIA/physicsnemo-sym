@@ -14,9 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import time
 import torch
-from typing import Dict, List, Optional
+from typing import Dict, List
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.constants import diff
 from physicsnemo.sym.node import Node
@@ -114,7 +113,7 @@ def test_graph_no_loss_node():
     model_node = Node(["x", "y", "z"], ["u", "v", "w", "p"], model, name="Model")
 
     loss = torch.jit.script(Loss()).to(device)
-    loss_node = Node(
+    Node(
         [diff("u", "x"), diff("v", "y"), diff("w", "z")],
         ["divergence_loss"],
         loss,

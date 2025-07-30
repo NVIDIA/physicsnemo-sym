@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.electromagnetic import MaxwellFreqReal, SommerfeldBC, PEC
 import torch
 import numpy as np
-import os
 
 
 def test_maxwell_freq_real():
@@ -30,49 +29,40 @@ def test_maxwell_freq_real():
     uy = np.exp(2 * x + 2 * y + 2 * z)
     uz = np.exp(3 * x + 3 * y + 3 * z)
 
-    ux__x = 1 * np.exp(1 * x + 1 * y + 1 * z)
+    1 * np.exp(1 * x + 1 * y + 1 * z)
     uy__x = 2 * np.exp(2 * x + 2 * y + 2 * z)
     uz__x = 3 * np.exp(3 * x + 3 * y + 3 * z)
     ux__y = 1 * np.exp(1 * x + 1 * y + 1 * z)
-    uy__y = 2 * np.exp(2 * x + 2 * y + 2 * z)
+    2 * np.exp(2 * x + 2 * y + 2 * z)
     uz__y = 3 * np.exp(3 * x + 3 * y + 3 * z)
     ux__z = 1 * np.exp(1 * x + 1 * y + 1 * z)
     uy__z = 2 * np.exp(2 * x + 2 * y + 2 * z)
-    uz__z = 3 * np.exp(3 * x + 3 * y + 3 * z)
+    3 * np.exp(3 * x + 3 * y + 3 * z)
 
-    ux__x__x = 1 * np.exp(1 * x + 1 * y + 1 * z)
+    1 * np.exp(1 * x + 1 * y + 1 * z)
     ux__x__y = 1 * np.exp(1 * x + 1 * y + 1 * z)
     ux__x__z = 1 * np.exp(1 * x + 1 * y + 1 * z)
-    ux__y__x = ux__x__y
     ux__y__y = 1 * np.exp(1 * x + 1 * y + 1 * z)
-    ux__y__z = 1 * np.exp(1 * x + 1 * y + 1 * z)
-    ux__z__x = ux__x__z
-    ux__z__y = ux__y__z
+    1 * np.exp(1 * x + 1 * y + 1 * z)
     ux__z__z = 1 * np.exp(1 * x + 1 * y + 1 * z)
 
     uy__x__x = 4 * np.exp(2 * x + 2 * y + 2 * z)
     uy__x__y = 4 * np.exp(2 * x + 2 * y + 2 * z)
-    uy__x__z = 4 * np.exp(2 * x + 2 * y + 2 * z)
-    uy__y__x = uy__x__y
-    uy__y__y = 4 * np.exp(2 * x + 2 * y + 2 * z)
+    4 * np.exp(2 * x + 2 * y + 2 * z)
+    4 * np.exp(2 * x + 2 * y + 2 * z)
     uy__y__z = 4 * np.exp(2 * x + 2 * y + 2 * z)
-    uy__z__x = uy__x__z
-    uy__z__y = uy__y__z
     uy__z__z = 4 * np.exp(2 * x + 2 * y + 2 * z)
 
     uz__x__x = 9 * np.exp(3 * x + 3 * y + 3 * z)
-    uz__x__y = 9 * np.exp(3 * x + 3 * y + 3 * z)
+    9 * np.exp(3 * x + 3 * y + 3 * z)
     uz__x__z = 9 * np.exp(3 * x + 3 * y + 3 * z)
-    uz__y__x = uz__x__y
     uz__y__y = 9 * np.exp(3 * x + 3 * y + 3 * z)
     uz__y__z = 9 * np.exp(3 * x + 3 * y + 3 * z)
-    uz__z__x = uz__x__z
-    uz__z__y = uz__y__z
-    uz__z__z = 9 * np.exp(3 * x + 3 * y + 3 * z)
+    9 * np.exp(3 * x + 3 * y + 3 * z)
 
-    curlux = uz__y - uy__z  # 3*np.exp(3*x + 3*y + 3*z) - 2*np.exp(2*x + 2*y + 2*z)
-    curluy = ux__z - uz__x  # 1*np.exp(1*x + 1*y + 1*z) - 3*np.exp(3*x + 3*y + 3*z)
-    curluz = uy__x - ux__y  # 2*np.exp(2*x + 2*y + 2*z) - 1*np.exp(1*x + 1*y + 1*z)
+    uz__y - uy__z  # 3*np.exp(3*x + 3*y + 3*z) - 2*np.exp(2*x + 2*y + 2*z)
+    ux__z - uz__x  # 1*np.exp(1*x + 1*y + 1*z) - 3*np.exp(3*x + 3*y + 3*z)
+    uy__x - ux__y  # 2*np.exp(2*x + 2*y + 2*z) - 1*np.exp(1*x + 1*y + 1*z)
 
     curlcurlux = (
         4 * np.exp(2 * x + 2 * y + 2 * z)
@@ -139,15 +129,15 @@ def test_maxwell_freq_real():
     ].numpy()
 
     # verify PDE computation
-    assert np.allclose(
-        Maxwell_Freq_real_x_eval_pred, Maxwell_Freq_real_x_true
-    ), "Test Failed!"
-    assert np.allclose(
-        Maxwell_Freq_real_y_eval_pred, Maxwell_Freq_real_y_true
-    ), "Test Failed!"
-    assert np.allclose(
-        Maxwell_Freq_real_z_eval_pred, Maxwell_Freq_real_z_true
-    ), "Test Failed!"
+    assert np.allclose(Maxwell_Freq_real_x_eval_pred, Maxwell_Freq_real_x_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(Maxwell_Freq_real_y_eval_pred, Maxwell_Freq_real_y_true), (
+        "Test Failed!"
+    )
+    assert np.allclose(Maxwell_Freq_real_z_eval_pred, Maxwell_Freq_real_z_true), (
+        "Test Failed!"
+    )
 
 
 def test_sommerfeld_bc():
@@ -159,19 +149,19 @@ def test_sommerfeld_bc():
     normal_y = np.random.rand(1024, 1)
     normal_z = np.random.rand(1024, 1)
 
-    ux = np.exp(1 * x + 1 * y + 1 * z)
-    uy = np.exp(2 * x + 2 * y + 2 * z)
-    uz = np.exp(3 * x + 3 * y + 3 * z)
+    np.exp(1 * x + 1 * y + 1 * z)
+    np.exp(2 * x + 2 * y + 2 * z)
+    np.exp(3 * x + 3 * y + 3 * z)
 
-    ux__x = 1 * np.exp(1 * x + 1 * y + 1 * z)
+    1 * np.exp(1 * x + 1 * y + 1 * z)
     uy__x = 2 * np.exp(2 * x + 2 * y + 2 * z)
     uz__x = 3 * np.exp(3 * x + 3 * y + 3 * z)
     ux__y = 1 * np.exp(1 * x + 1 * y + 1 * z)
-    uy__y = 2 * np.exp(2 * x + 2 * y + 2 * z)
+    2 * np.exp(2 * x + 2 * y + 2 * z)
     uz__y = 3 * np.exp(3 * x + 3 * y + 3 * z)
     ux__z = 1 * np.exp(1 * x + 1 * y + 1 * z)
     uy__z = 2 * np.exp(2 * x + 2 * y + 2 * z)
-    uz__z = 3 * np.exp(3 * x + 3 * y + 3 * z)
+    3 * np.exp(3 * x + 3 * y + 3 * z)
 
     curlux = uz__y - uy__z  # 3*np.exp(3*x + 3*y + 3*z) - 2*np.exp(2*x + 2*y + 2*z)
     curluy = ux__z - uz__x  # 1*np.exp(1*x + 1*y + 1*z) - 3*np.exp(3*x + 3*y + 3*z)

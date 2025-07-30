@@ -21,18 +21,12 @@ Created on Thu Aug 24 21:33:56 2023
 
 @author: clementetienam
 """
+
 import os
-from physicsnemo.sym.hydra import to_absolute_path
-from physicsnemo.sym.key import Key
 from NVRS import *
 from physicsnemo.sym.models.fno import *
 from physicsnemo.sym.models.afno.afno import *
-import shutil
 import pandas as pd
-import scipy.io as sio
-import torch
-import yaml
-from PIL import Image
 
 oldfolder = os.getcwd()
 os.chdir(oldfolder)

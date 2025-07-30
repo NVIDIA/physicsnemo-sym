@@ -15,17 +15,14 @@
 # limitations under the License.
 
 import torch
-from torch.utils.data import DataLoader, Dataset
 
 import numpy as np
-from sympy import Symbol, Eq, tanh, Or, And
+from sympy import Symbol, Or, And
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
-from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
 from physicsnemo.sym.models.fourier_net import FourierNetArch
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
@@ -33,12 +30,10 @@ from physicsnemo.sym.domain.constraint import (
     IntegralBoundaryConstraint,
 )
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
-from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
-from physicsnemo.sym.eq.pdes.basic import NormalDotVec, GradNormal
+from physicsnemo.sym.eq.pdes.basic import NormalDotVec
 
 from limerock_properties import *
 
@@ -64,7 +59,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     flow_domain = Domain()
 
     # add constraints to solver
-    x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+    x, _y, _z = Symbol("x"), Symbol("y"), Symbol("z")
 
     # inlet
     def channel_sdf(x, y, z):

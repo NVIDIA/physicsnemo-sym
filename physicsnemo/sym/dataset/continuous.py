@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Dataset constructors for continuous type data
-"""
+"""PhysicsNeMo Dataset constructors for continuous type data"""
 
 from typing import Dict, List, Callable
 
@@ -29,7 +28,6 @@ class _DictPointwiseDatasetMixin(_DictDatasetMixin):
     "Special mixin class for dealing with dictionaries as input"
 
     def save_dataset(self, filename):
-
         named_lambda_weighting = {
             "lambda_" + key: value for key, value in self.lambda_weighting.items()
         }
@@ -72,7 +70,6 @@ class DictInferencePointwiseDataset(Dataset):
         invar: Dict[str, np.array],
         output_names: List[str],  # Just names of output vars
     ):
-
         self.invar = Dataset._to_tensor_dict(invar)
         self.output_names = output_names
         self.length = len(next(iter(invar.values())))
@@ -105,14 +102,13 @@ class ContinuousPointwiseIterableDataset(IterableDataset):
         outvar_fn: Callable,
         lambda_weighting_fn: Callable = None,
     ):
-
         self.invar_fn = invar_fn
         self.outvar_fn = outvar_fn
         self.lambda_weighting_fn = lambda_weighting_fn
         if lambda_weighting_fn is None:
-            lambda_weighting_fn = lambda _, outvar: {
-                key: np.ones_like(x) for key, x in outvar.items()
-            }
+
+            def lambda_weighting_fn(_, outvar):
+                return {key: np.ones_like(x) for key, x in outvar.items()}
 
         def iterable_function():
             while True:
@@ -169,7 +165,6 @@ class DictImportanceSampledPointwiseIterableDataset(
         self.importance_measure = importance_measure
 
         def iterable_function():
-
             # TODO: re-write idx calculation using pytorch sampling - to improve performance
 
             counter = 0
@@ -278,16 +273,19 @@ class ContinuousIntegralIterableDataset(IterableDataset):
         lambda_weighting_fn: Callable = None,
         param_ranges_fn: Callable = None,
     ):
-
         self.invar_fn = invar_fn
         self.outvar_fn = outvar_fn
         self.lambda_weighting_fn = lambda_weighting_fn
         if lambda_weighting_fn is None:
-            lambda_weighting_fn = lambda _, outvar: {
-                key: np.ones_like(x) for key, x in outvar.items()
-            }
+
+            def lambda_weighting_fn(_, outvar):
+                return {key: np.ones_like(x) for key, x in outvar.items()}
+
         if param_ranges_fn is None:
-            param_ranges_fn = lambda: {}  # Potentially unsafe?
+
+            def param_ranges_fn():
+                return {}  # Potentially unsafe?
+
         self.param_ranges_fn = param_ranges_fn
 
         self.batch_size = batch_size
@@ -353,7 +351,6 @@ class DictVariationalDataset(Dataset):
         invar: Dict[str, np.array],
         outvar_names: List[str],  # Just names of output vars
     ):
-
         self.invar = Dataset._to_tensor_dict(invar)
         self.outvar_names = outvar_names
         self.length = len(next(iter(invar.values())))

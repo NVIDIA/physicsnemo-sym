@@ -18,8 +18,6 @@
 Supported physicsnemo training paradigms
 """
 
-import torch
-
 from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore
 from omegaconf import MISSING, II

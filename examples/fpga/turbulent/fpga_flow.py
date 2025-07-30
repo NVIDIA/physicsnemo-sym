@@ -26,11 +26,10 @@ import physicsnemo.sym
 from sympy import Symbol, Eq, Abs, tanh, And, Or
 import numpy as np
 
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path, PhysicsNeMoConfig
 from physicsnemo.sym.utils.io import csv_to_dict
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane
 from physicsnemo.sym.models.fourier_net import FourierNetArch
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
@@ -38,15 +37,11 @@ from physicsnemo.sym.domain.constraint import (
     IntegralBoundaryConstraint,
 )
 from physicsnemo.sym.domain.validator import PointwiseValidator
-from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
-from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes, Curl
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
-from physicsnemo.sym.eq.pdes.basic import NormalDotVec, GradNormal
-from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
-from physicsnemo.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
+from physicsnemo.sym.eq.pdes.basic import NormalDotVec
 
 
 @physicsnemo.sym.main(config_path="conf", config_name="config")
@@ -72,11 +67,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     normalize_inlet_vel = 1.0
 
     # heat params
-    D_solid = 0.1
-    D_fluid = 0.02
-    inlet_T = 0
-    source_grad = 1.5
-    source_area = source_dim[0] * source_dim[2]
+    source_dim[0] * source_dim[2]
 
     u_profile = (
         normalize_inlet_vel

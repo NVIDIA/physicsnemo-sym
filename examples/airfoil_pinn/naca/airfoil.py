@@ -14,25 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
-import warnings
 
 import numpy as np
-from sympy import Symbol, Eq, Or, And, Max
+from sympy import Symbol, Or, Max
 
 import physicsnemo.sym
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry.primitives_2d import Line, Channel2D
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
-from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
-from physicsnemo.sym.geometry import Parameterization, Parameter, Bounds
+from physicsnemo.sym.geometry import Parameterization, Parameter
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.utils.io import InferencerPlotter
 

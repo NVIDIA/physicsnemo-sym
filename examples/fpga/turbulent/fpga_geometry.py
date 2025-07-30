@@ -15,8 +15,7 @@
 # limitations under the License.
 
 
-from sympy import Symbol, Eq, tanh
-import numpy as np
+from sympy import Symbol
 import yaml
 
 from physicsnemo.sym.geometry.primitives_3d import Box, Channel, Plane

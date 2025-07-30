@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Continuous type constraints
-"""
+"""Continuous type constraints"""
 
 import torch
 from torch.nn.parallel import DistributedDataParallel
@@ -23,7 +22,6 @@ import numpy as np
 from typing import Dict, List, Union, Tuple, Callable
 import sympy as sp
 import logging
-import torch
 
 from .constraint import Constraint
 from .utils import _compute_outvar, _compute_lambda_weighting
@@ -33,11 +31,9 @@ from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.loss import Loss, PointwiseLossNorm, IntegralLossNorm
 from physicsnemo.sym.distributed import DistributedManager
-from physicsnemo.sym.utils.sympy import np_lambdify
 
 from physicsnemo.sym.geometry import Geometry
-from physicsnemo.sym.geometry.helper import _sympy_criteria_to_criteria
-from physicsnemo.sym.geometry.parameterization import Parameterization, Bounds
+from physicsnemo.sym.geometry.parameterization import Parameterization
 
 from physicsnemo.sym.dataset import (
     DictPointwiseDataset,
@@ -280,11 +276,10 @@ class PointwiseBoundaryConstraint(PointwiseConstraint):
         loss: Loss = PointwiseLossNorm(),
         shuffle: bool = True,
     ):
-
         # assert that not using importance measure with continuous dataset
-        assert not (
-            (not fixed_dataset) and (importance_measure is not None)
-        ), "Using Importance measure with continuous dataset is not supported"
+        assert not ((not fixed_dataset) and (importance_measure is not None)), (
+            "Using Importance measure with continuous dataset is not supported"
+        )
 
         # if fixed dataset then sample points and fix for all of training
         if fixed_dataset:
@@ -325,20 +320,21 @@ class PointwiseBoundaryConstraint(PointwiseConstraint):
         # else sample points every batch
         else:
             # invar function
-            invar_fn = lambda: geometry.sample_boundary(
-                batch_size,
-                criteria=criteria,
-                parameterization=parameterization,
-                quasirandom=quasirandom,
-            )
+            def invar_fn():
+                return geometry.sample_boundary(
+                    batch_size,
+                    criteria=criteria,
+                    parameterization=parameterization,
+                    quasirandom=quasirandom,
+                )
 
             # outvar function
-            outvar_fn = lambda invar: _compute_outvar(invar, outvar)
+            def outvar_fn(invar):
+                return _compute_outvar(invar, outvar)
 
             # lambda weighting function
-            lambda_weighting_fn = lambda invar, outvar: _compute_lambda_weighting(
-                invar, outvar, lambda_weighting
-            )
+            def lambda_weighting_fn(invar, outvar):
+                return _compute_lambda_weighting(invar, outvar, lambda_weighting)
 
             # make point dataloader
             dataset = ContinuousPointwiseIterableDataset(
@@ -434,11 +430,10 @@ class PointwiseInteriorConstraint(PointwiseConstraint):
         loss: Loss = PointwiseLossNorm(),
         shuffle: bool = True,
     ):
-
         # assert that not using importance measure with continuous dataset
-        assert not (
-            (not fixed_dataset) and (importance_measure is not None)
-        ), "Using Importance measure with continuous dataset is not supported"
+        assert not ((not fixed_dataset) and (importance_measure is not None)), (
+            "Using Importance measure with continuous dataset is not supported"
+        )
 
         # if fixed dataset then sample points and fix for all of training
         if fixed_dataset:
@@ -481,22 +476,23 @@ class PointwiseInteriorConstraint(PointwiseConstraint):
         # else sample points every batch
         else:
             # invar function
-            invar_fn = lambda: geometry.sample_interior(
-                batch_size,
-                bounds=bounds,
-                criteria=criteria,
-                parameterization=parameterization,
-                quasirandom=quasirandom,
-                compute_sdf_derivatives=compute_sdf_derivatives,
-            )
+            def invar_fn():
+                return geometry.sample_interior(
+                    batch_size,
+                    bounds=bounds,
+                    criteria=criteria,
+                    parameterization=parameterization,
+                    quasirandom=quasirandom,
+                    compute_sdf_derivatives=compute_sdf_derivatives,
+                )
 
             # outvar function
-            outvar_fn = lambda invar: _compute_outvar(invar, outvar)
+            def outvar_fn(invar):
+                return _compute_outvar(invar, outvar)
 
             # lambda weighting function
-            lambda_weighting_fn = lambda invar, outvar: _compute_lambda_weighting(
-                invar, outvar, lambda_weighting
-            )
+            def lambda_weighting_fn(invar, outvar):
+                return _compute_lambda_weighting(invar, outvar, lambda_weighting)
 
             # make point dataloader
             dataset = ContinuousPointwiseIterableDataset(
@@ -684,7 +680,6 @@ class IntegralBoundaryConstraint(IntegralConstraint):
         loss: Loss = IntegralLossNorm(),
         shuffle: bool = True,
     ):
-
         # convert dict to parameterization if needed
         if parameterization is None:
             parameterization = geometry.parameterization
@@ -744,27 +739,36 @@ class IntegralBoundaryConstraint(IntegralConstraint):
         else:
             # sample parameter ranges
             if parameterization:
-                param_ranges_fn = lambda: parameterization.sample(1)
+
+                def param_ranges_fn():
+                    return parameterization.sample(1)
+
             else:
-                param_ranges_fn = lambda: {}
+
+                def param_ranges_fn():
+                    return {}
 
             # invar function
-            invar_fn = lambda param_range: geometry.sample_boundary(
-                integral_batch_size,
-                criteria=criteria,
-                parameterization=Parameterization(
-                    {sp.Symbol(key): float(value) for key, value in param_range.items()}
-                ),
-                quasirandom=quasirandom,
-            )
+            def invar_fn(param_range):
+                return geometry.sample_boundary(
+                    integral_batch_size,
+                    criteria=criteria,
+                    parameterization=Parameterization(
+                        {
+                            sp.Symbol(key): float(value)
+                            for key, value in param_range.items()
+                        }
+                    ),
+                    quasirandom=quasirandom,
+                )
 
             # outvar function
-            outvar_fn = lambda param_range: _compute_outvar(param_range, outvar)
+            def outvar_fn(param_range):
+                return _compute_outvar(param_range, outvar)
 
             # lambda weighting function
-            lambda_weighting_fn = lambda param_range, outvar: _compute_lambda_weighting(
-                param_range, outvar, lambda_weighting
-            )
+            def lambda_weighting_fn(param_range, outvar):
+                return _compute_lambda_weighting(param_range, outvar, lambda_weighting)
 
             # make dataset of integral planes
             dataset = ContinuousIntegralIterableDataset(
@@ -809,7 +813,6 @@ class VariationalConstraint(Constraint):
         drop_last: bool = True,
         num_workers: int = 0,
     ):
-
         # Get DDP manager
         self.manager = DistributedManager()
         self.device = self.manager.device

@@ -32,7 +32,7 @@ def compute_velocity_grad(velocity: torch.Tensor, dx: float = None) -> torch.Ten
     Returns:
         torch.Tensor: Computed velocity gradient tensor (N, 9, nx, ny, nz)
     """
-    if dx == None:
+    if dx is None:
         dx = 2 * np.pi / velocity.shape[-1]
 
     ops = FlowOps().to(velocity.device)
@@ -136,7 +136,7 @@ def compute_continuity(field: torch.Tensor, dx: float = None) -> torch.Tensor:
     ns = NavierStokes(nu=0.1, rho=1, dim=3, time=False)
     ns_node = ns.make_nodes()
 
-    if dx == None:
+    if dx is None:
         dx = 2 * np.pi / field.shape[-1]
 
     ops = FlowOps().to(field.device)
@@ -169,7 +169,7 @@ def compute_tke_spectrum(
         and binned.
     """
 
-    if l == None:
+    if l is None:
         lx, ly, lz = 2 * np.pi, 2 * np.pi, 2 * np.pi
 
     u, v, w = field[0, :, :, :], field[1, :, :, :], field[2, :, :, :]

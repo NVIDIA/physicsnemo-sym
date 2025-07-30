@@ -18,9 +18,8 @@ import os
 import warnings
 
 import torch
-import numpy as np
 from sympy import Symbol, pi, sin
-from typing import List, Tuple, Dict
+from typing import List, Dict
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig

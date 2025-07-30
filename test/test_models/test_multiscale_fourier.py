@@ -50,8 +50,8 @@ def test_multiscale_fourier_net():
     frequency_2 = tuple(
         [test_data["frequency_2_name"][()]] + list(test_data["frequency_2_data"])
     )
-    frequencies = test_data["frequencies"]
-    frequencies_params = test_data["frequencies_params"]
+    test_data["frequencies"]
+    test_data["frequencies_params"]
     # create graph
     arch = MultiscaleFourierNetArch(
         input_keys=[Key("x"), Key("y")],

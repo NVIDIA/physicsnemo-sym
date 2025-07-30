@@ -16,7 +16,7 @@
 
 import numpy as np
 from pathlib import Path
-from physicsnemo.sym.geometry import Parameterization, Parameter, Bounds
+from physicsnemo.sym.geometry import Parameterization, Parameter
 from physicsnemo.sym.geometry.primitives_1d import Point1D, Line1D
 from physicsnemo.sym.geometry.primitives_2d import (
     Line,
@@ -34,11 +34,6 @@ from physicsnemo.sym.geometry.primitives_3d import (
     Sphere,
     Cylinder,
     Torus,
-    Cone,
-    TriangularPrism,
-    Tetrahedron,
-    IsoTriangularPrism,
-    ElliCylinder,
 )
 from physicsnemo.sym.geometry.tessellation import Tessellation
 from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
@@ -159,9 +154,7 @@ def test_primitives():
 
     # torus
     g = Torus((0, 1, 2), 2, 1)
-    check_geometry(
-        g, boundary_area=8 * np.pi**2, interior_area=4 * np.pi**2, max_sdf=1
-    )
+    check_geometry(g, boundary_area=8 * np.pi**2, interior_area=4 * np.pi**2, max_sdf=1)
 
     """
     # cone

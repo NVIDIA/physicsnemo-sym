@@ -32,7 +32,6 @@ from physicsnemo.sym.domain.constraint import (
     PointwiseConstraint,
 )
 from physicsnemo.sym.domain.inferencer import VoxelInferencer
-from physicsnemo.sym.utils.io.plotter import InferencerPlotter
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.eq.pdes.electromagnetic import PEC, SommerfeldBC, MaxwellFreqReal
 

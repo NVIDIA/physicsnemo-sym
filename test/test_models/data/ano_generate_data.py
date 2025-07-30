@@ -15,7 +15,6 @@
 # limitations under the License.
 
 from functools import partial
-from re import S
 import numpy as np
 import torch
 import torch.nn as nn
@@ -25,6 +24,7 @@ import math
 torch.manual_seed(0)
 np.random.seed(0)
 cuda_device = torch.device("cpu:0")
+
 
 ################################################################
 # Baseline AFNO implementation from Jiadeeps original wind dataset implementation
@@ -141,9 +141,9 @@ class AFNO2D(nn.Module):
         hidden_size_factor=1,
     ):
         super().__init__()
-        assert (
-            hidden_size % num_blocks == 0
-        ), f"hidden_size {hidden_size} should be divisble by num_blocks {num_blocks}"
+        assert hidden_size % num_blocks == 0, (
+            f"hidden_size {hidden_size} should be divisble by num_blocks {num_blocks}"
+        )
 
         self.hidden_size = hidden_size
         self.sparsity_threshold = sparsity_threshold
@@ -208,9 +208,9 @@ class AFNO2D(nn.Module):
                 self.b1,
             )
         )
-        o2[
-            :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes, ...
-        ] = compl_mul_add_act(o1, self.w2, self.b2)
+        o2[:, total_modes - kept_modes : total_modes + kept_modes, :kept_modes, ...] = (
+            compl_mul_add_act(o1, self.w2, self.b2)
+        )
 
         # finalize
         x = F.softshrink(o2, lambd=self.sparsity_threshold)
@@ -414,9 +414,9 @@ class PatchEmbed(nn.Module):
 
     def forward(self, x):
         B, C, H, W = x.shape
-        assert (
-            H == self.img_size[0] and W == self.img_size[1]
-        ), f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        assert H == self.img_size[0] and W == self.img_size[1], (
+            f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        )
         x = self.proj(x).flatten(2)
         return x
 
@@ -461,7 +461,6 @@ params = {
     "in_channels": in_channels,
     "out_channels": out_channels,
     "n_layers": n_layers,
-    "modes": modes,
     "embed_dim": embed_dim,
 }
 np.savez_compressed(

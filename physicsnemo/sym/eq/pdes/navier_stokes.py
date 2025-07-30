@@ -14,14 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Equations related to Navier Stokes Equations
-"""
+"""Equations related to Navier Stokes Equations"""
 
 from sympy import Symbol, Function, Number
 
 from physicsnemo.sym.amp import AmpManager
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class NavierStokes(PDE):
@@ -207,9 +205,9 @@ class NavierStokes(PDE):
             self.equations["momentum_x"] = (
                 (rho * u).diff(t)
                 + (
-                    u * ((rho * u.diff(x)))
-                    + v * ((rho * u.diff(y)))
-                    + w * ((rho * u.diff(z)))
+                    u * (rho * u.diff(x))
+                    + v * (rho * u.diff(y))
+                    + w * (rho * u.diff(z))
                     + rho * u * (curl)
                 )
                 + p.diff(x)
@@ -225,9 +223,9 @@ class NavierStokes(PDE):
             self.equations["momentum_y"] = (
                 (rho * v).diff(t)
                 + (
-                    u * ((rho * v.diff(x)))
-                    + v * ((rho * v.diff(y)))
-                    + w * ((rho * v.diff(z)))
+                    u * (rho * v.diff(x))
+                    + v * (rho * v.diff(y))
+                    + w * (rho * v.diff(z))
                     + rho * v * (curl)
                 )
                 + p.diff(y)
@@ -243,9 +241,9 @@ class NavierStokes(PDE):
             self.equations["momentum_z"] = (
                 (rho * w).diff(t)
                 + (
-                    u * ((rho * w.diff(x)))
-                    + v * ((rho * w.diff(y)))
-                    + w * ((rho * w.diff(z)))
+                    u * (rho * w.diff(x))
+                    + v * (rho * w.diff(y))
+                    + w * (rho * w.diff(z))
                     + rho * w * (curl)
                 )
                 + p.diff(z)

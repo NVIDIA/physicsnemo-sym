@@ -272,9 +272,9 @@ class GradientsAutoDiff(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
     def forward(self, input_dict):
         y = input_dict[self.invar]
@@ -286,9 +286,9 @@ class GradientsAutoDiff(torch.nn.Module):
                 + "the computations might be incorrect!"
             )
 
-        assert (
-            x.shape[1] == self.dim
-        ), f"Expected shape (N, {self.dim}), but got {x.shape}"
+        assert x.shape[1] == self.dim, (
+            f"Expected shape (N, {self.dim}), but got {x.shape}"
+        )
 
         grad = gradient_autodiff(y, [x])
 
@@ -299,11 +299,11 @@ class GradientsAutoDiff(torch.nn.Module):
                 result[f"{self.invar}__{axis_list[axis]}"] = grad[0][:, axis : axis + 1]
         elif self.order == 2:
             for axis in range(self.dim):
-                result[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ] = gradient_autodiff(grad[0][:, axis : axis + 1], [x])[0][
-                    :, axis : axis + 1
-                ]
+                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
+                    gradient_autodiff(grad[0][:, axis : axis + 1], [x])[0][
+                        :, axis : axis + 1
+                    ]
+                )
             if self.return_mixed_derivs:
                 # Need to compute them manually due to how pytorch builds graph
                 if self.dim == 2:
@@ -372,9 +372,9 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
         self.init_derivative_operators()
 
@@ -406,19 +406,19 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
                     out_name=f"{self.invar}__x__y",
                 )
                 if self.dim == 3:
-                    self.mixed_deriv_ops[
-                        "dxdz"
-                    ] = mfd_grads.MixedSecondDerivSecondOrder(
-                        var=self.invar,
-                        indep_vars=["x", "z"],
-                        out_name=f"{self.invar}__x__z",
+                    self.mixed_deriv_ops["dxdz"] = (
+                        mfd_grads.MixedSecondDerivSecondOrder(
+                            var=self.invar,
+                            indep_vars=["x", "z"],
+                            out_name=f"{self.invar}__x__z",
+                        )
                     )
-                    self.mixed_deriv_ops[
-                        "dydz"
-                    ] = mfd_grads.MixedSecondDerivSecondOrder(
-                        var=self.invar,
-                        indep_vars=["y", "z"],
-                        out_name=f"{self.invar}__y__z",
+                    self.mixed_deriv_ops["dydz"] = (
+                        mfd_grads.MixedSecondDerivSecondOrder(
+                            var=self.invar,
+                            indep_vars=["y", "z"],
+                            out_name=f"{self.invar}__y__z",
+                        )
                     )
 
     def forward(self, input_dict):
@@ -431,17 +431,15 @@ class GradientsMeshlessFiniteDifference(torch.nn.Module):
                 )[f"{self.invar}__{axis_list[axis]}"]
         elif self.order == 2:
             for axis, op in self.second_deriv_ops.items():
-                result[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ] = op.forward(input_dict, self.dx[axis])[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ]
+                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
+                    op.forward(input_dict, self.dx[axis])[
+                        f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
+                    ]
+                )
             if self.return_mixed_derivs:
                 result[f"{self.invar}__x__y"] = self.mixed_deriv_ops["dxdy"].forward(
                     input_dict, self.dx[0]
-                )[
-                    f"{self.invar}__x__y"
-                ]  # TODO: enable different dx and dy?
+                )[f"{self.invar}__x__y"]  # TODO: enable different dx and dy?
                 result[f"{self.invar}__y__x"] = self.mixed_deriv_ops["dxdy"].forward(
                     input_dict, self.dx[0]
                 )[f"{self.invar}__x__y"]
@@ -506,9 +504,9 @@ class GradientsFiniteDifference(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
         if self.order == 1:
             self.deriv_modulue = fd_grads.FirstDerivSecondOrder(self.dim, self.dx)
@@ -522,9 +520,9 @@ class GradientsFiniteDifference(torch.nn.Module):
     def forward(self, input_dict):
         u = input_dict[self.invar]
 
-        assert (
-            u.dim() - 2
-        ) == self.dim, f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        assert (u.dim() - 2) == self.dim, (
+            f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        )
 
         # compute finite difference based on convolutional operation
         result = {}
@@ -535,9 +533,9 @@ class GradientsFiniteDifference(torch.nn.Module):
                 result[f"{self.invar}__{axis_list[axis]}"] = derivative
         elif self.order == 2:
             for axis, derivative in enumerate(derivatives):
-                result[
-                    f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"
-                ] = derivative
+                result[f"{self.invar}__{axis_list[axis]}__{axis_list[axis]}"] = (
+                    derivative
+                )
             if self.return_mixed_derivs:
                 result[f"{self.invar}__x__y"] = self.mixed_deriv_module.forward(u)[0]
                 result[f"{self.invar}__y__x"] = self.mixed_deriv_module.forward(u)[0]
@@ -601,9 +599,9 @@ class GradientsSpectral(torch.nn.Module):
 
         if self.return_mixed_derivs:
             assert self.dim > 1, "Mixed Derivatives only supported for 2D and 3D inputs"
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
     def forward(self, input_dict):
         u = input_dict[self.invar]
@@ -611,9 +609,9 @@ class GradientsSpectral(torch.nn.Module):
         pi = float(np.pi)
 
         n = tuple(u.shape[2:])
-        assert (
-            len(n) == self.dim
-        ), f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        assert len(n) == self.dim, (
+            f"Expected a {self.dim + 2} dimensional tensor, but got {u.dim()} dimensional tensor"
+        )
 
         # compute the fourier transform
         u_h = torch.fft.fftn(u, dim=list(range(2, self.dim + 2)))
@@ -747,26 +745,25 @@ class GradientsLeastSquares(torch.nn.Module):
         self.order = order
         self.return_mixed_derivs = return_mixed_derivs
 
-        assert (
-            self.dim > 1
-        ), "1D gradients using Least squares is not supported. Please try other methods."
+        assert self.dim > 1, (
+            "1D gradients using Least squares is not supported. Please try other methods."
+        )
         assert self.order < 3, "Derivatives only upto 2nd order are supported"
 
         if self.return_mixed_derivs:
-            assert (
-                self.order == 2
-            ), "Mixed Derivatives not possible for first order derivatives"
+            assert self.order == 2, (
+                "Mixed Derivatives not possible for first order derivatives"
+            )
 
         # TODO add a seperate SecondDeriv module
         self.deriv_module = ls_grads.FirstDeriv(self.dim)
 
     def forward(self, input_dict):
-
         coords = input_dict["coordinates"]
 
-        assert (
-            coords.shape[1] == self.dim
-        ), f"Expected shape (N, {self.dim}), but got {coords.shape}"
+        assert coords.shape[1] == self.dim, (
+            f"Expected shape (N, {self.dim}), but got {coords.shape}"
+        )
 
         connectivity_tensor = input_dict["connectivity_tensor"]
 

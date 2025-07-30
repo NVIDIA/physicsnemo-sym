@@ -84,7 +84,6 @@ class SRResNetArch(Arch):
         )
 
     def forward(self, in_vars: Dict[str, Tensor]) -> Dict[str, Tensor]:
-
         input = self.prepare_input(
             in_vars,
             self.input_key_dict.keys(),

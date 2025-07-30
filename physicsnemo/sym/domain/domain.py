@@ -14,8 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Domain
-"""
+"""Domain"""
+
 import torch
 import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
@@ -143,7 +143,6 @@ class Domain:
     def compute_losses(self, step: int):
         losses = {}
         if self.ntk is None:
-
             for key, constraint in self.constraints.items():
                 # TODO: Test streaming here
                 torch.cuda.nvtx.range_push(f"Constraint Forward: {key}")
@@ -178,9 +177,9 @@ class Domain:
                 if (m not in models) and m.saveable:
                     models.append(m)
         models = sorted(models, key=lambda x: x.name)
-        assert len(set([m.name for m in models])) == len(
-            models
-        ), "Every model in graph needs a unique name: " + str([m.name for m in models])
+        assert len(set([m.name for m in models])) == len(models), (
+            "Every model in graph needs a unique name: " + str([m.name for m in models])
+        )
         return models
 
     def create_global_optimizer_model(self):
@@ -198,9 +197,9 @@ class Domain:
                 if m not in models:
                     models.append(m)
         models = sorted(models, key=lambda x: x.name)
-        assert len(set([m.name for m in models])) == len(
-            models
-        ), "Every model in graph needs a unique name: " + str([m.name for m in models])
+        assert len(set([m.name for m in models])) == len(models), (
+            "Every model in graph needs a unique name: " + str([m.name for m in models])
+        )
         models = nn.ModuleList(models)
         return models
 

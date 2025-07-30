@@ -24,6 +24,7 @@ import numpy as np
 # string used to determine derivatives
 diff_str: str = "__"
 
+
 # function to apply diff string
 def diff(y: str, x: str, degree: int = 1) -> str:
     return diff_str.join([y] + degree * [x])

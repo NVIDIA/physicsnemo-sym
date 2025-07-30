@@ -228,7 +228,6 @@ class SpectralConv3d_old(nn.Module):
 
 
 def test_spectral_convs():
-
     in_channels = 2
     out_channels = 3
     modes = 4
@@ -249,9 +248,9 @@ def test_spectral_convs():
     output_old = sc1d_old(inputs)
     output = sc1d(inputs)
 
-    assert torch.allclose(
-        output_old, output, rtol=1e-3, atol=1e-3
-    ), "Spectral conv 1d mismatch"
+    assert torch.allclose(output_old, output, rtol=1e-3, atol=1e-3), (
+        "Spectral conv 1d mismatch"
+    )
 
     sc2d_old = SpectralConv2d_old(in_channels, out_channels, modes, modes)
     sc2d_old.weights1.data = torch.complex(
@@ -276,9 +275,9 @@ def test_spectral_convs():
     output_old = sc2d_old(inputs)
     output = sc2d(inputs)
 
-    assert torch.allclose(
-        output_old, output, rtol=1e-3, atol=1e-3
-    ), "Spectral conv 2d mismatch"
+    assert torch.allclose(output_old, output, rtol=1e-3, atol=1e-3), (
+        "Spectral conv 2d mismatch"
+    )
 
     sc3d_old = SpectralConv3d_old(in_channels, out_channels, modes, modes, modes)
     sc3d_old.weights1.data = torch.complex(
@@ -318,9 +317,9 @@ def test_spectral_convs():
     output_old = sc3d_old(inputs)
     output = sc3d(inputs)
 
-    assert torch.allclose(
-        output_old, output, rtol=1e-3, atol=1e-3
-    ), "Spectral conv 3d mismatch"
+    assert torch.allclose(output_old, output, rtol=1e-3, atol=1e-3), (
+        "Spectral conv 3d mismatch"
+    )
 
 
 test_spectral_convs()

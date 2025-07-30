@@ -24,7 +24,6 @@ http://farside.ph.utexas.edu/teaching/336L/Fluidhtml/node14.html#e4.67
 from sympy import Symbol, Function, Number
 from sympy import *
 from physicsnemo.sym.eq.pde import PDE
-from ..constants import diff
 
 
 class EnergyFluid(PDE):  # TODO clean function simlar to others
@@ -118,7 +117,7 @@ class EnergyFluid(PDE):  # TODO clean function simlar to others
         vel = [u, v, w]
         coord = [x, y, z]
         visc_h = 0 * x
-        if visc_heating == True:
+        if visc_heating:
             for i, j in zip(range(0, 3), range(0, 3)):
                 visc_h = visc_h + (
                     vel[i].diff(coord[j]) * vel[i].diff(coord[j])

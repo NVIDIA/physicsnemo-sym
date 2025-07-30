@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Continuous type constraints
-"""
+"""Continuous type constraints"""
 
 import logging
 from typing import Dict, List, Union
@@ -71,7 +70,6 @@ class SupervisedGridConstraint(Constraint):
         drop_last: bool = True,
         num_workers: int = 0,
     ):
-
         super().__init__(
             nodes=nodes,
             dataset=dataset,
@@ -189,7 +187,6 @@ class _DeepONetConstraint(Constraint):
         drop_last: bool,
         num_workers: int,
     ):
-
         # TODO: add support for other datasets (like SupervisedGridConstraint)
 
         # get dataset and dataloader
@@ -344,7 +341,6 @@ class DeepONetConstraint_Data(_DeepONetConstraint):
         drop_last: bool = True,
         num_workers: int = 0,
     ):
-
         super().__init__(
             nodes=nodes,
             invar_branch=invar_branch,
@@ -363,7 +359,6 @@ class DeepONetConstraint_Data(_DeepONetConstraint):
         )
 
     def loss(self, step: int):
-
         # compute loss
         losses = self._loss(
             self._input_vars_trunk,
@@ -390,7 +385,6 @@ class DeepONetConstraint_Physics(_DeepONetConstraint):
         num_workers: int = 0,
         tile_trunk_input: bool = True,
     ):
-
         super().__init__(
             nodes=nodes,
             invar_branch=invar_branch,
@@ -413,7 +407,6 @@ class DeepONetConstraint_Physics(_DeepONetConstraint):
         )
 
     def loss(self, step: int):
-
         target_vars = {
             k: torch.reshape(v, (-1, 1)) for k, v in self._target_vars.items()
         }
