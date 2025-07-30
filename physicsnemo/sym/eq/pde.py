@@ -77,7 +77,7 @@ class PDE(object):
         self,
         create_instances: int = 1,
         freeze_terms: Dict[str, List[int]] = {},
-        detach_names: list[str] = [],
+        detach_names: list[str] = None,
         return_as_dict: bool = False,
     ):
         """
@@ -101,6 +101,9 @@ class PDE(object):
             Makes a separate node for every equation.
             Returns list of nodes if return_as_dict=False, dictionary if return_as_dict=True.
         """
+        if detach_names is None:
+            detach_names = []
+
         if create_instances == 1:
             if bool(freeze_terms):
                 print(

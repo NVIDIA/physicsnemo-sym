@@ -92,7 +92,7 @@ class FirstDeriv(torch.nn.Module):
         grad_u = grad_u.squeeze(-1)  # [batch_size, N, dim]
 
         # Split into individual components
-        result = [grad_u[:, i : i + 1] for i in range(self.dim)]
+        result = [grad_u[:, [i]] for i in range(self.dim)]
 
         return result
 
@@ -101,7 +101,6 @@ class FirstDeriv(torch.nn.Module):
         Compute derivatives using sparse connectivity format with parallel processing.
         Optimized for cases where all nodes have the same number of neighbors.
         """
-        print("In sparse implementation")
         num_nodes = coords.shape[0]
 
         # Check if all nodes have the same number of neighbors
@@ -159,7 +158,7 @@ class FirstDeriv(torch.nn.Module):
             grad_u = grad_u.squeeze(-1)  # [N, dim]
 
             # Split into individual components
-            result = [grad_u[:, i : i + 1] for i in range(self.dim)]
+            result = [grad_u[:, [i]] for i in range(self.dim)]
 
             return result
 
@@ -191,17 +190,16 @@ class FirstDeriv(torch.nn.Module):
         grad_u = grad_u.squeeze(-1)  # [N, dim]
 
         # Split into individual components
-        result = [grad_u[:, i : i + 1] for i in range(self.dim)]
+        result = [grad_u[:, [i]] for i in range(self.dim)]
 
         return result
 
     def compute_ls_grads(self, dv: torch.Tensor, du: torch.Tensor) -> torch.Tensor:
         """Given du and dv, compute the grads (batched)"""
 
-        w_squared = 1 / ((dv**2).sum(dim=2) + 1e-8)
-        W = torch.diag_embed(w_squared)
-        A = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), dv)
-        B = torch.matmul(torch.matmul(dv.transpose(-2, -1), W), du)
+        w_squared = 1 / (torch.einsum("bni,bni->bn", dv, dv) + 1e-8)
+        A = torch.einsum("bni,bn,bnj->bij", dv, w_squared, dv)
+        B = torch.einsum("bni,bn,bnk->bik", dv, w_squared, du)
         grad_u, _, _, _ = torch.linalg.lstsq(A, B)
 
         return grad_u
