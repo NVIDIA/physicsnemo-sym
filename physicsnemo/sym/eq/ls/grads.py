@@ -200,6 +200,14 @@ class FirstDeriv(torch.nn.Module):
         w_squared = 1 / (torch.einsum("bni,bni->bn", dv, dv) + 1e-8)
         A = torch.einsum("bni,bn,bnj->bij", dv, w_squared, dv)
         B = torch.einsum("bni,bn,bnk->bik", dv, w_squared, du)
-        grad_u, _, _, _ = torch.linalg.lstsq(A, B)
+
+        lambda_value = 1e-6
+        batch_size = A.shape[0]
+        dim = A.shape[1]
+        A_reg = A + lambda_value * torch.eye(
+            dim, device=A.device, dtype=A.dtype
+        ).unsqueeze(0).expand(batch_size, -1, -1)
+
+        grad_u, _, _, _ = torch.linalg.lstsq(A_reg, B)
 
         return grad_u
