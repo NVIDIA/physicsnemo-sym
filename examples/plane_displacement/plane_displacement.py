@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import torch
-import numpy as np
 from sympy import Symbol, Eq
 
 import physicsnemo.sym
@@ -27,12 +26,10 @@ from physicsnemo.sym.dataset import DictVariationalDataset
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
-    PointwiseInteriorConstraint,
     VariationalConstraint,
 )
-from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
-from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.utils.io.plotter import InferencerPlotter
 from physicsnemo.sym.loss import Loss
 
 # VPINN imports

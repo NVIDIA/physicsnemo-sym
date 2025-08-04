@@ -14,12 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import warnings
 import torch
 import pytest
-from packaging import version
 from physicsnemo.sym.manager import JitManager
-from physicsnemo.sym.utils.benchmark import profile, timeit
+from physicsnemo.sym.utils.benchmark import timeit
 from physicsnemo.sym.models.activation import Activation, get_activation_fn
 
 # Allow fusing single node, and prevent tiny autodiff graph are inlined/reverted.

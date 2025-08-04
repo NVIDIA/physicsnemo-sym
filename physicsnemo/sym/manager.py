@@ -14,11 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Managers
-"""
+"""PhysicsNeMo Managers"""
 
 import logging
-from typing import Dict, List, Union
 from enum import Enum
 import torch
 from packaging import version

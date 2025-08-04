@@ -165,7 +165,6 @@ class GridValidatorPlotter(_Plotter):
         true_outvar: Dict[str, np.array],
         pred_outvar: Dict[str, np.array],
     ):
-
         ndim = next(iter(invar.values())).ndim - 2
         if ndim > 3:
             print("Default plotter can only handle <=3 input dimensions, passing")
@@ -183,7 +182,6 @@ class GridValidatorPlotter(_Plotter):
         return fs
 
     def _make_plot(self, ndim, ie, invar, true_outvar, pred_outvar, diff_outvar):
-
         # make plot
         nrows = max(len(invar), len(true_outvar))
         f = plt.figure(figsize=(4 * 5, nrows * 4), dpi=100)
@@ -220,7 +218,6 @@ class DeepONetValidatorPlotter(_Plotter):
         true_outvar: Dict[str, np.array],
         pred_outvar: Dict[str, np.array],
     ):
-
         ndim = next(iter(invar.values())).shape[-1]
         if ndim > 3:
             print("Default plotter can only handle <=2 input dimensions, passing")

@@ -28,7 +28,6 @@ dir_path = Path(__file__).parent
 
 @pytest.mark.parametrize("device", ["cuda", "cpu"])
 def test_geom_datapipe_csg(device):
-
     geoms = []
     for i in range(10):
         box = Box(point_1=(-1, -1, -1), point_2=(1, 1, 1))
@@ -78,7 +77,6 @@ def test_geom_datapipe_csg(device):
 
 @pytest.mark.parametrize("device", ["cuda", "cpu"])
 def test_geom_datapipe_stl(device):
-
     geoms = []
     for i in range(10):
         geo = Tessellation.from_stl(
@@ -121,7 +119,6 @@ def test_geom_datapipe_stl(device):
 
 @pytest.mark.parametrize("device", ["cuda", "cpu"])
 def test_geom_datapipe_stl_quasirandom(device):
-
     geoms = []
     for i in range(4):
         geo = Tessellation.from_stl(

@@ -27,7 +27,7 @@ except:
         + "Find out information here: https://github.com/idies/pyJHTDB"
     )
 from tqdm import *
-from typing import List, Dict, Union
+from typing import List
 from pathlib import Path
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.distributed.manager import DistributedManager
@@ -138,7 +138,7 @@ def make_jhtdb_dataset(
             [np.random.randint(1, 1024 - domain_size) for _ in range(3)], dtype=int
         )
         end = np.array([x + domain_size - 1 for x in start], dtype=int)
-        step = np.array(3 * [1], dtype=int)
+        np.array(3 * [1], dtype=int)
 
         # get high res data
         high_res_u = get_jhtdb(

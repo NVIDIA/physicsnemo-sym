@@ -16,19 +16,16 @@
 
 import torch
 import numpy as np
-from sympy import Symbol, sin
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry.primitives_1d import Line1D
 from physicsnemo.sym.domain.constraint import (
     PointwiseConstraint,
 )
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from wave_equation import WaveEquation1D
 
 

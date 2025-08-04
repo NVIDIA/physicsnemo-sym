@@ -16,12 +16,12 @@
 """
 @Author : Clement Etienam
 """
+
 from __future__ import print_function
 
 print(__doc__)
 import os
 from NVR import *
-import shutil
 import pandas as pd
 import scipy.io as sio
 import datetime
@@ -92,7 +92,6 @@ def inference_single(
     opennI,
     opennP,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -260,7 +259,6 @@ def inference_single2(
     SWOW,
     SWOG,
 ):
-
     paramss = ini
     Ne = paramss.shape[1]
 
@@ -416,7 +414,7 @@ class Simulator:
         SWR = cp.float32(plan["PROPS"]["SWR"])
         CFO = cp.float32(plan["PROPS"]["CFO"])
         IWSw = float(plan["PROPS"]["S1"])
-        IWSo = float(plan["PROPS"]["SO1"])
+        float(plan["PROPS"]["SO1"])
         IWSg = float(plan["PROPS"]["SG1"])
         pini_alt = float(plan["PROPS"]["P1"])
         P1 = cp.float32(pini_alt)
@@ -424,7 +422,7 @@ class Simulator:
         PB = P1
         mpor, hpor = float(plan["MPOR"]), float(plan["HPOR"])
         aay, bby = float(plan["aay"]), float(plan["bby"])
-        Low_K, High_K = aay, bby
+        _Low_K, _High_K = aay, bby
         BW = cp.float32(BW)
         BO = cp.float32(BO)
         PATM = cp.float32(float(plan["PROPS"]["PATM"]))
@@ -437,7 +435,7 @@ class Simulator:
         path_out = plan["path_out"]
 
         if N_components == 3:
-            SG1 = cp.float32(0)  # Initial gas saturation
+            cp.float32(0)  # Initial gas saturation
         if N_components == 3:
             UG = cp.float32(calc_mu_g(P1))  # gas viscosity in cP
             RS = cp.float32(calc_rs(PB, P1))  # Solution GOR
@@ -482,7 +480,7 @@ class Simulator:
         steppi = int(max_t / timmee)
 
         factorr = float(plan["MULTIPLY"]["z_factor"])
-        RE = 0.2 * DX
+        0.2 * DX
 
         rwell = 200  # well radius
         skin = 0  # well deformation
@@ -512,8 +510,8 @@ class Simulator:
         dt = np.diff(tc2)[0]  # Time-step
 
         # CFL = 1
-        n_inj = len(plan["WELLSPECS"]["injector_wells"])  # Number of injectors
-        n_prod = len(plan["WELLSPECS"]["producer_wells"])  # Number of producers
+        len(plan["WELLSPECS"]["injector_wells"])  # Number of injectors
+        len(plan["WELLSPECS"]["producer_wells"])  # Number of producers
 
         injectors = plan["WELLSPECS"]["injector_wells"]
         producers = plan["WELLSPECS"]["producer_wells"]
@@ -530,7 +528,7 @@ class Simulator:
         NecessaryI = np.array(np.vstack(injectors)[:, 4:7], dtype=float)
         NecessaryP = np.array(np.vstack(producers)[:, 4:7], dtype=float)
 
-        scaler1a = MinMaxScaler(feature_range=(aay, bby))
+        MinMaxScaler(feature_range=(aay, bby))
         if CFL == 1:
             print_section_title("Begin IMPES simulation")
         if CFL == 2:
@@ -700,7 +698,7 @@ class Simulator:
                 print("Plotting outputs")
                 os.chdir(path_out)
                 Runs = steppi
-                ty = np.arange(1, Runs + 1)
+                np.arange(1, Runs + 1)
 
                 if nz == 1:
                     # for kk in range(steppi):
@@ -761,7 +759,7 @@ class Simulator:
 
                     Parallel(n_jobs=-1)(
                         delayed(plot3d2)(
-                            ((1 - data_use1[0, kk + steppi, :, :][:, :, None])),
+                            (1 - data_use1[0, kk + steppi, :, :][:, :, None]),
                             nx,
                             ny,
                             nz,
@@ -873,7 +871,6 @@ class Simulator:
                     for f4 in glob("*unie_oil*"):
                         os.remove(f4)
                 else:
-
                     Parallel(n_jobs=-1)(
                         delayed(plot3d2)(
                             data_use1[0, kk, :, :, :][:, :, ::-1]
@@ -1024,7 +1021,7 @@ class Simulator:
                 print("Plotting outputs")
                 os.chdir(path_out)
                 Runs = steppi
-                ty = np.arange(1, Runs + 1)
+                np.arange(1, Runs + 1)
 
                 if nz == 1:
                     # for kk in range(steppi):
@@ -1050,12 +1047,10 @@ class Simulator:
                                     cp.asarray(data_use1[0, kk, :, :][:, :, None]),
                                     cp.asarray(
                                         (
-                                            (
-                                                1
-                                                - data_use1[0, kk + steppi, :, :][
-                                                    :, :, None
-                                                ]
-                                            )
+                                            1
+                                            - data_use1[0, kk + steppi, :, :][
+                                                :, :, None
+                                            ]
                                         )
                                     ),
                                     nx,
@@ -1131,7 +1126,7 @@ class Simulator:
                                     ),
                                     cp.asarray(data_use1[0, kk, :, :, :]),
                                     cp.asarray(
-                                        ((1 - data_use1[0, kk + steppi, :, :, :]))
+                                        (1 - data_use1[0, kk + steppi, :, :, :])
                                     ),
                                     nx,
                                     ny,
@@ -1290,7 +1285,7 @@ class Simulator:
                 print("Plotting outputs")
                 os.chdir(path_out)
                 Runs = steppi
-                ty = np.arange(1, Runs + 1)
+                np.arange(1, Runs + 1)
 
                 if nz == 1:
                     # for kk in range(steppi):
@@ -1378,7 +1373,7 @@ class Simulator:
 
                     Parallel(n_jobs=-1)(
                         delayed(plot3d2)(
-                            ((data_use1[0, kk + 3 * steppi, :, :][:, :, None])),
+                            (data_use1[0, kk + 3 * steppi, :, :][:, :, None]),
                             nx,
                             ny,
                             nz,
@@ -1389,12 +1384,12 @@ class Simulator:
                             "gas_sat",
                             max(
                                 (
-                                    (data_use1[0, kk + 3 * steppi, :, :][:, :, None])
+                                    data_use1[0, kk + 3 * steppi, :, :][:, :, None]
                                 ).ravel()
                             ),
                             min(
                                 (
-                                    (data_use1[0, kk + 3 * steppi, :, :][:, :, None])
+                                    data_use1[0, kk + 3 * steppi, :, :][:, :, None]
                                 ).ravel()
                             ),
                             injectors,

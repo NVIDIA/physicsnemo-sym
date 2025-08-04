@@ -20,7 +20,6 @@ from physicsnemo.sym.eq.pdes.linear_elasticity import (
 )
 import torch
 import numpy as np
-import os
 
 
 def test_linear_elasticity_equations():
@@ -33,9 +32,9 @@ def test_linear_elasticity_equations():
     normal_y = np.random.rand(1024, 1)
     normal_z = np.random.rand(1024, 1)
 
-    u = np.exp(2 * x + y + z + t)
-    v = np.exp(x + 2 * y + z + t)
-    w = np.exp(x + y + 2 * z + t)
+    np.exp(2 * x + y + z + t)
+    np.exp(x + 2 * y + z + t)
+    np.exp(x + y + 2 * z + t)
 
     u__t__t = 1 * np.exp(2 * x + y + z + t)
     v__t__t = 1 * np.exp(x + 2 * y + z + t)
@@ -49,10 +48,7 @@ def test_linear_elasticity_equations():
     u__z__z = 1 * 1 * np.exp(2 * x + y + z + t)
     u__x__y = 1 * 2 * np.exp(2 * x + y + z + t)
     u__x__z = 1 * 2 * np.exp(2 * x + y + z + t)
-    u__y__z = 1 * 1 * np.exp(2 * x + y + z + t)
-    u__y__x = u__x__y
-    u__z__x = u__x__z
-    u__z__y = u__y__z
+    1 * 1 * np.exp(2 * x + y + z + t)
 
     v__x = 1 * np.exp(x + 2 * y + z + t)
     v__y = 2 * np.exp(x + 2 * y + z + t)
@@ -61,11 +57,9 @@ def test_linear_elasticity_equations():
     v__y__y = 2 * 2 * np.exp(x + 2 * y + z + t)
     v__z__z = 1 * 1 * np.exp(x + 2 * y + z + t)
     v__x__y = 2 * 1 * np.exp(x + 2 * y + z + t)
-    v__x__z = 1 * 1 * np.exp(x + 2 * y + z + t)
+    1 * 1 * np.exp(x + 2 * y + z + t)
     v__y__z = 1 * 2 * np.exp(x + 2 * y + z + t)
     v__y__x = v__x__y
-    v__z__x = v__x__z
-    v__z__y = v__y__z
 
     w__x = 1 * np.exp(x + y + 2 * z + t)
     w__y = 1 * np.exp(x + y + 2 * z + t)
@@ -73,10 +67,9 @@ def test_linear_elasticity_equations():
     w__x__x = 1 * 1 * np.exp(x + y + 2 * z + t)
     w__y__y = 1 * 1 * np.exp(x + y + 2 * z + t)
     w__z__z = 2 * 2 * np.exp(x + y + 2 * z + t)
-    w__x__y = 1 * 1 * np.exp(x + y + 2 * z + t)
+    1 * 1 * np.exp(x + y + 2 * z + t)
     w__x__z = 2 * 1 * np.exp(x + y + 2 * z + t)
     w__y__z = 2 * 1 * np.exp(x + y + 2 * z + t)
-    w__y__x = w__x__y
     w__z__x = w__x__z
     w__z__y = w__y__z
 
@@ -294,15 +287,15 @@ def test_linear_elasticity_equations():
     assert np.allclose(traction_x_eval_pred, traction_x_true), "Test Failed!"
     assert np.allclose(traction_y_eval_pred, traction_y_true), "Test Failed!"
     assert np.allclose(traction_z_eval_pred, traction_z_true), "Test Failed!"
-    assert np.allclose(
-        navier_x_eval_pred, navier_x_true, atol=1e-3, rtol=1e-2
-    ), "Test Failed!"
-    assert np.allclose(
-        navier_y_eval_pred, navier_y_true, atol=1e-3, rtol=1e-2
-    ), "Test Failed!"
-    assert np.allclose(
-        navier_z_eval_pred, navier_z_true, atol=1e-3, rtol=1e-2
-    ), "Test Failed!"
+    assert np.allclose(navier_x_eval_pred, navier_x_true, atol=1e-3, rtol=1e-2), (
+        "Test Failed!"
+    )
+    assert np.allclose(navier_y_eval_pred, navier_y_true, atol=1e-3, rtol=1e-2), (
+        "Test Failed!"
+    )
+    assert np.allclose(navier_z_eval_pred, navier_z_true, atol=1e-3, rtol=1e-2), (
+        "Test Failed!"
+    )
 
 
 def test_linear_elasticity_plane_stress_equations():
@@ -313,8 +306,8 @@ def test_linear_elasticity_plane_stress_equations():
     normal_x = np.random.rand(1024, 1)
     normal_y = np.random.rand(1024, 1)
 
-    u = np.exp(2 * x + y + t)
-    v = np.exp(x + 2 * y + t)
+    np.exp(2 * x + y + t)
+    np.exp(x + 2 * y + t)
 
     sigma_xx = np.sin(x) * np.cos(y)
     sigma_yy = np.cos(x) * np.sin(y)
@@ -325,17 +318,15 @@ def test_linear_elasticity_plane_stress_equations():
 
     u__x = 2 * np.exp(2 * x + y + t)
     u__y = 1 * np.exp(2 * x + y + t)
-    u__x__x = 2 * 2 * np.exp(2 * x + y + t)
-    u__y__y = 1 * 1 * np.exp(2 * x + y + t)
-    u__x__y = 1 * 2 * np.exp(2 * x + y + t)
-    u__y__x = u__x__y
+    2 * 2 * np.exp(2 * x + y + t)
+    1 * 1 * np.exp(2 * x + y + t)
+    1 * 2 * np.exp(2 * x + y + t)
 
     v__x = 1 * np.exp(x + 2 * y + t)
     v__y = 2 * np.exp(x + 2 * y + t)
-    v__x__x = 1 * 1 * np.exp(x + 2 * y + t)
-    v__y__y = 2 * 2 * np.exp(x + 2 * y + t)
-    v__x__y = 2 * 1 * np.exp(x + 2 * y + t)
-    v__y__x = v__x__y
+    1 * 1 * np.exp(x + 2 * y + t)
+    2 * 2 * np.exp(x + 2 * y + t)
+    2 * 1 * np.exp(x + 2 * y + t)
 
     sigma_xx__x = np.cos(x) * np.cos(y)
     sigma_yy__y = np.cos(x) * np.cos(y)

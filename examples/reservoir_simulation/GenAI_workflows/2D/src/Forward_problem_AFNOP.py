@@ -16,10 +16,10 @@
 """
 @Author : Clement Etienam
 """
+
 from typing import Dict
 import numpy as np
 import torch
-import torch.nn.functional as F
 import os
 import physicsnemo
 from physicsnemo.sym.hydra import PhysicsNeMoConfig
@@ -31,12 +31,10 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
 from physicsnemo.sym.models.afno.afno import *
-import shutil
 import cupy as cp
 from sklearn.model_selection import train_test_split
 import scipy.io as sio
@@ -186,7 +184,6 @@ class CustomValidatorPlotterS(ValidatorPlotter):
 
         f_big = []
         for itt in range(self.steppi):
-
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(12, 12), dpi=100)
 
@@ -339,7 +336,6 @@ class Black_oil(torch.nn.Module):
         self.approach = approach
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         # get inputs
 
         u = input_var["pressure"]
@@ -364,7 +360,6 @@ class Black_oil(torch.nn.Module):
         dxf = 1.0 / u.shape[3]
 
         if self.approach == 1:
-
             u = u * self.pini_alt
             pini = pini * self.pini_alt
             # Pressure equation Loss
@@ -426,8 +421,8 @@ class Black_oil(torch.nn.Module):
                 (self.UO * self.BO),
             )
 
-            krw = torch.square(S)
-            kroil = torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
+            torch.square(S)
+            torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
             Mt = Mw + Mo
             a1 = torch.mul(Mt, a)  # overall Effective permeability
             a1water = torch.mul(Mw, a)  # water Effective permeability
@@ -669,7 +664,6 @@ class Black_oil(torch.nn.Module):
                     s_loss[zig, count, :, :] = darcy_saturation
 
         else:
-
             u = u * self.pini_alt
             pini = pini * self.pini_alt
             # Pressure equation Loss
@@ -731,8 +725,8 @@ class Black_oil(torch.nn.Module):
                 (self.UO * self.BO),
             )
 
-            krw = torch.square(S)
-            kroil = torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
+            torch.square(S)
+            torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
             Mt = Mw + Mo
             a1 = torch.mul(Mt, a)  # overall Effective permeability
             a1water = torch.mul(Mw, a)  # water Effective permeability
@@ -825,7 +819,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -838,7 +831,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         method = 5
         typee = 0
     else:
-
         method = None
         while True:
             method = cp.int(
@@ -858,7 +850,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-6")
             else:
-
                 break
 
         if method == 6:
@@ -899,7 +890,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-3")
             else:
-
                 break
 
     # Varaibles needed for NVRS
@@ -1010,7 +1000,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         print("Use already generated ensemble from Google drive folder")
         if choice == 1:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Multiple-point-statistics run")
 
                 print("....Downloading Please hold.........")
@@ -1039,7 +1029,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 ini_ensemblef = scaler1a.transform(ini_ensemblef)
         else:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble_gauss.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Two - point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -1093,7 +1083,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 permx = kjennq
 
             else:
-
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
                     "1TrAVvB-XXCzwHqDdCR4BJnmoe8nPsWIF",
@@ -1143,9 +1132,8 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     imp = batch_size
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
-
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
                 "1I-27_S53ORRFB_hIN_41r3Ntc6PpOE40",
@@ -1282,7 +1270,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     preprocess_FNO_mat(to_absolute_path("../PACKETS/simulations.mat"))
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/iglesias2.out"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1_9VRt8tEOF6IV7GvUnD7CFVM40DMHkxn",

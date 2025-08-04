@@ -14,27 +14,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
 import numpy as np
-from sympy import Symbol, Eq, sin, cos, Min, Max, Abs, log, exp
 from scipy import optimize
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import instantiate_arch, PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.utils.io import csv_to_dict
 from physicsnemo.sym.domain.constraint import (
-    PointwiseBoundaryConstraint,
-    PointwiseInteriorConstraint,
-    IntegralBoundaryConstraint,
     PointwiseConstraint,
 )
-from physicsnemo.sym.domain.monitor import PointwiseMonitor
-from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 
 
 @physicsnemo.sym.main(config_path="conf_u_tau_lookup", config_name="config")

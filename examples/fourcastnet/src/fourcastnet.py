@@ -15,6 +15,7 @@
 # limitations under the License.
 
 """Defines the FCN architecture"""
+
 import logging
 import torch
 from torch import Tensor
@@ -69,9 +70,9 @@ class FourcastNetArch(Arch):
         )
 
         # get number of timesteps steps to unroll
-        assert (
-            len(self.input_keys) == 1
-        ), "Error, FourcastNet only accepts one input variable (x_t0)"
+        assert len(self.input_keys) == 1, (
+            "Error, FourcastNet only accepts one input variable (x_t0)"
+        )
         self.n_tsteps = len(self.output_keys)
         logging.info(f"Unrolling FourcastNet over {self.n_tsteps} timesteps")
 

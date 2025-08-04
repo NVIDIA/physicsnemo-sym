@@ -22,7 +22,6 @@ Finite Volume Black Oil Reservoir Simulator
 
 from __future__ import division
 
-from distutils.version import LooseVersion
 from math import ceil, isnan
 
 try:
@@ -30,7 +29,6 @@ try:
 except:
     nan = float("nan")
 
-import numba
 import numpy as np
 
 from numba import cuda

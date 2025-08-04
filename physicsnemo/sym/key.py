@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" Key
-"""
+"""Key"""
 
 from typing import Union, List
 from functools import reduce

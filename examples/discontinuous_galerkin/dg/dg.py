@@ -33,7 +33,6 @@ from physicsnemo.sym.utils.vpinn.integral import tensor_int, Quad_Rect, Quad_Col
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
-    PointwiseInteriorConstraint,
     VariationalConstraint,
 )
 from physicsnemo.sym.dataset import DictVariationalDataset
@@ -173,7 +172,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
 
     # make training domain for traditional PINN
     eps = 0.02
-    rec_pinn = Rectangle((0 + eps, 0 + eps), (0.5 - eps, 1 - eps)) + Rectangle(
+    Rectangle((0 + eps, 0 + eps), (0.5 - eps, 1 - eps)) + Rectangle(
         (0.5 + eps, 0 + eps), (1 - eps, 1 - eps)
     )
 

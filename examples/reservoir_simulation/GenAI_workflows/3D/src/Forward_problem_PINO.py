@@ -16,10 +16,10 @@
 """
 @Author : Clement Etienam
 """
+
 from typing import Dict
 import numpy as np
 import torch
-import torch.nn.functional as F
 import os
 import physicsnemo
 from physicsnemo.sym.hydra import PhysicsNeMoConfig
@@ -31,12 +31,10 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
 from physicsnemo.sym.models.fno import *
-import shutil
 import cupy as cp
 from sklearn.model_selection import train_test_split
 import scipy.io as sio
@@ -105,7 +103,7 @@ class CustomValidatorPlotterP(ValidatorPlotter):
 
             lookf = (pressure_true[0, itt, :, :, :]) * self.pini_alt
 
-            diff1 = abs(look - lookf)
+            abs(look - lookf)
 
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(12, 12), dpi=100)
@@ -269,7 +267,6 @@ class CustomValidatorPlotterS(ValidatorPlotter):
 
         f_big = []
         for itt in range(self.steppi):
-
             XX, YY = np.meshgrid(np.arange(self.nx), np.arange(self.ny))
             f_2 = plt.figure(figsize=(20, 20), dpi=100)
 
@@ -582,7 +579,6 @@ class Black_oil(torch.nn.Module):
         self.nz = nz
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         # get inputs
 
         u = input_var["pressure"]
@@ -662,8 +658,8 @@ class Black_oil(torch.nn.Module):
             (self.UO * self.BO),
         )
 
-        krw = torch.square(S)
-        kroil = torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
+        torch.square(S)
+        torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
         Mt = Mw + Mo
         a1 = torch.mul(Mt, a)  # overall Effective permeability
         a1water = torch.mul(Mw, a)  # water Effective permeability
@@ -844,25 +840,6 @@ class Black_oil(torch.nn.Module):
 # [pde-loss]
 @physicsnemo.sym.main(config_path="conf", config_name="config_PINO")
 def run(cfg: PhysicsNeMoConfig) -> None:
-    text = """
-                                                              dddddddd                                                         
-    MMMMMMMM               MMMMMMMM                           d::::::d                lllllll                                  
-    M:::::::M             M:::::::M                           d::::::d                l:::::l                                  
-    M::::::::M           M::::::::M                           d::::::d                l:::::l                                  
-    M:::::::::M         M:::::::::M                           d:::::d                 l:::::l                                  
-    M::::::::::M       M::::::::::M  ooooooooooo      ddddddddd:::::duuuuuu    uuuuuu  l::::luuuuuu    uuuuuu     ssssssssss   
-    M:::::::::::M     M:::::::::::Moo:::::::::::oo  dd::::::::::::::du::::u    u::::u  l::::lu::::u    u::::u   ss::::::::::s  
-    M:::::::M::::M   M::::M:::::::o:::::::::::::::od::::::::::::::::du::::u    u::::u  l::::lu::::u    u::::u ss:::::::::::::s 
-    M::::::M M::::M M::::M M::::::o:::::ooooo:::::d:::::::ddddd:::::du::::u    u::::u  l::::lu::::u    u::::u s::::::ssss:::::s
-    M::::::M  M::::M::::M  M::::::o::::o     o::::d::::::d    d:::::du::::u    u::::u  l::::lu::::u    u::::u  s:::::s  ssssss 
-    M::::::M   M:::::::M   M::::::o::::o     o::::d:::::d     d:::::du::::u    u::::u  l::::lu::::u    u::::u    s::::::s      
-    M::::::M    M:::::M    M::::::o::::o     o::::d:::::d     d:::::du::::u    u::::u  l::::lu::::u    u::::u       s::::::s   
-    M::::::M     MMMMM     M::::::o::::o     o::::d:::::d     d:::::du:::::uuuu:::::u  l::::lu:::::uuuu:::::u ssssss   s:::::s 
-    M::::::M               M::::::o:::::ooooo:::::d::::::ddddd::::::du:::::::::::::::ul::::::u:::::::::::::::us:::::ssss::::::s
-    M::::::M               M::::::o:::::::::::::::od:::::::::::::::::du:::::::::::::::l::::::lu:::::::::::::::s::::::::::::::s 
-    M::::::M               M::::::Moo:::::::::::oo  d:::::::::ddd::::d uu::::::::uu:::l::::::l uu::::::::uu:::us:::::::::::ss  
-    MMMMMMMM               MMMMMMMM  ooooooooooo     ddddddddd   ddddd   uuuuuuuu  uuullllllll   uuuuuuuu  uuuu sssssssssss   
-    """
     print("")
     print("------------------------------------------------------------------")
     print("")
@@ -884,7 +861,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -897,7 +873,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         method = 6
         typee = 0
     else:
-
         method = None
         while True:
             method = cp.int(
@@ -918,7 +893,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-6")
             else:
-
                 break
 
         if method == 7:
@@ -1048,7 +1022,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         print("Use already generated ensemble from Google drive folder")
         if choice == 1:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Multiple-point-statistics run")
 
                 print("....Downloading Please hold.........")
@@ -1077,7 +1051,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 ini_ensemblef = scaler1a.transform(ini_ensemblef)
         else:
             bb = os.path.isfile(to_absolute_path("../PACKETS/Ganensemble_gauss.mat"))
-            if bb == False:
+            if not bb:
                 print("Get initial geology from saved Two - point-statistics run")
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
@@ -1131,7 +1105,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 permx = kjennq
 
             else:
-
                 print("....Downloading Please hold.........")
                 download_file_from_google_drive(
                     "1TrAVvB-XXCzwHqDdCR4BJnmoe8nPsWIF",
@@ -1181,9 +1154,8 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     imp = batch_size
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         if use_pretrained == 1:
-
             print("....Downloading Please hold.........")
             download_file_from_google_drive(
                 "1wYyREUcpp0qLhbRItG5RMPeRMxVtntDi",
@@ -1343,7 +1315,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     preprocess_FNO_mat(to_absolute_path("../PACKETS/simulations.mat"))
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/iglesias2.out"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1VSy2m3ocUkZnhCsorbkhcJB5ADrPxzIp",

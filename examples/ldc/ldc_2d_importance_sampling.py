@@ -26,7 +26,6 @@ from physicsnemo.sym.utils.io import csv_to_dict
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry.primitives_2d import Rectangle
-from physicsnemo.sym.models.fully_connected import FullyConnectedArch
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,

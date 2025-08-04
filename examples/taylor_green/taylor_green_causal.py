@@ -14,15 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import torch
-from torch.utils.data import DataLoader, Dataset
 import numpy as np
 
-from sympy import Symbol, Eq, Abs, sin, cos
+from sympy import Symbol, sin, cos
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
-from physicsnemo.sym.utils.io import csv_to_dict
+from physicsnemo.sym.hydra import PhysicsNeMoConfig
 from physicsnemo.sym.solver import SequentialSolver
 from physicsnemo.sym.domain import Domain
 
@@ -35,7 +32,6 @@ from physicsnemo.sym.geometry.parameterization import OrderedParameterization
 from physicsnemo.sym.models.fully_connected import FullyConnectedArch
 from physicsnemo.sym.models.moving_time_window import MovingTimeWindowArch
 from physicsnemo.sym.domain.constraint import (
-    PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
 )
 from physicsnemo.sym.domain.inferencer import PointVTKInferencer
@@ -43,7 +39,6 @@ from physicsnemo.sym.utils.io import (
     VTKUniformGrid,
 )
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 
 

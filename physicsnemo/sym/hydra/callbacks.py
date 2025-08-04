@@ -18,19 +18,17 @@
 Supported PhysicsNeMo callback configs
 """
 
-import torch
 import logging
 
-from dataclasses import dataclass
 from omegaconf import DictConfig
 from hydra.core.config_store import ConfigStore
 from hydra.experimental.callback import Callback
 from typing import Any
-from omegaconf import DictConfig, OmegaConf
+from omegaconf import OmegaConf
 
 from physicsnemo.sym.amp import AmpManager
 from physicsnemo.sym.distributed import DistributedManager
-from physicsnemo.sym.manager import JitManager, JitArchMode, GraphManager
+from physicsnemo.sym.manager import JitManager, GraphManager
 
 logger = logging.getLogger(__name__)
 

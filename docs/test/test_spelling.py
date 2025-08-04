@@ -1,16 +1,14 @@
 import re
 import json
 from pathlib import Path
-from turtle import color
 from spellchecker import SpellChecker
 from string import punctuation
-from typing import List, Set
+from typing import List
 from termcolor import colored
 
 
 class RSTSpellChecker:
     def __init__(self, spell_checker: SpellChecker):
-
         self.spell_checker = spell_checker
         self.sphinx_block = False
 

@@ -31,7 +31,7 @@ class FilterTypeMeta(enum.EnumMeta):
     def __getitem__(self, name):
         try:
             return super().__getitem__(name.upper())
-        except (KeyError) as error:
+        except KeyError:
             raise KeyError(f"Invalid activation function {name}")
 
 

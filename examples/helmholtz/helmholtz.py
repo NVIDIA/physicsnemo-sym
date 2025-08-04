@@ -30,9 +30,7 @@ from physicsnemo.sym.domain.constraint import (
     PointwiseInteriorConstraint,
 )
 from physicsnemo.sym.domain.validator import PointwiseValidator
-from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.wave_equation import HelmholtzEquation
 
 

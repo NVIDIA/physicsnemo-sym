@@ -21,7 +21,6 @@ see https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
 
 from sympy import (
     Symbol,
-    Function,
     Abs,
     Max,
     Min,
@@ -29,7 +28,6 @@ from sympy import (
     pi,
     sin,
     cos,
-    atan,
     atan2,
     acos,
     asin,
@@ -38,8 +36,6 @@ from sympy import (
 
 from sympy.vector import CoordSys3D
 import numpy as np
-from mpl_toolkits.mplot3d import Axes3D
-import matplotlib.pyplot as plt
 from .geometry import Geometry, csg_curve_naming
 from .helper import _sympy_sdf_to_sdf
 from .curve import SympyCurve, Curve
@@ -62,12 +58,12 @@ class Plane(Geometry):
     """
 
     def __init__(self, point_1, point_2, normal=1, parameterization=Parameterization()):
-        assert (
-            point_1[0] == point_2[0]
-        ), "Points must have same coordinate on normal dim"
+        assert point_1[0] == point_2[0], (
+            "Points must have same coordinate on normal dim"
+        )
 
         # make sympy symbols to use
-        x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+        x, _y, _z = Symbol("x"), Symbol("y"), Symbol("z")
         s_1, s_2 = Symbol(csg_curve_naming(0)), Symbol(csg_curve_naming(1))
         center = (
             point_1[0] + (point_2[0] - point_1[0]) / 2,
@@ -135,7 +131,7 @@ class Channel(Geometry):
 
     def __init__(self, point_1, point_2, parameterization=Parameterization()):
         # make sympy symbols to use
-        x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
+        _x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
         s_1, s_2 = Symbol(csg_curve_naming(0)), Symbol(csg_curve_naming(1))
         center = (
             point_1[0] + (point_2[0] - point_1[0]) / 2,
@@ -989,17 +985,8 @@ class Cone(Geometry):
         P = x * N.i + y * N.j + z * N.k
         O = center[0] * N.i + center[1] * N.j + center[2] * N.k
         H = center[0] * N.i + center[1] * N.j + (center[2] + height) * N.k
-        R = (
-            (center[0] + radius * cos(atan2(y, x))) * N.i
-            + (center[1] + radius * sin(atan2(y, x))) * N.j
-            + (center[2]) * N.k
-        )
-        OP_xy = (x - center[0]) * N.i + (y - center[1]) * N.j + (0) * N.k
-        OR = radius * OP_xy / sqrt(OP_xy.dot(OP_xy))
         OP = P - O
         OH = H - O
-        RP = OP - OR
-        RH = OH - OR
         PH = OH - OP
         cone_angle = atan2(radius, height)
         angle = acos(PH.dot(OH) / sqrt(PH.dot(PH)) / sqrt(OH.dot(OH)))
@@ -1083,7 +1070,7 @@ class TriangularPrism(Geometry):
     def __init__(self, center, side, height, parameterization=Parameterization()):
         # make sympy symbols to use
         x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
-        s_1, s_2, s_3 = (
+        s_1, s_2, _s_3 = (
             Symbol(csg_curve_naming(0)),
             Symbol(csg_curve_naming(1)),
             Symbol(csg_curve_naming(2)),
@@ -1098,12 +1085,6 @@ class TriangularPrism(Geometry):
         normal_2 = -sqrt(3) / 2 * N.i + 1 / 2 * N.j
         normal_3 = sqrt(3) / 2 * N.i + 1 / 2 * N.j
         r_ins = side / 2 / sqrt(3)
-        distance_side = Min(
-            Abs(r_ins - OP_xy.dot(normal_1)),
-            Abs(r_ins - OP_xy.dot(normal_2)),
-            Abs(r_ins - OP_xy.dot(normal_3)),
-        )
-        distance_top = Abs(z - center[2]) - 0.5 * height
 
         v1 = O + (
             -0.5 * side * N.i - 0.5 * sqrt(1 / 3) * side * N.j - height / 2 * side * N.k
@@ -1282,7 +1263,6 @@ class Tetrahedron(Geometry):
 
         N = CoordSys3D("N")
         P = x * N.i + y * N.j + z * N.k
-        O = center[0] * N.i + center[1] * N.j + center[2] * N.k
 
         side = sqrt(8 / 3) * radius
 
@@ -1502,23 +1482,13 @@ class IsoTriangularPrism(Geometry):
 
         N = CoordSys3D("N")
         P = (x) * N.i + y * N.j + center[2] * N.k
-        Q = x * N.i + y * N.j + center[2] * N.k
         O = center[0] * N.i + center[1] * N.j + center[2] * N.k
         H = center[0] * N.i + (center[1] + height) * N.j + center[2] * N.k
-        B = (center[0] + base / 2) * N.i + center[1] * N.j + center[2] * N.k
-        B_p = (center[0] - base / 2) * N.i + center[1] * N.j + center[2] * N.k
 
         OP = P - O
         OH = H - O
         PH = OH - OP
-        OQ = Q - O
-        QH = OH - OQ
-        HP = OP - OH
-        HB = B - H
-        HB_p = B_p - H
 
-        norm = ((HB_p).cross(HB)).normalize()
-        norm_HB = (norm.cross(HB)).normalize()
         hypo = sqrt(height**2 + (base / 2) ** 2)
         angle = acos(PH.dot(OH) / sqrt(PH.dot(PH)) / sqrt(OH.dot(OH)))
         apex_angle = asin(base / 2 / hypo)
@@ -1639,7 +1609,6 @@ class IsoTriangularPrism(Geometry):
         curves = [curve_1, curve_2, curve_3, curve_4, curve_5]
 
         # calculate SDF
-        z_dist = Abs(z - center[2])
         outside_distance = 1 * sqrt(
             sqrt(Max(0, dist) ** 2 + Max(0, center[1] - y) ** 2) ** 2
             + Min(0.5 * height_prism - Abs(z - center[2]), 0) ** 2
@@ -1949,9 +1918,7 @@ class ElliCylinder(Geometry):
         )
         flat_outside_distance = Max(Abs(z - center[2]) - 0.5 * height, 0)
 
-        outside_distance = sqrt(
-            curved_outside_distance**2 + flat_outside_distance**2
-        )
+        outside_distance = sqrt(curved_outside_distance**2 + flat_outside_distance**2)
 
         # (sign((x-min)*(max-x))+1)/2       # gives 0 if outside range, 0.5 if on min/max, 1 if inside range
         inside_distance_1 = (

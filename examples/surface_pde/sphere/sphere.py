@@ -14,11 +14,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" This PDE problem was taken from,
+"""This PDE problem was taken from,
 "A Physics-Informed Neural Network Framework
 for PDEs on 3D Surfaces: Time Independent
 Problems" by Zhiwei Fang and Justin Zhan.
 """
+
 from sympy import Symbol, Function
 
 import physicsnemo.sym
@@ -33,7 +34,6 @@ from physicsnemo.sym.domain.constraint import (
 )
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pde import PDE
 
 

@@ -17,6 +17,7 @@
 """
 Reference: https://www.mathworks.com/help/pde/ug/deflection-analysis-of-a-bracket.html
 """
+
 import os
 import warnings
 
@@ -36,7 +37,6 @@ from physicsnemo.sym.domain.constraint import (
 from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.linear_elasticity import LinearElasticity
 
 
@@ -146,9 +146,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     geo = support + bracket + curve_lower + curve_upper - cylinder_hole
 
     # Doamin bounds
-    bounds_x = (-1, 1)
-    bounds_y = (-1, 1)
-    bounds_z = (-1, 1)
     bounds_support_x = (-1, -0.65)
     bounds_support_y = (-1, 1)
     bounds_support_z = (-1, 1)

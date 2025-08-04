@@ -20,29 +20,20 @@ import warnings
 
 import torch
 import numpy as np
-from sympy import Symbol, Eq
+from sympy import Symbol
 
 import physicsnemo.sym
 from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
-from physicsnemo.sym.utils.sympy.functions import parabola
 from physicsnemo.sym.utils.io import csv_to_dict
-from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes, GradNormal
-from physicsnemo.sym.eq.pdes.basic import NormalDotVec
-from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
+from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 from physicsnemo.sym.eq.pdes.advection_diffusion import AdvectionDiffusion
 from physicsnemo.sym.domain.constraint import (
-    PointwiseBoundaryConstraint,
-    PointwiseInteriorConstraint,
-    IntegralBoundaryConstraint,
     PointwiseConstraint,
 )
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
-from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 
 
 @physicsnemo.sym.main(config_path="conf_inverse", config_name="config")

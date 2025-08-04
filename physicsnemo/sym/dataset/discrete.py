@@ -14,8 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo Dataset constructors for discrete type data
-"""
+"""PhysicsNeMo Dataset constructors for discrete type data"""
 
 from pathlib import Path
 from typing import Union, Dict, List
@@ -31,7 +30,6 @@ class _DictGridDatasetMixin(_DictDatasetMixin):
     "Special mixin class for dealing with dictionaries as input"
 
     def save_dataset(self, filename):
-
         named_lambda_weighting = {
             "lambda_" + key: value for key, value in self.lambda_weighting.items()
         }
@@ -82,7 +80,6 @@ class HDF5GridDataset(Dataset):
         outvar_keys: List[str],
         n_examples: int = None,
     ):
-
         self._invar_keys = invar_keys
         self._outvar_keys = outvar_keys
         self.path = Path(filename)
@@ -96,18 +93,17 @@ class HDF5GridDataset(Dataset):
 
         # check dataset/ get length
         with h5py.File(self.path, "r") as f:
-
             # check keys exist
             for k in invar_keys + outvar_keys:
-                if not k in f.keys():
+                if k not in f.keys():
                     raise KeyError(f"Variable {k} not found in HDF5 file")
 
             length = len(f[k])
 
         if n_examples is not None:
-            assert (
-                n_examples <= length
-            ), "error, n_examples greater than length of file data"
+            assert n_examples <= length, (
+                "error, n_examples greater than length of file data"
+            )
             length = min(n_examples, length)
 
         self.length = length

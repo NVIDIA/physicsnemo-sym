@@ -14,14 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import math
-import matplotlib.pyplot as plt
 import numpy as np
-from sympy import Number, Symbol, Heaviside, atan, sin, cos, sqrt
-import os
+from sympy import Heaviside, atan, sin, cos, sqrt
 
 from physicsnemo.sym.geometry.primitives_2d import Polygon
-from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
 from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
 
 

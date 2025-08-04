@@ -63,9 +63,9 @@ class AFNO2D(nn.Module):
         hidden_size_factor=1,
     ):
         super().__init__()
-        assert (
-            hidden_size % num_blocks == 0
-        ), f"hidden_size {hidden_size} should be divisble by num_blocks {num_blocks}"
+        assert hidden_size % num_blocks == 0, (
+            f"hidden_size {hidden_size} should be divisble by num_blocks {num_blocks}"
+        )
 
         self.hidden_size = hidden_size
         self.sparsity_threshold = sparsity_threshold
@@ -137,44 +137,52 @@ class AFNO2D(nn.Module):
         total_modes = H // 2 + 1
         kept_modes = int(total_modes * self.hard_thresholding_fraction)
 
-        o1_real[
-            :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes
-        ] = F.relu(
-            torch.einsum(
-                "...bi,bio->...bo",
-                x[
-                    :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes
-                ].real,
-                self.w1[0],
+        o1_real[:, total_modes - kept_modes : total_modes + kept_modes, :kept_modes] = (
+            F.relu(
+                torch.einsum(
+                    "...bi,bio->...bo",
+                    x[
+                        :,
+                        total_modes - kept_modes : total_modes + kept_modes,
+                        :kept_modes,
+                    ].real,
+                    self.w1[0],
+                )
+                - torch.einsum(
+                    "...bi,bio->...bo",
+                    x[
+                        :,
+                        total_modes - kept_modes : total_modes + kept_modes,
+                        :kept_modes,
+                    ].imag,
+                    self.w1[1],
+                )
+                + self.b1[0]
             )
-            - torch.einsum(
-                "...bi,bio->...bo",
-                x[
-                    :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes
-                ].imag,
-                self.w1[1],
-            )
-            + self.b1[0]
         )
 
-        o1_imag[
-            :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes
-        ] = F.relu(
-            torch.einsum(
-                "...bi,bio->...bo",
-                x[
-                    :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes
-                ].imag,
-                self.w1[0],
+        o1_imag[:, total_modes - kept_modes : total_modes + kept_modes, :kept_modes] = (
+            F.relu(
+                torch.einsum(
+                    "...bi,bio->...bo",
+                    x[
+                        :,
+                        total_modes - kept_modes : total_modes + kept_modes,
+                        :kept_modes,
+                    ].imag,
+                    self.w1[0],
+                )
+                + torch.einsum(
+                    "...bi,bio->...bo",
+                    x[
+                        :,
+                        total_modes - kept_modes : total_modes + kept_modes,
+                        :kept_modes,
+                    ].real,
+                    self.w1[1],
+                )
+                + self.b1[1]
             )
-            + torch.einsum(
-                "...bi,bio->...bo",
-                x[
-                    :, total_modes - kept_modes : total_modes + kept_modes, :kept_modes
-                ].real,
-                self.w1[1],
-            )
-            + self.b1[1]
         )
 
         o2_real[:, total_modes - kept_modes : total_modes + kept_modes, :kept_modes] = (
@@ -283,9 +291,9 @@ class AFNONet(nn.Module):
         hard_thresholding_fraction=1.0,
     ) -> None:
         super().__init__()
-        assert (
-            img_size[0] % patch_size[0] == 0 and img_size[1] % patch_size[1] == 0
-        ), f"img_size {img_size} should be divisible by patch_size {patch_size}"
+        assert img_size[0] % patch_size[0] == 0 and img_size[1] % patch_size[1] == 0, (
+            f"img_size {img_size} should be divisible by patch_size {patch_size}"
+        )
 
         self.in_chans = in_channels
         self.out_chans = out_channels
@@ -389,9 +397,9 @@ class PatchEmbed(nn.Module):
 
     def forward(self, x):
         B, C, H, W = x.shape
-        assert (
-            H == self.img_size[0] and W == self.img_size[1]
-        ), f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        assert H == self.img_size[0] and W == self.img_size[1], (
+            f"Input image size ({H}*{W}) doesn't match model ({self.img_size[0]}*{self.img_size[1]})."
+        )
         x = self.proj(x).flatten(2).transpose(1, 2)
         return x
 

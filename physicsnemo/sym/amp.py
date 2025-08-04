@@ -17,12 +17,10 @@
 import torch
 import logging
 from collections import defaultdict
-from torch.autograd import Function
 from torch.amp.grad_scaler import _refresh_per_optimizer_state
 from typing import List, Dict, Any
 from enum import Enum
 from termcolor import colored
-from . import physicsnemo_ext
 
 Tensor = torch.Tensor
 logger = logging.getLogger(__name__)
@@ -223,15 +221,15 @@ class GradScaler(torch.cuda.amp.GradScaler):
             self._max_scale = max_scale
             self._recover_threshold = recover_threshold
             self._recover_growth_interval = recover_growth_interval
-            assert (
-                self._init_scale <= self._max_scale
-            ), "init_scale should not be greater than max_scale"
-            assert (
-                self._recover_threshold <= self._max_scale
-            ), "recover_threshold should not be greater than max_scale"
-            assert (
-                self._recover_growth_interval <= self._growth_interval
-            ), "recover_growth_interval should not be greater than growth_interval"
+            assert self._init_scale <= self._max_scale, (
+                "init_scale should not be greater than max_scale"
+            )
+            assert self._recover_threshold <= self._max_scale, (
+                "recover_threshold should not be greater than max_scale"
+            )
+            assert self._recover_growth_interval <= self._growth_interval, (
+                "recover_growth_interval should not be greater than growth_interval"
+            )
 
     def update(self, new_scale=None):
         """
@@ -450,7 +448,7 @@ class DerivScaler(GradScaler):
         if not self._enabled:
             return False
 
-        if self._found_inf == None:
+        if self._found_inf is None:
             logger.warning(
                 "deriv_scaler.scale() never got called, "
                 "please make sure there are no derivative nodes in the model."

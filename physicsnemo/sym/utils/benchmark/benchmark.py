@@ -15,7 +15,7 @@
 # limitations under the License.
 
 import time
-from typing import Any, Callable, Optional
+from typing import Callable, Optional
 import torch
 from torch.profiler import record_function, ProfilerActivity
 

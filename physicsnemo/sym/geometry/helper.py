@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import numpy as np
-import sympy
 import itertools
 
 from physicsnemo.sym.utils.sympy import np_lambdify

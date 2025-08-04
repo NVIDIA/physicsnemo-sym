@@ -17,7 +17,6 @@
 from physicsnemo.sym.eq.pdes.turbulence_zero_eq import ZeroEquation
 import torch
 import numpy as np
-import os
 
 
 def test_zero_equation():
@@ -27,9 +26,9 @@ def test_zero_equation():
     z = np.random.rand(1024, 1)
     t = np.random.rand(1024, 1)
 
-    u = np.exp(2 * x + y + z + t)
-    v = np.exp(x + 2 * y + z + t)
-    w = np.exp(x + y + 2 * z + t)
+    np.exp(2 * x + y + z + t)
+    np.exp(x + 2 * y + z + t)
+    np.exp(x + y + 2 * z + t)
     u__x = 2 * np.exp(2 * x + y + z + t)
     u__y = 1 * np.exp(2 * x + y + z + t)
     u__z = 1 * np.exp(2 * x + y + z + t)

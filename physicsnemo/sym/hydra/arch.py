@@ -20,8 +20,8 @@ Architecture/Model configs
 
 from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore
-from omegaconf import MISSING, SI, II
-from typing import Any, Union, List, Dict, Tuple
+from omegaconf import MISSING
+from typing import Any, Tuple
 
 
 @dataclass
@@ -92,7 +92,6 @@ class FourierConf(ModelConf):
 
 @dataclass
 class FullyConnectedConf(ModelConf):
-
     arch_type: str = "fully_connected"
     layer_size: int = 512
     nr_layers: int = 6
@@ -132,7 +131,6 @@ class FusedFourierNetConf(ModelConf):
 
 @dataclass
 class FusedGridEncodingNetConf(ModelConf):
-
     arch_type: str = "fused_hash_encoding"
     layer_size: int = 128
     nr_layers: int = 6

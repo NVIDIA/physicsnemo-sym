@@ -34,7 +34,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import numpy as np
 import torch
 import torch.nn.functional as F
 from torch.nn.modules.utils import _triple

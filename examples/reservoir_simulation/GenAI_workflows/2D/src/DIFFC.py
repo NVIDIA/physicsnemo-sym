@@ -16,6 +16,7 @@
 """
 @Modified by: clement etienam
 """
+
 import math
 from pathlib import Path
 from random import random
@@ -250,7 +251,6 @@ class ResnetBlock(nn.Module):
         self.res_conv = nn.Conv2d(dim, dim_out, 1) if dim != dim_out else nn.Identity()
 
     def forward(self, x, time_emb=None):
-
         scale_shift = None
         if exists(self.mlp) and exists(time_emb):
             time_emb = self.mlp(time_emb)
@@ -552,7 +552,9 @@ class GaussianDiffusion(nn.Module):
             "pred_noise",
             "pred_x0",
             "pred_v",
-        }, "objective must be either pred_noise (predict noise) or pred_x0 (predict image start) or pred_v (predict v [v-parameterization as defined in appendix D of progressive distillation paper, used in imagen-video successfully])"
+        }, (
+            "objective must be either pred_noise (predict noise) or pred_x0 (predict image start) or pred_v (predict v [v-parameterization as defined in appendix D of progressive distillation paper, used in imagen-video successfully])"
+        )
 
         if beta_schedule == "linear":
             beta_schedule_fn = linear_beta_schedule
@@ -585,9 +587,8 @@ class GaussianDiffusion(nn.Module):
 
         # helper function to register buffer from float64 to float32
 
-        register_buffer = lambda name, val: self.register_buffer(
-            name, val.to(torch.float32)
-        )
+        def register_buffer(name, val):
+            return self.register_buffer(name, val.to(torch.float32))
 
         register_buffer("betas", betas)
         register_buffer("alphas_cumprod", alphas_cumprod)
@@ -710,7 +711,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample(self, x, t: int, x_self_cond=None):
-        b, *_, device = *x.shape, x.device
+        _b, *_, _device = *x.shape, x.device
         batched_times = torch.full((x.shape[0],), t, device=x.device, dtype=torch.long)
         model_mean, _, model_log_variance, x_start = self.p_mean_variance(
             x=x, t=batched_times, x_self_cond=x_self_cond, clip_denoised=True
@@ -721,7 +722,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop(self, shape, return_all_timesteps=False):
-        batch, device = shape[0], self.betas.device
+        _batch, device = shape[0], self.betas.device
 
         img = torch.randn(shape, device=device)
         # img = inn
@@ -745,7 +746,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def p_sample_loop_clem(self, shape, inn, return_all_timesteps=False):
-        batch, device = shape[0], self.betas.device
+        _batch, _device = shape[0], self.betas.device
 
         # img = torch.randn(shape, device = device)
         img = inn
@@ -769,7 +770,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def ddim_sample(self, shape, return_all_timesteps=False):
-        batch, device, total_timesteps, sampling_timesteps, eta, objective = (
+        batch, device, total_timesteps, sampling_timesteps, eta, _objective = (
             shape[0],
             self.betas.device,
             self.num_timesteps,
@@ -824,7 +825,7 @@ class GaussianDiffusion(nn.Module):
 
     @torch.no_grad()
     def ddim_sample_clem(self, shape, inn, return_all_timesteps=False):
-        batch, device, total_timesteps, sampling_timesteps, eta, objective = (
+        batch, device, total_timesteps, sampling_timesteps, eta, _objective = (
             shape[0],
             self.betas.device,
             self.num_timesteps,
@@ -978,14 +979,21 @@ class GaussianDiffusion(nn.Module):
         return loss.mean()
 
     def forward(self, img, *args, **kwargs):
-        b, c, h, w, device, img_size, = (
+        (
+            b,
+            _c,
+            h,
+            w,
+            device,
+            img_size,
+        ) = (
             *img.shape,
             img.device,
             self.image_size,
         )
-        assert (
-            h == img_size and w == img_size
-        ), f"height and width of image must be {img_size}"
+        assert h == img_size and w == img_size, (
+            f"height and width of image must be {img_size}"
+        )
         t = torch.randint(0, self.num_timesteps, (b,), device=device).long()
 
         img = normalize_to_neg_one_to_one(img)
@@ -1070,9 +1078,9 @@ class Trainer(object):
 
         self.model = diffusion_model
 
-        assert has_int_squareroot(
-            num_samples
-        ), "number of samples must have an integer square root"
+        assert has_int_squareroot(num_samples), (
+            "number of samples must have an integer square root"
+        )
         self.num_samples = num_samples
         self.save_and_sample_every = save_and_sample_every
 
@@ -1168,9 +1176,7 @@ class Trainer(object):
             total=self.train_num_steps,
             disable=not accelerator.is_main_process,
         ) as pbar:
-
             while self.step < self.train_num_steps:
-
                 total_loss = 0.0
 
                 for _ in range(self.gradient_accumulate_every):

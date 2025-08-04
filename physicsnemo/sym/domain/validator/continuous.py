@@ -61,7 +61,6 @@ class PointwiseValidator(Validator):
         plotter: ValidatorPlotter = None,
         requires_grad: bool = False,
     ):
-
         # TODO: add support for other datasets?
 
         # get dataset and dataloader
@@ -94,7 +93,6 @@ class PointwiseValidator(Validator):
         self.plotter = plotter
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-
         invar_cpu = {key: [] for key in self.dataset.invar_keys}
         true_outvar_cpu = {key: [] for key in self.dataset.outvar_keys}
         pred_outvar_cpu = {key: [] for key in self.dataset.outvar_keys}
@@ -247,7 +245,6 @@ class PointVTKValidator(PointwiseValidator):
         )
 
     def save_results(self, name, results_dir, writer, save_filetypes, step):
-
         invar_cpu = {key: [] for key in self.dataset.invar_keys}
         true_outvar_cpu = {key: [] for key in self.dataset.outvar_keys}
         pred_outvar_cpu = {key: [] for key in self.dataset.outvar_keys}

@@ -39,7 +39,6 @@ from physicsnemo.sym.domain.validator import PointwiseValidator
 from physicsnemo.sym.domain.inferencer import PointwiseInferencer
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.key import Key
-from physicsnemo.sym.node import Node
 from physicsnemo.sym.eq.pdes.navier_stokes import NavierStokes
 from physicsnemo.sym.eq.pdes.basic import NormalDotVec
 
@@ -298,12 +297,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             ),
             output_names=["p"],
             metrics={
-                "force_x_r"
-                + str(radius): lambda var: torch.sum(
+                "force_x_r" + str(radius): lambda var: torch.sum(
                     var["normal_x"] * var["area"] * var["p"]
                 ),
-                "force_y_r"
-                + str(radius): lambda var: torch.sum(
+                "force_y_r" + str(radius): lambda var: torch.sum(
                     var["normal_y"] * var["area"] * var["p"]
                 ),
             },

@@ -14,10 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-""" PhysicsNeMo nodes
-"""
+"""PhysicsNeMo nodes"""
+
 from sympy import Add
-import torch
 from .constants import diff_str
 from .key import Key
 
@@ -57,9 +56,9 @@ class Node:
 
         # check that model has name if optimizable
         if self._optimize:
-            assert hasattr(
-                self.evaluate, "name"
-            ), "Optimizable nodes require model to have unique name"
+            assert hasattr(self.evaluate, "name"), (
+                "Optimizable nodes require model to have unique name"
+            )
 
     @classmethod
     def from_sympy(cls, eq, out_name, freeze_terms=[], detach_names=[]):
@@ -87,7 +86,6 @@ class Node:
         """
 
         from physicsnemo.sym.utils.sympy.torch_printer import (
-            torch_lambdify,
             _subs_derivatives,
             SympyToTorch,
         )

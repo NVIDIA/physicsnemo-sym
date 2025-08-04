@@ -15,7 +15,6 @@
 # limitations under the License.
 
 import torch
-from physicsnemo.sym.constants import diff
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.models.arch import Arch
 

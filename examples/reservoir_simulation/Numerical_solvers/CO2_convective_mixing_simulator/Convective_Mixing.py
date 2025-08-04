@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 print(".........................IMPORT SOME LIBRARIES.....................")
 import os
 import numpy as np
@@ -34,7 +35,6 @@ def is_available():
 Yet = is_available()
 if Yet == 0:
     print("GPU Available with CUDA")
-    import cupy as cp
     from numba import cuda
 
     print(cuda.detect())  # Print the GPU information
@@ -46,8 +46,6 @@ if Yet == 0:
     sess = tf.compat.v1.InteractiveSession(config=config)
 else:
     print("No GPU Available")
-    import numpy as cp
-from joblib import Parallel, delayed
 import matplotlib.pyplot as plt
 
 os.environ["KERAS_BACKEND"] = "tensorflow"
@@ -57,7 +55,6 @@ import numba as nb
 from numba import prange
 import numpy.matlib
 from matplotlib import rcParams
-from drawnow import drawnow, figure
 from matplotlib.colors import LinearSegmentedColormap
 
 rcParams["font.family"] = "sans-serif"
@@ -307,9 +304,6 @@ def round_divmod(b, a):
     return q, r / d
 
 
-import imagesc
-
-
 def draw_fig(c, Tt, namee, itrr):
     # Tt = T
 
@@ -460,7 +454,7 @@ for itr in range(itermx):
                     / (kx[i, j] + kz[i, j] * beta**2)
                     * (
                         kx[i, j] * (strfun[i - 1, j] + strfun[i + 1, j])
-                        + beta**2 * kz[i, j] * ((strfun[i, j - 1] + strfun[i, j + 1]))
+                        + beta**2 * kz[i, j] * (strfun[i, j - 1] + strfun[i, j + 1])
                         - 0.5 * RaC * (c[i + 1, j] - c[i - 1, j]) * dx
                         - 0.5 * Le * RaT * (T[i + 1, j] - T[i - 1, j]) * dx
                     )

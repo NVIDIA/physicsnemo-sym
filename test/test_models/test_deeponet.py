@@ -19,7 +19,6 @@ from physicsnemo.sym.models.fully_connected import FullyConnectedArch
 from physicsnemo.sym.models.fourier_net import FourierNetArch
 from physicsnemo.sym.models.pix2pix import Pix2PixArch
 import torch
-import numpy as np
 from physicsnemo.sym.key import Key
 import pytest
 from physicsnemo.sym.graph import Graph

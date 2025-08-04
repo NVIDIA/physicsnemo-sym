@@ -17,12 +17,12 @@
 """
 Hydra related configs
 """
+
 import pathlib
 from dataclasses import dataclass, field
 from hydra.core.config_store import ConfigStore
-from hydra.conf import RunDir
-from omegaconf import OmegaConf, MISSING, SI, II
-from typing import Any, Union, List, Dict
+from omegaconf import OmegaConf, SI
+from typing import Any
 
 
 @dataclass

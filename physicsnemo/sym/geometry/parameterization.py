@@ -16,9 +16,8 @@
 
 import itertools
 import numpy as np
-from typing import Dict, List, Union, Tuple, Callable, Optional
+from typing import Dict, Union, Tuple, Callable, Optional
 import sympy
-from typing import Callable
 from chaospy.distributions.sampler.sequences.primes import create_primes
 from chaospy.distributions.sampler.sequences.van_der_corput import (
     create_van_der_corput_samples as create_samples,

@@ -90,7 +90,6 @@ class FNO1DEncoder(nn.Module):
         self.padding_type = padding_type
 
     def forward(self, x: Tensor) -> Tensor:
-
         if self.coord_features:
             coord_feat = self.meshgrid(list(x.shape), x.device)
             x = torch.cat((x, coord_feat), dim=1)
@@ -130,7 +129,6 @@ class FNO2DEncoder(nn.Module):
         activation_fn: Activation = Activation.GELU,
         coord_features: bool = True,
     ) -> None:
-
         super().__init__()
         self.in_channels = in_channels
         self.nr_fno_layers = nr_fno_layers
@@ -168,9 +166,9 @@ class FNO2DEncoder(nn.Module):
         self.padding_type = padding_type
 
     def forward(self, x: Tensor) -> Tensor:
-        assert (
-            x.dim() == 4
-        ), "Only 4D tensors [batch, in_channels, grid_x, grid_y] accepted for 2D FNO"
+        assert x.dim() == 4, (
+            "Only 4D tensors [batch, in_channels, grid_x, grid_y] accepted for 2D FNO"
+        )
 
         if self.coord_features:
             coord_feat = self.meshgrid(list(x.shape), x.device)
@@ -258,7 +256,6 @@ class FNO3DEncoder(nn.Module):
         self.padding_type = padding_type
 
     def forward(self, x: Tensor) -> Tensor:
-
         if self.coord_features:
             coord_feat = self.meshgrid(list(x.shape), x.device)
             x = torch.cat((x, coord_feat), dim=1)
@@ -443,9 +440,9 @@ class FNOArch(Arch):
 
         self.latent_key = self.decoder_net.input_keys
         self.latent_key_dict = {str(var): var.size for var in self.latent_key}
-        assert (
-            len(self.latent_key) == 1
-        ), "FNO decoder network should only have a single input key"
+        assert len(self.latent_key) == 1, (
+            "FNO decoder network should only have a single input key"
+        )
         self.latent_key = str(self.latent_key[0])
 
         in_channels = sum(self.input_key_dict.values())
@@ -508,9 +505,9 @@ class FNOArch(Arch):
         For details on the "exact" gradient calculation refer to section 3.3 in:
         https://arxiv.org/pdf/2111.03794.pdf
         """
-        assert (
-            len(domain_length) == self.dimension
-        ), "Domain length must be same length as the dimension of the model"
+        assert len(domain_length) == self.dimension, (
+            "Domain length must be same length as the dimension of the model"
+        )
         self.domain_length = domain_length
 
         logger.warning(
@@ -534,16 +531,18 @@ class FNOArch(Arch):
         for var in derivatives:
             dx_name = str(var).split("__")  # Split name to get original var names
             if len(dx_name) == 2:  # First order
-                assert (
-                    dx_name[1] in ["x", "y", "z"][: self.dimension]
-                ), f"Invalid first-order derivative {str(var)} for {self.dimension}d FNO"
+                assert dx_name[1] in ["x", "y", "z"][: self.dimension], (
+                    f"Invalid first-order derivative {str(var)} for {self.dimension}d FNO"
+                )
                 self.derivative_keys.append(var)
                 self.first_order_pino = True
             elif len(dx_name) == 3:
                 assert (
                     dx_name[1] in ["x", "y", "z"][: self.dimension]
                     and dx_name[1] == dx_name[2]
-                ), f"Invalid second-order derivative {str(var)} for {self.dimension}d FNO"
+                ), (
+                    f"Invalid second-order derivative {str(var)} for {self.dimension}d FNO"
+                )
                 self.derivative_keys.append(var)
                 self.second_order_pino = True
             elif len(dx_name) > 3:

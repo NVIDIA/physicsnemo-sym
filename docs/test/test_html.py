@@ -1,6 +1,4 @@
 from pathlib import Path
-from sphinx.application import Sphinx
-import logging
 
 
 def check_error_log(
@@ -33,11 +31,10 @@ def check_error_log(
         i = 0
         print(f"Number of lines in warnings log file: {len(lines)}")
         while i < len(lines):
-
             line_str = lines[i]
             # Make sure multi-line errors are included
             # Sphinx logs end with this escape character we can check for (for color)
-            while not "[39;49;00m" in line_str and i < len(lines):
+            while "[39;49;00m" not in line_str and i < len(lines):
                 i += 1
                 line_str = line_str + lines[i]
             i += 1

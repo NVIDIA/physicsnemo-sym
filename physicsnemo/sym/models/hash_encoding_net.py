@@ -24,10 +24,8 @@ import itertools
 import physicsnemo.sym.models.fully_connected as fully_connected
 from physicsnemo.sym.models.activation import Activation
 from physicsnemo.models.layers.interpolation import (
-    _grid_knn_idx,
     _hyper_cube_weighting,
     smooth_step_2,
-    linear_step,
 )
 from physicsnemo.sym.models.arch import Arch
 from physicsnemo.sym.key import Key
@@ -103,13 +101,9 @@ class MultiresolutionHashNetArch(Arch):
         self.params_var = [
             x for x in self.input_key_dict if x not in ["x", "y", "z", "t"]
         ]
-        in_features_xyzt = sum(
-            (v for k, v in self.input_key_dict.items() if k in self.xyzt_var)
-        )
         in_features_params = sum(
             (v for k, v in self.input_key_dict.items() if k in self.params_var)
         )
-        in_features = in_features_xyzt + in_features_params
         out_features = sum(self.output_key_dict.values())
         if len(self.params_var) == 0:
             self.params_var = None

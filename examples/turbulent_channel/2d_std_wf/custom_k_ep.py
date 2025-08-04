@@ -14,13 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Equations related to Navier Stokes Equations
-"""
+"""Equations related to Navier Stokes Equations"""
 
 from sympy import Symbol, Function, Number, log, Abs, simplify
 
 from physicsnemo.sym.eq.pde import PDE
-from physicsnemo.sym.node import Node
 
 
 class kEpsilonInit(PDE):
@@ -95,7 +93,6 @@ class kEpsilon(PDE):
         C_ep1 = 1.44
         C_ep2 = 1.92
         C_mu = 0.09
-        E = 9.793
 
         # Turbulent Viscosity
         nu_t = C_mu * (k**2) / (ep + 1e-4)
@@ -176,8 +173,6 @@ class kEpsilonStdWF(PDE):
         # Model constants
         C_mu = 0.09
         E = 9.793
-        C_k = -0.36
-        B_k = 8.15
         karman_constant = 0.4187
 
         # Turbulent Viscosity

@@ -158,7 +158,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     # add validator
     file_path = "openfoam/cavity_uniformVel0.csv"
     if os.path.exists(to_absolute_path(file_path)):
-
         mapping = {"Points:0": "x", "Points:1": "y", "U:0": "u", "U:1": "v", "p": "p"}
         openfoam_var = csv_to_dict(to_absolute_path(file_path), mapping)
         openfoam_var["x"] += -width / 2  # center OpenFoam data

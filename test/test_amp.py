@@ -20,7 +20,7 @@ import torch.nn as nn
 
 from physicsnemo.sym.amp import DerivScaler, AmpManager
 from physicsnemo.sym.eq.derivatives import gradient_autodiff
-from physicsnemo.sym import physicsnemo_ext
+from physicsnemo.sym import physicsnemo_ext  # noqa: F401
 
 
 Tensor = torch.Tensor
@@ -201,12 +201,12 @@ def test_amp_manager():
 
     # scaler_enbaled
     manager.enabled = False
-    assert manager.scaler_enabled == False
+    assert not manager.scaler_enabled
 
     # scaler is not enabled for bfloat16
     manager.enabled = True
     manager.dtype = "bfloat16"
-    assert manager.scaler_enabled == False
+    assert not manager.scaler_enabled
 
 
 @skip_if_no_gpu

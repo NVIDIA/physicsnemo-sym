@@ -16,6 +16,7 @@
 """
 @Author : Clement Etienam
 """
+
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import pickle
@@ -27,7 +28,6 @@ import datetime
 import multiprocessing
 from sklearn.model_selection import train_test_split
 from numpy import linalg as LA
-import numpy
 import gzip
 from copy import copy
 from joblib import Parallel, delayed
@@ -149,7 +149,6 @@ def getoptimumkcost(X, i, training_master, oldfolder):
 
 
 def best_fit(X, Y):
-
     xbar = sum(X) / len(X)
     ybar = sum(Y) / len(Y)
     n = len(X)  # or len(Y)
@@ -163,7 +162,6 @@ def best_fit(X, Y):
 
 
 def Performance_plot_cost(CCR, Trued, stringg, training_master, oldfolder):
-
     CoDview = np.zeros((1, Trued.shape[1]))
     R2view = np.zeros((1, Trued.shape[1]))
 
@@ -434,7 +432,6 @@ def PREDICTION_CCR__MACHINE(
     deg,
     experts,
 ):
-
     filenamex = "clfx_%d.asv" % ii
     filenamey = "clfy_%d.asv" % ii
 

@@ -17,7 +17,6 @@
 from typing import Dict
 import numpy as np
 import torch
-import torch.nn.functional as F
 import os
 import physicsnemo
 from physicsnemo.sym.hydra import PhysicsNeMoConfig
@@ -29,12 +28,10 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.domain.constraint import SupervisedGridConstraint
 from physicsnemo.sym.domain.validator import GridValidator
 from physicsnemo.sym.dataset import DictGridDataset
-from physicsnemo.sym.utils.io.plotter import GridValidatorPlotter
 from NVRS import *
 from utilities import load_FNO_dataset2, preprocess_FNO_mat
 from ops import dx, ddx
 from physicsnemo.sym.models.afno.afno import *
-import shutil
 import cupy as cp
 import scipy.io as sio
 import requests
@@ -716,7 +713,6 @@ class Black_oil(torch.nn.Module):
         self.approach = approach
 
     def forward(self, input_var: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
-
         # get inputs
 
         u = input_var["pressure"]
@@ -735,7 +731,6 @@ class Black_oil(torch.nn.Module):
         dxf = 1.0 / u.shape[3]
 
         if self.approach == 1:
-
             u = u * self.pini_alt
             pini = pini * self.pini_alt
             # Pressure equation Loss
@@ -797,8 +792,8 @@ class Black_oil(torch.nn.Module):
                 (self.UO * self.BO),
             )
 
-            krw = torch.square(S)
-            kroil = torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
+            torch.square(S)
+            torch.square(torch.sub(torch.ones(S.shape, device=u.device), S))
             Mt = Mw + Mo
             a1 = torch.mul(Mt, a)  # overall Effective permeability
             a1water = torch.mul(Mw, a)  # water Effective permeability
@@ -1067,7 +1062,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             print("")
             print("please try again and select value between 1-2")
         else:
-
             break
 
     if not os.path.exists(to_absolute_path("../PACKETS")):
@@ -1094,21 +1088,18 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 print("")
                 print("please try again and select value between 1-3")
             else:
-
                 break
 
     # Varaibles needed for NVRS
     # Varaibles needed for NVRS
     nx = cfg.custom.NVRS.nx
     ny = cfg.custom.NVRS.ny
-    nz = cfg.custom.NVRS.nz
     BO = cfg.custom.NVRS.BO  # oil formation volume factor
     BW = cfg.custom.NVRS.BW  # Water formation volume factor
     UW = cfg.custom.NVRS.UW  # water viscosity in cP
     UO = cfg.custom.NVRS.UO  # oil viscosity in cP
     DX = cfg.custom.NVRS.DX  # size of pixel in x direction
     DY = cfg.custom.NVRS.DY  # sixze of pixel in y direction
-    DZ = cfg.custom.NVRS.DZ  # sizze of pixel in z direction
 
     DX = cp.float32(DX)
     DY = cp.float32(DY)
@@ -1116,24 +1107,19 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     UO = cp.float32(UO)  # oil viscosity in cP
     SWI = cp.float32(cfg.custom.NVRS.SWI)
     SWR = cp.float32(cfg.custom.NVRS.SWR)
-    CFO = cp.float32(cfg.custom.NVRS.CFO)  # oil compressibility in 1/psi
-    IWSw = cfg.custom.NVRS.IWSw  # initial water saturation
+    cp.float32(cfg.custom.NVRS.CFO)  # oil compressibility in 1/psi
     pini_alt = cfg.custom.NVRS.pini_alt
-    P1 = cp.float32(pini_alt)  # Bubble point pressure psia
-    PB = P1
-    mpor = cfg.custom.NVRS.mpor
-    hpor = cfg.custom.NVRS.hpor  # minimum and maximum porosity
+    cp.float32(pini_alt)  # Bubble point pressure psia
     BW = cp.float32(BW)  # Water formation volume factor
     BO = cp.float32(BO)  # Oil formation volume factor
-    PATM = cp.float32(cfg.custom.NVRS.PATM)  # Atmospheric pressure in psi
+    cp.float32(cfg.custom.NVRS.PATM)  # Atmospheric pressure in psi
 
     # training
     LUB = cfg.custom.NVRS.LUB
     HUB = cfg.custom.NVRS.HUB  # Permeability rescale
     aay, bby = cfg.custom.NVRS.aay, cfg.custom.NVRS.bby  # Permeability range mD
-    Low_K, High_K = aay, bby
+    _Low_K, _High_K = aay, bby
 
-    batch_size = cfg.custom.NVRS.batch_size  #'size of simulated labelled data to run'
     timmee = (
         cfg.custom.NVRS.timmee
     )  # float(input ('Enter the time step interval duration for simulation (days): '))
@@ -1142,24 +1128,17 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     )  # float(input ('Enter the maximum time in days for simulation(days): '))
     MAXZ = cfg.custom.NVRS.MAXZ  # reference maximum time in days of simulation
     steppi = int(max_t / timmee)
-    factorr = cfg.custom.NVRS.factorr  # from [0 1] excluding the limits for PermZ
-    LIR = cfg.custom.NVRS.LIR  # lower injection rate
     UIR = cfg.custom.NVRS.UIR  # uppwer injection rate
-    input_channel = (
-        cfg.custom.NVRS.input_channel
-    )  # [Perm, Q,QW,Phi,dt, initial_pressure, initial_water_sat]
 
-    injectors = cfg.custom.WELLSPECS.water_injector_wells
-    producers = cfg.custom.WELLSPECS.producer_wells
-    N_injw = len(cfg.custom.WELLSPECS.water_injector_wells)  # Number of water injectors
-    N_pr = len(cfg.custom.WELLSPECS.producer_wells)  # Number of producers
+    len(cfg.custom.WELLSPECS.water_injector_wells)  # Number of water injectors
+    len(cfg.custom.WELLSPECS.producer_wells)  # Number of producers
 
     # tc2 = Equivalent_time(timmee,2100,timmee,max_t)
     tc2 = Equivalent_time(timmee, MAXZ, timmee, max_t)
-    dt = np.diff(tc2)[0]  # Time-step
+    np.diff(tc2)[0]  # Time-step
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Training4.mat"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1I-27_S53ORRFB_hIN_41r3Ntc6PpOE40",
@@ -1180,7 +1159,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         data_use1 = matt["OUTPUT"]
 
     bb = os.path.isfile(to_absolute_path("../PACKETS/Test4.mat"))
-    if bb == False:
+    if not bb:
         print("....Downloading Please hold.........")
         download_file_from_google_drive(
             "1G4Cvg8eIObyBK0eoo7iX-0hhMTnpJktj",

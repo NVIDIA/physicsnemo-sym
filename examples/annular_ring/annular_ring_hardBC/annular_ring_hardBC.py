@@ -30,7 +30,6 @@ from physicsnemo.sym.domain import Domain
 from physicsnemo.sym.geometry import Bounds
 from physicsnemo.sym.geometry.primitives_2d import Rectangle, Circle
 from physicsnemo.sym.domain.constraint import (
-    PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
     IntegralBoundaryConstraint,
 )
@@ -208,7 +207,6 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     cylinder_center = hard_bc.cylinder_center
     outer_cylinder_radius = hard_bc.outer_cylinder_radius
     inner_cylinder_radius = hard_bc.inner_cylinder_radius
-    inlet_vel = hard_bc.inlet_vel
 
     # make geometry
     x, y = Symbol("x"), Symbol("y")

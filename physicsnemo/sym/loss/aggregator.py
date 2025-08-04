@@ -17,7 +17,6 @@
 # Import libraries
 import torch
 import logging
-import numpy as np
 from torch import nn
 from typing import Dict, List, Optional, Callable, Union
 
@@ -43,7 +42,7 @@ class Aggregator(nn.Module):
         self.init_loss: torch.Tensor = torch.tensor(0.0, device=self.device)
 
         def weigh_losses_initialize(
-            weights: Optional[Dict[str, float]]
+            weights: Optional[Dict[str, float]],
         ) -> Callable[
             [Dict[str, torch.Tensor], Optional[Dict[str, float]]],
             Dict[str, torch.Tensor],
@@ -184,7 +183,6 @@ class GradNorm(Aggregator):
 
 
 class ResNorm(Aggregator):
-
     """
     Residual normalization for loss aggregation
     Contributors: T. Nandi, D. Van Essendelft, M. A. Nabian

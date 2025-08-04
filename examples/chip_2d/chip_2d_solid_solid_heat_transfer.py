@@ -19,26 +19,24 @@ import warnings
 
 import torch
 import numpy as np
-from sympy import Symbol, Eq, Or, And
+from sympy import Symbol, Eq
 
 import physicsnemo.sym
-from physicsnemo.sym.hydra import to_absolute_path, instantiate_arch, PhysicsNeMoConfig
+from physicsnemo.sym.hydra import to_absolute_path, PhysicsNeMoConfig
 from physicsnemo.sym.utils.io import csv_to_dict
 from physicsnemo.sym.solver import Solver
 from physicsnemo.sym.domain import Domain
-from physicsnemo.sym.geometry import Bounds
 from physicsnemo.sym.geometry.primitives_2d import Rectangle, Line, Channel2D
 from physicsnemo.sym.eq.pdes.navier_stokes import GradNormal
 from physicsnemo.sym.eq.pdes.diffusion import Diffusion, DiffusionInterface
 from physicsnemo.sym.domain.constraint import (
     PointwiseBoundaryConstraint,
     PointwiseInteriorConstraint,
-    IntegralBoundaryConstraint,
 )
 from physicsnemo.sym.models.activation import Activation
 from physicsnemo.sym.domain.monitor import PointwiseMonitor
 from physicsnemo.sym.domain.validator import PointwiseValidator
-from physicsnemo.sym.utils.io.plotter import ValidatorPlotter, InferencerPlotter
+from physicsnemo.sym.utils.io.plotter import ValidatorPlotter
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.node import Node
 from physicsnemo.sym.models.modified_fourier_net import ModifiedFourierNetArch
@@ -54,12 +52,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     heat_sink_base_dim = (1.0, 0.2)
     fin_origin = heat_sink_base_origin
     fin_dim = (1.0, 0.6)
-    total_fins = 1
     box_origin = (-1.1, -0.5)
     box_dim = (1.2, 1.0)
     source_origin = (-0.7, -0.5)
     source_dim = (0.4, 0.0)
-    source_length = 0.4
 
     inlet_temp = 25.0
     conductivity_I = 0.01
@@ -122,7 +118,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
             heat_sink_base_origin[1] + heat_sink_base_dim[1],
         ),
     )
-    fin_center = (fin_origin[0] + fin_dim[0] / 2, fin_origin[1] + fin_dim[1] / 2)
+    (fin_origin[0] + fin_dim[0] / 2, fin_origin[1] + fin_dim[1] / 2)
     fin = Rectangle(
         fin_origin, (fin_origin[0] + fin_dim[0], fin_origin[1] + fin_dim[1])
     )
@@ -140,11 +136,11 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     lr_geo = geo - box
     hr_geo = geo & box
 
-    lr_bounds_x = (channel_origin[0], channel_origin[0] + channel_dim[0])
-    lr_bounds_y = (channel_origin[1], channel_origin[1] + channel_dim[1])
+    (channel_origin[0], channel_origin[0] + channel_dim[0])
+    (channel_origin[1], channel_origin[1] + channel_dim[1])
 
-    hr_bounds_x = (box_origin[0], box_origin[0] + box_dim[0])
-    hr_bounds_y = (box_origin[1], box_origin[1] + box_dim[1])
+    (box_origin[0], box_origin[0] + box_dim[0])
+    (box_origin[1], box_origin[1] + box_dim[1])
 
     # inlet and outlet
     inlet = Line(
