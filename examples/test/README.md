@@ -14,9 +14,11 @@ For example, the command to run all of the unit tests on gpus with ID 0 and 1 is
 python run_experiments.py --mode=unit_tests --gpus=0,1
 ```
 
-NOTE, before running experiments please install quadpy with the command
-`pip install quadpy GPUtil gdown`.
-This library is not included in the docker image for technical reasons.
+NOTE: Before running experiments, install QuadPy and related utilities:
+```bash
+pip install quadpy GPUtil gdown
+```
+This library is not included in the Docker image for technical reasons.
 
 ## Checking Convergence
 

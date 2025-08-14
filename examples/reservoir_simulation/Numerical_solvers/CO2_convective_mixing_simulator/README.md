@@ -1,5 +1,5 @@
 # GPU Based CO<sub>2</sub>-Brin sequestration 
-![Nvidia-Energy](https://www.dgidocs.info/slider/images/media/resources_reservoirsim.jpg)
+![NVIDIA-Energy](https://www.dgidocs.info/slider/images/media/resources_reservoirsim.jpg)
 
 
 ## **Forward problem**
@@ -232,7 +232,7 @@ sudo chmod +x ./scripts/docker/docker-run.sh
 
 ## Getting Started:
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-- The code is developed in a Linux enviroment.
+- The code is developed in a Linux environment.
 
 ![alt text](Evolution.gif)**Figure 1**: CO2 dissolution in brine over some epoch iterations 
 
@@ -268,5 +268,5 @@ cd ..
 conda deactivate
 ```
 ## Author:
-- Clement Etienam- Solution Architect-Energy @Nvidia  Email: cetienam@nvidia.com
+- Clement Etienam- Solution Architect-Energy @NVIDIA  Email: cetienam@nvidia.com
 

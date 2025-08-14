@@ -8,7 +8,7 @@ Calibration of subsurface structures is an important step to forecast fluid dyna
 Reservoir model calibration is applicable and relevant for locating new hydrocarbon deposits and for CCUS stratigraphic trapping initiatives in many energy companies. Energy companies are aiming to accelerate their forward simulation codes for precise and detailed subsurface/dynamic/Petro-physical mappings of their assets/plays. A fascinating and easy to implement meshless approximation to solve reservoir simulation forward problems using physics constrained/informed deep neural networks show promising results.In this project, a physics informed neural operators (PINOs) is developed for surrogating a Two phase flow black oil model and a recently developed weighted adaptive regularised ensemble kalman inversion method is used for solving the inverse problem.
 
 
-The aim of this project is to develop an integrated workflow, where the finite volume fully/adaptive implicit black oil reservoir simulator is replaced by a phyiscs informed neural operator. This developed PINO surrogate is now used in an inverse problem methodology. Two methods are developed for the inverse problem, a newly developed adaptive regularised ensemble alman inversion method (with various forms of exotic priors). This approach is well suited for forward and inverse uncertainty quantifiication and a gradient based conjugate gradient method with line-search methodlogy and armijio conditions being adhered to.
+The aim of this project is to develop an integrated workflow, where the finite volume fully/adaptive implicit black oil reservoir simulator is replaced by a phyiscs informed neural operator. This developed PINO surrogate is now used in an inverse-problem methodology. A newly developed adaptive regularised ensemble Kalman inversion method with covariance localisation, together with a mixture-of-experts approach, is implemented. This approach—called _PINO-CCR_—is well suited for forward and inverse uncertainty quantification, as is a gradient-based conjugate-gradient method with line-search that satisfies Armijo conditions.
 
 
 ## Methods for the forward and inverse problem (In the weeds):
@@ -146,7 +146,7 @@ The final pressure and saturation equations for a two-phase oil-water flow is
 **Fourier Neural operator based machine infused with physics constraint from black oil model ansatz**
 
 An FNO model architecture, introduced in [54], is shown below.
-![Nvidia-Energy](https://zongyi-li.github.io/assets/img/fourier_layer.png)
+![NVIDIA-Energy](https://zongyi-li.github.io/assets/img/fourier_layer.png)
 
 The goal is to replace the Finite volume simulator with an FNO surrogate.
 
@@ -185,8 +185,8 @@ Loss_{cfd} =V(F,u;T)_{pressure} + V(u,S_w;t)_{saturation}
 
 
 ## Important Dependencies & Prerequisites:
-- Nvidia's in-house GPU based black oil reservoir simulator - **NVRS**
-- Nvidia's PhysicsNeMo v22.09 :[link](https://docs.nvidia.com/deeplearning/physicsnemo/user_guide/getting_started/installation.html)
+- NVIDIA's in-house GPU based black oil reservoir simulator - **NVRS**
+- NVIDIA's PhysicsNeMo v22.09 :[link](https://docs.nvidia.com/deeplearning/physicsnemo/user_guide/getting_started/installation.html)
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - pyAMGX : [link](https://github.com/shwina/pyamgx.git)
@@ -195,7 +195,7 @@ Loss_{cfd} =V(F,u;T)_{pressure} + V(u,S_w;t)_{saturation}
 
 ## Getting Started:
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-- The code is developed in a Linux enviroment.
+- The code is developed in a Linux environment.
 
 ## Installation - Bare metal / Docker
 
@@ -483,12 +483,12 @@ The result for the PINO surrogate is shown in Fig.2(a), 500 training samples was
 Refer to the included Energy SDK License Agreement in **Energy_SDK_License_Agreement.pdf** for guidance.
 
 ## Author:
-- Clement Etienam- Solution Architect-Energy @Nvidia  Email: cetienam@nvidia.com
+- Clement Etienam- Solution Architect-Energy @NVIDIA  Email: cetienam@nvidia.com
 
 ## Contributors:
-- Oleg Ovcharenko- Nvidia
-- Issam Said- Nvidia
-- Ken Hester- Nvidia
+- Oleg Ovcharenko- NVIDIA
+- Issam Said- NVIDIA
+- Ken Hester- NVIDIA
 
 
 ## References:

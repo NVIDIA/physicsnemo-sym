@@ -21,7 +21,7 @@ app_name: NVIDIA PhysicsNeMo
 header: == ${hydra.help.app_name} ==
 
 footer: |-
-  Nvidia Coorporation (https://developer.nvidia.com/physicsnemo)
+  NVIDIA Corporation (https://developer.nvidia.com/physicsnemo)
   By using this software you are agreeing to the 
   SOFTWARE DEVELOPER KITS, SAMPLES AND TOOLS LICENSE AGREEMENT
 

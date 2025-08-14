@@ -6898,7 +6898,7 @@ _, ouut_peacemann, pressure, Swater, Sgas, Soil = Forward_model_ensemble(
 )
 elapsed_time_secs2 = time.time() - start_time_plots2
 msg = (
-    "Reservoir simulation with NVidia PhysicsNeMo (CCR - Hard prediction)  took: %s secs (Wall clock time)"
+    "Reservoir simulation with NVIDIA PhysicsNeMo (CCR - Hard prediction)  took: %s secs (Wall clock time)"
     % timedelta(seconds=round(elapsed_time_secs2))
 )
 print(msg)

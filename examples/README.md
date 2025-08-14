@@ -3,9 +3,8 @@
 
 ## Introduction
 
-This repository provides sample applications demonstrating use of specific Physics-ML
-model architectures that are easy to train and deploy. These examples aim to show how
-such models can help solve real world problems.
+This repository provides sample applications that demonstrate the use of specific Physics-ML
+model architectures that are easy to train and deploy. These examples illustrate how such models can help solve real-world problems.
 
 ## Introductory
 
@@ -63,14 +62,14 @@ such models can help solve real world problems.
 
 ## Additional examples
 
-In addition to the examples in this repo, more Physics-ML usecases and examples
+In addition to the examples in this repo, more Physics-ML use cases and examples
 can be referenced from the [PhysicsNeMo examples](https://github.com/NVIDIA/physicsnemo/blob/main/examples/README.md).
 
 ## NVIDIA support
 
-In each of the example READMEs, we indicate the level of support that will be provided.
-Some examples are under active development/improvement and might involve rapid changes.
-For stable examples, please refer the tagged versions.
+Each README indicates the level of support provided.
+Some examples are under active development and may change rapidly.
+For stable examples, refer to the tagged versions.
 
 ## Feedback / Contributions
 

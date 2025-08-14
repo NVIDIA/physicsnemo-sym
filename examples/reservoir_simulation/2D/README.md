@@ -1,11 +1,11 @@
 # Reservoir Simulation Forward Modelling with a Physics Informed Neural Operator (PINO) - 2D Implementation 
-![Nvidia-Energy](https://www.dgidocs.info/slider/images/media/resources_reservoirsim.jpg)
+![NVIDIA-Energy](https://www.dgidocs.info/slider/images/media/resources_reservoirsim.jpg)
 
 ## An AI enabled Automatic History Matching Workflow with a PINO based forward solver:
-Reservoir model calibration is applicable and relevant for locating new hydrocarbon deposits and for CCUS stratigraphic trapping initiatives in many energy companies. Energy companies are aiming to accelerate their forward simulation codes for precise and detailed subsurface/dynamic/Petro-physical mappings of their assets/plays. A fascinating and easy to implement meshless approximation to solve reservoir simulation forward problems using physics constrained/informed deep neural networks show promising results.In this project, a physics informed neural operators (PINOs) is developed for surrogating a Two phase flow black oil model .
+Reservoir model calibration is applicable and relevant for locating new hydrocarbon deposits and for CCUS stratigraphic trapping initiatives in many energy companies. Energy companies are aiming to accelerate their forward simulation codes for precise and detailed subsurface/dynamic/Petro-physical mappings of their assets/plays. A fascinating and easy to implement meshless approximation to solve reservoir simulation forward problems using physics-constrained deep neural networks shows promising results. In this project, a physics-informed neural operator (PINO) is developed to surrogate a two-phase black-oil model.
 
 
-The aim of this project is to develop an integrated workflow, where the finite volume fully/adaptive implicit black oil reservoir simulator is replaced by a phyiscs informed neural operator. This approach is well suited for forward and inverse uncertainty .
+The aim of this project is to develop an integrated workflow, where the finite-volume fully/adaptive implicit black-oil reservoir simulator is replaced by a physics-informed neural operator. This approach is well suited for forward and inverse uncertainty analysis.
 
 
 ## Methods for the forward and inverse problem (In the weeds):
@@ -75,7 +75,7 @@ The final pressure and saturation equations for a two-phase oil-water flow is
 **Fourier Neural operator based machine infused with physics constraint from black oil model ansatz**
 
 An FNO model architecture, introduced in [54], is shown below.
-![Nvidia-Energy](https://zongyi-li.github.io/assets/img/fourier_layer.png)
+![NVIDIA-Energy](https://zongyi-li.github.io/assets/img/fourier_layer.png)
 
 The goal is to replace the Finite volume simulator with an FNO surrogate.
 
@@ -115,7 +115,7 @@ Loss_{cfd} =V(F,u;T)_{pressure} + V(u,S_w;t)_{saturation}
 
 ## Getting Started:
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-- The code is developed in a Linux enviroment.
+- The code is developed in a Linux environment.
 
 To run the example, launch the PhysicsNeMo container using below:
 ```bash
@@ -261,7 +261,7 @@ The result for the Psurrogate is shown in Fig.2(a-d), 500 training samples was u
 * 2 new PINO implementation accounting for the Overall Flux and water specific flux during the pde loss computation.
 * Experimental gradient based method implementd with Adam & LBFGS for comparison purposes only to the aREKI scheme.
 * Sensible initial ensemble initialisation from MPS and 6 new training images (TI's).
-* Constrained presure residual method for the fully/adaptive implict finitie volume numerical solver implemented. This method has a 2 stage V cyclec AMG, with the coarsening, aggregation, colouring & level-scheduling implemented during the restrcition operation. SOR, Gauss-Seidel, Jacobi implemented during the smoothing operation. The solution from the pressure solve serves as an initialiser for the saturation solver, which is a left-preconditioned GMRES with an ILU(0) preconditoner. 
+* Constrained pressure residual method for the fully/adaptive implicit finite-volume numerical solver implemented. This method has a two-stage V-cycle AMG with coarsening, aggregation, coloring, and level scheduling during the restriction operation. SOR, Gauss–Seidel, and Jacobi are implemented during smoothing. The pressure solution serves as an initializer for the saturation solver, which is a left-preconditioned GMRES with an ILU(0) preconditioner. 
 
 **23.02**
 * Bug Fixes
@@ -270,11 +270,11 @@ The result for the Psurrogate is shown in Fig.2(a-d), 500 training samples was u
 * First release 
 
 ## Author:
-- Clement Etienam- Solution Architect-Energy @Nvidia  Email: cetienam@nvidia.com
+- Clement Etienam- Solution Architect-Energy @NVIDIA  Email: cetienam@nvidia.com
 
 ## Contributors:
-- Oleg Ovcharenko- Nvidia
-- Issam Said- Nvidia
+- Oleg Ovcharenko- NVIDIA
+- Issam Said- NVIDIA
 
 ## References:
 [1] J.-Y. Zhu, R. Zhang, D. Pathak, T. Darrell, A. A. Efros, O. Wang, E. Shechtman, Toward multimodal image-to-image translation, in Advances in Neural Information Processing Systems, 2017, pp. 465–476.
