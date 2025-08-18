@@ -186,7 +186,7 @@ specified in the ``rec_results_freq`` parameter of its derivatives. See :ref:`hy
 The network directory folder (in this case ``'outputs/darcy_pino/validators'``) contains several plots of different 
 validation predictions.
 
-.. figure:: /images/user_guide/pino_darcy_pred.png
+.. figure:: ../../images/user_guide/pino_darcy_pred.png
    :alt: PINO Darcy Prediction
    :width: 80.0%
    :align: center
@@ -199,7 +199,7 @@ Comparison to FNO
 The TensorBoard plot below compares the validation loss of PINO (all three gradient methods) and FNO. 
 You can see that with large amounts of training data (1000 training examples), both FNO and PINO perform similarly.
 
-.. figure:: /images/user_guide/pino_darcy_tensorboard1.png
+.. figure:: ../../images/user_guide/pino_darcy_tensorboard1.png
    :alt: FNO vs PINO Darcy Tensorboard
    :width: 70.0%
    :align: center
@@ -209,7 +209,7 @@ You can see that with large amounts of training data (1000 training examples), b
 A benefit of PINO is that the PDE loss regularizes the model, meaning that it can be more effective in "small data" regimes.
 The plot below shows the validation loss when both models are trained with only 100 training examples:
 
-.. figure:: /images/user_guide/pino_darcy_tensorboard2.png
+.. figure:: ../../images/user_guide/pino_darcy_tensorboard2.png
    :alt: FNO vs PINO Darcy Tensorboard (small data regime)
    :width: 70.0%
    :align: center

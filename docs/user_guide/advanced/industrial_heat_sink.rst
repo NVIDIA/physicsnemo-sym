@@ -28,7 +28,7 @@ material. Unlike :ref:`2d_heat`, a hFTB algorithm will be used to handle the lar
 
 .. _fig-limerock_original:
 
-.. figure:: /images/user_guide/limerock_original.png
+.. figure:: ../../images/user_guide/limerock_original.png
    :alt: NVSwitch heat sink geometry
    :width: 25.0%
    :align: center
@@ -53,7 +53,7 @@ complete description can be found here [#school2018stability]_.
 
 .. _fig-hFTB_algorithm:
 
-.. figure:: /images/user_guide/hftb_algorithm.png
+.. figure:: ../../images/user_guide/hftb_algorithm.png
    :alt: hFTB algorithm
    :width: 70.0%
    :align: center
@@ -178,7 +178,7 @@ profile is shown in :numref:`fig-limerock_thermal`.
 
 .. _fig-limerock_thermal:
 
-.. figure:: /images/user_guide/limerock_thermal.png
+.. figure:: ../../images/user_guide/limerock_thermal.png
    :alt: NVSwitch Solid Temperature
    :width: 50.0%
    :align: center
@@ -236,7 +236,7 @@ optimization of this heat sink.
 
 .. _fig-limerock_parameterized_geometry:
 
-.. figure:: /images/user_guide/limerock_parameterized_geometry.png
+.. figure:: ../../images/user_guide/limerock_parameterized_geometry.png
    :alt: NVSwitch heat sink geometry parameterization. Each parameter ranges between 0 and :math:`\pi/6`.
    :width: 30.0%
    :align: center
@@ -279,7 +279,7 @@ to convergence by a factor of 5.
 
 .. _fig-limerock_pce_pressure:
 
-.. figure:: /images/user_guide/limerock_pce_pressure.png
+.. figure:: ../../images/user_guide/limerock_pce_pressure.png
    :alt: NVSwitch front and back pressure convergence results for different geometries using transfer learning.
    :name: fig:limerock_pce_pressure
    :align: center
@@ -302,7 +302,7 @@ the good accuracy of the constructed gPC pressure drop surrogate.
 
 .. _fig-limerock_tests:
 
-.. figure:: /images/user_guide/limerock_pce_test.png
+.. figure:: ../../images/user_guide/limerock_pce_test.png
    :alt: The gPC pressure drop surrogate accuracy tested on four geometries
    :align: center
    :width: 90.0%

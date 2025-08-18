@@ -44,7 +44,7 @@ Below example shows a simple CSG primitive being built using PhysicsNeMo Sym.
     print("Volume: {:.3f}".format(np.sum(s["area"])))
         
 
-.. figure:: /images/user_guide/csg_demo.png
+.. figure:: ../../images/user_guide/csg_demo.png
    :alt: Constructive Solid Geometry using PhysicsNeMo Sym primitives
    :width: 80.0%
    :align: center
@@ -77,7 +77,7 @@ The geometry objects created also support operations like ``translate``, ``scale
     var_to_polyvtk(s, "repeated_interior")
     print("Repeated Volume: {:.3f}".format(np.sum(s["area"])))
 
-.. figure:: /images/user_guide/csg_repeat_demo.png
+.. figure:: ../../images/user_guide/csg_repeat_demo.png
    :alt: Geometry transforms
    :width: 80.0%
    :align: center
@@ -119,7 +119,7 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
     var_to_polyvtk(s, "y_pos_zero_interior")
     
 
-.. figure:: /images/user_guide/csg_parameterized_demo.png
+.. figure:: ../../images/user_guide/csg_parameterized_demo.png
    :alt: Parameterized Constructive Solid Geometry using PhysicsNeMo Sym primitives
    :width: 80.0%
    :align: center
@@ -129,21 +129,21 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
 
 Some interesting shapes generated using PhysicsNeMo Sym' geometry module are presented below
 
-.. figure:: /images/user_guide/naca_demo.png
+.. figure:: ../../images/user_guide/naca_demo.png
    :alt: NACA airfoil using ``Polygon`` primitive
    :width: 80.0%
    :align: center
 
    NACA airfoil using ``Polygon`` primitive. (script at ``/examples/geometry/naca_airfoil.py``)
 
-.. figure:: /images/user_guide/ahmed_demo.png
+.. figure:: ../../images/user_guide/ahmed_demo.png
    :alt: Ahmed body
    :width: 80.0%
    :align: center
 
    Ahmed body
 
-.. figure:: /images/user_guide/industrial_geo_demo.png
+.. figure:: ../../images/user_guide/industrial_geo_demo.png
    :alt: Industrial heatsink geometry
    :width: 80.0%
    :align: center
@@ -249,7 +249,7 @@ expression for the signed distance field and the surfaces of the geometry. An ex
     var_to_polyvtk(s, "interior_infinite_cylinder")
         
 
-.. figure:: /images/user_guide/custom_primitive_demo.png
+.. figure:: ../../images/user_guide/custom_primitive_demo.png
    :alt: Custom primitive in PhysicsNeMo Sym. The cylinders are sliced to visualize the interior SDF
    :width: 80.0%
    :align: center
@@ -293,14 +293,14 @@ Tesselated geometries can also be combined with the primitives
     print("Repeated Volume: {:.3f}".format(np.sum(s["area"])))
         
 
-.. figure:: /images/user_guide/stl_demo_1.png
+.. figure:: ../../images/user_guide/stl_demo_1.png
    :alt: Tesselated Geometry sampling using PhysicsNeMo Sym 
    :width: 80.0%
    :align: center
 
    Tesselated Geometry sampling using PhysicsNeMo Sym
 
-.. figure:: /images/user_guide/stl_demo_2.png
+.. figure:: ../../images/user_guide/stl_demo_2.png
    :alt: Tesselated Geometry sampling using PhysicsNeMo Sym: Stanford bunny
    :width: 80.0%
    :align: center
@@ -372,7 +372,7 @@ Below example shows the use of these utilities for a CSG geometry.
     )
 
 
-.. figure:: /images/user_guide/sdf_to_stl_csg.png
+.. figure:: ../../images/user_guide/sdf_to_stl_csg.png
    :alt: Computing SDF for CSG geometry and reconstructing the STL
    :width: 80.0%
    :align: center
@@ -420,7 +420,7 @@ Below example shows the use of these utilities for a Tesselation geometry.
     )
 
 
-.. figure:: /images/user_guide/sdf_to_stl_tesselation.png
+.. figure:: ../../images/user_guide/sdf_to_stl_tesselation.png
    :alt: Computing SDF for Tesselation geometry and reconstructing the STL
    :width: 80.0%
    :align: center

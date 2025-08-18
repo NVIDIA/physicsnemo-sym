@@ -6,7 +6,7 @@ The figures below show a summary of performance improvements using various Physi
 
 .. _fig-v100_speedup:
 
-.. figure:: /images/user_guide/perf-comparisons-v100.png
+.. figure:: ../../images/user_guide/perf-comparisons-v100.png
    :alt: Speed-up across different PhysicsNeMo Sym releases on V100 GPUs
    :width: 60.0%
    :align: center
@@ -15,7 +15,7 @@ The figures below show a summary of performance improvements using various Physi
 
 .. _fig-a100_speedup:
 
-.. figure:: /images/user_guide/perf-comparisons-a100.png
+.. figure:: ../../images/user_guide/perf-comparisons-a100.png
    :alt: Speed-up across different PhysicsNeMo Sym releases on A100 GPUs
    :width: 60.0%
    :align: center
@@ -46,7 +46,7 @@ dramatically reduced training times (:numref:`fig-fpga_tf32_speedup`) without ch
 
 .. _fig-fpga_tf32_speedup:
 
-.. figure:: /images/user_guide/fpga_TF32_speedup.png
+.. figure:: ../../images/user_guide/fpga_TF32_speedup.png
    :alt: Speed-up using TF32 on an A100 GPU.
    :width: 60.0%
    :align: center
@@ -79,7 +79,7 @@ dramatically reduced training times (:numref:`fig-fpga_tf32_speedup`) without ch
 
 .. _fig-fpga_tf32:
 
-.. figure:: /images/user_guide/TF32vFP32.png
+.. figure:: ../../images/user_guide/TF32vFP32.png
    :alt: Loss convergence plot for FPGA simulation with TF32 feature
    :name: fig:fpga_tf32
    :width: 60.0%
@@ -283,7 +283,7 @@ For more information, see `Environment variable initialization <https://pytorch.
 
 .. _fig-fpga_scaling:
 
-.. figure:: /images/user_guide/fpga_multi_node_scaling.png
+.. figure:: ../../images/user_guide/fpga_multi_node_scaling.png
    :alt: FPGA scaling
    :width: 60.0%
    :align: center

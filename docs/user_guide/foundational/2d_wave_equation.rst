@@ -59,7 +59,7 @@ peak wavelet frequency of :math:`f_0=15 Hz`.
 
 .. _fig-seismic-wave-velocity:
 
-.. figure:: /images/user_guide/velocity_model.png
+.. figure:: ../../images/user_guide/velocity_model.png
    :alt: Velocity model of the medium
    :width: 40.0%
    :align: center
@@ -68,7 +68,7 @@ peak wavelet frequency of :math:`f_0=15 Hz`.
 
 .. _fig-seismic-wave-source:
 
-.. figure:: /images/user_guide/ricker_source.png
+.. figure:: ../../images/user_guide/ricker_source.png
    :alt: Ricker source signature
    :width: 40.0%
    :align: center
@@ -76,7 +76,7 @@ peak wavelet frequency of :math:`f_0=15 Hz`.
    Ricker source signature
 
 The problem uses wavefield data at time steps (150 :math:`ms` - 300
-:math:`ms`) generated from finite difference simulations, using `Devito <https://github.com/devitocodes/devito/tree/master../../../examples/seismic/tutorials>`_, as constraints for the temporal boundary conditions, and train
+:math:`ms`) generated from finite difference simulations, using `Devito <https://github.com/devitocodes/devito/tree/main/examples/seismic>`_, as constraints for the temporal boundary conditions, and train
 PhysicsNeMo Sym to produce wavefields at later time steps (300 :math:`ms` – 1000
 :math:`ms`).
 
@@ -193,7 +193,7 @@ The training results can be viewed in TensorBoard. It can be seen that the Physi
 results are noticeably better than Devito, predicting the wavefield with
 much less boundary reflections, especially at later time steps.
 
-.. figure:: /images/user_guide/simnet_vs_devito_combined.PNG
+.. figure:: ../../images/user_guide/simnet_vs_devito_combined.PNG
    :alt: Comparison of PhysicsNeMo Sym results with Devito solution
    :width: 65.0%
    :align: center

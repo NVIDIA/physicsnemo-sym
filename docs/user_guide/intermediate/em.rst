@@ -41,7 +41,7 @@ relative permittivity :math:`\epsilon_r = 1`. The left boundary is a
 waveguide port while the right boundary is absorbing boundary (or ABC).
 The top and the bottom is PEC.
 
-.. figure:: /images/user_guide/2Dwaveguide.png
+.. figure:: ../../images/user_guide/2Dwaveguide.png
    :alt: Domain of 2D waveguide
    :name: fig:2Dwaveguide
    :width: 30.0%
@@ -126,7 +126,7 @@ The full code of this example can be found in
 simulation with wavenumber equals :math:`32`. The solution from comercial solver, PhysicsNeMo Sym prediction, and their difference
 are shown below.
 
-.. figure:: /images/user_guide/2Dwaveguide_physicsnemo.png
+.. figure:: ../../images/user_guide/2Dwaveguide_physicsnemo.png
    :alt: PhysicsNeMo Sym, wavenumber=\ :math:`32`
    :name: fig:2Dwaveguide_physicsnemo
    :width: 100.0%
@@ -142,7 +142,7 @@ slab. The problem setup is almost same as before except there is a
 horizontal dielectric slab in the middle of the domain. The domain is
 shown below.
 
-.. figure:: /images/user_guide/2Dslab_geo.png
+.. figure:: ../../images/user_guide/2Dslab_geo.png
    :alt: Domain of 2D Dielectric slab waveguide
    :name: fig:2Dslab_geo
    :width: 30.0%
@@ -212,7 +212,7 @@ The full code of this example can be found in
 simulation with wavenumber equals :math:`16` and :math:`32`,
 respectively. The results are shown in figure below
 
-.. figure:: /images/user_guide/2Dslab_16.png
+.. figure:: ../../images/user_guide/2Dslab_16.png
    :alt: PhysicsNeMo Sym, wavenumber=\ :math:`16`
    :name: fig:2Dslab
    :width: 50.0%
@@ -232,7 +232,7 @@ to define the boundary condition are used. The geometry is
 Problem setup
 ~~~~~~~~~~~~~
 
-.. figure:: /images/user_guide/3Dwaveguide_geo.png
+.. figure:: ../../images/user_guide/3Dwaveguide_geo.png
    :alt: 3D waveguide geometry
    :name: fig:3Dwaveguide_geo
    :width: 50.0%
@@ -313,7 +313,7 @@ The full code of this example can be found in
 :math:`32` and use second eigenmode for :math:`y` and :math:`z`. The
 slices of the three components are shown in below.
 
-.. figure:: /images/user_guide/3Dwaveguide_Ex.png
+.. figure:: ../../images/user_guide/3Dwaveguide_Ex.png
    :alt: 3D waveguide, :math:`E_x`
    :name: fig:3Dwaveguide_ex
    :width: 50.0%
@@ -321,7 +321,7 @@ slices of the three components are shown in below.
 
    3D waveguide, :math:`E_x`
 
-.. figure:: /images/user_guide/3Dwaveguide_Ey.png
+.. figure:: ../../images/user_guide/3Dwaveguide_Ey.png
    :alt: 3D waveguide, :math:`E_y`
    :name: fig:3Dwaveguide_ey
    :width: 50.0%
@@ -329,7 +329,7 @@ slices of the three components are shown in below.
 
    3D waveguide, :math:`E_y`
 
-.. figure:: /images/user_guide/3Dwaveguide_Ez.png
+.. figure:: ../../images/user_guide/3Dwaveguide_Ez.png
    :alt: 3D waveguide, :math:`E_z`
    :name: fig:3Dwaveguide_ez
    :width: 50.0%
@@ -349,7 +349,7 @@ slab.
 
 .. _fig-3Dslab_geo:
 
-.. figure:: /images/user_guide/3Dslab_geo.png
+.. figure:: ../../images/user_guide/3Dslab_geo.png
    :alt: 3D view with BCs
    :name: fig:3Dslab_geo
    :width: 80.0%
@@ -359,7 +359,7 @@ slab.
 
 .. _fig-3Dslab_geo_cross:
 
-.. figure:: /images/user_guide/3Dslab_geo_xz.png
+.. figure:: ../../images/user_guide/3Dslab_geo_xz.png
    :alt: :math:`xz` cross-sectional view
    :name: fig:3Dslab_geo_cross
    :width: 50.0%
@@ -428,7 +428,7 @@ The full code of this example can be found in
 simulation for different wavenumbers is done. Below figures show the result for wavenumber equals :math:`16`.
 
 
-.. figure:: /images/user_guide/3Dslab_16_Ex.png
+.. figure:: ../../images/user_guide/3Dslab_16_Ex.png
    :alt: 3D dielectric slab, :math:`E_x`
    :name: fig:3Dslab_16ex
    :width: 50.0%
@@ -436,7 +436,7 @@ simulation for different wavenumbers is done. Below figures show the result for 
 
    3D dielectric slab, :math:`E_x`
 
-.. figure:: /images/user_guide/3Dslab_16_Ey.png
+.. figure:: ../../images/user_guide/3Dslab_16_Ey.png
    :alt: 3D dielectric slab, :math:`E_y`
    :name: fig:3Dslab_16ey
    :width: 50.0%
@@ -444,7 +444,7 @@ simulation for different wavenumbers is done. Below figures show the result for 
 
    3D dielectric slab, :math:`E_y`
 
-.. figure:: /images/user_guide/3Dslab_16_Ez.png
+.. figure:: ../../images/user_guide/3Dslab_16_Ez.png
    :alt: 3D dielectric slab, :math:`E_z`
    :name: fig:3Dslab_16ez
    :width: 50.0%
@@ -455,7 +455,7 @@ simulation for different wavenumbers is done. Below figures show the result for 
 Also the results of higher wavenumber :math:`32` are shown below.
 
 
-.. figure:: /images/user_guide/3Dslab_32_Ex.png
+.. figure:: ../../images/user_guide/3Dslab_32_Ex.png
    :alt: 3D dielectric slab, :math:`E_x`
    :name: fig:3Dslab_32ex
    :width: 50.0%
@@ -463,7 +463,7 @@ Also the results of higher wavenumber :math:`32` are shown below.
 
    3D dielectric slab, :math:`E_x`
 
-.. figure:: /images/user_guide/3Dslab_32_Ey.png
+.. figure:: ../../images/user_guide/3Dslab_32_Ey.png
    :alt: 3D dielectric slab, :math:`E_y`
    :name: fig:3Dslab_32ey
    :width: 50.0%
@@ -471,7 +471,7 @@ Also the results of higher wavenumber :math:`32` are shown below.
 
    3D dielectric slab, :math:`E_y`
 
-.. figure:: /images/user_guide/3Dslab_32_Ez.png
+.. figure:: ../../images/user_guide/3Dslab_32_Ez.png
    :alt: 3D dielectric slab, :math:`E_z`
    :name: fig:3Dslab_32ez
    :width: 50.0%

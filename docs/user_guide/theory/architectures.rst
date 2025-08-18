@@ -1,6 +1,3 @@
-
-.. _architectures:
-
 Architectures In PhysicsNeMo Sym
 ================================
 
@@ -462,7 +459,7 @@ Pix2Pix network in PhysicsNeMo Sym is a convolutional encoder-decoder based on t
 The implementation inside of PhysicsNeMo Sym is a streamlined version of these models that can be used for various problems involving data that is structured.
 This model consists of three main components: downscaling layers, residual blocks and upscaling layers.
 
-.. figure:: /images/user_guide/pix2pix_arch.png
+.. figure:: ../../images/user_guide/pix2pix_arch.png
    :alt: Pix2Pix architecture in PhysicsNeMo Sym
    :width: 60.0%
    :align: center
@@ -493,7 +490,7 @@ The super resolution network in PhysicsNeMo Sym is a convolutional decoder that 
 This model can be particularly useful for mapping between low to high resolution data that is on a structured grid.
 This model consists of just two parts: convolutional residual blocks and upscaling blocks.
 
-.. figure:: /images/user_guide/super_res_arch.png
+.. figure:: ../../images/user_guide/super_res_arch.png
    :alt: Super resolution architecture in PhysicsNeMo Sym
    :width: 50.0%
    :align: center

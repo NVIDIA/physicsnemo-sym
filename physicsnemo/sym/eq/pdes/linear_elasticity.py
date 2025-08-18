@@ -24,7 +24,7 @@ from physicsnemo.sym.eq.pde import PDE
 class LinearElasticity(PDE):
     """
     Linear elasticity equations.
-    Use either (E, nu) or (lambda_, mu) to define the material properties.
+    Use either (E, nu) or (``lambda_``, mu) to define the material properties.
 
     Parameters
     ==========
@@ -32,7 +32,7 @@ class LinearElasticity(PDE):
         The Young's modulus
     nu : float, Sympy Symbol/Expr, str
         The Poisson's ratio
-    lambda_: float, Sympy Symbol/Expr, str
+    ``lambda_`` : float, Sympy Symbol/Expr, str
         Lamé's first parameter
     mu: float, Sympy Symbol/Expr, str
         Lamé's second parameter (shear modulus)
@@ -200,7 +200,7 @@ class LinearElasticity(PDE):
 class LinearElasticityPlaneStress(PDE):
     """
     Linear elasticity plane stress equations.
-    Use either (E, nu) or (lambda_, mu) to define the material properties.
+    Use either (E, nu) or (``lambda_`` , mu) to define the material properties.
 
     Parameters
     ==========
@@ -208,7 +208,7 @@ class LinearElasticityPlaneStress(PDE):
         The Young's modulus
     nu : float, Sympy Symbol/Expr, str
         The Poisson's ratio
-    lambda_: float, Sympy Symbol/Expr, str
+    ``lambda_`` : float, Sympy Symbol/Expr, str
         Lamé's first parameter.
     mu: float, Sympy Symbol/Expr, str
         Lamé's second parameter (shear modulus)
