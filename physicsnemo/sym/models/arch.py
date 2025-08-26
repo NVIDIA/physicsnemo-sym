@@ -99,7 +99,7 @@ class Arch(nn.Module):
             self.detach_key_dict[dummy_str] = 0
 
     def make_node(self, name: str, jit: Optional[bool] = None, optimize: bool = True):
-        """Makes neural network node for unrolling with PhysicsNeMo `Graph`.
+        """Makes neural network node for unrolling with PhysicsNeMo Graph.
 
         Parameters
         ----------
@@ -693,7 +693,7 @@ class FuncArch(nn.Module):
         return out
 
     def make_node(self, name: str, optimize: bool = True):
-        """Makes functional arch node for unrolling with PhysicsNeMo `Graph`.
+        """Makes functional arch node for unrolling with PhysicsNeMo Graph.
 
         Parameters
         ----------

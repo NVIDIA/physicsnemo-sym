@@ -1,6 +1,3 @@
-
-Welcome to the PhysicsNeMo Sym API documentation.
-
 Fundamental API
 ================
 

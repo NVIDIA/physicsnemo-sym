@@ -102,7 +102,7 @@ class PointVTKInferencer(PointwiseInferencer):
     mask_value : float, optional
         Value to assign masked points, by default Nan
     plotter : Plotter, optional
-        PhysicsNeMo `Plotter` for showing results in tensorboard., by default None
+        PhysicsNeMo Plotter for showing results in tensorboard., by default None
     requires_grad : bool, optional
         If automatic differentiation is needed for computing results., by default True
     log_iter : bool, optional

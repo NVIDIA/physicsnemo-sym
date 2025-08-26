@@ -246,7 +246,7 @@ The problem was originally defined in [#zang2020weak]_.
 
 .. _fig-domain-appendix:
 
-.. figure:: /images/user_guide/domain_combine.png
+.. figure:: ../../images/user_guide/domain_combine.png
    :alt: Left: Domain of interface problem. Right: True Solution
    :align: center
    :width: 60.0%
@@ -334,7 +334,7 @@ average on :math:`F` is defined by
 
 .. _fig-element:
 
-.. figure:: /images/user_guide/element_new.png
+.. figure:: ../../images/user_guide/element_new.png
    :alt: Adjacent Elements.
    :width: 60.0%   
    :align: center

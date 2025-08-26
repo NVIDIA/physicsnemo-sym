@@ -44,7 +44,7 @@ fully connected neural network (slow convergence).
 
 .. _fig-laminar_fpga_geom_2:
 
-.. figure:: /images/user_guide/fpga_geom.PNG
+.. figure:: ../../images/user_guide/fpga_geom.PNG
    :alt: The FPGA heat sink geometry
    :name: fig:laminar_fpga_geom_2
    :width: 40.0%
@@ -158,7 +158,7 @@ following:
 
 .. _fig-fpga_symm:
 
-.. figure:: /images/user_guide/symmetry_plane_viz.png
+.. figure:: ../../images/user_guide/symmetry_plane_viz.png
    :alt: The FPGA heat sink with plane of symmetry
    :name: fig:fpga_symm
    :width: 50.0%
@@ -305,13 +305,13 @@ comparison for the loss values from different runs.
 
 .. _fig-fpga-loss-plots:
 
-.. figure:: /images/user_guide/loss_fpga_laminar_flow.png
+.. figure:: ../../images/user_guide/loss_fpga_laminar_flow.png
    :alt: flow
    :align: center
 
    Flow comparisons
 
-.. figure:: /images/user_guide/loss_fpga_laminar_heat.png
+.. figure:: ../../images/user_guide/loss_fpga_laminar_heat.png
    :alt: heat
    :align: center
 

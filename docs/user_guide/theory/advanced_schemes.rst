@@ -53,7 +53,7 @@ yields faster convergence and better validation accuracy.
 
 .. _fig-helmholtz_stan:
 
-.. figure:: /images/user_guide/helmholtz_stan.png
+.. figure:: ../../images/user_guide/helmholtz_stan.png
    :alt: A comparison of the validation error results between default SiLU (red) and Stan activations (blue) for the Helmholtz example.
    :name: fig:helmholtz_stan
    :width: 50.0%
@@ -126,7 +126,7 @@ shown in :numref:`fig-annular-ring-sample-prob`.
 
 .. _fig-annular-ring-importance-sampling:
 
-.. figure:: /images/user_guide/annular_ring_importance_sampling.PNG
+.. figure:: ../../images/user_guide/annular_ring_importance_sampling.PNG
    :alt: A comparison between the uniform and importance sampling validation error results for the annular ring example.
    :name: fig:annular_ring_importance_sampling
    :width: 80.0%
@@ -137,7 +137,7 @@ shown in :numref:`fig-annular-ring-sample-prob`.
 
 .. _fig-annular-ring-sample-prob:
 
-.. figure:: /images/user_guide/annular_ring_sample_prob.png
+.. figure:: ../../images/user_guide/annular_ring_sample_prob.png
    :alt: A visualization of the training point sampling probability at iteration 100K for the annular ring example.
    :name: fig:annular_ring_sample_prob
    :width: 50.0%
@@ -169,7 +169,7 @@ in tutorial :ref:`fpga`.
 
 .. _fig-halton-ring:
 
-.. figure:: /images/user_guide/halton_ring.png
+.. figure:: ../../images/user_guide/halton_ring.png
    :alt: A snapshot of a batch of training points generated using uniform sampling (top) and Halton sequences (bottom) for the annular ring example.
    :name: fig:halton_ring
    :width: 50.0%
@@ -317,7 +317,7 @@ are available at ``examples/helmholtz``.
 
 .. _fig-helmholtz_hardBC:
 
-.. figure:: /images/user_guide/helmholtz_hardBC.png
+.. figure:: ../../images/user_guide/helmholtz_hardBC.png
    :alt: Interior validation accuracy for models trained with soft BC (orange) and hard BC (blue) imposition for the Helmholtz example.
    :width: 45.0%
    :align: center
@@ -335,7 +335,7 @@ The figure below shows the solution for the annular ring example with hard BC im
 
 .. _fig-annular_ring_hardBC:
 
-.. figure:: /images/user_guide/annular_ring_hardBC.png
+.. figure:: ../../images/user_guide/annular_ring_hardBC.png
    :alt: Solution for the annular ring example obtained using hard BC imposition.
    :width: 65.0%
    :align: center
@@ -398,7 +398,7 @@ accuracy up to one order of magnitude.
 
 .. _fig-wave_1d_causal:
 
-.. figure:: /images/user_guide/wave_1d_causal.png
+.. figure:: ../../images/user_guide/wave_1d_causal.png
    :alt: Interior validation accuracy for models trained with (blue) and without (red) the causal loss function for the 1D wave equation example.
    :width: 50.0%
    :align: center
@@ -475,7 +475,7 @@ this scheme, please refer to [#kendall2018multi]_.
 
 .. _fig-uncertainty_loss_weighting:
 
-.. figure:: /images/user_guide/uncertainty_loss_weighting.png
+.. figure:: ../../images/user_guide/uncertainty_loss_weighting.png
    :alt: A comparison between the uncertainty loss weighting vs. no loss weighting for the annular ring example.
    :width: 95.0%
    :align: center
@@ -583,7 +583,7 @@ accomplish this.
 
 .. _fig-gradnorm:
 
-.. figure:: /images/user_guide/gradnorm.png
+.. figure:: ../../images/user_guide/gradnorm.png
    :alt: GradNorm performance for loss balancing in the annular example
    :width: 99.0%
    :align: center
@@ -620,7 +620,7 @@ It is evident that ResNorm can effectively find a good balance between the loss 
 
 .. _fig-resnorm:
 
-.. figure:: /images/user_guide/resnorm.png
+.. figure:: ../../images/user_guide/resnorm.png
    :alt: ResNorm performance for loss balancing in the annular example
    :width: 99.0%
    :align: center
@@ -668,7 +668,7 @@ in the :numref:`fig-ntk`.
 
 .. _fig-no-ntk:
 
-.. figure:: /images/user_guide/helmholtz_without_ntk.png
+.. figure:: ../../images/user_guide/helmholtz_without_ntk.png
    :alt: Helmholtz problem without NTK weights
    :width: 80.0%
    :align: center
@@ -677,7 +677,7 @@ in the :numref:`fig-ntk`.
 
 .. _fig-ntk:
 
-.. figure:: /images/user_guide/helmholtz_with_ntk.png
+.. figure:: ../../images/user_guide/helmholtz_with_ntk.png
    :alt: Helmholtz problem without NTK weights
    :width: 80.0%
    :align: center
@@ -709,7 +709,7 @@ large scale differences in the different terms.
 
 .. _fig-eqn-instancing:
 
-.. figure:: /images/user_guide/equation_instancing.png
+.. figure:: ../../images/user_guide/equation_instancing.png
    :alt: Equation instancing for annular ring example
    :width: 99.0%
    :align: center
@@ -727,7 +727,6 @@ large scale differences in the different terms.
 .. [#sukumar2022exact] Sukumar, N., and Ankit Srivastava. "Exact imposition of boundary conditions with distance functions in physics-informed deep neural networks." Computer Methods in Applied Mechanics and Engineering 389 (2022): 114333.
 .. [#son2021sobolev] Son, Hwijae, Jin Woo Jang, Woo Jin Han, and Hyung Ju Hwang. "Sobolev training for the neural network solutions of pdes." arXiv preprint arXiv:2101.08932 (2021).
 .. [#yu2021gradient] Yu, Jeremy, Lu Lu, Xuhui Meng, and George Em Karniadakis. "Gradient-enhanced physics-informed neural networks for forward and inverse PDE problems." arXiv preprint arXiv:2111.02801 (2021).
-.. [#heydari2019softadapt] Heydari, A. Ali, Craig A. Thompson, and Asif Mehmood. "Softadapt: Techniques for adaptive loss weighting of neural networks with multi-part loss functions." arXiv preprint arXiv:1912.12355 (2019).
 .. [#bischof2021multi] Bischof, Rafael, and Michael Kraus. "Multi-objective loss balancing for physics-informed deep learning." arXiv preprint arXiv:2110.09813 (2021).
 .. [#chen2018gradnorm] Chen, Zhao, Vijay Badrinarayanan, Chen-Yu Lee, and Andrew Rabinovich. "Gradnorm: Gradient normalization for adaptive loss balancing in deep multitask networks." In International Conference on Machine Learning, pp. 794-803. PMLR, 2018.
 .. [#wang2022when] Wang, S., Yu, X. and Perdikaris, P., 2022. When and why PINNs fail to train: A neural tangent kernel perspective. Journal of Computational Physics, 449, p.110768.
