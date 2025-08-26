@@ -64,6 +64,13 @@ geometry.tessellation
    :members:
    :show-inheritance:
 
+geometry.tessellation_warp
+-------------------------------------------------
+
+.. automodule:: physicsnemo.sym.geometry.tessellation_warp
+   :members:
+   :show-inheritance:
+
 geometry.geometry_dataloader
 -----------------------------
 

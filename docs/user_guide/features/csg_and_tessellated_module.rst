@@ -6,22 +6,22 @@ Geometry Modules
 Constructive Solid Geometry
 ---------------------------
 
-PhysicsNeMo Sym provides several 1D, 2D and 3D primitives that can be used for sampling point clouds required for the physics-informed training. 
+PhysicsNeMo Sym provides several 1D, 2D and 3D primitives that can be used for sampling point clouds required for the physics-informed training.
 These primitives support the standard boolean operations* like Union (``+`` ), Intersection (``&`` ) and Subtraction (``-`` ). The boolean
-operations work on the signed distance fields of the differnt primitives. 
+operations work on the signed distance fields of the differnt primitives.
 
-Below example shows a simple CSG primitive being built using PhysicsNeMo Sym. 
+Below example shows a simple CSG primitive being built using PhysicsNeMo Sym.
 
 .. code-block:: python
     :caption: Constructive solid geometry
-        
+
     import numpy as np
     from physicsnemo.sym.geometry.primitives_3d import Box, Sphere, Cylinder
     from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
-    
+
     # number of points to sample
     nr_points = 100000
-    
+
     # make standard constructive solid geometry example
     # make primitives
     box = Box(point_1=(-1, -1, -1), point_2=(1, 1, 1))
@@ -29,12 +29,12 @@ Below example shows a simple CSG primitive being built using PhysicsNeMo Sym.
     cylinder_1 = Cylinder(center=(0, 0, 0), radius=0.5, height=2)
     cylinder_2 = cylinder_1.rotate(angle=float(np.pi / 2.0), axis="x")
     cylinder_3 = cylinder_1.rotate(angle=float(np.pi / 2.0), axis="y")
-    
+
     # combine with boolean operations
     all_cylinders = cylinder_1 + cylinder_2 + cylinder_3
     box_minus_sphere = box & sphere
     geo = box_minus_sphere - all_cylinders
-    
+
     # sample geometry for plotting in Paraview
     s = geo.sample_boundary(nr_points=nr_points)
     var_to_polyvtk(s, "boundary")
@@ -42,7 +42,7 @@ Below example shows a simple CSG primitive being built using PhysicsNeMo Sym.
     s = geo.sample_interior(nr_points=nr_points, compute_sdf_derivatives=True)
     var_to_polyvtk(s, "interior")
     print("Volume: {:.3f}".format(np.sum(s["area"])))
-        
+
 
 .. figure:: ../../images/user_guide/csg_demo.png
    :alt: Constructive Solid Geometry using PhysicsNeMo Sym primitives
@@ -51,10 +51,10 @@ Below example shows a simple CSG primitive being built using PhysicsNeMo Sym.
 
    Constructive Solid Geometry using PhysicsNeMo Sym primitives
 
-A complete list of primitives can be referred in ``physicsnemo.geometry.primitives_*`` 
+A complete list of primitives can be referred in ``physicsnemo.geometry.primitives_*``
 
 .. note::
-    While generating a complex primitive, it should be noted that the boolean operation are performed at the final stage, meaning it is invariant to 
+    While generating a complex primitive, it should be noted that the boolean operation are performed at the final stage, meaning it is invariant to
     the order of the boolean operations. In other words, if you are subtracting a primitive from another primitive, and if you decide to add a different primitive
     in the area that is subtracted, you will not see the newly added primitive because the subtracted primitive.
 
@@ -68,7 +68,7 @@ The geometry objects created also support operations like ``translate``, ``scale
     geo = geo.rotate(angle=np.pi / 4, axis="z")
     geo = geo.rotate(angle=np.pi / 4, axis="y")
     geo = geo.repeat(spacing=4.0, repeat_lower=(-1, -1, -1), repeat_higher=(1, 1, 1))
-    
+
     # sample geometry for plotting in Paraview
     s = geo.sample_boundary(nr_points=nr_points)
     var_to_polyvtk(s, "repeated_boundary")
@@ -93,7 +93,7 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
     from physicsnemo.sym.geometry.primitives_2d import Rectangle, Circle
     from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
     from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter
-    
+
     # make plate with parameterized hole
     # make parameterized primitives
     plate = Rectangle(point_1=(-1, -1), point_2=(1, 1))
@@ -101,13 +101,13 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
     parameterization = Parameterization({y_pos: (-1, 1)})
     circle = Circle(center=(0, y_pos), radius=0.3, parameterization=parameterization)
     geo = plate - circle
-    
+
     # sample geometry over entire parameter range
     s = geo.sample_boundary(nr_points=100000)
     var_to_polyvtk(s, "parameterized_boundary")
     s = geo.sample_interior(nr_points=100000)
     var_to_polyvtk(s, "parameterized_interior")
-    
+
     # sample specific parameter
     s = geo.sample_boundary(
         nr_points=100000, parameterization=Parameterization({y_pos: 0})
@@ -117,7 +117,7 @@ The CSG objects can be easily parameterized using sympy. An example of this is u
         nr_points=100000, parameterization=Parameterization({y_pos: 0})
     )
     var_to_polyvtk(s, "y_pos_zero_interior")
-    
+
 
 .. figure:: ../../images/user_guide/csg_parameterized_demo.png
    :alt: Parameterized Constructive Solid Geometry using PhysicsNeMo Sym primitives
@@ -155,25 +155,25 @@ Defining Custom Primitives
 --------------------------
 
 If you don't find a primitive defined for your application, it is easy to setup using the base classes from PhysicsNeMo Sym. All you need to do is come up with and appropriate
-expression for the signed distance field and the surfaces of the geometry. An example is shown below. 
+expression for the signed distance field and the surfaces of the geometry. An example is shown below.
 
 .. code-block:: python
     :caption: Custom Primitive
 
     from sympy import Symbol, pi, sin, cos, sqrt, Min, Max, Abs
-    
+
     from physicsnemo.sym.geometry.geometry import Geometry, csg_curve_naming
     from physicsnemo.sym.geometry.helper import _sympy_sdf_to_sdf
     from physicsnemo.sym.geometry.curve import SympyCurve, Curve
     from physicsnemo.sym.geometry.parameterization import Parameterization, Parameter, Bounds
     from physicsnemo.sym.geometry.primitives_3d import Cylinder
     from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
-    
+
     class InfiniteCylinder(Geometry):
         """
         3D Infinite Cylinder
         Axis parallel to z-axis, no caps on ends
-    
+
         Parameters
         ----------
         center : tuple with 3 ints or floats
@@ -185,13 +185,13 @@ expression for the signed distance field and the surfaces of the geometry. An ex
         parameterization : Parameterization
             Parameterization of geometry.
         """
-    
+
         def __init__(self, center, radius, height, parameterization=Parameterization()):
             # make sympy symbols to use
             x, y, z = Symbol("x"), Symbol("y"), Symbol("z")
             h, r = Symbol(csg_curve_naming(0)), Symbol(csg_curve_naming(1))
             theta = Symbol(csg_curve_naming(2))
-    
+
             # surface of the cylinder
             curve_parameterization = Parameterization(
                 {h: (-1, 1), r: (0, 1), theta: (0, 2 * pi)}
@@ -212,11 +212,11 @@ expression for the signed distance field and the surfaces of the geometry. An ex
                 area=height * 2 * pi * radius,
             )
             curves = [curve_1]
-    
+
             # calculate SDF
             r_dist = sqrt((x - center[0]) ** 2 + (y - center[1]) ** 2)
             sdf = radius - r_dist
-    
+
             # calculate bounds
             bounds = Bounds(
                 {
@@ -226,7 +226,7 @@ expression for the signed distance field and the surfaces of the geometry. An ex
                 },
                 parameterization=parameterization,
             )
-    
+
             # initialize Infinite Cylinder
             super().__init__(
                 curves,
@@ -235,19 +235,19 @@ expression for the signed distance field and the surfaces of the geometry. An ex
                 bounds=bounds,
                 parameterization=parameterization,
             )
-    
-    
+
+
     nr_points = 100000
-    
+
     cylinder_1 = Cylinder(center=(0, 0, 0), radius=0.5, height=2)
     cylinder_2 = InfiniteCylinder(center=(0, 0, 0), radius=0.5, height=2)
-    
+
     s = cylinder_1.sample_interior(nr_points=nr_points, compute_sdf_derivatives=True)
     var_to_polyvtk(s, "interior_cylinder")
-    
+
     s = cylinder_2.sample_interior(nr_points=nr_points, compute_sdf_derivatives=True)
     var_to_polyvtk(s, "interior_infinite_cylinder")
-        
+
 
 .. figure:: ../../images/user_guide/custom_primitive_demo.png
    :alt: Custom primitive in PhysicsNeMo Sym. The cylinders are sliced to visualize the interior SDF
@@ -256,7 +256,7 @@ expression for the signed distance field and the surfaces of the geometry. An ex
 
    Custom primitive in PhysicsNeMo Sym. The cylinders are sliced to visualize the interior SDF
 
-   
+
 Tesselated Geometry
 -------------------
 
@@ -264,7 +264,7 @@ For more complicated shapes, PhysicsNeMo Sym allows geometries to be imported in
 The module also gives surface normals of the geometry for surface sampling. Once the geometry is imported, the point cloud can be used for training. An
 example of this can be found in :ref:`stl`.
 
-Tesselated geometries can also be combined with the primitives 
+Tesselated geometries can also be combined with the primitives
 
 .. code-block:: python
     :caption: Tesselated Geometry
@@ -273,17 +273,17 @@ Tesselated geometries can also be combined with the primitives
     from physicsnemo.sym.geometry.tessellation import Tessellation
     from physicsnemo.sym.geometry.primitives_3d import Plane
     from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
-    
+
     # number of points to sample
     nr_points = 100000
-    
+
     # make tesselated geometry from stl file
     geo = Tessellation.from_stl("./stl_files/tessellated_example.stl")
-    
+
     # tesselated geometries can be combined with primitives
     cut_plane = Plane((0, -1, -1), (0, 1, 1))
     geo = geo & cut_plane
-    
+
     # sample geometry for plotting in Paraview
     s = geo.sample_boundary(nr_points=nr_points)
     var_to_polyvtk(s, "tessellated_boundary")
@@ -291,10 +291,10 @@ Tesselated geometries can also be combined with the primitives
     s = geo.sample_interior(nr_points=nr_points, compute_sdf_derivatives=True)
     var_to_polyvtk(s, "tessellated_interior")
     print("Repeated Volume: {:.3f}".format(np.sum(s["area"])))
-        
+
 
 .. figure:: ../../images/user_guide/stl_demo_1.png
-   :alt: Tesselated Geometry sampling using PhysicsNeMo Sym 
+   :alt: Tesselated Geometry sampling using PhysicsNeMo Sym
    :width: 80.0%
    :align: center
 
@@ -306,6 +306,49 @@ Tesselated geometries can also be combined with the primitives
    :align: center
 
    Tesselated Geometry sampling using PhysicsNeMo Sym: Stanford bunny
+
+Tesselated Geometry with Warp
+-----------------------------
+
+PhysicsNeMo Sym also provides a Warp-based ``Tessellation`` module.
+This module provides significant speedups for surface sampling using ``sample_interior``
+over the original ``Tessellation`` module. It is a drop-in replacement for the
+original ``Tessellation`` module and can be used in the same way.
+
+.. code-block:: python
+    :caption: Tesselated Geometry with Warp
+
+    from physicsnemo.sym.geometry.tessellation_warp import Tessellation
+
+    # The rest of the code is the same.
+
+Below is a ``sample_boundary`` performance comparison of the original ``Tessellation`` module
+and the Warp-based ``Tessellation`` module.
+
+.. list-table:: Tessellation Module Comparison (seconds, 100k sampled points)
+   :header-rows: 1
+
+   * - Mesh Size
+     - Original ``sample_boundary``
+     - Warp-based ``sample_boundary``
+     - Speedup
+   * - 10K
+     - 2.9698
+     - 0.0367
+     - 80x
+   * - 100K
+     - 20.6874
+     - 0.1317
+     - 150x
+   * - 1M
+     - 145.18
+     - 0.4148
+     - 350x
+   * - Usage
+     - ``from physicsnemo.sym.geometry.tessellation import Tessellation``
+     - ``from physicsnemo.sym.geometry.tessellation_warp import Tessellation``
+     -
+
 
 
 Signed Distance Fields (SDF) of Geometry objects
@@ -320,7 +363,7 @@ applications. In physics-informed learning, it is also used to represent
 PhysicsNeMo' geometry module (CSG and Tesselation) computes the SDF (and its derivatives) on
 points sampled in the interior for use in the training pipelines.
 Additionally, the SDF can be computed on custom points using the ``.sdf`` attribute.
- 
+
 PhysicsNeMo also provides a utility to recover the STL geometry from the SDF using marching
 cubes algorithm. For more details refer
 `here <https://github.com/NVIDIA/physicsnemo/blob/main/physicsnemo/utils/mesh/generate_stl.py#L25>`_.
@@ -352,14 +395,14 @@ Below example shows the use of these utilities for a CSG geometry.
     z = np.linspace(-2, 2, 100)
 
     xx, yy, zz = np.meshgrid(x, y, z, indexing='ij')
-    
+
     # compute the SDF on the grid points
     sdf = geo.sdf(
             {
-                "x": xx.reshape(-1, 1), 
-                "y": yy.reshape(-1, 1), 
+                "x": xx.reshape(-1, 1),
+                "y": yy.reshape(-1, 1),
                 "z": zz.reshape(-1, 1),
-            }, 
+            },
         params={}
     )["sdf"]
 
@@ -400,17 +443,17 @@ Below example shows the use of these utilities for a Tesselation geometry.
     z = np.linspace(bounds["z"][0] - 1, bounds["z"][1] + 1, 100)
 
     xx, yy, zz = np.meshgrid(x, y, z, indexing='ij')
-    
+
     # compute the SDF on the grid points
     sdf = geo.sdf(
             {
-                "x": xx.reshape(-1, 1), 
-                "y": yy.reshape(-1, 1), 
+                "x": xx.reshape(-1, 1),
+                "y": yy.reshape(-1, 1),
                 "z": zz.reshape(-1, 1),
-            }, 
+            },
         params={}
     )["sdf"]
-    
+
     # reconstruct the STL from SDF
     sdf_to_stl(
         sdf.reshape(100, 100, 100),    # sdf field in [nx, ny, nz] shape
