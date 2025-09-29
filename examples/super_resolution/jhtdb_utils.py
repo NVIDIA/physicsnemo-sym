@@ -19,12 +19,12 @@ import matplotlib.pyplot as plt
 import torch
 
 try:
-    import pyJHTDB
-    import pyJHTDB.dbinfo
+    from givernylocal.turbulence_dataset import turb_dataset
+    from givernylocal.turbulence_toolkit import getData
 except:
     raise ModuleNotFoundError(
-        "This example requires the pyJHTDB python package for access to the JHT database.\n"
-        + "Find out information here: https://github.com/idies/pyJHTDB"
+        "This example requires the giverny python package for access to the JHT database.\n"
+        + "Find out information here: https://github.com/sciserver/giverny"
     )
 from tqdm import *
 from typing import List
@@ -73,30 +73,140 @@ def _name_to_pos(name):
     return field, time_step, start, end, step, filter_width
 
 
-def get_jhtdb(
-    loader, data_dir: Path, dataset, field, time_step, start, end, step, filter_width
+def _download_sharded_volume(
+    loader,
+    file_dir: Path,
+    field: str,
+    physical_time_step: float,
+    nx: int,
+    ny: int,
+    nz: int,
+    dx: float,
+    dy: float,
+    dz: float,
+    subfield_size,
+    subfield_idx: int = 0,
+    temporal_method: str = "none",
+    spatial_method: str  = "none",
+    spatial_operator: str = "field"
 ):
-    # get filename
+    """
+    Break down big query into smaller getData calls to stay withing 2m point limit.
+    Only rank 0 executes the download; afterwards the array is saved on
+    disk so the other ranks can reload it.
+    """
+    MAX_POINTS = 2_000_000
+    # --- decide sub-cube size -------------------------------------------------
+    # maximum linear size that stays within the point limit
+    sub_n = int(MAX_POINTS ** (1 / 3))          # ~126 for 2e6
+    sub_n = max(1, sub_n)                       # safety
+    sub_n = min(sub_n, nx, ny, nz)
+    # round sub_n to power of two so that 128 -> 64
+    while sub_n & (sub_n - 1):
+        sub_n -= 1                              # 125 → 124 → … → 64
+
+    results = np.empty((nx, ny, nz), dtype=np.float32)
+
+    # loop over blocks----------------------------------------------------------
+    for i0 in range(0, nx, sub_n):
+        i1 = min(i0 + sub_n, nx)
+        x_sub = np.linspace(i0 * dx, (i1 - 1) * dx, i1 - i0, dtype=np.float64)
+
+        for j0 in range(0, ny, sub_n):
+            j1 = min(j0 + sub_n, ny)
+            y_sub = np.linspace(j0 * dy, (j1 - 1) * dy, j1 - j0, dtype=np.float64)
+
+            for k0 in range(0, nz, sub_n):
+                k1 = min(k0 + sub_n, nz)
+                z_sub = np.linspace(k0 * dz, (k1 - 1) * dz, k1 - k0, dtype=np.float64)
+
+                # build point list for this block
+                pts = np.array(
+                    [axis.ravel() for axis in np.meshgrid(x_sub, y_sub, z_sub, indexing='ij')],
+                    dtype=np.float64
+                ).T
+
+                block = getData(
+                    loader,
+                    field,
+                    physical_time_step,
+                    temporal_method,
+                    spatial_method,
+                    spatial_operator,
+                    pts
+                )
+                block = np.array(block[0]).reshape(len(x_sub), len(y_sub), len(z_sub), subfield_size)
+                # Swap z-y-x axis order from getData into x-y-z from original getCutout method
+                block = block.transpose(2,1,0,3) # 4th dimension - the variable "depth" should stay where it is
+                desired_var = block[:,:,:,subfield_idx]
+                results[i0:i1, j0:j1, k0:k1] = desired_var
+
+    return results
+
+
+def get_jhtdb(
+    loader, data_dir: Path, dataset, field, time_step, start, end, step, filter_width, domain_size
+):
+    # Set Dataset params. See https://turbulence.idies.jhu.edu/docs/isotropic/README-isotropic.pdf
+    subfield = 0 # u-component of u-v-w of Velocity
+    temporal_method = 'none'
+    spatial_method = 'none'
+    spatial_operator = 'field'
+    physical_domain_size = 2 * np.pi
+    # Scalar fields have depth 3. Velocity is a vector field of depth 3
+    subfield_size = 3 if field == "velocity" else 1
+    # Physical Domain steps between measured points
+    dx = dy = dz = physical_domain_size / 1024
+    # Physical Time between each snapshot. Can be found in the README file of each dataset
+    #    e.g. https://turbulence.idies.jhu.edu/docs/isotropic/README-isotropic.pdf
+    dt = .002
+
+    subfield = "u"  # 0-th component of velocity, which is a vector of [u,v,w]
+    subfield_idx = 0
+
     file_name = (
-        _pos_to_name(dataset, field, time_step, start, end, step, filter_width) + ".npy"
+        _pos_to_name(dataset, subfield, time_step, start, end, step, filter_width) + ".npy"
     )
     file_dir = data_dir / Path(file_name)
+
+    nx = ny = nz = domain_size
+
+    # getData is now 0-indexed, unlike previous getCutout. Keep this after file_name
+    x_points = np.linspace((start[0]-1) * dx, (end[0]-1-64) * dx * step[0], nx, dtype=np.float64)
+    y_points = np.linspace((start[1]-1) * dy, (end[1]-1-64) * dy * step[1], ny, dtype=np.float64)
+    z_points = np.linspace((start[2]-1) * dz, (end[2]-1-64) * dz * step[2], nz, dtype=np.float64)
+
+    points = np.array(
+        [axis.ravel() for axis in np.meshgrid(x_points, y_points, z_points, indexing = 'ij')],
+        dtype = np.float64).T
+    
+    physical_time_step = (time_step-1) * dt
 
     # check if file exists and if not download it
     try:
         results = np.load(file_dir)
-    except:
+
+    except FileNotFoundError:
         # Only MPI process 0 can download data
         if DistributedManager().rank == 0:
-            results = loader.getCutout(
-                data_set=dataset,
-                field=field,
-                time_step=time_step,
-                start=start,
-                end=end,
-                step=step,
-                filter_width=filter_width,
+            # getData is limited to 2,000,000 points. Bigger queries need to be broken down
+            results = _download_sharded_volume(
+                loader,
+                file_dir,
+                field,
+                physical_time_step,
+                nx, ny, nz,
+                dx, dy, dz,
+                subfield_size,
+                subfield_idx = subfield_idx,
             )
+            # Optional: Test against predownloaded 
+            # res2 = np.array(r2[0]).reshape(nx, ny, nz, subfield_size)
+            # # Swap z-y-x axis order from getData into x-y-z from original getCutout method
+            # results2 = res2.transpose(2,1,0,3) # 4th dimension - the variable "depth" should stay where it is
+            # # results2 = res2[:,:,:,subfield_idx] # nvidia seems to have saved all 3 u-v-w
+    
+            # assert np.array_equal(results[:64,:64,:64,:], results2)
             np.save(file_dir, results)
         # Wait for all processes to get here
         if DistributedManager().distributed:
@@ -120,29 +230,31 @@ def make_jhtdb_dataset(
     data_dir = Path(data_dir)
     data_dir.mkdir(parents=True, exist_ok=True)
 
-    # initialize runner
-    lJHTDB = pyJHTDB.libJHTDB()
-    lJHTDB.initialize()
-    lJHTDB.add_token(token)
+    dataset = "isotropic1024coarse"
+
+    # initialize JHTDB dataset
+    turbulence_dataset = turb_dataset(
+        dataset_title=dataset,
+        output_path = str(data_dir),
+        auth_token = token
+    )
 
     # loop to get dataset
     np.random.seed(dataset_seed)
     list_low_res_u = []
     list_high_res_u = []
     for i in tqdm(range(nr_samples)):
-        # set download params
-        dataset = "isotropic1024coarse"
-        field = "u"
+        field = "velocity"
         time_step = int(np.random.randint(time_range[0], time_range[1]))
+
         start = np.array(
             [np.random.randint(1, 1024 - domain_size) for _ in range(3)], dtype=int
         )
         end = np.array([x + domain_size - 1 for x in start], dtype=int)
-        np.array(3 * [1], dtype=int)
 
         # get high res data
         high_res_u = get_jhtdb(
-            lJHTDB,
+            turbulence_dataset,
             data_dir,
             dataset,
             field,
@@ -151,11 +263,12 @@ def make_jhtdb_dataset(
             end,
             np.array(3 * [1], dtype=int),
             1,
+            domain_size
         )
 
         # get low res data
         low_res_u = get_jhtdb(
-            lJHTDB,
+            turbulence_dataset,
             data_dir,
             dataset,
             field,
@@ -164,6 +277,7 @@ def make_jhtdb_dataset(
             end,
             np.array(3 * [lr_factor], dtype=int),
             lr_factor,
+            domain_size
         )
 
         # plot
