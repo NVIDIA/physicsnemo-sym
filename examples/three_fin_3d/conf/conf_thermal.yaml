@@ -54,3 +54,4 @@ batch_size:
   InteriorLR: 1000
   InteriorHR: 1000
   SolidInterior: 1000
+  MonitorHeatSource: 5000
