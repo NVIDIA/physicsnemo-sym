@@ -326,7 +326,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 + str(HS_thickness_s)
             )
             invar_pressure = geo.integral_plane.sample_boundary(
-                1024,
+                cfg.batch_size.MonitorPlane,
                 parameterization=plane_param_ranges,
             )
             front_pressure_monitor = PointwiseMonitor(
@@ -357,7 +357,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 + str(HS_thickness_s)
             )
             invar_pressure = geo.integral_plane.sample_boundary(
-                1024,
+                cfg.batch_size.MonitorPlane,
                 parameterization=plane_param_ranges,
             )
             back_pressure_monitor = PointwiseMonitor(
