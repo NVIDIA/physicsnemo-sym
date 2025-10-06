@@ -52,3 +52,4 @@ batch_size:
   InteriorLR: 2000
   InteriorHR: 2000
   IntegralContinuity: 10000
+  MonitorPlane: 1024
