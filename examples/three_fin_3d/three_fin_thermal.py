@@ -386,7 +386,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
                 + str(HS_thickness_s)
             )
             invar_temp = geo.three_fin.sample_boundary(
-                5000,
+                cfg.batch_size.MonitorHeatSource,
                 criteria=Eq(y, source_origin[1]),
                 parameterization=plane_param_ranges,
             )
