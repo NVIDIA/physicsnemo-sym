@@ -59,7 +59,7 @@ custom:
     n_train: 512
     n_valid: 16
     domain_size: 128
-    access_token: "edu.jhu.pha.turbulence.testing-201311" #Replace with your own token here
+    access_token: "edu.jhu.pha.turbulence.testing-201406" #Replace with your own token here
 
   loss_weights:
     U: 1.0
