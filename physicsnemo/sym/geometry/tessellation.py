@@ -19,14 +19,12 @@ Defines base class for all mesh type geometries
 """
 
 import numpy as np
-import warp as wp
 from stl import mesh as np_mesh
 
 from .geometry import Geometry
 from .parameterization import Parameterization, Bounds, Parameter
 from .curve import Curve
 from physicsnemo.sym.constants import diff_str
-from physicsnemo.utils.sdf import signed_distance_field
 
 
 class Tessellation(Geometry):
@@ -118,37 +116,50 @@ class Tessellation(Geometry):
             def sdf(invar, params, compute_sdf_derivatives=False):
                 # gather points
                 points = np.stack([invar["x"], invar["y"], invar["z"]], axis=1)
+                points = np.squeeze(points)
+                if points.ndim == 1:
+                    points = points.reshape(1, -1)
 
                 # normalize triangles and points
                 minx, maxx, miny, maxy, minz, maxz = _find_mins_maxs(points)
                 max_dis = max(max((maxx - minx), (maxy - miny)), (maxz - minz))
-                store_triangles = np.array(triangles, dtype=np.float64)
+                store_triangles = np.array(triangles, dtype=np.float32)
                 store_triangles[:, :, 0] -= minx
                 store_triangles[:, :, 1] -= miny
                 store_triangles[:, :, 2] -= minz
                 store_triangles *= 1 / max_dis
-                store_triangles = store_triangles.reshape(-1, 3)
+                store_triangles = store_triangles.reshape(-1, 3)  # (n_vertices, 3)
                 points[:, 0] -= minx
                 points[:, 1] -= miny
                 points[:, 2] -= minz
                 points *= 1 / max_dis
-                points = points.astype(np.float64).flatten()
+                points = points.astype(np.float32)  # Keep as (n_points, 3)
 
                 # compute sdf values
                 outputs = {}
                 if airtight:
-                    sdf_field, sdf_derivative = signed_distance_field(
-                        store_triangles,
-                        np.arange((store_triangles.shape[0])),
-                        points,
-                        include_hit_points=True,
+                    # Import locally to avoid pickling issues with multiprocessing
+                    import torch
+                    from physicsnemo.utils.sdf import signed_distance_field
+
+                    torch_vertices = torch.from_numpy(store_triangles)
+                    torch_indices = torch.arange(
+                        store_triangles.shape[0], dtype=torch.int32
                     )
-                    if isinstance(sdf_field, wp.types.array):
-                        sdf_field = sdf_field.numpy()
-                    if isinstance(sdf_derivative, wp.types.array):
-                        sdf_derivative = sdf_derivative.numpy()
+                    torch_points = torch.from_numpy(points)
+
+                    sdf_field, sdf_derivative = signed_distance_field(
+                        torch_vertices,
+                        torch_indices,
+                        torch_points,
+                        max_dist=1e8,
+                        use_sign_winding_number=False,
+                    )
+
+                    sdf_field = sdf_field.numpy()
+                    sdf_derivative = sdf_derivative.numpy()  # Shape: (n_points, 3)
+
                     sdf_field = -np.expand_dims(max_dis * sdf_field, axis=1)
-                    sdf_derivative = sdf_derivative.reshape(-1)
                 else:
                     sdf_field = np.zeros_like(invar["x"])
                 outputs["sdf"] = sdf_field
@@ -156,9 +167,6 @@ class Tessellation(Geometry):
                 # get sdf derivatives
                 if compute_sdf_derivatives:
                     sdf_derivative = -(sdf_derivative - points)
-                    sdf_derivative = np.reshape(
-                        sdf_derivative, (sdf_derivative.shape[0] // 3, 3)
-                    )
                     sdf_derivative = sdf_derivative / np.linalg.norm(
                         sdf_derivative, axis=1, keepdims=True
                     )
