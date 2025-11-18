@@ -72,7 +72,7 @@ def _name_to_pos(name):
 
 
 def get_jhtdb(
-    loader, data_dir: Path, dataset, field, time_step, start, end, step, subfield = 0
+    loader, data_dir: Path, dataset, field, time_step, start, end, step
 ):
     # get filename
     file_name = (
@@ -96,7 +96,7 @@ def get_jhtdb(
                 strides=step
             )
 
-            np.save(file_dir, results.to_array()[0,:,:,:,subfield])
+            np.save(file_dir, results.to_array()[0,:,:,:,:])
         # Wait for all processes to get here
         if DistributedManager().distributed:
             torch.distributed.barrier()
@@ -122,7 +122,7 @@ def make_jhtdb_dataset(
     dataset_title = "isotropic1024coarse"
 
     # initialize runner
-    dataset = turb_dataset(dataset_title = dataset_title, output_path = data_dir, auth_token = token)
+    dataset = turb_dataset(dataset_title = dataset_title, output_path = str(data_dir), auth_token = token)
 
     # loop to get dataset
     np.random.seed(dataset_seed)
@@ -131,7 +131,7 @@ def make_jhtdb_dataset(
     for i in tqdm(range(nr_samples)):
         # set download params
         field = "velocity"
-        subfield = 0 # Velocity has 3 components: u-v-w. Specify 0 for u
+        # subfield = 0 # Velocity has 3 components: u-v-w. Specify 0 for u
         time_step = int(np.random.randint(time_range[0], time_range[1]))
         start = np.array(
             [np.random.randint(1, 1024 - domain_size) for _ in range(3)], dtype=int
@@ -149,7 +149,6 @@ def make_jhtdb_dataset(
             end,
             np.array(3 * [1], dtype=int),
             # 1, # JHTDB no longer supports filtering operations
-            subfield
         )
 
         # get low res data
@@ -163,7 +162,6 @@ def make_jhtdb_dataset(
             end,
             np.array(3 * [lr_factor], dtype=int),
             # lr_factor, # JHTDB no longer supports filtering operations
-            subfield
         )
 
         # plot
