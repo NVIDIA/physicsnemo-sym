@@ -27,8 +27,8 @@ In this example you will learn the following:
 
 .. warning::
 
-   The Python package `pyJHTDB <https://github.com/idies/pyJHTDB>`_ is required for this example to download and process the training and validation datasets.
-   Install using ``pip install pyJHTDB``.
+   The Python package `giverny <https://github.com/sciserver/giverny>`_ is required for this example to download and process the training and validation datasets.
+   Install using ``pip install giverny``.
 
 Problem Description
 -------------------
