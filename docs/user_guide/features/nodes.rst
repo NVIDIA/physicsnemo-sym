@@ -62,7 +62,7 @@ The architecture, its intermediate layers can be visualized by printing the mode
    make_dot(data_out["u"], params=dict(u_net.named_parameters())).render("u_network", format="png")
 
 
-.. figure:: /user_guide/notebook/u_network.png
+.. figure:: ../notebook/u_network.png
    :alt: Visualizing a neural network model in PhysicsNeMo Sym using Torchviz
    :width: 80.0%
    :align: center

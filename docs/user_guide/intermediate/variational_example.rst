@@ -55,7 +55,7 @@ was originally defined in [#zang2020weak]_.
 
 .. _fig-domain:
 
-.. figure:: /images/user_guide/domain_combine.png
+.. figure:: ../../images/user_guide/domain_combine.png
    :alt: Left: Domain of interface problem. Right: True Solution
    :name: fig:domain
    :align: center
@@ -288,7 +288,7 @@ The results are shown in :numref:`fig-dg_pinn`.
 
 .. _fig-dg_pinn:
 
-.. figure:: /images/user_guide/dg_pinns.png
+.. figure:: ../../images/user_guide/dg_pinns.png
    :alt: Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
    :name: fig:dg_pinn
    :align: center
@@ -299,7 +299,7 @@ By using quadrature rule, the results are shown in :numref:`fig-dg_quad`.
 
 .. _fig-dg_quad:
 
-.. figure:: /images/user_guide/dg_quad.png
+.. figure:: ../../images/user_guide/dg_quad.png
    :alt: Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
    :name: fig:dg_quad
    :align: center
@@ -310,7 +310,7 @@ By using quadrature rule and RBF test function, the results are shown in :numref
 
 .. _fig-dg_rbf:
 
-.. figure:: /images/user_guide/dg_rbf.png
+.. figure:: ../../images/user_guide/dg_rbf.png
    :alt: Left: PhysicsNeMo Sym. Center: Analytical. Right: Difference.
    :name: fig:dg_rbf
    :align: center
@@ -352,7 +352,7 @@ The code of this example can be found in ``./point_source/point_source.py``.
 
 .. _fig-point-source:
 
-.. figure:: /images/user_guide/point-source-fig.png
+.. figure:: ../../images/user_guide/point-source-fig.png
    :alt: Domain for the point source problem.
    :name: fig:point-source
    :align: center
@@ -390,7 +390,7 @@ Results and Post-processing
 
 The results for the problem are shown in :numref:`fig:dg_point_source`.
 
-.. figure:: /images/user_guide/point_source.png
+.. figure:: ../../images/user_guide/point_source.png
    :alt: PhysicsNeMo Sym prediction.
    :name: fig:dg_point_source
    :align: center

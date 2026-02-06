@@ -44,7 +44,7 @@ This simulation solves the forced Navier-Stokes equations:
 The forcing term :math:`\textbf{f}` is used to inject energy into the simulation to maintain a constant total energy. 
 This dataset contains 5028 time steps spanning from 0 to 10.05 seconds which are sampled every 10 time steps from the original pseudo-spectral simulation.
 
-.. figure:: /images/user_guide/super_res_dataset_sample.png
+.. figure:: ../../images/user_guide/super_res_dataset_sample.png
    :alt: Isotropic turbulence velocity field snap shot
    :width: 70.0%
    :align: center
@@ -56,7 +56,7 @@ The objective is to build a surrogate model to learn the mapping between a low-r
 Due to the size of the full simulation domain, this tutorial focuses on predicting smaller volumes such that the surrogate learns with a low resolution dimensionality of :math:`32^{3}` to a high-resolution dimensionality of :math:`128^{3}`.
 Use the :ref:`super_res` in this tutorial, but :ref:`pix2pix` is also integrated into this problem and can be used instead if desired.
 
-.. figure:: /images/user_guide/super_res_surrogate.png
+.. figure:: ../../images/user_guide/super_res_surrogate.png
    :alt: Isotropic turbulence velocity field snap shot
    :width: 70.0%
    :align: center
@@ -227,7 +227,7 @@ You can see that the inclusion of vorticity in the loss equation increases the m
 Loss combinations of additional fluid measures has proven successful in past works [#geneva2020multi]_ [#subramaniam2020turbulence]_. 
 However, additional losses can potentially make the optimization more difficult for the model and adversely impact accuracy.
 
-.. figure:: /images/user_guide/super_res_tensorboard.png
+.. figure:: ../../images/user_guide/super_res_tensorboard.png
    :alt: Turbulence super-resolution tensorboard
    :width: 75.0%
    :align: center
@@ -238,14 +238,14 @@ However, additional losses can potentially make the optimization more difficult 
 The output VTK files can be found in the ``'outputs/super_resolution/validators'`` folder which you can then view in Paraview.
 The volumetric plots of the velocity magnitude fields are shown below where you can see the model dramatically improves the low-resolution velocity field.
 
-.. figure:: /images/user_guide/super_res_validation_0.png
+.. figure:: ../../images/user_guide/super_res_validation_0.png
     :alt: Validation volumetric plot
     :width: 80.0%
     :align: center
     
     Velocity magnitude for a validation case using the super resolution model for predicting turbulence
 
-.. figure:: /images/user_guide/super_res_validation_1.png
+.. figure:: ../../images/user_guide/super_res_validation_1.png
     :alt: Validation volumetric plot
     :width: 80.0%
     :align: center

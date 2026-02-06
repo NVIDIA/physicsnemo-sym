@@ -18,7 +18,7 @@ An example custom TensorBoard plot for the lid driven cavity example :ref:`Intro
 
 .. _fig-custom-plot:
 
-.. figure:: /images/user_guide/tensorboard_custom.png
+.. figure:: ../../images/user_guide/tensorboard_custom.png
    :alt: Custom TensorBoard plots
    :width: 80.0%
    :align: center
@@ -228,7 +228,7 @@ To better understand the conversion, consider the following minimal example for 
     var_to_polyvtk(save_var, "./test_file")
 
 
-.. figure:: /images/user_guide/vtk_poly_data.png
+.. figure:: ../../images/user_guide/vtk_poly_data.png
     :alt: `vtkPolyData` visualization example
     :width: 60.0%
     :align: center
@@ -261,7 +261,7 @@ The following minimal example will demonstrate this function for a 3D grid:
     grid_to_vtk(save_var, "./test_file", batch_index=1)
 
 
-.. figure:: /images/user_guide/vtk_grid_data.png
+.. figure:: ../../images/user_guide/vtk_grid_data.png
     :alt: `vtkUniformGridData` visualization example
     :width: 60.0%
     :align: center
@@ -309,7 +309,7 @@ The example below defines a uniform mesh to conduct inference on:
 The above example defines a square domain of resolution :math:`128\times 128`.
 Adding this to your ``ldc_2d.py`` from :ref:`Introductory Example` will add an addition inferencer with and output file ``vtk_inf.vti`` which is visualized as a mesh rather than a point cloud.
 
-.. figure:: /images/user_guide/vtk_ldc_grid_data.png
+.. figure:: ../../images/user_guide/vtk_ldc_grid_data.png
     :alt: `vtkUniformGridData` visualization LDC example
     :width: 60.0%
     :align: center
@@ -361,7 +361,7 @@ An example of reading in a OpenFOAM simulation file and using it for building a 
 Since ``cavity_openfoam.vtk`` is an unstructured grid, the output from this validator would be ``vtk_validator.vtu`` and contain the same mesh structure.
 Adding this code to your ``ldc_2d.py`` from :ref:`Introductory Example` will now produce a meshed validation result in ParaView.
 
-.. figure:: /images/user_guide/vtk_ldc_validation_data.png
+.. figure:: ../../images/user_guide/vtk_ldc_validation_data.png
     :alt: `vtkUnstructuredGridData` visualization LDC example
     :width: 60.0%
     :align: center
@@ -405,7 +405,7 @@ With the VTK file ``bunny.vtk`` or any VTK unstructured mesh of your choosing, y
 The result is ``vtk_bunny.vtp``, shown below, which contains the result from querying the network at the mesh vertex points of the Stanford bunny.
 While this is not a very practical result for the LDC flow, this illustrates how one can quickly load a predefined geometry and conduct inference on it.
 
-.. figure:: /images/user_guide/vtk_ldc_bunny_data.png
+.. figure:: ../../images/user_guide/vtk_ldc_bunny_data.png
     :alt: Bunny inference visualization LDC example
     :width: 60.0%
     :align: center
@@ -448,7 +448,7 @@ Adding this to ``ldc_2d.py`` will output the file ``vox_inf.vti``.
 Initially upon loading this VTK file in ParaView, all masked and unmasked points will be shown.
 Use the ``Threshold`` filter on the default settings to remove the masked points leaving a nice cylinder.
 
-.. figure:: /images/user_guide/vtk_ldc_cylinder_data.png
+.. figure:: ../../images/user_guide/vtk_ldc_cylinder_data.png
     :alt: Voxel inference visualization LDC example
     :width: 60.0%
     :align: center
@@ -456,7 +456,7 @@ Use the ``Threshold`` filter on the default settings to remove the masked points
     Visualization of `vox_inf.vti` in ParaView from LDC inferencer
 
 
-.. figure:: /images/user_guide/vtk_ldc_cylinder_masked_data.png
+.. figure:: ../../images/user_guide/vtk_ldc_cylinder_masked_data.png
     :alt: Masked voxel inference visualization LDC example
     :width: 60.0%
     :align: center

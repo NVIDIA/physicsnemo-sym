@@ -100,7 +100,7 @@ agreement between the exact solution and the neural network solution as shown in
 
 .. _fig-single-parabola:
 
-.. figure:: /images/user_guide/single_parabola.png
+.. figure:: ../../images/user_guide/single_parabola.png
    :alt: Neural Network Solver compared with analytical solution
    :width: 60.0%
    :align: center
@@ -194,7 +194,7 @@ computational cost. Examples of this will be given later in the user guide.
 
 .. _fig-every-parabola:
 
-.. figure:: /images/user_guide/every_parabola.png
+.. figure:: ../../images/user_guide/every_parabola.png
    :alt: PhysicsNeMo Sym solving parameterized differential equation problem.
    :width: 60.0%
    :align: center
@@ -226,7 +226,7 @@ solve this problem and compare the results in :numref:`fig-inverse-parabola`,
 
 .. _fig-inverse-parabola:
 
-.. figure:: /images/user_guide/inverse_parabola.png
+.. figure:: ../../images/user_guide/inverse_parabola.png
    :alt: Comparison of true solution for :math:`f(x)` and the function approximated by the NN.
    :width: 60.0%
    :align: center
@@ -236,7 +236,7 @@ solve this problem and compare the results in :numref:`fig-inverse-parabola`,
 
 .. _fig-inverse-parabola-2:
 
-.. figure:: /images/user_guide/inverse_parabola_2.png
+.. figure:: ../../images/user_guide/inverse_parabola_2.png
    :alt: Comparison of :math:`u_{net}(x)` and train points from :math:`u_{true}`.
    :width: 60.0%
    :align: center

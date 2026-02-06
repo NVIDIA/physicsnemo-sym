@@ -63,7 +63,7 @@ equation better and faster.
 
 .. _fig-more-ic:
 
-.. figure:: /images/user_guide/IC_planes_compare.png
+.. figure:: ../../images/user_guide/IC_planes_compare.png
    :alt: Improvements in accuracy by adding more Integral continuity planes and points inside the domain
    :width: 40.0%
    :align: center
@@ -113,7 +113,7 @@ convergence.
 
 .. _fig-sdf:
 
-.. figure:: /images/user_guide/sdf.png
+.. figure:: ../../images/user_guide/sdf.png
    :alt: Improvements in convergence speed by weighting the equation residuals spatially.
    :name: fig:sdf
    :width: 80.0%
@@ -150,7 +150,7 @@ Using more points near the heat sink, we are able to achieve better
 
 .. _fig-more-pts-fpga:
 
-.. figure:: /images/user_guide/more_pts.png
+.. figure:: ../../images/user_guide/more_pts.png
    :alt: Improvements in accuracy by adding more points in the interior.
    :name: fig:more_pts_fpga
    :width: 80.0%
@@ -182,7 +182,7 @@ introduce any extra communication overhead between the workers. Details
 on how to use the gradient aggregation in PhysicsNeMo Sym is provided in Tutorial
 :ref:`config`.
 
-.. figure:: /images/user_guide/annular_ring_gradient_aggregation.png
+.. figure:: ../../images/user_guide/annular_ring_gradient_aggregation.png
    :alt: Increasing the batch size can improve the accuracy of neural network solvers. Results are for the :math:`u`-velocity of an annular ring example trained with different number of GPUs and gradient aggregations.
    :name: fig:more_pts
    :width: 40.0%

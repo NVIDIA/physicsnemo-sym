@@ -15,8 +15,8 @@
 # limitations under the License.
 
 """
-Primitives for 3D geometries
-see https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
+Primitives for 3D geometries see
+https://iquilezles.org/articles/distfunctions/
 """
 
 from sympy import (

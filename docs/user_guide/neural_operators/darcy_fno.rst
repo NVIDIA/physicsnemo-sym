@@ -77,7 +77,7 @@ you are `not` learning just a single solution but rather a distribution.
 
 .. _fig-fno_darcy:
 
-.. figure:: /images/user_guide/fno_darcy.png
+.. figure:: ../../images/user_guide/fno_darcy.png
    :alt: FNO surrogate model for 2D Darcy Flow
    :width: 80.0%
    :align: center
@@ -236,7 +236,7 @@ validation predictions. Several are shown below, and you can see that the model
 is able to accurately predict the pressure field for permeability fields it had
 not seen previously.
 
-.. figure:: /images/user_guide/fno_darcy_pred1.png
+.. figure:: ../../images/user_guide/fno_darcy_pred1.png
    :alt: FNO Darcy Prediction 1
    :width: 80.0%
    :align: center
@@ -244,7 +244,7 @@ not seen previously.
    FNO validation prediction 1. (Left to right) Input permeability, true
    pressure, predicted pressure, error.
 
-.. figure:: /images/user_guide/fno_darcy_pred2.png
+.. figure:: ../../images/user_guide/fno_darcy_pred2.png
    :alt: FNO Darcy Prediction 2
    :width: 80.0%
    :align: center
@@ -252,7 +252,7 @@ not seen previously.
    FNO validation prediction 2. (Left to right) Input permeability, true
    pressure, predicted pressure, error.
 
-.. figure:: /images/user_guide/fno_darcy_pred3.png
+.. figure:: ../../images/user_guide/fno_darcy_pred3.png
    :alt: FNO Darcy Prediction 3
    :width: 80.0%
    :align: center

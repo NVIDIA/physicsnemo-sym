@@ -106,7 +106,7 @@ the code and final results is presented here.
 
 The results of the turbulent lid driven cavity flow are shown below. 
 
-.. figure:: /images/user_guide/try_decoupled_inference.png
+.. figure:: ../../images/user_guide/try_decoupled_inference.png
    :alt: Visualizing variables from Inference domain
    :name: fig:zeroInference
    :width: 40.0%
@@ -114,7 +114,7 @@ The results of the turbulent lid driven cavity flow are shown below.
 
    Visualizing variables from Inference domain
 
-.. figure:: /images/user_guide/try_decoupled.png
+.. figure:: ../../images/user_guide/try_decoupled.png
    :alt: Comparison with OpenFOAM data. Left: PhysicsNeMo Sym Prediction. Center: OpenFOAM, Right: Difference
    :name: fig:zeroValidation
    :width: 80.0%

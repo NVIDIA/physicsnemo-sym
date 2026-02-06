@@ -36,6 +36,7 @@ from physicsnemo.sym.geometry.primitives_3d import (
     Torus,
 )
 from physicsnemo.sym.geometry.tessellation import Tessellation
+from physicsnemo.sym.geometry.tessellation_warp import Tessellation as TessellationWarp
 from physicsnemo.sym.utils.io.vtk import var_to_polyvtk
 
 dir_path = Path(__file__).parent
@@ -238,4 +239,87 @@ def test_primitives():
     )
 
 
-test_primitives()
+def test_tessellation_equivalency():
+    """
+    Test equivalency between original Tessellation and Warp Tessellation implementations.
+
+    This test compares the sample_boundary method from both implementations
+    to ensure they produce equivalent results.
+    It roughly reproduces relevant checks from test_primitives.
+    """
+
+    # Set up test parameters.
+    nr_points = 1000
+    stl_file = dir_path / "stls/cube.stl"
+
+    # Create original and Warp Tessellation objects.
+    tess_original = Tessellation.from_stl(stl_file)
+    tess_warp = TessellationWarp.from_stl(stl_file)
+
+    # Sample boundary.
+    boundary_original = tess_original.sample_boundary(nr_points)
+    boundary_warp = tess_warp.sample_boundary(nr_points)
+
+    # Check that both dictionaries have the same keys.
+    assert set(boundary_original.keys()) == set(boundary_warp.keys()), (
+        f"Different keys: original={set(boundary_original.keys())}, warp={set(boundary_warp.keys())}"
+    )
+
+    # Check that shapes are consistent.
+    for key in boundary_original.keys():
+        assert boundary_original[key].shape == boundary_warp[key].shape, (
+            f"Shape mismatch for key '{key}': original={boundary_original[key].shape}, warp={boundary_warp[key].shape}"
+        )
+
+    # Check that total surface areas are approximately equal.
+    total_area_original = np.sum(boundary_original["area"])
+    total_area_warp = np.sum(boundary_warp["area"])
+    assert np.isclose(total_area_original, total_area_warp, rtol=1e-2), (
+        f"Total area mismatch: original={total_area_original}, warp={total_area_warp}"
+    )
+
+    # Verify the expected surface area for a unit cube (should be 6.0).
+    assert np.isclose(total_area_original, 6.0, rtol=1e-1), (
+        f"Expected cube surface area ~6.0, got {total_area_original}"
+    )
+    assert np.isclose(total_area_warp, 6.0, rtol=1e-1), (
+        f"Expected cube surface area ~6.0, got {total_area_warp}"
+    )
+
+    # Check that normals are unit vectors (approximately).
+    for impl_name, boundary in (
+        ("original", boundary_original),
+        ("warp", boundary_warp),
+    ):
+        normal_magnitudes = np.sqrt(
+            boundary["normal_x"] ** 2
+            + boundary["normal_y"] ** 2
+            + boundary["normal_z"] ** 2
+        )
+        assert np.allclose(normal_magnitudes, 1.0, rtol=1e-3), (
+            f"Normal vectors are not unit vectors in {impl_name} implementation"
+        )
+
+    # Check that points are on the cube surface (SDF should be close to 0).
+    for impl_name, boundary in (
+        ("original", boundary_original),
+        ("warp", boundary_warp),
+    ):
+        # Create points array for SDF computation.
+        points_dict = {"x": boundary["x"], "y": boundary["y"], "z": boundary["z"]}
+
+        # Compute SDF using original tessellation.
+        sdf_result = tess_original.sdf(points_dict, {})
+        sdf_values = sdf_result["sdf"]
+
+        # All boundary points should have SDF close to 0.
+        assert np.allclose(sdf_values, 0.0, atol=1e-3), (
+            f"Boundary points not on surface in {impl_name} implementation, max SDF: {np.max(np.abs(sdf_values))}"
+        )
+
+    print("Tessellation equivalency test passed!")
+
+
+if __name__ == "__main__":
+    test_primitives()
+    test_tessellation_equivalency()

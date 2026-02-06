@@ -135,7 +135,7 @@ The validation results (ground truth, DeepONet prediction, and difference, respe
 
 .. _fig-data-deeponet-0:
 
-.. figure:: /images/user_guide/data_deeponet_0.png
+.. figure:: ../../images/user_guide/data_deeponet_0.png
    :alt: DeepONet validation result
    :width: 50.0%
    :align: center
@@ -144,7 +144,7 @@ The validation results (ground truth, DeepONet prediction, and difference, respe
 
 .. _fig-data-deeponet-1:
 
-.. figure:: /images/user_guide/data_deeponet_1.png
+.. figure:: ../../images/user_guide/data_deeponet_1.png
    :alt: DeepONet validation result
    :width: 50.0%
    :align: center
@@ -153,7 +153,7 @@ The validation results (ground truth, DeepONet prediction, and difference, respe
 
 .. _fig-data-deeponet-2:
 
-.. figure:: /images/user_guide/data_deeponet_2.png
+.. figure:: ../../images/user_guide/data_deeponet_2.png
    :alt: DeepONet validation result
    :width: 50.0%
    :align: center
@@ -247,7 +247,7 @@ The validation results (ground truth, DeepONet prediction, and difference, respe
 
 .. _fig-physics-deeponet-0:
 
-.. figure:: /images/user_guide/physics_deeponet_0.png
+.. figure:: ../../images/user_guide/physics_deeponet_0.png
    :alt: DeepONet validation result
    :width: 50.0%
    :align: center
@@ -256,7 +256,7 @@ The validation results (ground truth, DeepONet prediction, and difference, respe
 
 .. _fig-physics-deeponet-1:
 
-.. figure:: /images/user_guide/physics_deeponet_1.png
+.. figure:: ../../images/user_guide/physics_deeponet_1.png
    :alt: DeepONet validation result
    :width: 50.0%
    :align: center
@@ -265,7 +265,7 @@ The validation results (ground truth, DeepONet prediction, and difference, respe
 
 .. _fig-physics-deeponet-2:
 
-.. figure:: /images/user_guide/physics_deeponet_2.png
+.. figure:: ../../images/user_guide/physics_deeponet_2.png
    :alt: DeepONet validation result
    :width: 50.0%
    :align: center
@@ -348,21 +348,21 @@ Results and Post-processing
 
 The validation results (ground truth, DeepONet prediction, and difference, respectively) are shown as below.
 
-.. figure:: /images/user_guide/deeponet_darcy_1.png
+.. figure:: ../../images/user_guide/deeponet_darcy_1.png
    :alt: DeepONet validation result 1
    :width: 80.0%
    :align: center
 
    DeepONet validation result, sample 1
 
-.. figure:: /images/user_guide/deeponet_darcy_2.png
+.. figure:: ../../images/user_guide/deeponet_darcy_2.png
    :alt: DeepONet validation result 2
    :width: 80.0%
    :align: center
 
    DeepONet validation result, sample 2
 
-.. figure:: /images/user_guide/deeponet_darcy_3.png
+.. figure:: ../../images/user_guide/deeponet_darcy_3.png
    :alt: DeepONet validation result 3
    :width: 80.0%
    :align: center

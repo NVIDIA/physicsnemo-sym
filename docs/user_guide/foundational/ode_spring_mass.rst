@@ -58,7 +58,7 @@ For this tutorial, assume the following conditions:
 
 .. _fig-spring-mass:
 
-.. figure:: /images/user_guide/spring_mass_drawing.png
+.. figure:: ../../images/user_guide/spring_mass_drawing.png
    :alt: Three masses connected by four springs on a frictionless surface
    :width: 50.0%
    :align: center
@@ -138,7 +138,7 @@ the analytical result very quickly. The plots can be created
 using the ``.npz`` files that are created in the ``validator/`` directory
 in the network checkpoint.
 
-.. figure:: /images/user_guide/comparison_ode.png
+.. figure:: ../../images/user_guide/comparison_ode.png
    :alt: Comparison of PhysicsNeMo Sym results with an analytical solution
    :width: 70.0%
    :align: center

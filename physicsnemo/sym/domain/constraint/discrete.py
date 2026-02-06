@@ -46,7 +46,7 @@ class SupervisedGridConstraint(Constraint):
         dataset which supplies invar and outvar examples
         Must be a subclass of Dataset or IterableDataset
     loss : Loss, optional
-        PhysicsNeMo `Loss` function, by default PointwiseLossNorm()
+        PhysicsNeMo Loss function, by default PointwiseLossNorm()
     batch_size : int, optional
         Batch size used when running constraint, must be specified if Dataset used
         Not used if IterableDataset used

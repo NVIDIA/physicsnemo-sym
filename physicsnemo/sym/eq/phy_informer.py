@@ -59,46 +59,51 @@ class PhysicsInformer:
     grad_method : str
         Gradient method to use. Currently below methods are supported, which can be
         selected based on the model output format:
-            `autodiff`: The spatial gradients are computed using automatic
-            differentiation. Ideal for networks dealing with point-clouds and
-            fully-differentiable networks. The `.forward` call requires input dict with
-            the relevant variables in `[N, 1]` shape along with entry for "coordinates"
-            in `[N, m]` shape where m is the dimensionality of the input
-            (1/2/3 based on 1D, 2D and 3D).
-            Note: the coordinates tensor must have `requires_grad` set to `True` and the
-            model outputs need to be connected to the coordinates in the computational
-            graph.
-            `meshless_finite_difference`: The spatial gradients are computed using
-            meshless finite difference. Ideal for use with point-clouds.
-            For details refer: https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/features/performance.html#meshless-finite-derivatives.
-            The `.forward` call requires input dict with the relevant variables in
-            `[N, 1]` shape along with the same variables executed at the stencil points.
-            Stencil points are defined by the following convention:
-                "u>>x::1": u(i+1, j)
-                "u>>x::-1": u(i-1, j)
-                "u>>x::1&&y::1": u(i+1, j+1)
-                "u>>x::-1&&y::-1": u(i-1, j-1)
-                etc.
-            `finite_difference`: The spatial gradients are computed using finite
-            difference assuming regular grid. Ideal for use with regular grids / images.
-            The `.forward` call requires input dict with the relevant variables in
-            `[N, 1, H, W, D]` for 3D, `[N, 1, H, W]` for 2D and `[N, 1, H]` for 1D.
-            `spectral`: The spatial gradients are computed using FFTs. Note: this can
-            lead to boundary artifacts for non-periodic signals. Ideal for use with
-            regular grids / images.
-            The `.forward` call requires input dict with the relevant variables in
-            `[N, 1, H, W, D]` for 3D, `[N, 1, H, W]` for 2D and `[N, 1, H]` for 1D.
-            `least_squares`: The spatial gradients are computed using Least Squares
-            technique. Ideal for use with mesh based representations (i.e. unstructured
-            grids). All values are
-            computed at the nodes. The `.forward` call requires input dict with
-            the relevant variables in `[N, 1]` shape along with entry for "coordinates"
-            in `[N, m]` shape where m is the dimensionality of the input
-            (1/2/3 based on 1D, 2D and 3D), "node_ids", "edges" and
-            "connectivity_tensor". The "node_ids" and "edges" can directly derived from
-            the graph representation (for example for dgl graph, by running
-            `graph.nodes()` and `graph.edges()`). For computing connectivity tensor,
-            refer: `physicsnemo.sym.eq.spatial_grads.spatial_grads.compute_connectivity_tensor`
+
+        - ``autodiff``: The spatial gradients are computed using automatic
+          differentiation. Ideal for networks dealing with point-clouds and
+          fully-differentiable networks. The `.forward` call requires input dict with
+          the relevant variables in ``[N, 1]`` shape along with entry for "coordinates"
+          in ``[N, m]`` shape where m is the dimensionality of the input
+          (1/2/3 based on 1D, 2D and 3D).
+          Note: the coordinates tensor must have ``requires_grad`` set to ``True`` and the
+          model outputs need to be connected to the coordinates in the computational
+          graph.
+
+        - ``meshless_finite_difference``: The spatial gradients are computed using
+          meshless finite difference. Ideal for use with point-clouds.
+          For details refer: https://docs.nvidia.com/deeplearning/physicsnemo/physicsnemo-sym/user_guide/features/performance.html#meshless-finite-derivatives.
+          The `.forward` call requires input dict with the relevant variables in
+          ``[N, 1]`` shape along with the same variables executed at the stencil points.
+          Stencil points are defined by the following convention:
+
+              "u>>x::1": u(i+1, j)
+              "u>>x::-1": u(i-1, j)
+              "u>>x::1&&y::1": u(i+1, j+1)
+              "u>>x::-1&&y::-1": u(i-1, j-1)
+              etc.
+
+        - ``finite_difference``: The spatial gradients are computed using finite
+          difference assuming regular grid. Ideal for use with regular grids / images.
+          The `.forward` call requires input dict with the relevant variables in
+          ``[N, 1, H, W, D]`` for 3D, ``[N, 1, H, W]`` for 2D and ``[N, 1, H]`` for 1D.
+
+        - ``spectral``: The spatial gradients are computed using FFTs. Note: this can
+          lead to boundary artifacts for non-periodic signals. Ideal for use with
+          regular grids / images.
+          The `.forward` call requires input dict with the relevant variables in
+          ``[N, 1, H, W, D]`` for 3D, ``[N, 1, H, W]`` for 2D and ``[N, 1, H]`` for 1D.
+
+        - ``least_squares``: The spatial gradients are computed using Least Squares
+          technique. Ideal for use with mesh based representations (i.e. unstructured
+          grids). All values are computed at the nodes. The `.forward` call requires
+          input dict with the relevant variables in ``[N, 1]`` shape along with entry
+          for "coordinates" in ``[N, m]`` shape where m is the dimensionality of the
+          input (1/2/3 based on 1D, 2D and 3D), "node_ids", "edges" and
+          "connectivity_tensor". The "node_ids" and "edges" can directly derived from
+          the graph representation (for example for dgl graph, by running
+          ``graph.nodes()`` and ``graph.edges()``). For computing connectivity tensor,
+          refer: ``physicsnemo.sym.eq.spatial_grads.spatial_grads.compute_connectivity_tensor``
     fd_dx : Union[float, List[float]], optional
         dx to be used for meshless finite difference and regular finite difference
         calculation. If float, the same value is used across all dimensions,
@@ -106,7 +111,7 @@ class PhysicsInformer:
     bounds : List[float], optional
         bounds to be used for spectral derivatives, by default [2 * np.pi, 2 * np.pi, 2 * np.pi]
     compute_connectivity : bool, optional
-        Wether to compute the connectivity tensor during forward pass (only applies for
+        Whether to compute the connectivity tensor during forward pass (only applies for
         least squares method), by default True. Set to false if this can be computed as
         a part of the dataloader.
     device : Optional[str], optional

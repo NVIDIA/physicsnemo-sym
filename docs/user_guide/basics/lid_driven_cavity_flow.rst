@@ -49,7 +49,7 @@ so that the Reynolds number is 10, indicating a more laminar flow.
 
 .. _fig-ldc-geom:
 
-.. figure:: /images/user_guide/ldc.png
+.. figure:: ../../images/user_guide/ldc.png
    :alt: Lid driven cavity geometry
    :width: 30.0%
    :align: center
@@ -61,7 +61,7 @@ Case Setup
 
 We first summarize the key concepts
 and how they relate to PhysicsNeMo Sym' features.
-(For a more detailed discussion, please see :ref:`nn_methodology`.)
+(For a more detailed discussion, please see `physics-informed theory <../theory/phys_informed.html>`_.)
 Solving any physics-driven simulation that is defined by
 differential equations requires information about the domain of the
 problem and its governing equations and boundary conditions.
@@ -363,7 +363,7 @@ Weights to any variables can be specified as an input to the
 
 .. _fig-ldc-lambda:
 
-.. figure:: /images/user_guide/ldc_lambda.png
+.. figure:: ../../images/user_guide/ldc_lambda.png
    :alt: Weighting the sharp discontinuities in the boundary condition
    :width: 60.0%
    :align: center
@@ -531,7 +531,7 @@ constraints).
 
 .. _fig-tensorboard-1:
 
-.. figure:: /images/user_guide/tensorboard_sample.png
+.. figure:: ../../images/user_guide/tensorboard_sample.png
    :alt: Tensorboard Interface.
    :align: center
 
@@ -561,7 +561,7 @@ important files/directories.
 
    .. _fig-train-1:
 
-.. figure:: /images/user_guide/train_continuity.png
+.. figure:: ../../images/user_guide/train_continuity.png
    :alt: Visualization using Paraview. Left: Continuity as specified in the domain definition. Right: Computed continuity after training.
    :name: fig:train_1
    :width: 80.0%
@@ -584,7 +584,7 @@ important files/directories.
 
 .. _fig-val-vs-train-1:
 
-.. figure:: /images/user_guide/val_vs_train.png
+.. figure:: ../../images/user_guide/val_vs_train.png
    :alt: image
    :width: 80.0%
    :align: center
@@ -634,7 +634,7 @@ The points to sample can be selected using the ``sample_interior`` and ``sample_
     	ldc_domain.add_monitor(global_monitor)
 
 
-.. figure:: /images/user_guide/ldc_monitors.png
+.. figure:: ../../images/user_guide/ldc_monitors.png
    :alt: image
    :width: 60.0%
    :align: center
@@ -653,7 +653,7 @@ found in :ref:`tensorboard`. The code below shows use of ``PointwiseInferencer``
    :lines: 117-126
 
 
-.. figure:: /images/user_guide/ldc_inferencer.png
+.. figure:: ../../images/user_guide/ldc_inferencer.png
    :alt: image
    :width: 80.0%
    :align: center

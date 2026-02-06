@@ -27,8 +27,19 @@ python three_fin_thermal.py
 To perform inference within a design-exploration loop, run:
 
 ```bash
-python three_fin_design.py
+bash design_optimization.sh
 ```
+
+Note, if you run out of memory when running the design optimization loop, please
+set `export CUDA_VISIBLE_DEVICES=""` in the `design_optimization.sh` script.
+If you still run out of memory, lower the `batch_size` for `MonitorPlane` and
+`MonitorHeatSource` in [`conf/conf_flow.yaml`](conf/conf_flow.yaml) and
+[`conf/conf_thermal.yaml`](conf/conf_thermal.yaml) respectively.
+
+Additionally, the design optimization workflow assumes the model is trained with
+default configs present in the `conf/` directory. If you plan to change any configs
+via commandline, this changes the directory structure of the outputs and the
+`design_optimization.sh` and `three_fin_design.py` will have to be modified appropriately.
 
 ## References
 

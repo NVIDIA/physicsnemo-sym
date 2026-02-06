@@ -29,7 +29,7 @@ developed channel flow case. The flow is set between two flat plates separated b
 2H in y-direction and is driven by a constant negative pressure gradient in the streamwise direction. 
 The flow in streamwise direction is periodic and flow is homogenous in the z-direction. 
 
-.. figure:: /images/user_guide/turbulent_channel_geometry.png
+.. figure:: ../../images/user_guide/turbulent_channel_geometry.png
    :alt: Turbulent flow in a 2D channel 
    :width: 50.0%
    :align: center
@@ -69,7 +69,7 @@ The wall function relations that are shown in the following sections are then ap
 
 .. _fig-point-sampling:
 
-.. figure:: /images/user_guide/turbulent_channel_sampling.png
+.. figure:: ../../images/user_guide/turbulent_channel_sampling.png
    :alt: Turbulent channel sampling 
    :width: 50.0%
    :align: center
@@ -206,7 +206,7 @@ Post-processing, Results and Discussion
 
 The PhysicsNeMo Sym results are shown in the figure below along with the DNS data [#moser1999direct]_ and Solver data [#gistanford]_. Observe that the the nondimensionalized velocity and turbulent kinetic energy profiles match very well with the DNS and solver data. Also, the k-omega models are able to predict the friction velocity with better accuracy when compared to the k-epsilon models. 
 
-.. figure:: /images/user_guide/turbulent_channel_results.png
+.. figure:: ../../images/user_guide/turbulent_channel_results.png
    :alt: Turbulent flow in a 2D channel 
    :width: 100.0%
    :align: center
