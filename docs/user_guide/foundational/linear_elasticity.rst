@@ -159,7 +159,7 @@ Problem 1: Deflection of a bracket
 
 This linear elasticity example, shows a 3D bracket 
 in :numref:`fig-bracket-geometry`. This example is partially
-adopted from the `MATLAB PDE toolbox <https://www.mathworks.com/help/pde/ug/deflection-analysis-of-a-bracket.html>`_.
+adopted from the `MATLAB PDE toolbox <https://www.mathworks.com/help/pde/ug/deflection-analysis-of-bracket-femodel.html>`_.
 The back face of this bracket is clamped, and a traction of
 :math:`4 \times 10^4 \, \text{Pa}` is applied to the front face in the
 negative-:math:`z` direction (this face is shown in red). The rest of
@@ -170,7 +170,7 @@ linear elasticity equations by setting
 
 .. _fig-bracket-geometry:
 
-.. figure:: /images/user_guide/bracket_geometry.png
+.. figure:: ../../images/user_guide/bracket_geometry.png
    :width: 40.0%
    :align: center
 
@@ -223,7 +223,7 @@ a 8% difference in maximum bracket displacement.
 
 .. _fig-bracket-results:
 
-.. figure:: /images/user_guide/bracket_results_combined.png
+.. figure:: ../../images/user_guide/bracket_results_combined.png
    :width: 100.0%
    :align: center
 
@@ -246,7 +246,7 @@ for different values of hoop stress.
 
 .. _fig-panel-geometry:
 
-.. figure:: /images/user_guide/panel.png
+.. figure:: ../../images/user_guide/panel.png
    :alt: Geometry and boundary conditions of the simplified aircraft fuselage panel.
    :width: 24.0%
    :align: center
@@ -278,7 +278,7 @@ of less than 5% in the maximum Von Mises stress.
 
 .. _fig-panel-results:
 
-.. figure:: /images/user_guide/panel_results_combined.png
+.. figure:: ../../images/user_guide/panel_results_combined.png
    :alt: PhysicsNeMo Sym linear elasticity results for the aircraft fuselage panel example with parameterized hoop stress. The results are for :math:`\sigma_{hoop}` = 46
    :width: 100.0%
    :align: center
@@ -287,7 +287,7 @@ of less than 5% in the maximum Von Mises stress.
 
 .. _fig-panel-abaqus-results:
 
-.. figure:: /images/user_guide/panel_commercial_results_combined.png
+.. figure:: ../../images/user_guide/panel_commercial_results_combined.png
    :alt: Commercial solver linear elasticity results for the aircraft fuselage panel example with :math:`\sigma_{hoop}` = 46
    :width: 100.0%
    :align: center
@@ -352,7 +352,7 @@ python script for this problem can be found at
 
 .. _fig-plane_displacement:
 
-.. figure:: /images/user_guide/plane_displacement.png
+.. figure:: ../../images/user_guide/plane_displacement.png
    :width: 35.0%
    :align: center
 
@@ -416,7 +416,7 @@ the accuracy of the PhysicsNeMo Sym results in the variational form.
 
 .. _fig-plane_displacement-results:
 
-.. figure:: /images/user_guide/plane_displacement_results_combined.png
+.. figure:: ../../images/user_guide/plane_displacement_results_combined.png
    :width: 100.0%
    :align: center
 

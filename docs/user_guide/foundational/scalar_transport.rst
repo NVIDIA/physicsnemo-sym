@@ -35,7 +35,7 @@ as the peak velocity. The kinematic viscosity :math:`\nu` is set to 0.01
 :math:`m^2/s` and the Prandtl number is 5. Although the flow is laminar,
 the Zero Equation turbulence model is kept on.
 
-.. figure:: /images/user_guide/threeFin_2d_geom.png
+.. figure:: ../../images/user_guide/threeFin_2d_geom.png
    :alt: 2D slice of three fin heat sink geometry (All dimensions in :math:`m`)
    :name: fig:threeFin_2d
    :width: 100.0%
@@ -189,7 +189,7 @@ data in :numref:`fig-2d_heat_sink_results`.
 
 .. _fig-2d_heat_sink_results:
 
-.. figure:: /images/user_guide/heatSink_try4.png
+.. figure:: ../../images/user_guide/heatSink_try4.png
    :alt: Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference
    :name: fig:2d_heat_sink_results
    :width: 100.0%

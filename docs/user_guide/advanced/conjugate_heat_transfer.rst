@@ -44,7 +44,7 @@ All the other surfaces of the geometry are treated as no-slip walls.
  
 .. _fig-threeFin_heatsink:
 
-.. figure:: /images/user_guide/threeFin_geom.png
+.. figure:: ../../images/user_guide/threeFin_geom.png
    :alt: Three fin heat sink geometry (All dimensions in :math:`m`)
    :name: fig:threeFin_heatsink
    :width: 100.0%
@@ -268,7 +268,7 @@ from OpenFOAM solver.
    ===================================== =========== ========
 
 
-.. figure:: /images/user_guide/CHTXSlice.png
+.. figure:: ../../images/user_guide/CHTXSlice.png
    :alt: Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. Top: Temperature distribution in Fluid. Bottom: Temperature distribution in Solid (*Temperature scales in C*)
    :name: fig:3d_heat_sink_xslice_heat
    :width: 100.0%
@@ -277,7 +277,7 @@ from OpenFOAM solver.
    Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. Top: Temperature
    distribution in Fluid. Bottom: Temperature distribution in Solid (*Temperature scales in C*)
 
-.. figure:: /images/user_guide/CHTZSlice.png
+.. figure:: ../../images/user_guide/CHTZSlice.png
    :alt: Left: PhysicsNeMo Sym. Center: OpenFOAM. Right: Difference. (*Temperature scales in C*)
    :name: fig:3d_heat_sink_zslice_heat
    :width: 100.0%
@@ -312,13 +312,13 @@ visualize such quantities in PhysicsNeMo Sym by outputting the :math:`x`,
 
 You can then post-process these quantities based on your choice to
 visualize the desired variables. `Paraview’s Calculator Filter
-<https://kitware.github.io/paraview-docs/latest/python/paraview.simple.Calculator.html>`_ was used for the 
+<https://www.paraview.org/paraview-docs/nightly/python/paraview.simple.Calculator.html>`_ was used for the 
 plot shown below. The wall velocity gradients comparison between OpenFOAM and PhysicsNeMo Sym is
 shown in :numref:`fig-3d_heat_sink_wall_velGrad`.
 
 .. _fig-3d_heat_sink_wall_velGrad:
 
-.. figure:: /images/user_guide/wall_shear_stress_3Fin.png
+.. figure:: ../../images/user_guide/wall_shear_stress_3Fin.png
    :alt: Comparison of magnitude of wall velocity gradients. Left: PhysicsNeMo Sym. Right: OpenFOAM
    :width: 80.0%
    :align: center

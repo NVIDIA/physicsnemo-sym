@@ -46,7 +46,7 @@ boundary conditions :numref:`fig-taylor_green_initial_conditions`.
 
 .. _fig-taylor_green_initial_conditions:
 
-.. figure:: /images/user_guide/taylor_green_initial_conditions.png
+.. figure:: ../../images/user_guide/taylor_green_initial_conditions.png
    :alt: Taylor-Green vortex initial conditions.
    :name: fig:tylor_green_initial_conditions
    :align: center
@@ -65,7 +65,7 @@ time window. A similar approach can be found here
 
 .. _fig-moving_time_window:
 
-.. figure:: /images/user_guide/moving_time_window_fig.png
+.. figure:: ../../images/user_guide/moving_time_window_fig.png
    :alt: Moving Time Window Method
    :name: fig:moving_time_window
    :align: center
@@ -149,14 +149,14 @@ large differences. Instead, you can look at the average turbulent kinetic
 energy decay (TKE) of the simulation. A figure of this can be found
 here below.
 
-.. figure:: /images/user_guide/taylor_green_re_500.png
+.. figure:: ../../images/user_guide/taylor_green_re_500.png
    :alt: Taylor-Green vortex at time :math:`15.0`.
    :name: fig:taylor_green_re_500
    :align: center
 
    Taylor-Green vortex at time :math:`15.0`.
 
-.. figure:: /images/user_guide/tke_plot.png
+.. figure:: ../../images/user_guide/tke_plot.png
    :alt: Taylor-Green Turbulent kinetic energy decay.
    :name: fig:taylor_green_tke
    :align: center

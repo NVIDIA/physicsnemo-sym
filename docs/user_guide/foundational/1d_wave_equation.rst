@@ -179,7 +179,7 @@ Results
 
 The figure below shows the comparison of PhysicsNeMo Sym results with the analytical solution. You can see that the error in PhysicsNeMo Sym prediction increases as the time increases. Some advanced approaches to tackle transient problems are covered in :ref:`transient-navier-stokes`. 
 
-.. figure:: /images/user_guide/try12.png
+.. figure:: ../../images/user_guide/try12.png
    :alt: Left: PhysicsNeMo Sym. Center: Analytical Solution. Right: Difference
    :name: fig:wave1
    :width: 100.0%
@@ -221,14 +221,14 @@ The below figures show the PhysicsNeMo Sym validation error for models trained w
 marching for transient 1D, 2D wave examples and a 2D channel flow over a bump. It is evident that these two simple tricks
 can improve the training accuracy. 
 
-.. figure:: /images/user_guide/continuous_time_vs_temporal_marching_1.png
+.. figure:: ../../images/user_guide/continuous_time_vs_temporal_marching_1.png
    :alt:  PhysicsNeMo Sym validation error for the 1D transient wave example: (a) standard continuous time approach; (b) continuous time approach with temporal loss weighting and time marching.
    :width: 60%
    :align: center
 
    PhysicsNeMo Sym validation error for the 1D transient wave example: (a) standard continuous time approach; (b) continuous time approach with temporal loss weighting and time marching.
 
-.. figure:: /images/user_guide/continuous_time_vs_temporal_marching_2.png
+.. figure:: ../../images/user_guide/continuous_time_vs_temporal_marching_2.png
    :alt: PhysicsNeMo Sym validation error for the 2D transient wave example: (a) standard continuous time approach; (b) continuous time approach with temporal loss weighting and time marching. 
    :width: 60%
    :align: center
@@ -236,7 +236,7 @@ can improve the training accuracy.
    PhysicsNeMo Sym validation error for the 2D transient wave example: (a) standard continuous time approach; (b) continuous time approach with temporal loss weighting and time marching.
 
 
-.. figure:: /images/user_guide/continuous_time_vs_temporal_marching_3.png
+.. figure:: ../../images/user_guide/continuous_time_vs_temporal_marching_3.png
    :alt: PhysicsNeMo Sym validation error for a 2D transient channel flow over a bump: (a) standard continuous time approach; (b) continuous time approach with temporal loss weighting.
    :width: 80%
    :align: center

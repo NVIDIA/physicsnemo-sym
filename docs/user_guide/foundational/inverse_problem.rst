@@ -61,7 +61,7 @@ minimize loss from the conservation laws alone.
 
 .. _fig-inverse_point_sample:
 
-.. figure:: /images/user_guide/inverse_problem.png
+.. figure:: ../../images/user_guide/inverse_problem.png
    :alt: Batch of training points sampled from OpenFOAM data
    :name: fig:inverse_point_sample
    :width: 50.0%
@@ -207,7 +207,7 @@ in :numref:`fig-inverse-point-result`.
 
 .. _fig-inverse-point-result:
 
-.. figure:: /images/user_guide/inverse_problem_results_try2.png
+.. figure:: ../../images/user_guide/inverse_problem_results_try2.png
    :alt: Tensorboard plots for :math:`\nu` and :math:`\alpha`
    :width: 60.0%
    :align: center

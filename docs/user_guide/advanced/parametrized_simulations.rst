@@ -69,7 +69,7 @@ given in equation :eq:`param_ranges`.
    t_{side fins} &= (0.05, 0.15)
    \end{split}
 
-.. figure:: /images/user_guide/parameterized_3fin.png
+.. figure:: ../../images/user_guide/parameterized_3fin.png
    :alt: Examples of some of the 3 Fin geometries covered in the chosen design space
    :name: fig:param_3_fin_1
    :width: 50.0%
@@ -225,7 +225,7 @@ design has a pressure drop of 2.46 and a peak temperature of 76.23
 
 .. _fig-optimal_3Fin:
 
-.. figure:: /images/user_guide/optimal_3fin.png
+.. figure:: ../../images/user_guide/optimal_3fin.png
    :alt: Three Fin geometry after optimization
    :width: 30.0%
    :align: center
@@ -268,7 +268,7 @@ the time taken for two approaches.
 .. note::
    The PhysicsNeMo Sym calculations were done using 4 NVIDIA V100 GPUs. The OpenFOAM calculations were done using 20 processors.
 
-.. figure:: /images/user_guide/flow_field_with_T_4_cropped.png
+.. figure:: ../../images/user_guide/flow_field_with_T_4_cropped.png
    :name: fig:optimal_3Fin_result
    :width: 70.0%
    :align: center

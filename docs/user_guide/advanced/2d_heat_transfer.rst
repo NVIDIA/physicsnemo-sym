@@ -21,7 +21,7 @@ This tutorial presents two scenarios, one where both the materials are solids bu
 The geometry of the problem is a simple composite 2D geometry with different material conductivities. The heat source is placed in inside the material of higher conductivity to replicate the actual heatsink and scenario. The objective of this case is to mimic the orders of magnitude difference between Copper :math:`(k=385 \text{ } W/m-K)` and Air :math:`(k=0.0261 \text{ } W/m-K)`. Therefore, set the conductivity of the heatsink and surrounding solid to 100 and 0.01 respectively. 
 
 
-.. figure:: /images/user_guide/2d-solid-solid-geo.png
+.. figure:: ../../images/user_guide/2d-solid-solid-geo.png
    :alt: Geometry for 2D solid-solid case
    :width: 60.0%
    :align: center
@@ -56,7 +56,7 @@ the heat sink between the Commercial solver and PhysicsNeMo Sym results.
 
 This figure visualizes the solution. 
 
-.. figure:: /images/user_guide/2d_solid_solid_results.png
+.. figure:: ../../images/user_guide/2d_solid_solid_results.png
    :alt: Results for 2D solid-solid case
    :width: 80.0%
    :align: center
@@ -71,7 +71,7 @@ The geometry of the problem is very similar to the earlier case, except that now
 geometry are more representative of a real heatsink geometry scales. The real properties for air and copper will also be used in this example. This example is also a 
 good demonstrator for nondimensionalizing the properties/geometries to improve the neural network training. This figure shows the geometry and measurements for this problem. 
 
-.. figure:: /images/user_guide/solid_fluid_geo.png
+.. figure:: ../../images/user_guide/solid_fluid_geo.png
    :alt: Geometry for 2D solid-fluid case
    :width: 60.0%
    :align: center
@@ -91,7 +91,7 @@ The figure below visualizes the thermal solution in solid and fluid. You can obs
 at the interface when compared to the commercial solution. We believe these differences in the solver results are due to the discretization errors and can be potentially fixed 
 by improving the grid resolution at the interface. PhysicsNeMo Sym prediction however does not suffer from such errors and the physical constraints are respected to a better degree of accuracy. 
 
-.. figure:: /images/user_guide/2d_solid_fluid_results.png
+.. figure:: ../../images/user_guide/2d_solid_fluid_results.png
    :alt: Results for 2D solid-fluid case
    :width: 99.0%
    :align: center

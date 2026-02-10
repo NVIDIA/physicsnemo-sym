@@ -351,14 +351,14 @@ $`w_1`$ , $`\ldots`$ , $`w_{10}`$  $`\text{ are the weights associated with the 
 
 
 ## Important Dependencies & Prerequisites:
-- Nvidia's PhysicsNeMo symbolic v23.09 :[link](https://github.com/NVIDIA/physicsnemo-sym)
+- NVIDIA's PhysicsNeMo Symbolic v23.09 :[link](https://github.com/NVIDIA/physicsnemo-sym)
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - Python 3.8 upwards
 
 ## Getting Started:
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-- The code is developed in a Linux enviroment.
+- The code is developed in a Linux environment.
 
 ## Installation - Bare metal / Docker
 
@@ -587,11 +587,11 @@ The overall loss is shown in the second column of the second row for all the fig
 
 
 ## Author:
-- Clement Etienam- Solution Architect-Energy @Nvidia  Email: cetienam@nvidia.com
+- Clement Etienam- Solution Architect-Energy @NVIDIA  Email: cetienam@nvidia.com
 
 ## Contributors:
-- Kaustubh Tangsali- Nvidia
-- Issam Said- Nvidia
+- Kaustubh Tangsali- NVIDIA
+- Issam Said- NVIDIA
 
 
 

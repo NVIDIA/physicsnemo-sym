@@ -7308,7 +7308,7 @@ print("")
 
 print("--------------------------ADAPTIVE-REKI----------------------------------")
 print("History Matching using the Adaptive Regularised Ensemble Kalman Inversion")
-print("Novel Implementation by Clement Etienam, SA-Nvidia: SA-ML/A.I/Energy")
+print("Novel Implementation by Clement Etienam, SA-NVIDIA: SA-ML/A.I/Energy")
 
 if DEFAULT == 1:
     Technique_REKI = 3
@@ -9208,7 +9208,7 @@ post-processing\n"
 elif Technique_REKI == 2:
     print("")
     print("Adaptive Regularised Ensemble Kalman Inversion with KSVD Parametrisation")
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
 
     os.chdir(oldfolder)
@@ -10574,7 +10574,7 @@ elif Technique_REKI == 3:
         "Adaptive Regularised Ensemble Kalman Inversion with Convolution Autoencoder \
 Parametrisation\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("../PACKETS/encoder.h5")
@@ -15932,7 +15932,7 @@ elif Technique_REKI == 7:
         "Adaptive Regularised Ensemble Kalman Inversion with Convolution Autoencoder \
 Parametrisation with Generative adverserail network prior\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("../PACKETS/autoencoder.h5")
@@ -17324,7 +17324,7 @@ elif Technique_REKI == 8:
         "Adaptive Regularised Ensemble Kalman Inversion with Generative\
 adverserail network prior for permeability field alone\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print(" Learn the permeability field GAN module")
     aa = os.path.isfile("../PACKETS/generator.h5")
@@ -18709,7 +18709,7 @@ adverserail network prior for permeability field alone\n"
 elif Technique_REKI == 9:
     print("")
     print("Adaptive Regularised Ensemble Kalman Inversion with KMEANS Parametrisation")
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
 
     os.chdir(oldfolder)
@@ -20076,7 +20076,7 @@ elif Technique_REKI == 10:
         "Adaptive Regularised Ensemble Kalman Inversion with Variational Convolution Autoencoder \
 Parametrisation\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print(
         "-------------------------learn Variational Autoencoder------------------------"
@@ -22914,7 +22914,7 @@ Gaussian Process Experts. arXiv preprint arXiv:2006.13309, 2020.\n"
 elif Technique_REKI == 12:
     print("")
     print("Adaptive Regularised Ensemble Kalman Inversion with DCT Parametrisation")
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
 
     os.chdir(oldfolder)
@@ -25196,7 +25196,7 @@ elif Technique_REKI == 14:
     print(
         "Adaptive Regularised Ensemble Kalman Inversion with Diffusion model Parametrisation\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print("-------------------------learn Diffusion model------------------------")
     if not os.path.exists(("../PACKETS/tochi")):

@@ -51,7 +51,7 @@ The tokenized image is processed by the transformer layers followed by a linear 
 
 .. _fig-afno_darcy:
 
-.. figure:: /images/user_guide/afno_darcy.png
+.. figure:: ../../images/user_guide/afno_darcy.png
    :alt: AFNO surrogate model for 2D Darcy Flow
    :width: 75.0%
    :align: center
@@ -171,21 +171,21 @@ specified in the ``rec_results_freq`` parameter of its derivatives. See :ref:`hy
 The network directory folder (in this case ``'outputs/darcy_afno/validators'``) contains several plots of different 
 validation predictions.
 
-.. figure:: /images/user_guide/afno_darcy_pred1.png
+.. figure:: ../../images/user_guide/afno_darcy_pred1.png
    :alt: AFNO Darcy Prediction 1
    :width: 80.0%
    :align: center
 
    AFNO validation prediction 1. (Left to right) Input permeability, true pressure, predicted pressure, error.
 
-.. figure:: /images/user_guide/afno_darcy_pred2.png
+.. figure:: ../../images/user_guide/afno_darcy_pred2.png
    :alt: AFNO Darcy Prediction 2
    :width: 80.0%
    :align: center
 
    AFNO validation prediction 2. (Left to right) Input permeability, true pressure, predicted pressure, error.
 
-.. figure:: /images/user_guide/afno_darcy_pred3.png
+.. figure:: ../../images/user_guide/afno_darcy_pred3.png
    :alt: AFNO Darcy Prediction 3
    :width: 80.0%
    :align: center

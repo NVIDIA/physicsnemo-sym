@@ -5146,7 +5146,7 @@ print("|                 SOLVE INVERSE PROBLEM WITH LBFGS:               |")
 print("|-----------------------------------------------------------------|")
 print("")
 print("History Matching using LBFGS")
-print("Novel Implementation by Clement Etienam, SA-Nvidia: SA-ML/A.I/Energy")
+print("Novel Implementation by Clement Etienam, SA-NVIDIA: SA-ML/A.I/Energy")
 
 
 if DEFAULT == 1:

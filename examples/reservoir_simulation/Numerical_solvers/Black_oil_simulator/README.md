@@ -1,4 +1,4 @@
-![Nvidia-Energy](../pino_modeling/3D/Forward_problem_results/FNO/TRUE/Evolution_water_3D.gif)
+![NVIDIA-Energy](../pino_modeling/3D/Forward_problem_results/FNO/TRUE/Evolution_water_3D.gif)
 
 # [GPU accelerated Reservoir Simulator](https://gitlab-master.nvidia.com/GlobalEnergyTeam/simulation/gpu_black_oil_reservoir_simulation)
 
@@ -71,14 +71,14 @@ The final pressure and saturation equations for a two-phase oil-water flow is
 * Creates an animation at the end
 
 ## Important Dependencies & Prerequisites:
-- Nvidia's in-house GPU based black oil reservoir simulator - **NVRS**
+- NVIDIA's in-house GPU based black oil reservoir simulator - **NVRS**
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - Python 3.8 upwards
 
 ## Getting Started:
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-- The code is developed in a Linux enviroment.
+- The code is developed in a Linux environment.
 
 ## Installation
 
@@ -94,7 +94,7 @@ conda activate MDLO
 git clone https://gitlab-master.nvidia.com/GlobalEnergyTeam/simulation/gpu_black_oil_reservoir_simulation.git
 
 ```
-- From terminal, install (missing) dependencies in 'requirements.txt' in the conda enviroment **MDLO**
+- From terminal, install missing dependencies in `requirements.txt` inside the **MDLO** environment.
 - Follow instructions to install CuPy from : [link](https://github.com/cupy/cupy.git)
 
 ```bash
@@ -114,8 +114,8 @@ sudo chmod +x ./scripts/docker/docker-run.sh
 Solvers include;
 1) Left-Preconditioned GMRES [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.gmres.html)
 2) LSQR [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.lsqr.html)
-3) Left Preconditoned Conjugate gradient [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.cg.html)
-4) Constrained pressure residual -CPR  (V cycle 2stage AMG for presure solve and left-precondioned GMRES with ILU(0) as preconditoner for saturation sole) [link](https://doi.org/10.2118/96809-MS)
+3) Left-Preconditioned Conjugate Gradient [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.cg.html)
+4) Constrained Pressure Residual (CPR)  (V-cycle two-stage AMG for the pressure solve and left-preconditioned GMRES with ILU(0) for the saturation solve) [link](https://doi.org/10.2118/96809-MS)
 6) Spsolve [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.spsolve.html)
 
 

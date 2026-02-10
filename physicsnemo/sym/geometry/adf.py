@@ -24,6 +24,7 @@ class ADF(torch.nn.Module):
     Used for hard imposition of boundary conditions.
     Currently supports 2d geometries and Dirichlet boundary conditions.
     Contributors: M. A. Nabian, R. Gladstone, H. Meidani, N. Sukumar, A. Srivastava
+
     Reference: "Sukumar, N. and Srivastava, A., 2021.
         Exact imposition of boundary conditions with distance functions in physics-informed deep neural networks.
         Computer Methods in Applied Mechanics and Engineering, p.114333."
@@ -47,9 +48,9 @@ class ADF(torch.nn.Module):
         Parameters
         ----------
         omegas : List[torch.Tensor]
-          List of ADFs used to compute the R-equivalence.
-        m: float
-          Normalization order
+            List of ADFs used to compute the R-equivalence.
+        m : float
+            Normalization order
 
         Returns
         -------
@@ -73,12 +74,12 @@ class ADF(torch.nn.Module):
 
         Parameters
         ----------
-        bases: List[torch.Tensor]
-          List of ADFs used for the transfinite interpolation.
-        indx: int
-          index of the interpolation basis
-        eps: float
-          Small value to avoid division by zero
+        bases : List[torch.Tensor]
+            List of ADFs used for the transfinite interpolation.
+        indx : int
+            index of the interpolation basis
+        eps : float
+            Small value to avoid division by zero
 
         Returns
         -------
@@ -104,12 +105,12 @@ class ADF(torch.nn.Module):
 
         Parameters
         ----------
-        points: Tuple[torch.Tensor]
-          ADF will be computed on these points
-        point_1: Tuple[float]
-          One of the two points that form the infinite line
-        point_2: Tuple[float]
-          One of the two points that form the infinite line
+        points : Tuple[torch.Tensor]
+            ADF will be computed on these points
+        point_1 : Tuple[float]
+            One of the two points that form the infinite line
+        point_2 : Tuple[float]
+            One of the two points that form the infinite line
 
         Returns
         -------

@@ -15,7 +15,7 @@
 # limitations under the License.
 """
 
-Nvidia Finite volume reservoir simulator with flexible solver
+NVIDIA Finite volume reservoir simulator with flexible solver
 
 AMG to solve the pressure and saturation well possed inverse problem
 

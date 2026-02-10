@@ -2840,7 +2840,7 @@ pressure, Swater, Sgas = Forward_model_ensemble(
 
 elapsed_time_secs2 = time.time() - start_time_plots2
 msg = (
-    "Reservoir simulation with Nvidia PhysicsNeMo took: %s secs (Wall clock time)"
+    "Reservoir simulation with NVIDIA PhysicsNeMo took: %s secs (Wall clock time)"
     % timedelta(seconds=round(elapsed_time_secs2))
 )
 print(msg)
@@ -2855,13 +2855,13 @@ flow_time = elapsed_time_secs
 if physicsnemo_time < flow_time:
     slower_time = physicsnemo_time
     faster_time = flow_time
-    slower = "Nvidia PhysicsNeMo Surrogate"
+    slower = "NVIDIA PhysicsNeMo Surrogate"
     faster = "Flow Reservoir Simulator"
 else:
     slower_time = flow_time
     faster_time = physicsnemo_time
     slower = "Flow Reservoir Simulator"
-    faster = "Nvidia PhysicsNeMo Surrogate"
+    faster = "NVIDIA PhysicsNeMo Surrogate"
 
 # Calculate speedup
 speedup = math.ceil(faster_time / slower_time)
@@ -3218,7 +3218,7 @@ pressuref, Swaterf, Sgasf = Forward_model_ensemble(
 
 elapsed_time_secs2 = time.time() - start_time_plots2
 msg = (
-    "Reservoir simulation with Nvidia PhysicsNeMo (FNO) took: %s secs (Wall clock time)"
+    "Reservoir simulation with NVIDIA PhysicsNeMo (FNO) took: %s secs (Wall clock time)"
     % timedelta(seconds=round(elapsed_time_secs2))
 )
 print(msg)
@@ -3233,13 +3233,13 @@ flow_time = elapsed_time_secs
 if physicsnemo_time < flow_time:
     slower_time = physicsnemo_time
     faster_time = flow_time
-    slower = "Nvidia PhysicsNeMo Surrogate"
+    slower = "NVIDIA PhysicsNeMo Surrogate"
     faster = "Flow Reservoir Simulator"
 else:
     slower_time = flow_time
     faster_time = physicsnemo_time
     slower = "Flow Reservoir Simulator"
-    faster = "Nvidia PhysicsNeMo Surrogate"
+    faster = "NVIDIA PhysicsNeMo Surrogate"
 
 # Calculate speedup
 speedup = math.ceil(faster_time / slower_time)

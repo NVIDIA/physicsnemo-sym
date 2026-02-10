@@ -1,5 +1,5 @@
 # Automatic History Matching with a Weighted adaptive Regularised Ensemble Kalman Inversion ($`\alpha`$REKI) and a GPU based black oil forward model
-![Nvidia-Energy](https://www.dgidocs.info/slider/images/media/resources_reservoirsim.jpg)
+![NVIDIA-Energy](https://www.dgidocs.info/slider/images/media/resources_reservoirsim.jpg)
 
 ## An Automatic History Matching Workflow with a GPU based forward solver:
 Calibration of subsurface structures is an important step to forecast fluid dynamics and behaviours in a plethora of geoenvironments such as petroleum and geothermal reservoirs. History matching is an ill-posed inverse process to find reservoir model parameters honouring observations by integration of static (e.g., core, logging, and seismic) and dynamic data (e.g., oil and gas rate, water cut, bottomhole pressure, and subsidence/uplift) .In recent developments, the ensemble Kalman filter (EnKF) (Evensen 1994, Law et al 2012, Stuart 2010), ensemble smoother (ES) (van Leeuwen & Evensen 1996) ES with multiple data assimilation (ES-MDA) (Emerick & Reynolds 2013) and Iterative variants of ES (Chen & Oliver 2011, Iglesias 2013) have all been utilised for history matching/data assimilation problems. However, the ensemble-based data assimilation approaches have limited capability in preserving non-Gaussian distributions of model parameters such as facies (Aanonsen et al.,2009, Villegas et al, 2018, Lorentzen et al, 2013). In the ensemble-based data assimilation techniques, model parameters lose the non- Gaussianity of their original distributions (generated from a geostatistical software) that are initially constrained and constructed to available hard data and the distributions of the model parameters tend towards Gaussian ones (Evensen & Eikrem 2018, Kim et al 2018). Some methods utilised for this parametrisation technique in reservoir characterization literature is, the discrete cosine transform (DCT) (Jafarpour & McLaughlin, 2007)  (Liu & Jafarpour, 2013), level set (Moreno & Aanonsen 2007, Dorn & Villegas 2008, Villegas et al 2018, Chang et al 2010, Lorentzen et al., 2013) and sparse geologic dictionaries (Etienam et al, 2019, Kim et al, 2018, Khaninezhad et al, 2012). In particular, Fourier transform-based methods such as DCT are capable of capturing essential traits such as main shapes and patterns of a facies channel reservoir (Khaninezhad, et al., 2012) but reveal a deficiency in describing a crisp contrast among different facies because of data loss from inverse transformation (Kim et al 2018, Khaninezhad et al, 2012, Tarrahi & Afra,2016).
@@ -144,14 +144,14 @@ The final pressure and saturation equations for a two-phase oil-water flow is
 
 
 ## Important Dependencies & Prerequisites:
-- Nvidia's in-house GPU based black oil reservoir simulator - **NVRS**
+- NVIDIA's in-house GPU based black oil reservoir simulator - **NVRS**
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - Python 3.8 upwards
 
 ## Getting Started:
 - These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
-- The code is developed in a Linux enviroment.
+- The code is developed in a Linux environment.
 
 ## Installation 
 
@@ -175,21 +175,21 @@ sudo chmod +x ./scripts/docker/docker-build.sh
 sudo chmod +x ./scripts/docker/docker-run.sh
 # Run docker container (also enables X server for docker)
 ./scripts/docker/docker-run.sh
-``````
+```
 
 ### Run
 **NVRS** is a fully GPU based Black oil reservoir simulator.
 Solvers include;
 1) Left-Preconditioned GMRES [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.gmres.html)
 2) LSQR [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.lsqr.html)
-3) Left Preconditoned Conjugate gradient [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.cg.html)
-4) Constrained pressure residual -CPR  (V cycle 2stage AMG for presure solve and left-precondioned GMRES with ILU(0) as preconditoner for saturation sole) [link](https://doi.org/10.2118/96809-MS)
+3) Left Preconditioned Conjugate Gradient [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.cg.html)
+4) Constrained Pressure Residual (CPR) (V-cycle two-stage AMG for the pressure solve and left-preconditioned GMRES with ILU(0) for the saturation solve) [link](https://doi.org/10.2118/96809-MS)
 6) Spsolve [link](https://docs.cupy.dev/en/stable/reference/generated/cupyx.scipy.sparse.linalg.spsolve.html)
 7) AMGx suite of solvers
 
 **CPR is the default solver**.
 1) Pressure solver: V cycle 2 stage AMG with Aggregation and Level scheduling for the coarsening/restriction operations
-2) Saturation solver:  Left preconditoned GMRES with ILU(0) as preconditioner
+2) Saturation solver:  Left preconditioned GMRES with ILU(0) as preconditioner
 3) Smoothers include : Jacobi, Gauss-Seidel, SOR
 
 
@@ -295,7 +295,7 @@ conda deactivate
 Refer to the included Energy SDK License Agreement in **Energy_SDK_License_Agreement.pdf** for guidance.
 
 ## Author:
-- Clement Etienam- Solution Architect-Energy @Nvidia  Email: cetienam@nvidia.com
+- Clement Etienam- Solution Architect-Energy @NVIDIA  Email: cetienam@nvidia.com
 
 
 

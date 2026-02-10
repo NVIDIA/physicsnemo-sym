@@ -5185,7 +5185,7 @@ print("")
 
 print("--------------------------ADAPTIVE-REKI----------------------------------")
 print("History Matching using the Adaptive Regularised Ensemble Kalman Inversion")
-print("Novel Implementation by Clement Etienam, SA-Nvidia: SA-ML/A.I/Energy")
+print("Novel Implementation by Clement Etienam, SA-NVIDIA: SA-ML/A.I/Energy")
 
 if DEFAULT == 1:
     Technique_REKI = 2
@@ -6156,7 +6156,7 @@ elif Technique_REKI == 2:
         "Adaptive Regularised Ensemble Kalman Inversion with Convolution Autoencoder \
 Parametrisation\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("PACKETS/encoder.h5")
@@ -8269,7 +8269,7 @@ elif Technique_REKI == 5:
         "Adaptive Regularised Ensemble Kalman Inversion with Convolution Autoencoder \
 Parametrisation with Generative adverserail network prior\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print("-------------------------learn Autoencoder------------------------")
     bb = os.path.isfile("PACKETS/autoencoder.h5")
@@ -8987,7 +8987,7 @@ elif Technique_REKI == 6:
         "Adaptive Regularised Ensemble Kalman Inversion with Generative\
 adverserail network prior for permeability field alone\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print(" Learn the permeability field GAN module")
 
@@ -9668,7 +9668,7 @@ adverserail network prior for permeability field alone\n"
 elif Technique_REKI == 7:
     print("")
     print("Adaptive Regularised Ensemble Kalman Inversion with KMEANS Parametrisation")
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
 
     os.chdir(oldfolder)
@@ -10352,7 +10352,7 @@ elif Technique_REKI == 8:
         "Adaptive Regularised Ensemble Kalman Inversion with Variational Convolution Autoencoder \
 Parametrisation\n"
     )
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
     print(
         "-------------------------learn Variational Autoencoder------------------------"
@@ -11219,7 +11219,7 @@ Parametrisation\n"
 elif Technique_REKI == 9:
     print("")
     print("Adaptive Regularised Ensemble Kalman Inversion with DCT Parametrisation")
-    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @Nvidia")
+    print("Novel Implementation: Author: Clement Etienam SA Energy/GPU @NVIDIA")
     print("Starting the History matching with ", str(Ne) + " Ensemble members")
 
     os.chdir(oldfolder)

@@ -43,6 +43,7 @@ training:
   rec_monitor_freq: 1000
   rec_constraint_freq: 2000
   max_steps : 1500000
+  monitor_grad_clip: False
 
 batch_size:
   Inlet: 500
@@ -51,3 +52,4 @@ batch_size:
   InteriorLR: 2000
   InteriorHR: 2000
   IntegralContinuity: 10000
+  MonitorPlane: 1024

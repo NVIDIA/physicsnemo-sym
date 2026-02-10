@@ -9,7 +9,7 @@ Calibration of subsurface structures is an important step to forecast fluid dyna
 Reservoir model calibration is applicable and relevant for locating new hydrocarbon deposits and for CCUS stratigraphic trapping initiatives in many energy companies. Energy companies are aiming to accelerate their forward simulation codes for precise and detailed subsurface/dynamic/Petro-physical mappings of their assets/plays. A fascinating and easy to implement meshless approximation to solve reservoir simulation forward problems using physics constrained/informed deep neural networks show promising results.In this project, a physics informed neural operators (PINOs) is developed for surrogating a Two phase flow black oil model and a recently developed weighted adaptive regularised ensemble kalman inversion method is used for solving the inverse problem.
 
 
-The aim of this project is to develop an integrated workflow, where the finite volume fully/adaptive implicit black oil reservoir simulator is replaced by a phyiscs informed neural operator. This developed PINO surrogate is now used in an inverse problem methodology. A newly developed adaptive regularised ensemble alman inversion method with covariance localisation together with a mixture of experts approach is implemented. This approach called _PINO-CCR_ is well suited for forward and inverse uncertainty quantifiication .
+The aim of this project is to develop an integrated workflow, where the finite volume fully/adaptive implicit black oil reservoir simulator is replaced by a phyiscs informed neural operator. This developed PINO surrogate is now used in an inverse problem methodology. A newly developed adaptive regularised ensemble kalman inversion method with covariance localisation together with a mixture of experts approach is implemented. This approach called _PINO-CCR_ is well suited for forward and inverse uncertainty quantification .
 
 
 ## Methods for the forward and inverse problem (In the weeds):
@@ -202,7 +202,7 @@ The final pressure , water saturation and gas saturation equations for a three-p
 **Fourier Neural operator based machine infused with physics constraint from black oil model ansatz**
 
 An FNO model architecture, introduced in [54], is shown below.
-![Nvidia-Energy](https://zongyi-li.github.io/assets/img/fourier_layer.png)
+![NVIDIA-Energy](https://zongyi-li.github.io/assets/img/fourier_layer.png)
 
 The goal is to replace the Finite volume simulator with an FNO surrogate.
 
@@ -406,7 +406,7 @@ are some standard parametric regressors.
 
 
 ## Important Dependencies & Prerequisites:
-- Nvidia's PhysicsNeMo symbolic v23.09 :[link](https://github.com/NVIDIA/physicsnemo-sym)
+- NVIDIA's PhysicsNeMo symbolic v23.09 :[link](https://github.com/NVIDIA/physicsnemo-sym)
 - CUDA 11.8 : [link](https://developer.nvidia.com/cuda-11-8-0-download-archive)
 - CuPy : [link](https://github.com/cupy/cupy.git)
 - Python 3.8 upwards
@@ -623,7 +623,7 @@ tensorboard --logdir=./ --port=7007
 The result for the PINO surrogate is shown in Fig.2(a), 100 training samples was used were we compute the data loss and physics loss. The water flows from the injectors (downwards facing arrows) towards the producers (upwards facing arrows). The size of the reservoir computational voxel is nx, ny, nz = 46,112,22. Three phases are considered (oil,gas and water) and the wells (9 water injectors and 4 gas injectors and 22 producers) shown here [link](https://www.equinor.com/energy/norne) . The 22 producers well have measurable quantities of oil rate, gas rate and  water rate are controlled by bottom-hole-pressure. The 9 water injector wells have measurable quantity of bottom hole pressure (BHP), controlled by injection rates. 3,298 days of simulation are simulated. The left column of Fig.2(a) are the responses from the PINO surrogate, the middle column are the responses from the Flow finite volume solver  and the right column is the difference between each response. For all panels in Fig. 2(a), the first row is for the pressure, the second row is for the water saturation, the third row is for oil saturation and the fourth row is for the gas saturation
 
 - The results from the Forward Problem using the PINO implementation
-![alt text](Numerical_experiment/COMPARE_RESULTS/PINO/PEACEMANN_CCR/HARD_PREDICTION/Evolution.gif)***Figure 2**: Numerical implementation of Reservoir forward simulation shwoing the pressure (first row), water saturation (second row), oil saturation (third row) and gas saturation (fourth row) evolution. PINO based reservoir forwarding (left column), OPM-Flow based reservoir forwarding (first principle), (middle-column) and the difference in magnitudes from both approaches (last-column) with the well locations*
+![alt text](Numerical_experiment/COMPARE_RESULTS/PINO/PEACEMANN_CCR/HARD_PREDICTION/Evolution.gif)***Figure 2**: Numerical implementation of Reservoir forward simulation showing the pressure (first row), water saturation (second row), oil saturation (third row) and gas saturation (fourth row) evolution. PINO based reservoir forwarding (left column), OPM-Flow based reservoir forwarding (first principle), (middle-column) and the difference in magnitudes from both approaches (last-column) with the well locations*
 
 
 
@@ -733,12 +733,12 @@ They are 22 oil/water/gas producers (green), 9 water injectors (blue) and 4 gas 
 Refer to the included Energy SDK License Agreement in **Energy_SDK_License_Agreement.pdf** for guidance.
 
 ## Author:
-- Clement Etienam- Solution Architect-Energy @Nvidia  Email: cetienam@nvidia.com
+- Clement Etienam- Solution Architect-Energy @NVIDIA  Email: cetienam@nvidia.com
 
 ## Contributors:
-- Oleg Ovcharenko- Nvidia
-- Issam Said- Nvidia
-- Kaustubh Tangsali- Nvidia
+- Oleg Ovcharenko- NVIDIA
+- Issam Said- NVIDIA
+- Kaustubh Tangsali- NVIDIA
 
 
 

@@ -16,7 +16,7 @@
 
 """
 Primitives for 2D geometries see
-https://www.iquilezles.org/www/articles/distfunctions/distfunctions.html
+https://iquilezles.org/articles/distfunctions2d/
 """
 
 from operator import mul
