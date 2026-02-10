@@ -168,6 +168,7 @@ def compose(
     register_scheduler_configs()
     register_training_configs()
     register_physicsnemo_configs()
+    register_amp_configs()
     register_graph_configs()
 
     cfg = hydra.compose(
