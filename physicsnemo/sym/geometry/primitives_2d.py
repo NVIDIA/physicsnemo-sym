@@ -36,12 +36,14 @@ from sympy import (
 )
 from functools import reduce
 
-pi = float(pi)
 from sympy.vector import CoordSys3D
+
 from .curve import SympyCurve
-from .helper import _sympy_sdf_to_sdf
 from .geometry import Geometry, csg_curve_naming
-from .parameterization import Parameterization, Parameter, Bounds
+from .helper import _sympy_sdf_to_sdf
+from .parameterization import Bounds, Parameter, Parameterization
+
+pi = float(pi)
 
 
 class Line(Geometry):
@@ -64,11 +66,11 @@ class Line(Geometry):
         assert point_1[0] == point_2[0], "Points must have same x-coordinate"
 
         # make sympy symbols to use
-        l = Symbol(csg_curve_naming(0))
+        t = Symbol(csg_curve_naming(0))
         x = Symbol("x")
 
         # curves for each side
-        curve_parameterization = Parameterization({l: (0, 1)})
+        curve_parameterization = Parameterization({t: (0, 1)})
         curve_parameterization = Parameterization.combine(
             curve_parameterization, parameterization
         )
@@ -76,7 +78,7 @@ class Line(Geometry):
         line_1 = SympyCurve(
             functions={
                 "x": point_1[0],
-                "y": point_1[1] + l * dist_y,
+                "y": point_1[1] + t * dist_y,
                 "normal_x": 1e-10 + normal,  # TODO rm 1e-10
                 "normal_y": 0,
             },
@@ -135,11 +137,11 @@ class Channel2D(Geometry):
 
     def __init__(self, point_1, point_2, parameterization=Parameterization()):
         # make sympy symbols to use
-        l = Symbol(csg_curve_naming(0))
+        t = Symbol(csg_curve_naming(0))
         y = Symbol("y")
 
         # curves for each side
-        curve_parameterization = Parameterization({l: (0, 1)})
+        curve_parameterization = Parameterization({t: (0, 1)})
         curve_parameterization = Parameterization.combine(
             curve_parameterization, parameterization
         )
@@ -147,7 +149,7 @@ class Channel2D(Geometry):
         dist_y = point_2[1] - point_1[1]
         line_1 = SympyCurve(
             functions={
-                "x": l * dist_x + point_1[0],
+                "x": t * dist_x + point_1[0],
                 "y": point_1[1],
                 "normal_x": 0,
                 "normal_y": -1,
@@ -157,7 +159,7 @@ class Channel2D(Geometry):
         )
         line_2 = SympyCurve(
             functions={
-                "x": l * dist_x + point_1[0],
+                "x": t * dist_x + point_1[0],
                 "y": point_2[1],
                 "normal_x": 0,
                 "normal_y": 1,
@@ -209,11 +211,11 @@ class Rectangle(Geometry):
 
     def __init__(self, point_1, point_2, parameterization=Parameterization()):
         # make sympy symbols to use
-        l = Symbol(csg_curve_naming(0))
+        t = Symbol(csg_curve_naming(0))
         x, y = Symbol("x"), Symbol("y")
 
         # curves for each side
-        curve_parameterization = Parameterization({l: (0, 1)})
+        curve_parameterization = Parameterization({t: (0, 1)})
         curve_parameterization = Parameterization.combine(
             curve_parameterization, parameterization
         )
@@ -221,7 +223,7 @@ class Rectangle(Geometry):
         dist_y = point_2[1] - point_1[1]
         line_1 = SympyCurve(
             functions={
-                "x": l * dist_x + point_1[0],
+                "x": t * dist_x + point_1[0],
                 "y": point_1[1],
                 "normal_x": 0,
                 "normal_y": -1,
@@ -232,7 +234,7 @@ class Rectangle(Geometry):
         line_2 = SympyCurve(
             functions={
                 "x": point_2[0],
-                "y": l * dist_y + point_1[1],
+                "y": t * dist_y + point_1[1],
                 "normal_x": 1,
                 "normal_y": 0,
             },
@@ -241,7 +243,7 @@ class Rectangle(Geometry):
         )
         line_3 = SympyCurve(
             functions={
-                "x": l * dist_x + point_1[0],
+                "x": t * dist_x + point_1[0],
                 "y": point_2[1],
                 "normal_x": 0,
                 "normal_y": 1,
@@ -252,7 +254,7 @@ class Rectangle(Geometry):
         line_4 = SympyCurve(
             functions={
                 "x": point_1[0],
-                "y": -l * dist_y + point_2[1],
+                "y": -t * dist_y + point_2[1],
                 "normal_x": -1,
                 "normal_y": 0,
             },
@@ -370,10 +372,10 @@ class Triangle(Geometry):
 
         N = CoordSys3D("N")
         P = x * N.i + y * N.j
-        O = center[0] * N.i + center[1] * N.j
+        origin = center[0] * N.i + center[1] * N.j
         H = center[0] * N.i + (center[1] + height) * N.j
-        OP = P - O
-        OH = H - O
+        OP = P - origin
+        OH = H - origin
         PH = OH - OP
         angle = acos(PH.dot(OH) / sqrt(PH.dot(PH)) / sqrt(OH.dot(OH)))
         apex_angle = atan2(base / 2, height)
@@ -450,8 +452,10 @@ class Ellipse(Geometry):
     ----------
     center : tuple with 2 ints or floats
         center point of circle
-    radius : int or float
-        radius of circle
+    major : int or float
+        major axis of ellipse
+    minor : int or float
+        minor axis of ellipse
     parameterization : Parameterization
         Parameterization of geometry.
     """
@@ -466,7 +470,7 @@ class Ellipse(Geometry):
         )
         try:
             area = float(area)
-        except:
+        except (TypeError, ValueError):
             pass
 
         # curve for perimeter of the circle
