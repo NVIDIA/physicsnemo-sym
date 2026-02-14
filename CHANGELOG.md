@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed HTTP Error 308 when running `examples/super_resolution.py`
+- Fixed deprecated documentation links to the Johns Hopkins Turbulence Database
 
 ### Security
 
