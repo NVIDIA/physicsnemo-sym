@@ -6,7 +6,7 @@ Turbulence Super Resolution
 Introduction
 ------------
 
-This example uses PhysicsNeMo Sym to train a super-resolution surrogate model for predicting high-fidelity homogeneous isotropic turbulence fields from filtered low-resolution observations provided by the `Johns Hopkins Turbulence Database <http://turbulence.pha.jhu.edu/>`_.
+This example uses PhysicsNeMo Sym to train a super-resolution surrogate model for predicting high-fidelity homogeneous isotropic turbulence fields from filtered low-resolution observations provided by the `Johns Hopkins Turbulence Database <https://turbulence.idies.jhu.edu/home>`_.
 This model will combine standard data-driven learning as well as how to define custom data-driven loss functions that are uniquely catered to a specific problem.
 In this example you will learn the following:
 
@@ -34,7 +34,7 @@ Problem Description
 -------------------
 
 The objective of this problem is to learn the mapping between a low-resolution filtered 3D flow field to a high-fidelity solution.
-The flow field will be samples of a forced `isotropic turbulence direct numerical simulation <http://turbulence.pha.jhu.edu/Forced_isotropic_turbulence.aspx>`_ originally simulated with a resolution of :math:`1024^{3}`.
+The flow field will be samples of a forced `isotropic turbulence direct numerical simulation <https://turbulence.idies.jhu.edu/datasets/homogeneousTurbulence/isotropic>`_ originally simulated with a resolution of :math:`1024^{3}`.
 This simulation solves the forced Navier-Stokes equations:
 
 .. math::
@@ -121,8 +121,8 @@ Case Setup
 ----------
 
 Before proceeding, it is important to recognize that this problem needs to download the dataset upon its first run.
-To download the dataset from `Johns Hopkins Turbulence Database <http://turbulence.pha.jhu.edu/>`_ you will need to request an access token.
-Information regarding this process can be found on the `database website <http://turbulence.pha.jhu.edu/authtoken.aspx>`_.
+To download the dataset from `Johns Hopkins Turbulence Database <https://turbulence.idies.jhu.edu/home>`_ you will need to request an access token.
+Information regarding this process can be found on the `database website <https://turbulence.idies.jhu.edu/database>`_.
 Once aquired, please overwrite the default token in the config in the specified location.
 Utilities used to download the data can be located in ``examples/super_resolution/jhtdb_utils.py``, but will not be discussed in this tutorial.
 
