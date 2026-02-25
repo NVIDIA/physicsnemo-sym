@@ -19,7 +19,6 @@ dependencies = [
     "mistune>=2.0",
     "ninja",
     "notebook>=7.2.2",
-    "numpoly<=1.3.4",
     "numpy-stl>=2.16",
     "nvidia-physicsnemo>=2.0.0",
     "opencv-python>=4.8.1.78",
