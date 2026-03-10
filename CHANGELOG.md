@@ -6,22 +6,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.4.0a0] - 2026-XX-YY
-
-### Added
-
-### Changed
-
-### Deprecated
-
-### Removed
+## [2.4.0] - 2026-03-09
 
 ### Fixed
 
 - Fixed HTTP Error 308 when running `examples/super_resolution.py`
 - Fixed deprecated documentation links to the Johns Hopkins Turbulence Database
-
-### Security
 
 ### Dependencies
 

@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-__version__ = "2.4.0"
+__version__ = "2.5.0a0"
 
 from pint import UnitRegistry
 
-from .node import Node
-from .key import Key
-from .hydra.utils import main, compose
+from .node import Node as Node
+from .key import Key as Key
+from .hydra.utils import main as main, compose as compose
 
 # pint unit registry
 ureg = UnitRegistry()
