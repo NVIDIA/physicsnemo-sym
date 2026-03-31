@@ -71,7 +71,6 @@ from scipy.spatial.distance import cdist
 from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
-import pickle
 from kneed import KneeLocator
 import numpy
 from scipy.stats import norm
@@ -5896,12 +5895,10 @@ def _download_file_from_google_drive(id, path):
 
 
 def preprocess_FNO_mat2(path):
-    "Convert a FNO .gz file to a hdf5 file, adding extra dimension to data arrays"
+    "Convert a FNO .npz file to a hdf5 file, adding extra dimension to data arrays"
 
-    assert path.endswith(".gz")
-    # data = scipy.io.loadmat(path)
-    with gzip.open(path, "rb") as f1:
-        data = pickle.load(f1)
+    assert path.endswith(".npz")
+    data = np.load(path)
 
     ks = [k for k in data.keys() if not k.startswith("__")]
     with h5py.File(path[:-4] + ".hdf5", "w") as f:
@@ -7670,11 +7667,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         gc.collect()
 
         # Save compressed dictionary
-        with gzip.open(to_absolute_path("../PACKETS/data_train.pkl.gz"), "wb") as f1:
-            pickle.dump(X_data1, f1)
+        np.savez_compressed(to_absolute_path("../PACKETS/data_train.npz"), **X_data1)
 
-        with gzip.open(to_absolute_path("../PACKETS/data_test.pkl.gz"), "wb") as f2:
-            pickle.dump(X_data1, f2)
+        np.savez_compressed(to_absolute_path("../PACKETS/data_test.npz"), **X_data1)
 
         min_inn_fcn, max_inn_fcn, inn_fcnx = scale_clement(
             inn_fcn, target_min, target_max
@@ -7701,15 +7696,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         del out_fcn
         gc.collect()
 
-        with gzip.open(
-            to_absolute_path("../PACKETS/data_train_peaceman.pkl.gz"), "wb"
-        ) as f3:
-            pickle.dump(X_data2, f3)
+        np.savez_compressed(to_absolute_path("../PACKETS/data_train_peaceman.npz"), **X_data2)
 
-        with gzip.open(
-            to_absolute_path("../PACKETS/data_test_peaceman.pkl.gz"), "wb"
-        ) as f4:
-            pickle.dump(X_data2, f4)
+        np.savez_compressed(to_absolute_path("../PACKETS/data_test_peaceman.npz"), **X_data2)
 
         sio.savemat(
             to_absolute_path("../PACKETS/conversions.mat"),
@@ -7838,8 +7827,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     gc.collect()
 
     print("Load simulated labelled training data")
-    with gzip.open(to_absolute_path("../PACKETS/data_train.pkl.gz"), "rb") as f2:
-        mat = pickle.load(f2)
+    mat = np.load(to_absolute_path("../PACKETS/data_train.npz"))
     X_data1 = mat
     for key, value in X_data1.items():
         print(f"For key '{key}':")
@@ -7958,11 +7946,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         "oil_sat": cSato,
     }
 
-    with gzip.open(to_absolute_path("../PACKETS/simulations_train.pkl.gz"), "wb") as f4:
-        pickle.dump(data, f4)
+    np.savez_compressed(to_absolute_path("../PACKETS/simulations_train.npz"), **data)
 
-    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_train.pkl.gz"))
-    os.remove(to_absolute_path("../PACKETS/simulations_train.pkl.gz"))
+    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_train.npz"))
+    os.remove(to_absolute_path("../PACKETS/simulations_train.npz"))
     del data
     gc.collect()
     del cPerm
@@ -7995,8 +7982,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     gc.collect()
 
     print("Load simulated labelled test data from .gz file")
-    with gzip.open(to_absolute_path("../PACKETS/data_test.pkl.gz"), "rb") as f:
-        mat = pickle.load(f)
+    mat = np.load(to_absolute_path("../PACKETS/data_test.npz"))
     X_data1t = mat
     for key, value in X_data1t.items():
         print(f"For key '{key}':")
@@ -8062,11 +8048,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         "oil_sat": cSato,
     }
 
-    with gzip.open(to_absolute_path("../PACKETS/simulations_test.pkl.gz"), "wb") as f4:
-        pickle.dump(data_test, f4)
+    np.savez_compressed(to_absolute_path("../PACKETS/simulations_test.npz"), **data_test)
 
-    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_test.pkl.gz"))
-    os.remove(to_absolute_path("../PACKETS/simulations_test.pkl.gz"))
+    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_test.npz"))
+    os.remove(to_absolute_path("../PACKETS/simulations_test.npz"))
 
     del cPerm
     gc.collect()
@@ -8101,10 +8086,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     gc.collect()
 
     print("Load simulated labelled training data for peacemann")
-    with gzip.open(
-        to_absolute_path("../PACKETS/data_train_peaceman.pkl.gz"), "rb"
-    ) as f:
-        mat = pickle.load(f)
+    mat = np.load(to_absolute_path("../PACKETS/data_train_peaceman.npz"))
     X_data2 = mat
     del mat
     gc.collect()
@@ -8126,10 +8108,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     gc.collect()
 
     print("Load simulated labelled test data for peacemann modelling")
-    with gzip.open(
-        to_absolute_path("../PACKETS/data_train_peaceman.pkl.gz"), "rb"
-    ) as f:
-        mat = pickle.load(f)
+    mat = np.load(to_absolute_path("../PACKETS/data_train_peaceman.npz"))
     X_data2t = mat
     del mat
     gc.collect()

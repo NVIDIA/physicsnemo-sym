@@ -12339,9 +12339,6 @@ Parametrisation with Generative adverserail network prior\n"
     generator_map = load_model("../PACKETS/generator.h5")
     # generatorp_map = load_model('generatorp.h5')
 
-    # clfy_gen = pickle.load(open('clfy_gen.asv' , 'rb'))
-    # clfyp_gen = pickle.load(open('clfyp_gen.asv' , 'rb'))
-
     os.chdir(oldfolder)
 
     ensemble = ini_ensemble

@@ -133,7 +133,7 @@ from tensorflow.keras.layers import (
     MaxPooling2D,
 )
 from shutil import rmtree
-import pickle
+import skops.io as skio
 from physicsnemo.sym.models.fno import *
 from physicsnemo.sym.models.afno.afno import *
 from physicsnemo.sym.key import Key
@@ -5920,8 +5920,8 @@ def CCR_Machine(inpuutj, outputtj):
     yruth = y
     filenamex = "clfx.asv"
     filenamey = "clfy.asv"
-    pickle.dump(scaler1a, open(filenamex, "wb"))
-    pickle.dump(scaler2a, open(filenamey, "wb"))
+    skio.dump(scaler1a, filenamex)
+    skio.dump(scaler2a, filenamey)
     y_traind = numruth * 10 * y
     matrix = np.concatenate((X, y_traind), axis=1)
     k = getoptimumk(matrix)
@@ -5964,8 +5964,8 @@ def Prediction_CCR__Machine(nclusters, inputtest):
     loaded_model = modelusec
     filenamex = "../PACKETS/clfx.asv"
     filenamey = "../PACKETS/clfy.asv"
-    clfx = pickle.load(open(filenamex, "rb"))
-    clfy = pickle.load(open(filenamey, "rb"))
+    clfx = skio.load(filenamex, trusted=skio.get_untrusted_types(file=filenamex))
+    clfy = skio.load(filenamey, trusted=skio.get_untrusted_types(file=filenamey))
     inputtest = clfx.transform(inputtest)
     labelDA = loaded_model.predict(inputtest)
     labelDA = np.argmax(labelDA, axis=-1)
@@ -15978,9 +15978,6 @@ Parametrisation with Generative adverserail network prior\n"
         pass
     generator_map = load_model("../PACKETS/generator.h5")
     # generatorp_map = load_model('generatorp.h5')
-
-    # clfy_gen = pickle.load(open('clfy_gen.asv' , 'rb'))
-    # clfyp_gen = pickle.load(open('clfyp_gen.asv' , 'rb'))
 
     os.chdir(oldfolder)
 

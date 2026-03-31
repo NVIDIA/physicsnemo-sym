@@ -78,7 +78,7 @@ from scipy.spatial.distance import cdist
 from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
-import pickle
+import skops.io as skio
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.key import Key
 from physicsnemo.sym.models.fno import *
@@ -5934,12 +5934,10 @@ def _download_file_from_google_drive(id, path):
 
 
 def preprocess_FNO_mat2(path):
-    "Convert a FNO .gz file to a hdf5 file, adding extra dimension to data arrays"
+    "Convert a FNO .npz file to a hdf5 file, adding extra dimension to data arrays"
 
-    assert path.endswith(".gz")
-    # data = scipy.io.loadmat(path)
-    with gzip.open(path, "rb") as f1:
-        data = pickle.load(f1)
+    assert path.endswith(".npz")
+    data = np.load(path)
 
     ks = [k for k in data.keys() if not k.startswith("__")]
     with h5py.File(path[:-4] + ".hdf5", "w") as f:
@@ -6121,11 +6119,10 @@ def PREDICTION_CCR__MACHINE(
         loaded_model = xgb.Booster({"nthread": 4})  # init model
         loaded_model.load_model(filename1)  # load data
     else:
-        filename1 = "Classifier_%d.pkl" % ii
-        with open(filename1, "rb") as file:
-            loaded_model = pickle.load(file)
-    clfx = pickle.load(open(filenamex, "rb"))
-    clfy = pickle.load(open(filenamey, "rb"))
+        filename1 = "Classifier_%d.skops" % ii
+        loaded_model = skio.load(filename1, trusted=skio.get_untrusted_types(file=filename1))
+    clfx = skio.load(filenamex, trusted=skio.get_untrusted_types(file=filenamex))
+    clfy = skio.load(filenamey, trusted=skio.get_untrusted_types(file=filenamey))
     os.chdir(oldfolder)
 
     inputtest = clfx.transform(inputtest)
@@ -6150,15 +6147,13 @@ def PREDICTION_CCR__MACHINE(
     for i in range(nclusters):
         print("-- Predicting cluster: " + str(i + 1) + " | " + str(nclusters))
         if experts == 1:  # Polynomial regressor experts
-            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
-            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".skops"
+            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".skops"
             os.chdir(training_master)
 
-            with open(filename2, "rb") as file:
-                model0 = pickle.load(file)
+            model0 = skio.load(filename2, trusted=skio.get_untrusted_types(file=filename2))
 
-            with open(filename2b, "rb") as filex:
-                poly0 = pickle.load(filex)
+            poly0 = skio.load(filename2b, trusted=skio.get_untrusted_types(file=filename2b))
 
             os.chdir(oldfolder)
             labelDA0 = (np.asarray(np.where(labelDA == i))).T

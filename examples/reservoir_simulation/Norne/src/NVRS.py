@@ -73,7 +73,7 @@ from scipy.spatial.distance import cdist
 from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
-import pickle
+import skops.io as sio
 import xgboost as xgb
 from kneed import KneeLocator
 import numpy
@@ -5752,12 +5752,10 @@ def _download_file_from_google_drive(id, path):
 
 
 def preprocess_FNO_mat2(path):
-    "Convert a FNO .gz file to a hdf5 file, adding extra dimension to data arrays"
+    "Convert a FNO .npz file to a hdf5 file, adding extra dimension to data arrays"
 
-    assert path.endswith(".gz")
-    # data = scipy.io.loadmat(path)
-    with gzip.open(path, "rb") as f1:
-        data = pickle.load(f1)
+    assert path.endswith(".npz")
+    data = np.load(path)
 
     ks = [k for k in data.keys() if not k.startswith("__")]
     with h5py.File(path[:-4] + ".hdf5", "w") as f:
@@ -6052,8 +6050,8 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg):
     os.chdir(training_master)
     filenamex = "clfx_%d.asv" % ii
     filenamey = "clfy_%d.asv" % ii
-    pickle.dump(scaler1a, open(filenamex, "wb"))
-    pickle.dump(scaler2a, open(filenamey, "wb"))
+    sio.dump(scaler1a, filenamex)
+    sio.dump(scaler2a, filenamey)
     os.chdir(oldfolder)
     y_traind = numruth * 100 * y
     matrix = np.concatenate((X, y_traind), axis=1)
@@ -6065,7 +6063,7 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg):
     kmeans = MiniBatchKMeans(n_clusters=nclusters, max_iter=2000).fit(matrix)
     filename = "Clustering_%d.asv" % ii
     os.chdir(training_master)
-    pickle.dump(kmeans, open(filename, "wb"))
+    sio.dump(kmeans, filename)
     os.chdir(oldfolder)
     dd = kmeans.labels_
     dd = dd.T
@@ -6107,17 +6105,15 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg):
             if experts == 1:  # Polynomial regressor experts
                 theta, con1 = fit_machine3(a0, b0, degg)
                 filename = (
-                    "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+                    "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".skops"
                 )
-                filename2 = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+                filename2 = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".skops"
                 os.chdir(training_master)
                 # dump(theta, filename)
                 # dump(con1, filename2)
-                with open(filename, "wb") as file:
-                    pickle.dump(theta, file)
+                sio.dump(theta, filename)
 
-                with open(filename2, "wb") as fileb:
-                    pickle.dump(con1, fileb)
+                sio.dump(con1, filename2)
 
                 os.chdir(oldfolder)
             else:  # XGBoost experts
@@ -6148,8 +6144,8 @@ def PREDICTION_CCR__MACHINE(
     filenamey = "clfy_%d.asv" % ii
     os.chdir(training_master)
     loaded_model = xgb.Booster({"nthread": 4})  # init model
-    clfx = pickle.load(open(filenamex, "rb"))
-    clfy = pickle.load(open(filenamey, "rb"))
+    clfx = sio.load(filenamex, trusted=sio.get_untrusted_types(file=filenamex))
+    clfy = sio.load(filenamey, trusted=sio.get_untrusted_types(file=filenamey))
     loaded_model.load_model(filename1)  # load data
     os.chdir(oldfolder)
     inputtest = clfx.transform(inputtest)
@@ -6162,15 +6158,13 @@ def PREDICTION_CCR__MACHINE(
     for i in range(nclusters):
         print("-- Predicting cluster: " + str(i + 1) + " | " + str(nclusters))
         if experts == 1:  # Polynomial regressor experts
-            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
-            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".skops"
+            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".skops"
             os.chdir(training_master)
 
-            with open(filename2, "rb") as file:
-                model0 = pickle.load(file)
+            model0 = sio.load(filename2, trusted=sio.get_untrusted_types(file=filename2))
 
-            with open(filename2b, "rb") as filex:
-                poly0 = pickle.load(filex)
+            poly0 = sio.load(filename2b, trusted=sio.get_untrusted_types(file=filename2b))
 
             os.chdir(oldfolder)
             labelDA0 = (np.asarray(np.where(labelDA == i))).T

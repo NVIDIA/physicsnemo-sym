@@ -17,7 +17,6 @@
 import os
 import zipfile
 import gzip
-import pickle
 
 try:
     import gdown
@@ -288,12 +287,10 @@ def _download_file_from_google_drive(id, path):
 
 
 def preprocess_FNO_mat2(path):
-    "Convert a FNO .gz file to a hdf5 file, adding extra dimension to data arrays"
+    "Convert a FNO .npz file to a hdf5 file, adding extra dimension to data arrays"
 
-    assert path.endswith(".gz")
-    # data = scipy.io.loadmat(path)
-    with gzip.open(path, "rb") as f1:
-        data = pickle.load(f1)
+    assert path.endswith(".npz")
+    data = np.load(path)
 
     ks = [k for k in data.keys() if not k.startswith("__")]
     with h5py.File(path[:-4] + ".hdf5", "w") as f:

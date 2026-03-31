@@ -19,7 +19,7 @@
 
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
-import pickle
+import skops.io as skio
 from scipy.stats import rankdata, norm
 from scipy import interpolate
 import matplotlib.pyplot as plt
@@ -319,8 +319,8 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg, use_elb
     os.chdir(training_master)
     filenamex = "clfx_%d.asv" % ii
     filenamey = "clfy_%d.asv" % ii
-    pickle.dump(scaler1a, open(filenamex, "wb"))
-    pickle.dump(scaler2a, open(filenamey, "wb"))
+    skio.dump(scaler1a, filenamex)
+    skio.dump(scaler2a, filenamey)
     os.chdir(oldfolder)
     y_traind = numruth * 10 * y
     matrix = np.concatenate((X, y_traind), axis=1)
@@ -335,7 +335,7 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg, use_elb
     kmeans = KMeans(n_clusters=nclusters).fit(matrix)
     filename = "Clustering_%d.asv" % ii
     os.chdir(training_master)
-    pickle.dump(kmeans, open(filename, "wb"))
+    skio.dump(kmeans, filename)
     os.chdir(oldfolder)
     dd = kmeans.labels_
     dd = dd.T
@@ -347,14 +347,12 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg, use_elb
     if experts == 2:
         clf = RandomForestClassifier(n_estimators=500, random_state=42)
         clf.fit(inputtrainclass, outputtrainclass)
-        filename1 = "Classifier_%d.pkl" % ii
+        filename1 = "Classifier_%d.skops" % ii
 
         os.chdir(training_master)
-        with open(filename1, "wb") as file1:
-            pickle.dump(clf, file1)
+        skio.dump(clf, filename1)
 
-        with open(filename1, "rb") as file2:
-            loaded_model = pickle.load(file2)
+        loaded_model = skio.load(filename1, trusted=skio.get_untrusted_types(file=filename1))
         labelDA = loaded_model.predict(X)
         labelDA = np.reshape((labelDA), (-1, 1), "F")
         os.chdir(oldfolder)
@@ -396,17 +394,15 @@ def CCR_Machine(inpuutj, outputtj, ii, training_master, oldfolder, degg, use_elb
             if experts == 1:  # Polynomial regressor experts
                 theta, con1 = fit_machine3(a0, b0, degg)
                 filename = (
-                    "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+                    "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".skops"
                 )
-                filename2 = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+                filename2 = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".skops"
                 os.chdir(training_master)
                 # dump(theta, filename)
                 # dump(con1, filename2)
-                with open(filename, "wb") as file:
-                    pickle.dump(theta, file)
+                skio.dump(theta, filename)
 
-                with open(filename2, "wb") as fileb:
-                    pickle.dump(con1, fileb)
+                skio.dump(con1, filename2)
 
                 os.chdir(oldfolder)
             else:  # XGBoost experts
@@ -441,11 +437,10 @@ def PREDICTION_CCR__MACHINE(
         loaded_model = xgb.Booster({"nthread": 4})  # init model
         loaded_model.load_model(filename1)  # load data
     else:
-        filename1 = "Classifier_%d.pkl" % ii
-        with open(filename1, "rb") as file:
-            loaded_model = pickle.load(file)
-    clfx = pickle.load(open(filenamex, "rb"))
-    clfy = pickle.load(open(filenamey, "rb"))
+        filename1 = "Classifier_%d.skops" % ii
+        loaded_model = skio.load(filename1, trusted=skio.get_untrusted_types(file=filename1))
+    clfx = skio.load(filenamex, trusted=skio.get_untrusted_types(file=filenamex))
+    clfy = skio.load(filenamey, trusted=skio.get_untrusted_types(file=filenamey))
     os.chdir(oldfolder)
 
     inputtest = clfx.transform(inputtest)
@@ -470,15 +465,13 @@ def PREDICTION_CCR__MACHINE(
     for i in range(nclusters):
         print("-- Predicting cluster: " + str(i + 1) + " | " + str(nclusters))
         if experts == 1:  # Polynomial regressor experts
-            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
-            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".skops"
+            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".skops"
             os.chdir(training_master)
 
-            with open(filename2, "rb") as file:
-                model0 = pickle.load(file)
+            model0 = skio.load(filename2, trusted=skio.get_untrusted_types(file=filename2))
 
-            with open(filename2b, "rb") as filex:
-                poly0 = pickle.load(filex)
+            poly0 = skio.load(filename2b, trusted=skio.get_untrusted_types(file=filename2b))
 
             os.chdir(oldfolder)
             labelDA0 = (np.asarray(np.where(labelDA == i))).T
@@ -573,8 +566,7 @@ print("max_out_fcn value is:", max_out_fcn)
 print("target_min value is:", target_min)
 print("target_max value is:", target_max)
 
-with gzip.open(("../PACKETS/data_train_peaceman.pkl.gz"), "rb") as f:
-    mat = pickle.load(f)
+mat = np.load("../PACKETS/data_train_peaceman.npz")
 X_data2 = mat
 
 

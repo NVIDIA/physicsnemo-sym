@@ -91,7 +91,7 @@ import matplotlib as mpl
 import scipy.ndimage.morphology as spndmo
 from datetime import timedelta
 import os.path
-import pickle
+import skops.io as skio
 from scipy.fftpack import dct
 from scipy.fftpack.realtransforms import idct
 from scipy import interpolate
@@ -981,11 +981,10 @@ def PREDICTION_CCR__MACHINE(
         loaded_model = xgb.Booster({"nthread": 4})  # init model
         loaded_model.load_model(filename1)  # load data
     else:
-        filename1 = "Classifier_%d.pkl" % ii
-        with open(filename1, "rb") as file:
-            loaded_model = pickle.load(file)
-    clfx = pickle.load(open(filenamex, "rb"))
-    clfy = pickle.load(open(filenamey, "rb"))
+        filename1 = "Classifier_%d.skops" % ii
+        loaded_model = skio.load(filename1, trusted=skio.get_untrusted_types(file=filename1))
+    clfx = skio.load(filenamex, trusted=skio.get_untrusted_types(file=filenamex))
+    clfy = skio.load(filenamey, trusted=skio.get_untrusted_types(file=filenamey))
     os.chdir(oldfolder)
 
     inputtest = clfx.transform(inputtest)
@@ -1010,15 +1009,13 @@ def PREDICTION_CCR__MACHINE(
     for i in range(nclusters):
         # print('-- Predicting cluster: ' + str(i+1) + ' | ' + str(nclusters))
         if experts == 1:  # Polynomial regressor experts
-            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
-            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".pkl"
+            filename2 = "Regressor_Machine_" + str(ii) + "_Cluster_" + str(i) + ".skops"
+            filename2b = "polfeat_" + str(ii) + "_Cluster_" + str(i) + ".skops"
             os.chdir(training_master)
 
-            with open(filename2, "rb") as file:
-                model0 = pickle.load(file)
+            model0 = skio.load(filename2, trusted=skio.get_untrusted_types(file=filename2))
 
-            with open(filename2b, "rb") as filex:
-                poly0 = pickle.load(filex)
+            poly0 = skio.load(filename2b, trusted=skio.get_untrusted_types(file=filename2b))
 
             os.chdir(oldfolder)
             labelDA0 = (np.asarray(np.where(labelDA == i))).T
@@ -6687,10 +6684,9 @@ def parad2_TI(X_train, y_traind, namezz):
 
 
 def De_correlate_ensemble(nx, ny, nz, Ne, High_K, Low_K):
-    filename = "../PACKETS/Ganensemble.pkl.gz"
+    filename = "../PACKETS/Ganensemble.npz"
 
-    with gzip.open(filename, "rb") as f2:
-        mat1 = pickle.load(f2)
+    mat1 = np.load(filename)
     mat = mat1["permeability"]
     ini_ensemblef = mat
     ini_ensemblef = cp.asarray(ini_ensemblef)
@@ -9441,8 +9437,7 @@ X_data1 = {
     "gas_saturation": gasss,
 }
 
-with gzip.open("RESERVOIR_MODEL.pkl.gz", "wb") as f1:
-    pickle.dump(X_data1, f1)
+np.savez_compressed("RESERVOIR_MODEL.npz", **X_data1)
 os.chdir(oldfolder)
 
 Time_vector = np.zeros((steppi))
@@ -9625,8 +9620,7 @@ X_data1 = {
     "gas_saturation": gasbest,
 }
 
-with gzip.open("BEST_RESERVOIR_MODEL.pkl.gz", "wb") as f1:
-    pickle.dump(X_data1, f1)
+np.savez_compressed("BEST_RESERVOIR_MODEL.npz", **X_data1)
 
 os.chdir(oldfolder)
 
@@ -9798,8 +9792,7 @@ X_data1 = {
     "Gas_saturation": gasbest,
 }
 
-with gzip.open("MEAN_RESERVOIR_MODEL.pkl.gz", "wb") as f1:
-    pickle.dump(X_data1, f1)
+np.savez_compressed("MEAN_RESERVOIR_MODEL.npz", **X_data1)
 
 os.chdir(oldfolder)
 
@@ -10017,8 +10010,7 @@ X_data1 = {
     "Gas_saturation": gas_percentile,
 }
 
-with gzip.open("Posterior_Ensembles_percentile.pkl.gz", "wb") as f1:
-    pickle.dump(X_data1, f1)
+np.savez_compressed("Posterior_Ensembles_percentile.npz", **X_data1)
 
 
 f_3 = plt.figure(figsize=(20, 20), dpi=200)

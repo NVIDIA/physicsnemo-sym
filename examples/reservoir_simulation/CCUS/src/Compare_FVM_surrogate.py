@@ -76,7 +76,6 @@ from numpy import linalg as LA
 from pyDOE import lhs
 import matplotlib.colors
 from matplotlib import cm
-import pickle
 from physicsnemo.sym.models.activation import Activation
 from physicsnemo.sym.hydra import to_absolute_path
 from physicsnemo.sym.key import Key
@@ -2316,12 +2315,10 @@ def _download_file_from_google_drive(id, path):
 
 
 def preprocess_FNO_mat2(path):
-    "Convert a FNO .gz file to a hdf5 file, adding extra dimension to data arrays"
+    "Convert a FNO .npz file to a hdf5 file, adding extra dimension to data arrays"
 
-    assert path.endswith(".gz")
-    # data = scipy.io.loadmat(path)
-    with gzip.open(path, "rb") as f1:
-        data = pickle.load(f1)
+    assert path.endswith(".npz")
+    data = np.load(path)
 
     ks = [k for k in data.keys() if not k.startswith("__")]
     with h5py.File(path[:-4] + ".hdf5", "w") as f:
@@ -2634,8 +2631,7 @@ ny = plan["custom"]["PROPS"]["ny"]
 nz = plan["custom"]["PROPS"]["nz"]
 Ne = 1
 
-with gzip.open(("../PACKETS/static.pkl.gz"), "rb") as f2:
-    mat = pickle.load(f2)
+mat = np.load("../PACKETS/static.npz")
 X_data1 = mat
 for key, value in X_data1.items():
     print(f"For key '{key}':")

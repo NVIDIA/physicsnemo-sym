@@ -65,7 +65,6 @@ from shutil import rmtree
 import numpy.matlib
 import re
 from pyDOE import lhs
-import pickle
 import numpy
 from scipy.stats import norm as nrm
 from gstools import SRF, Gaussian
@@ -5902,12 +5901,10 @@ def _download_file_from_google_drive(id, path):
 
 
 def preprocess_FNO_mat2(path):
-    "Convert a FNO .gz file to a hdf5 file, adding extra dimension to data arrays"
+    "Convert a FNO .npz file to a hdf5 file, adding extra dimension to data arrays"
 
-    assert path.endswith(".gz")
-    # data = scipy.io.loadmat(path)
-    with gzip.open(path, "rb") as f1:
-        data = pickle.load(f1)
+    assert path.endswith(".npz")
+    data = np.load(path)
 
     ks = [k for k in data.keys() if not k.startswith("__")]
     with h5py.File(path[:-4] + ".hdf5", "w") as f:
@@ -7656,11 +7653,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         )
 
         X_ensemble = {"ensemble": perm_ensemble, "ensemblep": poro_ensemble}
-        with gzip.open(to_absolute_path("../PACKETS/static.pkl.gz"), "wb") as f1:
-            pickle.dump(X_ensemble, f1)
+        np.savez_compressed(to_absolute_path("../PACKETS/static.npz"), **X_ensemble)
     else:
-        with gzip.open(to_absolute_path("../PACKETS/static.pkl.gz"), "rb") as f2:
-            mat = pickle.load(f2)
+        mat = np.load(to_absolute_path("../PACKETS/static.npz"))
         X_data1 = mat
         for key, value in X_data1.items():
             print(f"For key '{key}':")
@@ -7880,11 +7875,9 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         gc.collect()
 
         # Save compressed dictionary
-        with gzip.open(to_absolute_path("../PACKETS/data_train.pkl.gz"), "wb") as f1:
-            pickle.dump(X_data1, f1)
+        np.savez_compressed(to_absolute_path("../PACKETS/data_train.npz"), **X_data1)
 
-        with gzip.open(to_absolute_path("../PACKETS/data_test.pkl.gz"), "wb") as f2:
-            pickle.dump(X_data1, f2)
+        np.savez_compressed(to_absolute_path("../PACKETS/data_test.npz"), **X_data1)
 
         sio.savemat(
             to_absolute_path("../PACKETS/conversions.mat"),
@@ -7953,8 +7946,7 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     gc.collect()
 
     print("Load simulated labelled training data")
-    with gzip.open(to_absolute_path("../PACKETS/data_train.pkl.gz"), "rb") as f2:
-        mat = pickle.load(f2)
+    mat = np.load(to_absolute_path("../PACKETS/data_train.npz"))
     X_data1 = mat
     for key, value in X_data1.items():
         print(f"For key '{key}':")
@@ -8060,11 +8052,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         "gas_sat": cSatg,
     }
 
-    with gzip.open(to_absolute_path("../PACKETS/simulations_train.pkl.gz"), "wb") as f4:
-        pickle.dump(data, f4)
+    np.savez_compressed(to_absolute_path("../PACKETS/simulations_train.npz"), **data)
 
-    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_train.pkl.gz"))
-    os.remove(to_absolute_path("../PACKETS/simulations_train.pkl.gz"))
+    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_train.npz"))
+    os.remove(to_absolute_path("../PACKETS/simulations_train.npz"))
     del data
     gc.collect()
     del cPerm
@@ -8090,9 +8081,8 @@ def run(cfg: PhysicsNeMoConfig) -> None:
     del cSatg
     gc.collect()
 
-    print("Load simulated labelled test data from .gz file")
-    with gzip.open(to_absolute_path("../PACKETS/data_test.pkl.gz"), "rb") as f:
-        mat = pickle.load(f)
+    print("Load simulated labelled test data from .npz file")
+    mat = np.load(to_absolute_path("../PACKETS/data_test.npz"))
     X_data1t = mat
     for key, value in X_data1t.items():
         print(f"For key '{key}':")
@@ -8151,11 +8141,10 @@ def run(cfg: PhysicsNeMoConfig) -> None:
         "gas_sat": cSatg,
     }
 
-    with gzip.open(to_absolute_path("../PACKETS/simulations_test.pkl.gz"), "wb") as f4:
-        pickle.dump(data_test, f4)
+    np.savez_compressed(to_absolute_path("../PACKETS/simulations_test.npz"), **data_test)
 
-    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_test.pkl.gz"))
-    os.remove(to_absolute_path("../PACKETS/simulations_test.pkl.gz"))
+    preprocess_FNO_mat2(to_absolute_path("../PACKETS/simulations_test.npz"))
+    os.remove(to_absolute_path("../PACKETS/simulations_test.npz"))
 
     del cPerm
     gc.collect()
